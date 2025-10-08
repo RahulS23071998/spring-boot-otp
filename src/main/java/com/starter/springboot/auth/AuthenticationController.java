@@ -8,7 +8,6 @@ import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.services.OtpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -29,14 +28,19 @@ public class AuthenticationController {
 
     private final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
-    @Autowired
-    private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
-    @Autowired
-    private OtpService otpService;
+    private final OtpService otpService;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
+
+    public AuthenticationController(TokenProvider tokenProvider,
+                                    OtpService otpService,
+                                    AuthenticationManager authenticationManager) {
+        this.tokenProvider = tokenProvider;
+        this.otpService = otpService;
+        this.authenticationManager = authenticationManager;
+    }
 
 
     @PostMapping(value = "/authenticate")

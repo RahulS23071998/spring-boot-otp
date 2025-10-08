@@ -3,8 +3,8 @@ package com.starter.springboot.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.starter.springboot.enumeration.AuthorityName;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 

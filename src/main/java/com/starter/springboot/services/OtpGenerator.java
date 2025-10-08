@@ -6,8 +6,7 @@ import com.google.common.cache.LoadingCache;
 import org.springframework.context.annotation.Description;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
+import java.security.SecureRandom;
 import java.util.concurrent.TimeUnit;
 
 @Description(value = "Service for generating and validating OTP.")
@@ -15,7 +14,8 @@ import java.util.concurrent.TimeUnit;
 public class OtpGenerator {
 
     private static final Integer EXPIRE_MIN = 5;
-    private LoadingCache<String, Integer> otpCache;
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+    private final LoadingCache<String, Integer> otpCache;
 
     /**
      * Constructor configuration.
@@ -41,11 +41,10 @@ public class OtpGenerator {
      */
     public Integer generateOTP(String key)
     {
-        Random random = new Random();
-        int OTP = 100000 + random.nextInt(900000);
-        otpCache.put(key, OTP);
+        int otp = 100000 + SECURE_RANDOM.nextInt(900000);
+        otpCache.put(key, otp);
 
-        return OTP;
+        return otp;
     }
 
     /**

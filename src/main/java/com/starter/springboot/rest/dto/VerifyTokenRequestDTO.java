@@ -1,20 +1,15 @@
 package com.starter.springboot.rest.dto;
 
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class VerifyTokenRequestDTO {
 
     @NotNull
     @NotBlank
-    @NotEmpty
     private String username;
 
     @NotNull
-    @NotBlank
-    @NotEmpty
     private Integer otp;
 
     private Boolean rememberMe;
