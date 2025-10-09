@@ -72,19 +72,20 @@ public class TokenProvider implements InitializingBean {
     public TokenCreationResponse createToken(Authentication authentication, Boolean rememberMe) {
         String username = authentication.getName();
         User user = userRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new EntityNotFoundException("User with username " + username + " not found!"));
+                .findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User with username " + username + " not found!"));
 
         if (Boolean.TRUE.equals(user.getIsOtpRequired())) {
             boolean otpIssued = otpService.generateOtp(user.getUsername());
             if (!otpIssued) {
-                throw new IllegalStateException("Failed to generate OTP for user " + username);
+                // Return a rejection instead of ResponseEntity
+                return TokenCreationResponse.rejected("Maximum OTP attempts exceeded. Try again later.");
             }
-            return TokenCreationResponse.accepted();
+            return TokenCreationResponse.accepted(null);
         }
 
         JWTToken token = new JWTToken(generateToken(authentication, rememberMe));
-        return new TokenCreationResponse(HttpStatus.OK, token);
+        return TokenCreationResponse.accepted(token);
     }
 
     /**

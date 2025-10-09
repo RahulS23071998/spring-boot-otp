@@ -46,8 +46,8 @@ public class OtpService {
      */
     public Boolean generateOtp(String key)
     {
+        String attemptsKey = "otp:" + key + ":attempts";
 
-        String attemptsKey = key + ":attempts";
         Long attempts = redisTemplate.opsForValue().increment(attemptsKey, 1);
         if (attempts == 1) {
             redisTemplate.expire(attemptsKey, otpProperties.getAttemptWindowMinutes(), TimeUnit.MINUTES);
@@ -95,20 +95,8 @@ public class OtpService {
      * @param otpNumber - provided OTP number
      * @return boolean value (true|false)
      */
-    public Boolean validateOTP(String key, Integer otpNumber)
-    {
-        if (otpNumber == null) {
-            LOGGER.warn("Attempt to validate OTP with null value for key: {}", key);
-            return false;
-        }
-
-        Integer cacheOTP = otpGenerator.getOPTByKey(key);
-        if (cacheOTP != null && cacheOTP.equals(otpNumber))
-        {
-            otpGenerator.clearOTPFromCache(key);
-            return true;
-        }
-        LOGGER.warn("Invalid OTP for key: {}", key);
-        return false;
+    public boolean validateOTP(String key, Integer otpNumber) {
+        if (otpNumber == null) return false;
+        return otpGenerator.validateOTPBasedOnKey(key, otpNumber);
     }
 }
