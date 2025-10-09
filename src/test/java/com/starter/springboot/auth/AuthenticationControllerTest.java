@@ -3,6 +3,7 @@ package com.starter.springboot.auth;
 import com.starter.springboot.rest.dto.LoginDTO;
 import com.starter.springboot.rest.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.security.jwt.JWTToken;
+import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.services.OtpService;
 import org.junit.jupiter.api.AfterEach;
@@ -67,7 +68,7 @@ class AuthenticationControllerTest {
         loginDTO.setRememberMe(Boolean.TRUE);
 
         when(authenticationManager.authenticate(any(Authentication.class))).thenReturn(authentication);
-        when(tokenProvider.createToken(authentication, Boolean.TRUE)).thenReturn("jwt-token");
+        when(tokenProvider.createToken(authentication, Boolean.TRUE)).thenReturn(new TokenCreationResponse(HttpStatus.OK, new JWTToken("jwt-token")));
 
         ResponseEntity<JWTToken> response = authenticationController.authorize(loginDTO);
 
@@ -77,10 +78,9 @@ class AuthenticationControllerTest {
         assertSame(authentication, SecurityContextHolder.getContext().getAuthentication());
 
         verify(authenticationManager).authenticate(argThat(auth -> {
-            if (!(auth instanceof UsernamePasswordAuthenticationToken)) {
+            if (!(auth instanceof UsernamePasswordAuthenticationToken token)) {
                 return false;
             }
-            UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken) auth;
             return Objects.equals("john.doe", token.getPrincipal())
                 && Objects.equals("strong-password", token.getCredentials());
         }));

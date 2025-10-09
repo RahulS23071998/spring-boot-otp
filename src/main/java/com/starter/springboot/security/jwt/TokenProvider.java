@@ -1,17 +1,18 @@
 package com.starter.springboot.security.jwt;
 
 import com.starter.springboot.domain.User;
+import com.starter.springboot.exceptions.OtpRequiredException;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.services.OtpService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,13 +20,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import jakarta.persistence.EntityNotFoundException;
+import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.security.Key;
-import java.util.Base64;
 
 @Component
 public class TokenProvider implements InitializingBean {
@@ -63,25 +63,28 @@ public class TokenProvider implements InitializingBean {
 
 
     /**
-     * Create token from authentication
+     * Create token from authentication. If OTP is required, the caller must complete the OTP flow.
      *
      * @param authentication authentication object
      * @param rememberMe remember me indicator
-     * @return String as token
+     * @return payload containing HTTP status and optional JWT token
      */
-    public String createToken(Authentication authentication, Boolean rememberMe)
-    {
+    public TokenCreationResponse createToken(Authentication authentication, Boolean rememberMe) {
         String username = authentication.getName();
         User user = userRepository
             .findByUsername(username)
             .orElseThrow(() -> new EntityNotFoundException("User with username " + username + " not found!"));
 
-        if (user.getIsOtpRequired())
-        {
-            otpService.generateOtp(user.getUsername());
-            return null;
+        if (Boolean.TRUE.equals(user.getIsOtpRequired())) {
+            boolean otpIssued = otpService.generateOtp(user.getUsername());
+            if (!otpIssued) {
+                throw new IllegalStateException("Failed to generate OTP for user " + username);
+            }
+            return TokenCreationResponse.accepted();
         }
-        return generateToken(authentication, rememberMe);
+
+        JWTToken token = new JWTToken(generateToken(authentication, rememberMe));
+        return new TokenCreationResponse(HttpStatus.OK, token);
     }
 
     /**

@@ -1,9 +1,7 @@
 package com.starter.springboot.services;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import org.springframework.context.annotation.Description;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
@@ -13,57 +11,33 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class OtpGenerator {
 
-    private static final Integer EXPIRE_MIN = 5;
-    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
-    private final LoadingCache<String, Integer> otpCache;
 
-    /**
-     * Constructor configuration.
-     */
-    public OtpGenerator()
-    {
-        super();
-        otpCache = CacheBuilder.newBuilder()
-                .expireAfterWrite(EXPIRE_MIN, TimeUnit.MINUTES)
-                .build(new CacheLoader<String, Integer>() {
-                    @Override
-                    public Integer load(String s) throws Exception {
-                        return 0;
-                    }
-                });
+    private static final SecureRandom SECURE_RANDOM = new SecureRandom();
+    private final StringRedisTemplate redisTemplate;
+    private final OtpProperties otpProperties;
+
+    public OtpGenerator(StringRedisTemplate redisTemplate, OtpProperties otpProperties) {
+        this.redisTemplate = redisTemplate;
+        this.otpProperties = otpProperties;
     }
 
-    /**
-     * Method for generating OTP and put it in cache.
-     *
-     * @param key - cache key
-     * @return cache value (generated OTP number)
-     */
-    public Integer generateOTP(String key)
-    {
+    public Integer generateOTP(String key) {
         int otp = 100000 + SECURE_RANDOM.nextInt(900000);
-        otpCache.put(key, otp);
-
+        redisTemplate.opsForValue().set(key, String.valueOf(otp), otpProperties.getExpiryMinutes(), TimeUnit.MINUTES);
         return otp;
     }
 
-    /**
-     * Method for getting OTP value by key.
-     *
-     * @param key - target key
-     * @return OTP value
-     */
-    public Integer getOPTByKey(String key)
-    {
-        return otpCache.getIfPresent(key);
+    public Integer getOPTByKey(String key) {
+        String otpStr = redisTemplate.opsForValue().get(key);
+        if (otpStr == null) return null;
+        try {
+            return Integer.parseInt(otpStr);
+        } catch (NumberFormatException e) {
+            return null;
+        }
     }
 
-    /**
-     * Method for removing key from cache.
-     *
-     * @param key - target key
-     */
     public void clearOTPFromCache(String key) {
-        otpCache.invalidate(key);
+        redisTemplate.delete(key);
     }
 }

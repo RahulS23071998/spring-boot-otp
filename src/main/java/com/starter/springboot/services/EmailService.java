@@ -26,21 +26,26 @@ public class EmailService {
      */
     public Boolean sendSimpleMessage(EmailDTO emailDTO)
     {
+        if (emailDTO.getRecipients() == null || emailDTO.getRecipients().isEmpty()) {
+            LOGGER.error("No recipients provided for email with subject: {}", emailDTO.getSubject());
+            return false;
+        }
+
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo(emailDTO.getRecipients().stream().collect(Collectors.joining(",")));
+        mailMessage.setTo(emailDTO.getRecipients().toArray(new String[0]));
         mailMessage.setSubject(emailDTO.getSubject());
         mailMessage.setText(emailDTO.getBody());
 
-        Boolean isSent = false;
         try
         {
             emailSender.send(mailMessage);
-            isSent = true;
+            LOGGER.info("Email successfully sent to: {}", String.join(",", emailDTO.getRecipients()));
+            return true;
         }
         catch (Exception e) {
-            LOGGER.error("Sending e-mail error: {}", e.getMessage());
+            LOGGER.error("Sending e-mail error: {}", e.getMessage(), e);
+            return false;
         }
-        return isSent;
     }
 
 

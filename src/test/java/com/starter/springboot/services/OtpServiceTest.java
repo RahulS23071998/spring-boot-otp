@@ -33,8 +33,6 @@ class OtpServiceTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    private Logger logger;
 
     @Captor
     private ArgumentCaptor<EmailDTO> emailCaptor;

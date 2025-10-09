@@ -2,6 +2,7 @@ package com.starter.springboot.services;
 
 import com.starter.springboot.domain.User;
 import com.starter.springboot.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,6 +38,6 @@ public class UserService {
         if (user.isPresent()) {
             return user.get().getEmail();
         }
-        return null;
+        throw new EntityNotFoundException("User with username " + username + " not found");
     }
 }
