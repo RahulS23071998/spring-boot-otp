@@ -14,6 +14,9 @@ public class VerifyTokenRequestDTO {
 
     private Boolean rememberMe;
 
+    private String clientId;
+
+    private String deviceId;
 
     public String getUsername() {
         return username;
@@ -37,5 +40,21 @@ public class VerifyTokenRequestDTO {
 
     public void setRememberMe(Boolean rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

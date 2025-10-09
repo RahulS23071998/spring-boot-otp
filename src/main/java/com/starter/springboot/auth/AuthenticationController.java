@@ -2,6 +2,7 @@ package com.starter.springboot.auth;
 
 
 import com.starter.springboot.exceptions.OtpRequiredException;
+import com.starter.springboot.rest.dto.AuthResponseDTO;
 import com.starter.springboot.rest.dto.LoginDTO;
 import com.starter.springboot.rest.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.security.jwt.JWTToken;
@@ -48,7 +49,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<AuthResponseDTO> authorize(@Valid @RequestBody LoginDTO loginDTO) {
         LOGGER.info("Authentication attempt for user: {}", loginDTO.getUsername());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -56,12 +57,16 @@ public class AuthenticationController {
         );
         try {
             Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-            TokenCreationResponse createResponse = tokenProvider.createToken(authentication, loginDTO.isRememberMe());
+            TokenCreationResponse createResponse = tokenProvider.createToken(authentication, loginDTO.getRememberMe());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            LOGGER.info("Authentication successful for user: {}", loginDTO.getUsername());
-            return ResponseEntity.status(createResponse.status()).body(createResponse.token());
+            LOGGER.info("Authentication completed for user: {}", loginDTO.getUsername());
+            AuthResponseDTO response = AuthResponseDTO.fromTokenCreation(loginDTO.getUsername(), createResponse)
+                .withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
+            return ResponseEntity
+                .status(createResponse.status())
+                .body(response);
         } catch (OtpRequiredException ex) {
             LOGGER.info("OTP required for user: {}", loginDTO.getUsername());
             throw ex;
@@ -75,7 +80,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/verify")
-    public ResponseEntity<JWTToken> verifyOtp(@Valid @RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
+    public ResponseEntity<AuthResponseDTO> verifyOtp(@Valid @RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
         String username = verifyTokenRequest.getUsername();
         Integer otp = verifyTokenRequest.getOtp();
         Boolean rememberMe = verifyTokenRequest.getRememberMe();
@@ -83,11 +88,14 @@ public class AuthenticationController {
         boolean isOtpValid = otpService.validateOTP(username, otp);
         if (!isOtpValid) {
             LOGGER.warn("Invalid OTP submitted for user: {}", username);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(AuthResponseDTO.failed(username, "Invalid OTP provided.")
+                    .withContext(rememberMe, verifyTokenRequest.getClientId(), verifyTokenRequest.getDeviceId()));
         }
 
-        String token = tokenProvider.createTokenAfterVerifiedOtp(username, rememberMe);
-        JWTToken response = new JWTToken(token);
+        JWTToken token = tokenProvider.createTokenAfterVerifiedOtp(username, rememberMe);
+        AuthResponseDTO response = AuthResponseDTO.success(username, token, rememberMe)
+            .withContext(rememberMe, verifyTokenRequest.getClientId(), verifyTokenRequest.getDeviceId());
 
         LOGGER.info("OTP verified successfully for user: {}", username);
         return ResponseEntity.ok(response);

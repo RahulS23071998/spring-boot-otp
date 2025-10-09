@@ -81,10 +81,10 @@ public class TokenProvider implements InitializingBean {
                 // Return a rejection instead of ResponseEntity
                 return TokenCreationResponse.rejected("Maximum OTP attempts exceeded. Try again later.");
             }
-            return TokenCreationResponse.accepted(null);
+            return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
         }
 
-        JWTToken token = new JWTToken(generateToken(authentication, rememberMe));
+        JWTToken token = JWTToken.bearerToken(generateToken(authentication, rememberMe), resolveExpiration(rememberMe));
         return TokenCreationResponse.accepted(token);
     }
 
@@ -95,7 +95,7 @@ public class TokenProvider implements InitializingBean {
      * @param rememberMe remember me indicator
      * @return String token value
      */
-    public String createTokenAfterVerifiedOtp(String username, Boolean rememberMe)
+    public JWTToken createTokenAfterVerifiedOtp(String username, Boolean rememberMe)
     {
         User user = userRepository
             .findByUsername(username)
@@ -110,7 +110,8 @@ public class TokenProvider implements InitializingBean {
             user.getUsername(), user.getPassword(), authorities
         );
 
-        return generateToken(authentication, rememberMe);
+        String tokenValue = generateToken(authentication, rememberMe);
+        return JWTToken.bearerToken(tokenValue, resolveExpiration(rememberMe));
     }
 
     /**
@@ -170,13 +171,7 @@ public class TokenProvider implements InitializingBean {
                 .collect(Collectors.joining(","));
 
         long now = new Date().getTime();
-        Date validity;
-        if (Boolean.TRUE.equals(rememberMe)) {
-            validity = new Date(now + this.tokenValidityInSecondsForRememberMe * 1000);
-        }
-        else {
-            validity = new Date(now + this.tokenValidityInSeconds * 1000);
-        }
+        Date validity = new Date(now + resolveExpiration(rememberMe) * 1000);
 
         return Jwts.builder()
             .setSubject(authentication.getName())
@@ -184,5 +179,9 @@ public class TokenProvider implements InitializingBean {
             .signWith(key)
             .setExpiration(validity)
             .compact();
+    }
+
+    private long resolveExpiration(Boolean rememberMe) {
+        return Boolean.TRUE.equals(rememberMe) ? this.tokenValidityInSecondsForRememberMe : this.tokenValidityInSeconds;
     }
 }

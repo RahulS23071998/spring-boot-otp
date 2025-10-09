@@ -22,6 +22,12 @@ public class LoginDTO {
 
     private Boolean rememberMe;
 
+    @Size(max = 64)
+    private String clientId;
+
+    @Size(max = 128)
+    private String deviceId;
+
     public String getUsername() {
         return username;
     }
@@ -38,7 +44,7 @@ public class LoginDTO {
         this.password = password;
     }
 
-    public Boolean isRememberMe() {
+    public Boolean getRememberMe() {
         return rememberMe;
     }
 
@@ -46,12 +52,19 @@ public class LoginDTO {
         this.rememberMe = rememberMe;
     }
 
-    @Override
-    public String toString() {
-        return "LoginDTO{" +
-                "password='" + password + '\'' +
-                ", username='" + username + '\'' +
-                ", rememberMe=" + rememberMe +
-                '}';
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }
