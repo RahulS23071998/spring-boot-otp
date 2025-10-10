@@ -1,14 +1,13 @@
 package com.starter.springboot.rest.resources;
 
-import com.starter.springboot.domain.User;
+import com.starter.springboot.rest.dto.UserResponseDTO;
 import com.starter.springboot.services.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,14 +25,14 @@ public class UserResource {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/users",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> getUsers()
+    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<UserResponseDTO>> getUsers()
     {
         log.debug("CLIENT REST REQUEST!");
 
-        List<User> userList = userService.findAllUsers();
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+        List<UserResponseDTO> userList = userService.findAllUsers().stream()
+            .map(UserResponseDTO::fromEntity)
+            .toList();
+        return ResponseEntity.ok(userList);
     }
 }

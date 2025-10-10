@@ -72,10 +72,12 @@ public class AuthenticationController {
             throw ex;
         } catch (BadCredentialsException badCredentialsException) {
             LOGGER.warn("Authentication failed for user: {} due to bad credentials", loginDTO.getUsername());
-            throw badCredentialsException;
+            AuthResponseDTO body = AuthResponseDTO.failed(loginDTO.getUsername(), "Invalid username or password").withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         } catch (AuthenticationException exception) {
-            LOGGER.error("Authentication failed for user: {}", loginDTO.getUsername(), exception);
-            throw exception;
+            LOGGER.warn("Authentication failed for user: {}: {}", loginDTO.getUsername(), exception.getMessage());
+            AuthResponseDTO body = AuthResponseDTO.failed(loginDTO.getUsername(), exception.getMessage()).withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(body);
         }
     }
 

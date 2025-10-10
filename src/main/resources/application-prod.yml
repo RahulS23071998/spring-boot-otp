@@ -44,3 +44,8 @@ email:
   username: your_username
   password: your_password
   debug: false
+
+logging:
+  level:
+    org.springframework.security.authentication.dao.DaoAuthenticationProvider: warn
+    org.springframework.security.authentication.ProviderManager: warn

@@ -42,9 +42,7 @@ public class UserDetailsService implements org.springframework.security.core.use
             if (user.getEnabled() == null || !user.getEnabled()) {
                 throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
             }
-            List<GrantedAuthority> grantedAuthorities = user.getRoles().stream()
-                    .map(role -> new SimpleGrantedAuthority(role.getId().toString()))
-                    .collect(Collectors.toList());
+            List<GrantedAuthority> grantedAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
 
             return new org.springframework.security.core.userdetails.User(lowercaseLogin,
                     user.getPassword(),

@@ -30,14 +30,10 @@ public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
 
-    private final TokenProvider tokenProvider;
-
     public SecurityConfiguration(Http401UnauthorizedEntryPoint authenticationEntryPoint,
-                                 UserDetailsService userDetailsService,
-                                 TokenProvider tokenProvider) {
+                                 UserDetailsService userDetailsService) {
         this.authenticationEntryPoint = authenticationEntryPoint;
         this.userDetailsService = userDetailsService;
-        this.tokenProvider = tokenProvider;
     }
 
     @Bean
@@ -54,16 +50,17 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, TokenProvider tokenProvider) throws Exception {
         http
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/users/public/**").permitAll()
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/api/**").authenticated()
                 )
                 .with(new JWTConfigurer(tokenProvider), Customizer.withDefaults());
         

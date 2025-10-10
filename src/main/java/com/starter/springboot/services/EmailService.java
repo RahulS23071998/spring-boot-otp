@@ -7,8 +7,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.stream.Collectors;
-
 @Service
 public class EmailService {
 
@@ -43,7 +41,7 @@ public class EmailService {
             return true;
         }
         catch (Exception e) {
-            LOGGER.error("Sending e-mail error: {}", e.getMessage(), e);
+            LOGGER.error("Sending e-mail error: {}", e.getMessage());
             return false;
         }
     }

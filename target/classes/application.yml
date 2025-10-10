@@ -3,3 +3,9 @@ spring:
             name: Starter Project
     profiles:
         active: dev
+
+logging:
+  level:
+    org.springframework.security.authentication.dao.DaoAuthenticationProvider: warn
+    org.springframework.security.authentication.ProviderManager: warn
+    org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: info

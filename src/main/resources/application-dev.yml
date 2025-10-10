@@ -57,3 +57,8 @@ server:
   port: 8080
 
 debug: true
+
+logging:
+  level:
+    org.springframework.security.authentication.dao.DaoAuthenticationProvider: warn
+    org.springframework.security.authentication.ProviderManager: warn

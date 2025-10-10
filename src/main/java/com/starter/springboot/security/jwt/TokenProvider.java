@@ -1,7 +1,6 @@
 package com.starter.springboot.security.jwt;
 
 import com.starter.springboot.domain.User;
-import com.starter.springboot.exceptions.OtpRequiredException;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.services.OtpService;
 import io.jsonwebtoken.Claims;
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -42,13 +40,18 @@ public class TokenProvider implements InitializingBean {
     @Value("${jwt.expiration}")
     private long tokenValidityInSeconds;
 
-    @Value("${jwt.expiration}")
+    @Value("${jwt.expirationRememberMe:${jwt.expiration}}")
     private long tokenValidityInSecondsForRememberMe;
     
     @Override
     public void afterPropertiesSet() {
-        // Decode the configured secret and build a key for HS256 (>=256 bits)
+        if (secretKey == null || secretKey.isBlank()) {
+            throw new IllegalStateException("JWT secret (`jwt.secret`) is not configured.");
+        }
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        if (keyBytes.length < 32) {
+            throw new IllegalArgumentException("JWT secret is too short. Provide Base64-encoded key of at least 256 bits.");
+        }
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
@@ -78,7 +81,6 @@ public class TokenProvider implements InitializingBean {
         if (Boolean.TRUE.equals(user.getIsOtpRequired())) {
             boolean otpIssued = otpService.generateOtp(user.getUsername());
             if (!otpIssued) {
-                // Return a rejection instead of ResponseEntity
                 return TokenCreationResponse.rejected("Maximum OTP attempts exceeded. Try again later.");
             }
             return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
@@ -101,10 +103,7 @@ public class TokenProvider implements InitializingBean {
             .findByUsername(username)
             .orElseThrow(() -> new EntityNotFoundException("User not found!"));
 
-        List<GrantedAuthority> authorities = user.getRoles()
-            .stream()
-            .map(role -> new SimpleGrantedAuthority(role.getName()))
-            .collect(Collectors.toList());
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
             user.getUsername(), user.getPassword(), authorities
@@ -147,8 +146,30 @@ public class TokenProvider implements InitializingBean {
     {
         try
         {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken);
-            return true;
+            Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken).getBody();
+            String username = claims.getSubject();
+            Date issuedAt = claims.getIssuedAt();
+            if (username == null || issuedAt == null) {
+                log.warn("JWT missing subject or issuedAt");
+                return false;
+            }
+
+            // Checking if user's password was reset after token was issued
+            return userRepository.findByUsername(username)
+                .map(user -> {
+                    Date lastReset = user.getLastPasswordResetDate();
+                    if (lastReset != null) {
+                        if (issuedAt.compareTo(lastReset) <= 0) {
+                            log.info("Rejecting JWT for user {}: issuedAt={} <= lastPasswordResetDate={}", username, issuedAt, lastReset);
+                            return false;
+                        }
+                    }
+                    return true;
+                })
+                .orElseGet(() -> {
+                    log.warn("User not found while validating JWT: {}", username);
+                    return false;
+                });
         }
         catch (Exception e)
         {
@@ -171,13 +192,15 @@ public class TokenProvider implements InitializingBean {
                 .collect(Collectors.joining(","));
 
         long now = new Date().getTime();
+        Date issuedAt = new Date(now);
         Date validity = new Date(now + resolveExpiration(rememberMe) * 1000);
 
         return Jwts.builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
-            .signWith(key)
+            .setIssuedAt(issuedAt)
             .setExpiration(validity)
+            .signWith(key)
             .compact();
     }
 

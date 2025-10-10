@@ -1,7 +1,6 @@
 package com.starter.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.starter.springboot.enumeration.AuthorityName;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -12,29 +11,38 @@ import java.util.List;
 @Table(name = "authority")
 public class Authority {
 
-    @Column(name = "name", length = 50)
-    @NotNull
     @Id
-    @Enumerated(EnumType.STRING)
-    private AuthorityName name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "authorities")
-    private List<User> users;
+    @Column(name = "name", length = 50, nullable = false, unique = true)
+    @NotNull
+    private String name;
 
-    public AuthorityName getName() {
+    @Column(name = "description")
+    private String description;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
         return name;
     }
 
-    public void setName(AuthorityName name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public String getDescription() {
+        return description;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
