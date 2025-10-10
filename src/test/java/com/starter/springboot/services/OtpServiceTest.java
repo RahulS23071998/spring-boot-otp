@@ -1,27 +1,28 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.otp.OtpAuditEntry;
+import com.starter.springboot.repositories.OtpAuditEntryRepository;
 import com.starter.springboot.rest.dto.EmailDTO;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.slf4j.Logger;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
-import java.util.Collections;
+import java.time.LocalDate;
+import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@DisplayName("OtpService Tests")
 class OtpServiceTest {
 
     @Mock
@@ -33,83 +34,339 @@ class OtpServiceTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private OtpProperties otpProperties;
 
-    @Captor
-    private ArgumentCaptor<EmailDTO> emailCaptor;
+    @Mock
+    private StringRedisTemplate redisTemplate;
 
+    @Mock
+    private OtpAuditEntryRepository otpAuditEntryRepository;
+
+    @Mock
+    private ValueOperations<String, String> valueOperations;
+
+    @InjectMocks
     private OtpService otpService;
+
+    private static final String TEST_USERNAME = "testuser";
+    private static final String TEST_EMAIL = "test@example.com";
+    private static final Integer TEST_OTP = 123456;
+    private static final int MAX_ATTEMPTS = 3;
+    private static final int ATTEMPT_WINDOW_MINUTES = 15;
+    private static final int EXPIRY_MINUTES = 5;
 
     @BeforeEach
     void setUp() {
-        otpService = new OtpService(otpGenerator, emailService, userService);
+        lenient().when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        lenient().when(otpProperties.getMaxAttempts()).thenReturn(MAX_ATTEMPTS);
+        lenient().when(otpProperties.getAttemptWindowMinutes()).thenReturn(ATTEMPT_WINDOW_MINUTES);
+        lenient().when(otpProperties.getExpiryMinutes()).thenReturn(EXPIRY_MINUTES);
     }
 
     @Test
-    void generateOtpSendsEmailWhenOtpCreated() {
-        when(otpGenerator.generateOTP("john.doe")).thenReturn(123456);
-        when(userService.findEmailByUsername("john.doe")).thenReturn("john.doe@example.com");
-        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(Boolean.TRUE);
+    @DisplayName("Should generate OTP successfully with valid user")
+    void shouldGenerateOtpSuccessfullyWithValidUser() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
+        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
 
-        Boolean result = otpService.generateOtp("john.doe");
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
 
+        // Then
         assertTrue(result);
-
-        verify(otpGenerator).generateOTP("john.doe");
-        verify(userService).findEmailByUsername("john.doe");
+        
+        // Verify Redis operations
+        verify(valueOperations).increment(attemptsKey, 1);
+        verify(redisTemplate).expire(attemptsKey, ATTEMPT_WINDOW_MINUTES, TimeUnit.MINUTES);
+        
+        // Verify OTP generation
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        
+        // Verify user email lookup
+        verify(userService).findEmailByUsername(TEST_USERNAME);
+        
+        // Verify email sent
+        ArgumentCaptor<EmailDTO> emailCaptor = ArgumentCaptor.forClass(EmailDTO.class);
         verify(emailService).sendSimpleMessage(emailCaptor.capture());
-
-        EmailDTO emailDTO = emailCaptor.getValue();
-        assertEquals(Collections.singletonList("john.doe@example.com"), emailDTO.getRecipients());
-        assertEquals("Spring Boot OTP Password.", emailDTO.getSubject());
-        assertEquals("OTP Password: 123456", emailDTO.getBody());
+        
+        EmailDTO sentEmail = emailCaptor.getValue();
+        assertEquals("Spring Boot OTP Password.", sentEmail.getSubject());
+        assertEquals("OTP Password: " + TEST_OTP, sentEmail.getBody());
+        assertEquals(1, sentEmail.getRecipients().size());
+        assertEquals(TEST_EMAIL, sentEmail.getRecipients().get(0));
+        
+        // Verify audit entry created
+        verify(otpAuditEntryRepository).save(any(OtpAuditEntry.class));
     }
 
     @Test
-    void generateOtpReturnsFalseWhenGeneratorFails() {
-        when(otpGenerator.generateOTP("john.doe")).thenReturn(-1);
+    @DisplayName("Should validate correct OTP successfully")
+    void shouldValidateCorrectOtpSuccessfully() {
+        // Given
+        when(otpGenerator.validateOTPBasedOnKey(TEST_USERNAME, TEST_OTP)).thenReturn(true);
 
-        Boolean result = otpService.generateOtp("john.doe");
+        // When
+        boolean result = otpService.validateOTP(TEST_USERNAME, TEST_OTP);
 
-        assertFalse(result);
-
-        verify(otpGenerator).generateOTP("john.doe");
-        verify(emailService, never()).sendSimpleMessage(any());
-        verifyNoMoreInteractions(userService);
-    }
-
-    @Test
-    void validateOtpReturnsTrueWhenOtpMatches() {
-        when(otpGenerator.getOPTByKey("john.doe")).thenReturn(123456);
-
-        Boolean result = otpService.validateOTP("john.doe", 123456);
-
+        // Then
         assertTrue(result);
-
-        verify(otpGenerator).getOPTByKey("john.doe");
-        verify(otpGenerator).clearOTPFromCache("john.doe");
+        verify(otpGenerator).validateOTPBasedOnKey(TEST_USERNAME, TEST_OTP);
     }
 
     @Test
-    void validateOtpReturnsFalseWhenOtpDoesNotMatch() {
-        when(otpGenerator.getOPTByKey("john.doe")).thenReturn(111111);
+    @DisplayName("Should return false when OTP is null")
+    void shouldReturnFalseWhenOtpIsNull() {
+        // When
+        boolean result = otpService.validateOTP(TEST_USERNAME, null);
 
-        Boolean result = otpService.validateOTP("john.doe", 123456);
-
+        // Then
         assertFalse(result);
-
-        verify(otpGenerator).getOPTByKey("john.doe");
-        verify(otpGenerator, never()).clearOTPFromCache("john.doe");
+        verifyNoInteractions(otpGenerator);
     }
 
     @Test
-    void validateOtpReturnsFalseWhenNoOtpPresent() {
-        when(otpGenerator.getOPTByKey("john.doe")).thenReturn(null);
+    @DisplayName("Should return false when max attempts exceeded")
+    void shouldReturnFalseWhenMaxAttemptsExceeded() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn((long) MAX_ATTEMPTS + 1);
 
-        Boolean result = otpService.validateOTP("john.doe", 123456);
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
 
+        // Then
         assertFalse(result);
+        verify(valueOperations).increment(attemptsKey, 1);
+        verify(otpGenerator, never()).generateOTP(anyString());
+        verify(userService, never()).findEmailByUsername(anyString());
+        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+    }
 
-        verify(otpGenerator).getOPTByKey("john.doe");
-        verify(otpGenerator, never()).clearOTPFromCache("john.doe");
+    @Test
+    @DisplayName("Should return false when OTP generation fails")
+    void shouldReturnFalseWhenOtpGenerationFails() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(-1);
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        verify(userService, never()).findEmailByUsername(anyString());
+        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+    }
+
+    @Test
+    @DisplayName("Should return false when user email not found")
+    void shouldReturnFalseWhenUserEmailNotFound() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(null);
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        verify(userService).findEmailByUsername(TEST_USERNAME);
+        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+    }
+
+    @Test
+    @DisplayName("Should return false when email is blank")
+    void shouldReturnFalseWhenEmailIsBlank() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn("");
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        verify(userService).findEmailByUsername(TEST_USERNAME);
+        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+    }
+
+    @Test
+    @DisplayName("Should return false when email sending fails")
+    void shouldReturnFalseWhenEmailSendingFails() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
+        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(false);
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        verify(userService).findEmailByUsername(TEST_USERNAME);
+        verify(emailService).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+    }
+
+    @Test
+    @DisplayName("Should return false when validating incorrect OTP")
+    void shouldReturnFalseWhenValidatingIncorrectOtp() {
+        // Given
+        Integer incorrectOtp = 999999;
+        when(otpGenerator.validateOTPBasedOnKey(TEST_USERNAME, incorrectOtp)).thenReturn(false);
+
+        // When
+        boolean result = otpService.validateOTP(TEST_USERNAME, incorrectOtp);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).validateOTPBasedOnKey(TEST_USERNAME, incorrectOtp);
+    }
+
+    @Test
+    @DisplayName("Should not set expiry on subsequent attempts within window")
+    void shouldNotSetExpiryOnSubsequentAttemptsWithinWindow() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(2L); // Second attempt
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
+        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertTrue(result);
+        verify(valueOperations).increment(attemptsKey, 1);
+        verify(redisTemplate, never()).expire(eq(attemptsKey), anyLong(), any(TimeUnit.class));
+    }
+
+    @Test
+    @DisplayName("Should create correct audit entry with proper dates")
+    void shouldCreateCorrectAuditEntryWithProperDates() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
+        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertTrue(result);
+        
+        ArgumentCaptor<OtpAuditEntry> auditCaptor = ArgumentCaptor.forClass(OtpAuditEntry.class);
+        verify(otpAuditEntryRepository).save(auditCaptor.capture());
+        
+        OtpAuditEntry savedAudit = auditCaptor.getValue();
+        assertEquals(TEST_USERNAME, savedAudit.getUsername());
+        assertEquals(LocalDate.now(), savedAudit.getIssuedOn());
+        
+        LocalDate expectedExpiryDate = LocalDate.now().plusDays(EXPIRY_MINUTES / 1440);
+        assertEquals(expectedExpiryDate, savedAudit.getExpiresOn());
+        assertEquals(expectedExpiryDate.toString(), savedAudit.getPartnerExpiry());
+    }
+
+    @Test
+    @DisplayName("Should handle whitespace email as blank")
+    void shouldHandleWhitespaceEmailAsBlank() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn("   ");
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        verify(userService).findEmailByUsername(TEST_USERNAME);
+        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+    }
+
+    @Test
+    @DisplayName("Should handle exactly max attempts allowed")
+    void shouldHandleExactlyMaxAttemptsAllowed() {
+        // Given
+        String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
+        
+        when(valueOperations.increment(attemptsKey, 1)).thenReturn((long) MAX_ATTEMPTS);
+        when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
+        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
+        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+
+        // When
+        Boolean result = otpService.generateOtp(TEST_USERNAME);
+
+        // Then
+        assertTrue(result);
+        verify(valueOperations).increment(attemptsKey, 1);
+        verify(otpGenerator).generateOTP(TEST_USERNAME);
+        verify(userService).findEmailByUsername(TEST_USERNAME);
+        verify(emailService).sendSimpleMessage(any(EmailDTO.class));
+        verify(otpAuditEntryRepository).save(any(OtpAuditEntry.class));
+    }
+
+    @Test
+    @DisplayName("Should validate OTP with empty string key")
+    void shouldValidateOtpWithEmptyStringKey() {
+        // Given
+        String emptyKey = "";
+        when(otpGenerator.validateOTPBasedOnKey(emptyKey, TEST_OTP)).thenReturn(true);
+
+        // When
+        boolean result = otpService.validateOTP(emptyKey, TEST_OTP);
+
+        // Then
+        assertTrue(result);
+        verify(otpGenerator).validateOTPBasedOnKey(emptyKey, TEST_OTP);
+    }
+
+    @Test
+    @DisplayName("Should validate OTP with null key")
+    void shouldValidateOtpWithNullKey() {
+        // Given
+        when(otpGenerator.validateOTPBasedOnKey(null, TEST_OTP)).thenReturn(false);
+
+        // When
+        boolean result = otpService.validateOTP(null, TEST_OTP);
+
+        // Then
+        assertFalse(result);
+        verify(otpGenerator).validateOTPBasedOnKey(null, TEST_OTP);
     }
 }

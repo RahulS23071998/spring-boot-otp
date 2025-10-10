@@ -1,15 +1,17 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.otp.OtpAuditEntry;
+import com.starter.springboot.repositories.OtpAuditEntryRepository;
 import com.starter.springboot.rest.dto.EmailDTO;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Description;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 @Description(value = "Service responsible for handling OTP related functionality.")
 @Service
@@ -29,13 +31,20 @@ public class OtpService {
      * @param emailService - email service dependency
      * @param userService - user service dependency
      */
-    public OtpService(OtpGenerator otpGenerator, EmailService emailService, UserService userService, OtpProperties otpProperties, StringRedisTemplate redisTemplate)
-    {
+    private final OtpAuditEntryRepository otpAuditEntryRepository;
+
+    public OtpService(OtpGenerator otpGenerator,
+                       EmailService emailService,
+                       UserService userService,
+                       OtpProperties otpProperties,
+                       StringRedisTemplate redisTemplate,
+                       OtpAuditEntryRepository otpAuditEntryRepository) {
         this.otpGenerator = otpGenerator;
         this.emailService = emailService;
         this.userService = userService;
         this.otpProperties = otpProperties;
         this.redisTemplate = redisTemplate;
+        this.otpAuditEntryRepository = otpAuditEntryRepository;
     }
 
     /**
@@ -84,8 +93,22 @@ public class OtpService {
         Boolean sent = emailService.sendSimpleMessage(emailDTO);
         if (!sent) {
             LOGGER.error("Failed to send OTP email to user: {}", key);
+            return false;
         }
-        return sent;
+
+        persistAuditEntry(key);
+        return true;
+    }
+
+    private void persistAuditEntry(String username) {
+        OtpAuditEntry auditEntry = new OtpAuditEntry();
+        LocalDate issuedOn = LocalDate.now();
+        LocalDate expiresOn = issuedOn.plusDays(otpProperties.getExpiryMinutes() / 1440);
+        auditEntry.setUsername(username);
+        auditEntry.setIssuedOn(issuedOn);
+        auditEntry.setExpiresOn(expiresOn);
+        auditEntry.setPartnerExpiry(expiresOn.toString());
+        otpAuditEntryRepository.save(auditEntry);
     }
 
     /**

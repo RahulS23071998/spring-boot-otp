@@ -3,6 +3,7 @@ package com.starter.springboot.security.jwt;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.services.OtpService;
+import com.starter.springboot.services.RedisTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
@@ -59,9 +61,12 @@ public class TokenProvider implements InitializingBean {
 
     private final UserRepository userRepository;
 
-    public TokenProvider(OtpService otpService, UserRepository userRepository) {
+    private final RedisTokenService redisTokenService;
+
+    public TokenProvider(OtpService otpService, UserRepository userRepository, RedisTokenService redisTokenService) {
         this.otpService = otpService;
         this.userRepository = userRepository;
+        this.redisTokenService = redisTokenService;
     }
 
 
@@ -86,7 +91,20 @@ public class TokenProvider implements InitializingBean {
             return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
         }
 
-        JWTToken token = JWTToken.bearerToken(generateToken(authentication, rememberMe), resolveExpiration(rememberMe));
+        // generate jti and token
+        String jti = UUID.randomUUID().toString();
+        String tokenValue = generateToken(authentication, rememberMe, jti);
+        // register jti in redis whitelist for this user
+        try {
+            long ttl = resolveExpiration(rememberMe);
+            if (user.getId() != null) {
+                redisTokenService.registerJti(user.getId(), jti, ttl);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
+        }
+
+        JWTToken token = JWTToken.bearerToken(tokenValue, resolveExpiration(rememberMe));
         return TokenCreationResponse.accepted(token);
     }
 
@@ -109,7 +127,16 @@ public class TokenProvider implements InitializingBean {
             user.getUsername(), user.getPassword(), authorities
         );
 
-        String tokenValue = generateToken(authentication, rememberMe);
+        String jti = UUID.randomUUID().toString();
+        String tokenValue = generateToken(authentication, rememberMe, jti);
+        try {
+            long ttl = resolveExpiration(rememberMe);
+            if (user.getId() != null) {
+                redisTokenService.registerJti(user.getId(), jti, ttl);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
+        }
         return JWTToken.bearerToken(tokenValue, resolveExpiration(rememberMe));
     }
 
@@ -149,21 +176,38 @@ public class TokenProvider implements InitializingBean {
             Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken).getBody();
             String username = claims.getSubject();
             Date issuedAt = claims.getIssuedAt();
-            if (username == null || issuedAt == null) {
-                log.warn("JWT missing subject or issuedAt");
+            String jti = claims.getId();
+            if (username == null || issuedAt == null || jti == null) {
+                log.warn("JWT missing subject or issuedAt or jti");
                 return false;
             }
 
-            // Checking if user's password was reset after token was issued
+            // Check if user's password was reset after token was issued
             return userRepository.findByUsername(username)
                 .map(user -> {
                     Date lastReset = user.getLastPasswordResetDate();
                     if (lastReset != null) {
+                        // reject token if it was issued at or before the last password reset
                         if (issuedAt.compareTo(lastReset) <= 0) {
                             log.info("Rejecting JWT for user {}: issuedAt={} <= lastPasswordResetDate={}", username, issuedAt, lastReset);
                             return false;
                         }
                     }
+
+                    // Check Redis whitelist: token's jti must match currently whitelisted jti for this user
+                    try {
+                        if (user.getId() != null) {
+                            boolean whitelisted = redisTokenService.isJtiWhitelisted(user.getId(), jti);
+                            if (!whitelisted) {
+                                log.info("JTI for user {} is not whitelisted in redis", username);
+                                return false;
+                            }
+                        }
+                    } catch (Exception e) {
+                        // If Redis check fails, fall back to lastPasswordResetDate check only (already done above)
+                        log.warn("Redis whitelist check failed: {}", e.getMessage());
+                    }
+
                     return true;
                 })
                 .orElseGet(() -> {
@@ -185,7 +229,7 @@ public class TokenProvider implements InitializingBean {
      * @param rememberMe remember me indicator
      * @return String value of jwt token
      */
-    private String generateToken(Authentication authentication, Boolean rememberMe)
+    private String generateToken(Authentication authentication, Boolean rememberMe, String jti)
     {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -196,6 +240,7 @@ public class TokenProvider implements InitializingBean {
         Date validity = new Date(now + resolveExpiration(rememberMe) * 1000);
 
         return Jwts.builder()
+            .setId(jti)
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
             .setIssuedAt(issuedAt)

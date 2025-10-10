@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +22,8 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
 
@@ -28,14 +33,18 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
+    private final RedisTokenService redisTokenService;
+
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
-                       AuthorityRepository authorityRepository) {
+                       AuthorityRepository authorityRepository,
+                       RedisTokenService redisTokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.authorityRepository = authorityRepository;
+        this.redisTokenService = redisTokenService;
     }
 
     /**
@@ -138,6 +147,17 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(java.util.Date.from(java.time.Instant.now()));
-        return userRepository.save(user);
+        User saved = userRepository.save(user);
+        // Remove any whitelisted token for this user so old tokens are invalidated immediately
+        try {
+            if (saved.getId() != null) {
+                redisTokenService.removeWhitelist(saved.getId());
+            }
+        } catch (Exception e) {
+            // Log and continue; token invalidation best-effort
+            LOGGER.warn("Failed to remove token whitelist for user {}: {}", saved.getId(), e.getMessage());
+        }
+        return saved;
     }
+
 }
