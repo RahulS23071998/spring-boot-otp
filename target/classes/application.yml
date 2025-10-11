@@ -3,9 +3,20 @@ spring:
             name: Starter Project
     profiles:
         active: dev
+    jpa:
+        properties:
+            hibernate:
+                generate_statistics: false
 
 logging:
   level:
     org.springframework.security.authentication.dao.DaoAuthenticationProvider: warn
     org.springframework.security.authentication.ProviderManager: warn
     org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver: info
+    # Suppress Hibernate Session Metrics
+    org.hibernate.engine.internal.StatisticalLoggingSessionEventListener: off
+    # Suppress Spring Boot Condition Evaluation Report
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: off
+    # General Hibernate logging
+    org.hibernate.stat: off
+    org.hibernate: warn
