@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Date;
+import java.util.Objects;
 
 public final class JSR310PersistenceConverters {
 
@@ -17,12 +18,12 @@ public final class JSR310PersistenceConverters {
 
         @Override
         public java.sql.Date convertToDatabaseColumn(LocalDate date) {
-            return date == null ? null : java.sql.Date.valueOf(date);
+            return Objects.isNull(date) ? null : java.sql.Date.valueOf(date);
         }
 
         @Override
         public LocalDate convertToEntityAttribute(java.sql.Date date) {
-            return date == null ? null : date.toLocalDate();
+            return Objects.isNull(date) ? null : date.toLocalDate();
         }
     }
 

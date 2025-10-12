@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Description(value = "Service for generating and validating OTP.")
@@ -60,7 +61,7 @@ public class OtpGenerator {
         }
 
         String storedHash = redisTemplate.opsForValue().get(redisKey);
-        if (storedHash == null) {
+        if (Objects.isNull(storedHash)) {
             return OtpValidationResult.invalid();
         }
 
@@ -74,7 +75,7 @@ public class OtpGenerator {
 
         Long failures = redisTemplate.opsForValue().increment(failureKey, 1);
         redisTemplate.expire(failureKey, otpProperties.getExpiryMinutes(), TimeUnit.MINUTES);
-        if (failures != null && failures >= otpProperties.getMaxAttempts()) {
+        if (Objects.nonNull(failures) && failures >= otpProperties.getMaxAttempts()) {
             redisTemplate.opsForValue().set(statusKey, OtpConstants.STATUS_LOCKED, otpProperties.getExpiryMinutes(), TimeUnit.MINUTES);
             redisTemplate.expire(statusKey, otpProperties.getExpiryMinutes(), TimeUnit.MINUTES);
             LOGGER.warn("OTP locked for key {} after {} failed attempts", key, failures);

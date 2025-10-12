@@ -10,6 +10,7 @@ import com.starter.springboot.services.dto.OtpValidationStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,7 +82,7 @@ public class OtpService {
         LOGGER.debug("Generated OTP for key: {}", key);
 
         String userEmail = userService.findEmailByUsername(key);
-        if (userEmail == null || userEmail.isBlank()) {
+        if (Objects.isNull(userEmail) || userEmail.isBlank()) {
             LOGGER.error(EmailConstants.NO_EMAIL_FOR_USERNAME_MESSAGE, key);
             return false;
         }
@@ -95,7 +96,7 @@ public class OtpService {
         emailDTO.setRecipients(recipients);
 
         Boolean sent = emailService.sendSimpleMessage(emailDTO);
-        if (!sent) {
+        if (Boolean.FALSE.equals(sent)) {
             LOGGER.error(EmailConstants.FAILED_TO_SEND_OTP_EMAIL_MESSAGE, key);
             return false;
         }
@@ -123,7 +124,7 @@ public class OtpService {
      * @return validation result
      */
     public OtpValidationResult validateOTP(String key, Integer otpNumber) {
-        if (otpNumber == null) {
+        if (Objects.isNull(otpNumber)) {
             return OtpValidationResult.invalid();
         }
         OtpValidationResult result = otpGenerator.validateOtpStatus(key, otpNumber);

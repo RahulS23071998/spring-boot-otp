@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -41,7 +42,7 @@ public class RedisTokenService {
         try {
             String key = userKey(userId);
             String stored = redisTemplate.opsForValue().get(key);
-            if (stored == null) return false;
+            if (Objects.isNull(stored)) return false;
             return stored.equals(jti);
         } catch (Exception e) {
             log.error("Failed to check jti whitelist for user {}: {}", userId, e.getMessage());

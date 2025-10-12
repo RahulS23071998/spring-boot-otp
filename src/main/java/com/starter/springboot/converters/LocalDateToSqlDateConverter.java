@@ -4,6 +4,7 @@ import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.time.LocalDate;
 import java.sql.Date;
+import java.util.Objects;
 
 
 @Converter
@@ -11,11 +12,11 @@ public class LocalDateToSqlDateConverter implements AttributeConverter<LocalDate
 
     @Override
     public Date convertToDatabaseColumn(LocalDate localDate) {
-        return ( localDate == null ? null : Date.valueOf(localDate) );
+        return ( Objects.isNull(localDate) ? null : Date.valueOf(localDate) );
     }
 
     @Override
     public LocalDate convertToEntityAttribute(Date date) {
-        return ( date == null ? null : date.toLocalDate() );
+        return ( Objects.isNull(date) ? null : date.toLocalDate() );
     }
 }

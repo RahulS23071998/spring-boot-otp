@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,7 @@ public class TokenProvider implements InitializingBean {
     
     @Override
     public void afterPropertiesSet() {
-        if (secretKey == null || secretKey.isBlank()) {
+        if (Objects.isNull(secretKey) || secretKey.isBlank()) {
             throw new IllegalStateException("JWT secret (`jwt.secret`) is not configured.");
         }
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
@@ -86,7 +87,7 @@ public class TokenProvider implements InitializingBean {
 
         if (Boolean.TRUE.equals(user.getIsOtpRequired())) {
             boolean otpIssued = otpService.generateOtp(user.getUsername());
-            if (!otpIssued) {
+            if (Boolean.FALSE.equals(otpIssued)) {
                 return TokenCreationResponse.rejected("Maximum OTP attempts exceeded. Try again later.");
             }
             return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
@@ -98,7 +99,7 @@ public class TokenProvider implements InitializingBean {
         // register jti in redis whitelist for this user
         try {
             long ttl = resolveExpiration(rememberMe);
-            if (user.getId() != null) {
+            if (Objects.nonNull(user.getId())) {
                 redisTokenService.registerJti(user.getId(), jti, ttl);
             }
         } catch (Exception e) {
@@ -132,7 +133,7 @@ public class TokenProvider implements InitializingBean {
         String tokenValue = generateToken(authentication, rememberMe, jti);
         try {
             long ttl = resolveExpiration(rememberMe);
-            if (user.getId() != null) {
+            if (Objects.nonNull(user.getId())) {
                 redisTokenService.registerJti(user.getId(), jti, ttl);
             }
         } catch (Exception e) {
@@ -178,7 +179,7 @@ public class TokenProvider implements InitializingBean {
             String username = claims.getSubject();
             Date issuedAt = claims.getIssuedAt();
             String jti = claims.getId();
-            if (username == null || issuedAt == null || jti == null) {
+            if (Objects.isNull(username) || Objects.isNull(issuedAt) || Objects.isNull(jti)) {
                 log.warn("JWT missing subject or issuedAt or jti");
                 return false;
             }
@@ -187,7 +188,7 @@ public class TokenProvider implements InitializingBean {
             return userRepository.findByUsername(username)
                 .map(user -> {
                     Date lastReset = user.getLastPasswordResetDate();
-                    if (lastReset != null) {
+                    if (Objects.nonNull(lastReset)) {
                         // reject token if it was issued at or before the last password reset
                         if (issuedAt.compareTo(lastReset) <= 0) {
                             log.info("Rejecting JWT for user {}: issuedAt={} <= lastPasswordResetDate={}", username, issuedAt, lastReset);
@@ -197,7 +198,7 @@ public class TokenProvider implements InitializingBean {
 
                     // Check Redis whitelist: token's jti must match currently whitelisted jti for this user
                     try {
-                        if (user.getId() != null) {
+                        if (Objects.nonNull(user.getId())) {
                             boolean whitelisted = redisTokenService.isJtiWhitelisted(user.getId(), jti);
                             if (!whitelisted) {
                                 log.info("JTI for user {} is not whitelisted in redis", username);

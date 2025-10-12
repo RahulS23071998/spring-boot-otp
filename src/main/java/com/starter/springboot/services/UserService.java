@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -81,18 +82,18 @@ public class UserService {
         });
         Date now = Date.from(Instant.now());
         user.setLastPasswordResetDate(now);
-        if (user.getStatus() == null) {
+        if (Objects.isNull(user.getStatus())) {
             user.setStatus(UserStatus.ACTIVE);
         }
-        if (user.getEnabled() == null) {
+        if (Objects.isNull(user.getEnabled())) {
             user.setEnabled(Boolean.TRUE);
         }
-        if (user.getRole() == null) {
+        if (Objects.isNull(user.getRole())) {
             Role defaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
                     .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.DEFAULT_ROLE_NOT_CONFIGURED_MESSAGE));
             user.setRole(defaultRole);
         }
-        if (user.getAuthority() == null && user.getRole() != null) {
+        if (Objects.isNull(user.getAuthority()) && Objects.nonNull(user.getRole())) {
             authorityRepository.findByName(user.getRole().getName().replace(SecurityConstants.ROLE_PREFIX, ""))
                     .ifPresent(user::setAuthority);
         }
@@ -102,15 +103,15 @@ public class UserService {
 
     @Transactional
     public User updateStatus(Long userId, UserStatus status, Boolean enabled) {
-        if (status == null && enabled == null) {
+        if (Objects.isNull(status) && Objects.isNull(enabled)) {
             throw new IllegalArgumentException(ApplicationConstants.STATUS_OR_ENABLED_REQUIRED_MESSAGE);
         }
         return userRepository.findById(userId)
             .map(existing -> {
-                if (status != null) {
+                if (Objects.nonNull(status)) {
                     existing.setStatus(status);
                 }
-                if (enabled != null) {
+                if (Objects.nonNull(enabled)) {
                     existing.setEnabled(enabled);
                 }
                 return userRepository.save(existing);
@@ -137,13 +138,13 @@ public class UserService {
         String newPassword = payload.get(ApplicationConstants.NEW_PASSWORD_FIELD);
         String confirmNewPassword = payload.get(ApplicationConstants.CONFIRM_PASSWORD_FIELD);
 
-        if (newPassword == null || confirmNewPassword == null) {
+        if (Objects.isNull(newPassword) || Objects.isNull(confirmNewPassword)) {
             throw new IllegalArgumentException(ApplicationConstants.PASSWORD_FIELDS_REQUIRED_MESSAGE);
         }
         if (!newPassword.equals(confirmNewPassword)) {
             throw new IllegalArgumentException(ApplicationConstants.PASSWORD_MISMATCH_MESSAGE);
         }
-        if (oldPassword == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
+        if (Objects.isNull(oldPassword) || !passwordEncoder.matches(oldPassword, user.getPassword())) {
             // Use BadCredentialsException to indicate authentication failure
             throw new org.springframework.security.authentication.BadCredentialsException(ApplicationConstants.OLD_PASSWORD_INCORRECT_MESSAGE);
         }
@@ -153,7 +154,7 @@ public class UserService {
         User saved = userRepository.save(user);
         // Remove any whitelisted token for this user so old tokens are invalidated immediately
         try {
-            if (saved.getId() != null) {
+            if (Objects.nonNull(saved.getId())) {
                 redisTokenService.removeWhitelist(saved.getId());
             }
         } catch (Exception e) {

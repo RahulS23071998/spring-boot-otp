@@ -6,6 +6,7 @@ import jakarta.persistence.Converter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,7 +17,7 @@ public class StringToDateConverter implements AttributeConverter<String, Date> {
 
     @Override
     public Date convertToDatabaseColumn(String value) {
-        if (value == null || value.isBlank()) {
+        if (Objects.isNull(value) || value.isBlank()) {
             return null;
         }
         try {
@@ -29,7 +30,7 @@ public class StringToDateConverter implements AttributeConverter<String, Date> {
 
     @Override
     public String convertToEntityAttribute(Date date) {
-        if (date == null) {
+        if (Objects.isNull(date)) {
             return null;
         }
         return new SimpleDateFormat(ValidationConstants.DATE_PATTERN).format(date);

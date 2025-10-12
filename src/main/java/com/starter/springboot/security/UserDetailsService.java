@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -40,7 +41,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         String lowercaseLogin = login.toLowerCase();
         Optional<User> userFromDatabase = userRepository.findByUsername(lowercaseLogin);
         return userFromDatabase.map(user -> {
-            if (user.getEnabled() == null || !user.getEnabled()) {
+            if (Objects.isNull(user.getEnabled()) || !user.getEnabled()) {
                 throw new UserNotActivatedException("User " + lowercaseLogin + ApplicationConstants.USER_NOT_ACTIVATED_MESSAGE);
             }
             List<GrantedAuthority> grantedAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));

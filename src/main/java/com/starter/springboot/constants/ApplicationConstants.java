@@ -20,8 +20,6 @@ public final class ApplicationConstants {
     public static final String STATUS_ENDPOINT = "/{id}/status";
 
     // HTTP Headers
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-    public static final String ACCESS_TOKEN_PARAMETER = "access_token";
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String BEARER_TOKEN_TYPE = "Bearer";
     
@@ -31,7 +29,6 @@ public final class ApplicationConstants {
     public static final String RATE_LIMITED_STATUS = "RATE_LIMITED";
     public static final String FAILED_STATUS = "FAILED";
     public static final String SUCCESS_MESSAGE = "Authentication successful";
-    public static final String AUTHENTICATION_FAILED_MESSAGE = "Authentication failed";
 
     // Request parameters
     public static final String STATUS_PARAM = "status";
@@ -39,8 +36,7 @@ public final class ApplicationConstants {
     public static final String USERID_PARAM = "userid";
     public static final String USERNAME_PARAM = "username";
     public static final String ID_PARAM = "id";
-    public static final String ID_PATH_VARIABLE = "id";
-    
+
     // Error Messages
     public static final String INVALID_USERID_FORMAT_MESSAGE = "Invalid userid format";
     public static final String USERID_OR_USERNAME_REQUIRED_MESSAGE = "Provide either userid or username in payload";

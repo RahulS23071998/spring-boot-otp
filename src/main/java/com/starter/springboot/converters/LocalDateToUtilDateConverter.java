@@ -5,13 +5,14 @@ import jakarta.persistence.Converter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Objects;
 
 @Converter
 public class LocalDateToUtilDateConverter implements AttributeConverter<LocalDate, Date> {
 
     @Override
     public Date convertToDatabaseColumn(LocalDate localDate) {
-        if (localDate == null) {
+        if (Objects.isNull(localDate)) {
             return null;
         }
         return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -19,7 +20,7 @@ public class LocalDateToUtilDateConverter implements AttributeConverter<LocalDat
 
     @Override
     public LocalDate convertToEntityAttribute(Date date) {
-        if (date == null) {
+        if (Objects.isNull(date)) {
             return null;
         }
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();

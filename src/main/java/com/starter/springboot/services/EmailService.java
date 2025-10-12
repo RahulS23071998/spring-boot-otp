@@ -8,6 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class EmailService {
 
@@ -25,7 +27,7 @@ public class EmailService {
      */
     public Boolean sendSimpleMessage(EmailDTO emailDTO)
     {
-        if (emailDTO.getRecipients() == null || emailDTO.getRecipients().isEmpty()) {
+        if (Objects.isNull(emailDTO.getRecipients()) || emailDTO.getRecipients().isEmpty()) {
             LOGGER.error(EmailConstants.NO_RECIPIENTS_PROVIDED_MESSAGE, emailDTO.getSubject());
             return false;
         }

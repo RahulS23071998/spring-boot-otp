@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * Utility class for Spring Security.
@@ -24,7 +25,7 @@ public final class SecurityUtils {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         String userName = null;
-        if (authentication != null)
+        if (Objects.nonNull(authentication))
         {
             if (authentication.getPrincipal() instanceof UserDetails)
             {
@@ -47,7 +48,7 @@ public final class SecurityUtils {
     {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Collection<? extends GrantedAuthority> authorities = securityContext.getAuthentication().getAuthorities();
-        if (authorities != null)
+        if (Objects.nonNull(authorities))
         {
             for (GrantedAuthority authority : authorities)
             {
@@ -70,7 +71,7 @@ public final class SecurityUtils {
     {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
-        if (authentication != null)
+        if (Objects.nonNull(authentication))
         {
             if (authentication.getPrincipal() instanceof UserDetails)
             {
