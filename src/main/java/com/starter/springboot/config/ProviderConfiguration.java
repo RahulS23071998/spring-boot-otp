@@ -1,10 +1,11 @@
 package com.starter.springboot.config;
 
+import com.starter.springboot.constants.EmailConstants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "spring.mail")
+@ConfigurationProperties(prefix = EmailConstants.MAIL_CONFIG_PREFIX)
 public class ProviderConfiguration {
 
     private String host;

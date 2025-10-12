@@ -1,5 +1,7 @@
 package com.starter.springboot.rest.resources;
 
+import com.starter.springboot.constants.ApplicationConstants;
+import com.starter.springboot.constants.SecurityConstants;
 import com.starter.springboot.domain.Authority;
 import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
@@ -29,7 +31,7 @@ import java.util.Map;
  * The creation endpoint is public, while updates require authentication.
  */
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(ApplicationConstants.API_BASE_PATH + ApplicationConstants.USERS_ENDPOINT)
 public class PublicUserResource {
 
     private final UserService userService;
@@ -38,7 +40,7 @@ public class PublicUserResource {
         this.userService = userService;
     }
 
-    @PostMapping("/public")
+    @PostMapping(ApplicationConstants.PUBLIC_ENDPOINT)
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO request) {
         try {
             User created = userService.createUser(toEntity(request));
@@ -48,33 +50,33 @@ public class PublicUserResource {
         }
     }
 
-    @PreAuthorize("hasAuthority('ADMIN') or isAuthenticated()")
-    @PutMapping("/{id}/status")
-    public ResponseEntity<UserResponseDTO> updateStatus(@PathVariable("id") Long id,
-                                                         @RequestParam("status") String status,
-                                                         @RequestParam(value = "enabled", required = false) Boolean enabled) {
+    @PreAuthorize("hasAuthority('" + SecurityConstants.ADMIN_AUTHORITY + "') or isAuthenticated()")
+    @PutMapping(ApplicationConstants.STATUS_ENDPOINT)
+    public ResponseEntity<UserResponseDTO> updateStatus(@PathVariable(ApplicationConstants.ID_PARAM) Long id,
+                                                         @RequestParam(ApplicationConstants.STATUS_PARAM) String status,
+                                                         @RequestParam(value = ApplicationConstants.ENABLED_PARAM, required = false) Boolean enabled) {
         User updated = userService.updateStatus(id, Enum.valueOf(com.starter.springboot.domain.UserStatus.class, status), enabled);
         return ResponseEntity.ok(UserResponseDTO.fromEntity(updated));
     }
 
-    @PutMapping("/public/password")
+    @PutMapping(ApplicationConstants.PUBLIC_ENDPOINT + ApplicationConstants.PASSWORD_ENDPOINT)
     public ResponseEntity<UserResponseDTO> changePasswordPublic(@RequestBody Map<String, String> payload) {
         try {
             User updated;
-            if (payload.containsKey("userid")) {
-                String idVal = payload.get("userid");
+            if (payload.containsKey(ApplicationConstants.USERID_PARAM)) {
+                String idVal = payload.get(ApplicationConstants.USERID_PARAM);
                 long id;
                 try {
                     id = Long.parseLong(idVal);
                 } catch (NumberFormatException nfe) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid userid format");
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.INVALID_USERID_FORMAT_MESSAGE);
                 }
                 updated = userService.changePasswordById(id, payload);
-            } else if (payload.containsKey("username")) {
-                String username = payload.get("username");
+            } else if (payload.containsKey(ApplicationConstants.USERNAME_PARAM)) {
+                String username = payload.get(ApplicationConstants.USERNAME_PARAM);
                 updated = userService.changePasswordByUsername(username, payload);
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide either userid or username in payload");
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.USERID_OR_USERNAME_REQUIRED_MESSAGE);
             }
             return ResponseEntity.ok(UserResponseDTO.fromEntity(updated));
         } catch (BadCredentialsException bce) {
@@ -84,7 +86,7 @@ public class PublicUserResource {
         } catch (EntityNotFoundException enfe) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, enfe.getMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Unable to change password");
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.PASSWORD_CHANGE_ERROR_MESSAGE);
         }
     }
 

@@ -8,6 +8,7 @@ import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.services.OtpService;
+import com.starter.springboot.services.dto.OtpValidationResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -119,7 +120,7 @@ class AuthenticationControllerTest {
         // Arrange
         JWTToken jwtToken = JWTToken.bearerToken("verified-jwt-token", 3600L);
         
-        when(otpService.validateOTP("testuser", 123456)).thenReturn(true);
+        when(otpService.validateOTP("testuser", 123456)).thenReturn(OtpValidationResult.success());
         when(tokenProvider.createTokenAfterVerifiedOtp("testuser", false)).thenReturn(jwtToken);
 
         // Act & Assert
@@ -182,7 +183,7 @@ class AuthenticationControllerTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.username", is("testuser")))
                 .andExpect(jsonPath("$.status", is("FAILED")))
-                .andExpect(jsonPath("$.message", is("Invalid username or password")))
+                .andExpect(jsonPath("$.message", is("Invalid credentials")))
                 .andExpect(jsonPath("$.token").doesNotExist())
                 .andExpect(jsonPath("$.otp_required", is(false)))
                 .andExpect(jsonPath("$.remember_me", is(false)))
@@ -218,7 +219,7 @@ class AuthenticationControllerTest {
     @DisplayName("Should return UNAUTHORIZED for invalid OTP")
     void testInvalidOtpVerification() throws Exception {
         // Arrange
-        when(otpService.validateOTP("testuser", 123456)).thenReturn(false);
+        when(otpService.validateOTP("testuser", 123456)).thenReturn(OtpValidationResult.invalid());
 
         // Act & Assert
         mockMvc.perform(post("/auth/verify")
@@ -299,7 +300,7 @@ class AuthenticationControllerTest {
         validVerifyRequest.setRememberMe(true);
         JWTToken jwtToken = JWTToken.bearerToken("remember-me-verified-token", 86400L);
         
-        when(otpService.validateOTP("testuser", 123456)).thenReturn(true);
+        when(otpService.validateOTP("testuser", 123456)).thenReturn(OtpValidationResult.success());
         when(tokenProvider.createTokenAfterVerifiedOtp("testuser", true)).thenReturn(jwtToken);
 
         // Act & Assert
@@ -352,7 +353,7 @@ class AuthenticationControllerTest {
         validVerifyRequest.setDeviceId(null);
         JWTToken jwtToken = JWTToken.bearerToken("null-context-token", 3600L);
         
-        when(otpService.validateOTP("testuser", 123456)).thenReturn(true);
+        when(otpService.validateOTP("testuser", 123456)).thenReturn(OtpValidationResult.success());
         when(tokenProvider.createTokenAfterVerifiedOtp("testuser", null)).thenReturn(jwtToken);
 
         // Act & Assert

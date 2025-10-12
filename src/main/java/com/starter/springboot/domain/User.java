@@ -2,6 +2,7 @@ package com.starter.springboot.domain;
 
 import java.util.Date;
 
+import com.starter.springboot.constants.DatabaseConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,61 +19,61 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-@Table(name = "user")
+@Table(name = DatabaseConstants.USER_TABLE)
 public class User {
 
     @Id
-    @Column(name = "id")
+    @Column(name = DatabaseConstants.USER_ID_COLUMN)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", length = 50, unique = true)
+    @Column(name = DatabaseConstants.USERNAME_COLUMN, length = DatabaseConstants.USERNAME_MAX_LENGTH, unique = true)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 4, max = DatabaseConstants.USERNAME_MAX_LENGTH)
     private String username;
 
-    @Column(name = "password", length = 100)
+    @Column(name = DatabaseConstants.PASSWORD_COLUMN, length = DatabaseConstants.PASSWORD_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = 100)
+    @Size(min = 4, max = DatabaseConstants.PASSWORD_MAX_LENGTH)
     private String password;
 
-    @Column(name = "first_name", length = 50)
+    @Column(name = DatabaseConstants.FIRST_NAME_COLUMN, length = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 4, max = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
     private String firstName;
 
-    @Column(name = "last_name", length = 50)
+    @Column(name = DatabaseConstants.LAST_NAME_COLUMN, length = DatabaseConstants.LAST_NAME_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 4, max = DatabaseConstants.LAST_NAME_MAX_LENGTH)
     private String lastName;
 
-    @Column(name = "email", length = 50)
+    @Column(name = DatabaseConstants.EMAIL_COLUMN, length = DatabaseConstants.EMAIL_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 4, max = DatabaseConstants.EMAIL_MAX_LENGTH)
     private String email;
 
-    @Column(name = "enabled")
+    @Column(name = DatabaseConstants.ENABLED_COLUMN)
     @NotNull
     private Boolean enabled;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status", length = 20)
+    @Column(name = DatabaseConstants.STATUS_COLUMN, length = DatabaseConstants.STATUS_MAX_LENGTH)
     @NotNull
     private UserStatus status;
 
-    @Column(name = "last_password_reset_date")
+    @Column(name = DatabaseConstants.LAST_PASSWORD_RESET_DATE_COLUMN)
     @NotNull
     private Date lastPasswordResetDate;
 
-    @Column(name = "is_otp_required")
+    @Column(name = DatabaseConstants.IS_OTP_REQUIRED_COLUMN)
     private Boolean isOtpRequired;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
+    @JoinColumn(name = DatabaseConstants.ROLE_ID_COLUMN)
     private Role role;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "authority_id")
+    @JoinColumn(name = DatabaseConstants.AUTHORITY_ID_COLUMN)
     private Authority authority;
 
     public Long getId() {

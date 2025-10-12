@@ -1,6 +1,9 @@
 package com.starter.springboot.auth;
 
 
+import com.starter.springboot.constants.ApplicationConstants;
+import com.starter.springboot.constants.OtpConstants;
+import com.starter.springboot.constants.SecurityConstants;
 import com.starter.springboot.exceptions.OtpRequiredException;
 import com.starter.springboot.rest.dto.AuthResponseDTO;
 import com.starter.springboot.rest.dto.LoginDTO;
@@ -9,6 +12,8 @@ import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.services.OtpService;
+import com.starter.springboot.services.dto.OtpValidationResult;
+import com.starter.springboot.services.dto.OtpValidationStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(ApplicationConstants.AUTH_ENDPOINT)
 @Validated
 public class AuthenticationController {
 
@@ -48,7 +53,7 @@ public class AuthenticationController {
         this.authenticationManager = authenticationManager;
     }
 
-    @PostMapping(value = "/authenticate")
+    @PostMapping(value = ApplicationConstants.AUTHENTICATE_ENDPOINT)
     public ResponseEntity<AuthResponseDTO> authorize(@Valid @RequestBody LoginDTO loginDTO) {
         LOGGER.info("Authentication attempt for user: {}", loginDTO.getUsername());
 
@@ -72,7 +77,7 @@ public class AuthenticationController {
             throw ex;
         } catch (BadCredentialsException badCredentialsException) {
             LOGGER.warn("Authentication failed for user: {} due to bad credentials", loginDTO.getUsername());
-            AuthResponseDTO body = AuthResponseDTO.failed(loginDTO.getUsername(), "Invalid username or password").withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
+            AuthResponseDTO body = AuthResponseDTO.failed(loginDTO.getUsername(), SecurityConstants.INVALID_CREDENTIALS_MESSAGE).withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         } catch (AuthenticationException exception) {
             LOGGER.warn("Authentication failed for user: {}: {}", loginDTO.getUsername(), exception.getMessage());
@@ -81,17 +86,21 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(value = "/verify")
+    @PostMapping(value = ApplicationConstants.VERIFY_ENDPOINT)
     public ResponseEntity<AuthResponseDTO> verifyOtp(@Valid @RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
         String username = verifyTokenRequest.getUsername();
         Integer otp = verifyTokenRequest.getOtp();
         Boolean rememberMe = verifyTokenRequest.getRememberMe();
 
-        boolean isOtpValid = otpService.validateOTP(username, otp);
-        if (!isOtpValid) {
-            LOGGER.warn("Invalid OTP submitted for user: {}", username);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(AuthResponseDTO.failed(username, "Invalid OTP provided.")
+        OtpValidationResult validationResult = otpService.validateOTP(username, otp);
+        if (!validationResult.isSuccess()) {
+            LOGGER.warn("OTP validation failed for user: {} with status {}", username, validationResult.getStatus());
+            HttpStatus status = validationResult.getStatus() == OtpValidationStatus.LOCKED ? HttpStatus.LOCKED : HttpStatus.UNAUTHORIZED;
+            String message = validationResult.getStatus() == OtpValidationStatus.LOCKED
+                ? OtpConstants.LOCKED_OTP_MESSAGE
+                : OtpConstants.INVALID_OTP_MESSAGE;
+            return ResponseEntity.status(status)
+                .body(AuthResponseDTO.failed(username, message)
                     .withContext(rememberMe, verifyTokenRequest.getClientId(), verifyTokenRequest.getDeviceId()));
         }
 

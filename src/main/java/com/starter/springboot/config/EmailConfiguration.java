@@ -1,5 +1,6 @@
 package com.starter.springboot.config;
 
+import com.starter.springboot.constants.EmailConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -27,10 +28,10 @@ public class EmailConfiguration {
         javaMailSender.setPassword(providerConfiguration.getPassword());
 
         Properties properties = javaMailSender.getJavaMailProperties();
-        properties.put("mail.transport.protocol", "smtp");
-        properties.put("mail.smtp.auth", providerConfiguration.getAuth().toString());
-        properties.put("mail.smtp.starttls.enable", providerConfiguration.getStarttlsEnable().toString());
-        properties.put("mail.debug", providerConfiguration.getDebug().toString());
+        properties.put(EmailConstants.MAIL_TRANSPORT_PROTOCOL_KEY, EmailConstants.SMTP_PROTOCOL);
+        properties.put(EmailConstants.MAIL_SMTP_AUTH_KEY, providerConfiguration.getAuth().toString());
+        properties.put(EmailConstants.MAIL_SMTP_STARTTLS_ENABLE_KEY, providerConfiguration.getStarttlsEnable().toString());
+        properties.put(EmailConstants.MAIL_DEBUG_KEY, providerConfiguration.getDebug().toString());
 
         return javaMailSender;
     }

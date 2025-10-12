@@ -1,6 +1,7 @@
 package com.starter.springboot.security;
 
 
+import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.exceptions.UserNotActivatedException;
 import com.starter.springboot.repositories.UserRepository;
@@ -40,14 +41,13 @@ public class UserDetailsService implements org.springframework.security.core.use
         Optional<User> userFromDatabase = userRepository.findByUsername(lowercaseLogin);
         return userFromDatabase.map(user -> {
             if (user.getEnabled() == null || !user.getEnabled()) {
-                throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
+                throw new UserNotActivatedException("User " + lowercaseLogin + ApplicationConstants.USER_NOT_ACTIVATED_MESSAGE);
             }
             List<GrantedAuthority> grantedAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
 
             return new org.springframework.security.core.userdetails.User(lowercaseLogin,
                     user.getPassword(),
                     grantedAuthorities);
-        }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + " was not found in the " +
-                "database"));
+        }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + ApplicationConstants.USER_NOT_FOUND_DATABASE_MESSAGE));
     }
 }

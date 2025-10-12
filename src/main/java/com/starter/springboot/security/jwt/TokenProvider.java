@@ -1,5 +1,6 @@
 package com.starter.springboot.security.jwt;
 
+import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.services.OtpService;
@@ -119,7 +120,7 @@ public class TokenProvider implements InitializingBean {
     {
         User user = userRepository
             .findByUsername(username)
-            .orElseThrow(() -> new EntityNotFoundException("User not found!"));
+            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_SIMPLE_MESSAGE));
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
 

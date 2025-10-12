@@ -1,5 +1,7 @@
 package com.starter.springboot.rest.dto;
 
+import com.starter.springboot.constants.DatabaseConstants;
+import com.starter.springboot.constants.ValidationConstants;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -11,21 +13,21 @@ import jakarta.validation.constraints.Size;
  */
 public class LoginDTO {
 
-    @Pattern(regexp = "^(?=.{1,50}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$")
+    @Pattern(regexp = ValidationConstants.USERNAME_PATTERN)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = DatabaseConstants.MIN_USERNAME_LENGTH, max = DatabaseConstants.USERNAME_MAX_LENGTH)
     private String username;
 
     @NotNull
-    @Size(min = 4, max = 32)
+    @Size(min = DatabaseConstants.MIN_PASSWORD_LENGTH, max = DatabaseConstants.DTO_PASSWORD_MAX_LENGTH)
     private String password;
 
     private Boolean rememberMe;
 
-    @Size(max = 64)
+    @Size(max = DatabaseConstants.CLIENT_ID_MAX_LENGTH)
     private String clientId;
 
-    @Size(max = 128)
+    @Size(max = DatabaseConstants.DEVICE_ID_MAX_LENGTH)
     private String deviceId;
 
     public String getUsername() {

@@ -1,5 +1,6 @@
 package com.starter.springboot.converters;
 
+import com.starter.springboot.constants.ValidationConstants;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.text.ParseException;
@@ -13,17 +14,15 @@ public class StringToDateConverter implements AttributeConverter<String, Date> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StringToDateConverter.class);
 
-    private static final String DATE_PATTERN = "yyyy-MM-dd";
-
     @Override
     public Date convertToDatabaseColumn(String value) {
         if (value == null || value.isBlank()) {
             return null;
         }
         try {
-            return new SimpleDateFormat(DATE_PATTERN).parse(value);
+            return new SimpleDateFormat(ValidationConstants.DATE_PATTERN).parse(value);
         } catch (ParseException exception) {
-            LOGGER.warn("Unable to parse date string '{}' using pattern {}", value, DATE_PATTERN, exception);
+            LOGGER.warn("Unable to parse date string '{}' using pattern {}", value, ValidationConstants.DATE_PATTERN, exception);
             return null;
         }
     }
@@ -33,6 +32,6 @@ public class StringToDateConverter implements AttributeConverter<String, Date> {
         if (date == null) {
             return null;
         }
-        return new SimpleDateFormat(DATE_PATTERN).format(date);
+        return new SimpleDateFormat(ValidationConstants.DATE_PATTERN).format(date);
     }
 }

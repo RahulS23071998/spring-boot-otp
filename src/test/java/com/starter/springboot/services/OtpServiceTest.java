@@ -3,6 +3,7 @@ package com.starter.springboot.services;
 import com.starter.springboot.otp.OtpAuditEntry;
 import com.starter.springboot.repositories.OtpAuditEntryRepository;
 import com.starter.springboot.rest.dto.EmailDTO;
+import com.starter.springboot.services.dto.OtpValidationResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -109,24 +110,24 @@ class OtpServiceTest {
     @DisplayName("Should validate correct OTP successfully")
     void shouldValidateCorrectOtpSuccessfully() {
         // Given
-        when(otpGenerator.validateOTPBasedOnKey(TEST_USERNAME, TEST_OTP)).thenReturn(true);
+        when(otpGenerator.validateOtpStatus(TEST_USERNAME, TEST_OTP)).thenReturn(OtpValidationResult.success());
 
         // When
-        boolean result = otpService.validateOTP(TEST_USERNAME, TEST_OTP);
+        OtpValidationResult result = otpService.validateOTP(TEST_USERNAME, TEST_OTP);
 
         // Then
-        assertTrue(result);
-        verify(otpGenerator).validateOTPBasedOnKey(TEST_USERNAME, TEST_OTP);
+        assertTrue(result.isSuccess());
+        verify(otpGenerator).validateOtpStatus(TEST_USERNAME, TEST_OTP);
     }
 
     @Test
     @DisplayName("Should return false when OTP is null")
     void shouldReturnFalseWhenOtpIsNull() {
         // When
-        boolean result = otpService.validateOTP(TEST_USERNAME, null);
+        OtpValidationResult result = otpService.validateOTP(TEST_USERNAME, null);
 
         // Then
-        assertFalse(result);
+        assertFalse(result.isSuccess());
         verifyNoInteractions(otpGenerator);
     }
 
@@ -238,14 +239,14 @@ class OtpServiceTest {
     void shouldReturnFalseWhenValidatingIncorrectOtp() {
         // Given
         Integer incorrectOtp = 999999;
-        when(otpGenerator.validateOTPBasedOnKey(TEST_USERNAME, incorrectOtp)).thenReturn(false);
+        when(otpGenerator.validateOtpStatus(TEST_USERNAME, incorrectOtp)).thenReturn(OtpValidationResult.invalid());
 
         // When
-        boolean result = otpService.validateOTP(TEST_USERNAME, incorrectOtp);
+        OtpValidationResult result = otpService.validateOTP(TEST_USERNAME, incorrectOtp);
 
         // Then
-        assertFalse(result);
-        verify(otpGenerator).validateOTPBasedOnKey(TEST_USERNAME, incorrectOtp);
+        assertFalse(result.isSuccess());
+        verify(otpGenerator).validateOtpStatus(TEST_USERNAME, incorrectOtp);
     }
 
     @Test
@@ -346,27 +347,27 @@ class OtpServiceTest {
     void shouldValidateOtpWithEmptyStringKey() {
         // Given
         String emptyKey = "";
-        when(otpGenerator.validateOTPBasedOnKey(emptyKey, TEST_OTP)).thenReturn(true);
+        when(otpGenerator.validateOtpStatus(emptyKey, TEST_OTP)).thenReturn(OtpValidationResult.success());
 
         // When
-        boolean result = otpService.validateOTP(emptyKey, TEST_OTP);
+        OtpValidationResult result = otpService.validateOTP(emptyKey, TEST_OTP);
 
         // Then
-        assertTrue(result);
-        verify(otpGenerator).validateOTPBasedOnKey(emptyKey, TEST_OTP);
+        assertTrue(result.isSuccess());
+        verify(otpGenerator).validateOtpStatus(emptyKey, TEST_OTP);
     }
 
     @Test
     @DisplayName("Should validate OTP with null key")
     void shouldValidateOtpWithNullKey() {
         // Given
-        when(otpGenerator.validateOTPBasedOnKey(null, TEST_OTP)).thenReturn(false);
+        when(otpGenerator.validateOtpStatus(null, TEST_OTP)).thenReturn(OtpValidationResult.invalid());
 
         // When
-        boolean result = otpService.validateOTP(null, TEST_OTP);
+        OtpValidationResult result = otpService.validateOTP(null, TEST_OTP);
 
         // Then
-        assertFalse(result);
-        verify(otpGenerator).validateOTPBasedOnKey(null, TEST_OTP);
+        assertFalse(result.isSuccess());
+        verify(otpGenerator).validateOtpStatus(null, TEST_OTP);
     }
 }

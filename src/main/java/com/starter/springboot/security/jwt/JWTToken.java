@@ -2,6 +2,7 @@ package com.starter.springboot.security.jwt;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.starter.springboot.constants.ApplicationConstants;
 
 /**
  * DTO representing the JWT token payload returned to the client.
@@ -25,7 +26,7 @@ public class JWTToken {
     }
 
     public static JWTToken bearerToken(String idToken, Long expiresIn) {
-        return new JWTToken(idToken, "Bearer", expiresIn);
+        return new JWTToken(idToken, ApplicationConstants.BEARER_TOKEN_TYPE, expiresIn);
     }
 
     @JsonProperty("id_token")

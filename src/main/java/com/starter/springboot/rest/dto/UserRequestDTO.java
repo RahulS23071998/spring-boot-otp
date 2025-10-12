@@ -1,5 +1,6 @@
 package com.starter.springboot.rest.dto;
 
+import com.starter.springboot.constants.DatabaseConstants;
 import com.starter.springboot.domain.UserStatus;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -12,26 +13,26 @@ import jakarta.validation.constraints.Size;
 public class UserRequestDTO {
 
     @NotBlank
-    @Size(min = 4, max = 50)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.USERNAME_MAX_LENGTH)
     private String username;
 
     /**
      * Password can be blank when updating without a password change.
      */
-    @Size(min = 4, max = 100)
+    @Size(min = DatabaseConstants.MIN_PASSWORD_LENGTH, max = DatabaseConstants.PASSWORD_MAX_LENGTH)
     private String password;
 
     @NotBlank
-    @Size(min = 4, max = 50)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
     private String firstName;
 
     @NotBlank
-    @Size(min = 4, max = 50)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.LAST_NAME_MAX_LENGTH)
     private String lastName;
 
     @NotBlank
     @Email
-    @Size(min = 4, max = 50)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.EMAIL_MAX_LENGTH)
     private String email;
 
     @NotNull

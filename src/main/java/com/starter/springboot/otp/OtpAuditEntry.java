@@ -1,5 +1,6 @@
 package com.starter.springboot.otp;
 
+import com.starter.springboot.constants.DatabaseConstants;
 import com.starter.springboot.converters.LocalDateToSqlDateConverter;
 import com.starter.springboot.converters.LocalDateToUtilDateConverter;
 import com.starter.springboot.converters.StringToDateConverter;
@@ -13,7 +14,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "otp_audit_entries")
+@Table(name = DatabaseConstants.OTP_AUDIT_ENTRIES_TABLE)
 public class OtpAuditEntry {
 
     @Id
@@ -21,18 +22,18 @@ public class OtpAuditEntry {
     private Long id;
 
     @Convert(converter = LocalDateToSqlDateConverter.class)
-    @Column(name = "issued_on", nullable = false)
+    @Column(name = DatabaseConstants.ISSUED_ON_COLUMN, nullable = false)
     private LocalDate issuedOn;
 
     @Convert(converter = LocalDateToUtilDateConverter.class)
-    @Column(name = "expires_on", nullable = false)
+    @Column(name = DatabaseConstants.EXPIRES_ON_COLUMN, nullable = false)
     private LocalDate expiresOn;
 
     @Convert(converter = StringToDateConverter.class)
-    @Column(name = "partner_expiry", columnDefinition = "DATE")
+    @Column(name = DatabaseConstants.PARTNER_EXPIRY_COLUMN, columnDefinition = DatabaseConstants.DATE_COLUMN_DEFINITION)
     private String partnerExpiry;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = DatabaseConstants.OTP_USERNAME_COLUMN, nullable = false)
     private String username;
 
     public Long getId() {

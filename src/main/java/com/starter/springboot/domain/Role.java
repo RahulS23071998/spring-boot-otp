@@ -1,6 +1,7 @@
 package com.starter.springboot.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.starter.springboot.constants.DatabaseConstants;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 
 
 @Entity
-@Table(name = "role")
+@Table(name = DatabaseConstants.ROLE_TABLE)
 @DynamicInsert
 @DynamicUpdate
 public class Role {
@@ -21,14 +22,14 @@ public class Role {
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
+    @Column(name = DatabaseConstants.ROLE_NAME_COLUMN, nullable = false)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = DatabaseConstants.ROLE_DESCRIPTION_COLUMN)
     private String description;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = DatabaseConstants.ROLE_MAPPING_FIELD)
     private Set<User> users = new HashSet<>();
 
     public Long getId() {

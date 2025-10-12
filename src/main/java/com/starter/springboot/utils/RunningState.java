@@ -1,5 +1,6 @@
 package com.starter.springboot.utils;
 
+import com.starter.springboot.constants.ApplicationConstants;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,6 @@ public class RunningState {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ResponseEntity<String> rootPageCheck()
     {
-        return new ResponseEntity<>("Application is running!", HttpStatus.OK);
+        return new ResponseEntity<>(ApplicationConstants.APPLICATION_RUNNING_MESSAGE, HttpStatus.OK);
     }
 }

@@ -1,5 +1,6 @@
 package com.starter.springboot.rest.resources;
 
+import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.rest.dto.UserResponseDTO;
 import com.starter.springboot.services.UserService;
 import org.slf4j.Logger;
@@ -14,7 +15,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping(ApplicationConstants.API_BASE_PATH)
 public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
@@ -25,10 +26,10 @@ public class UserResource {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/users", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = ApplicationConstants.USERS_ENDPOINT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<UserResponseDTO>> getUsers()
     {
-        log.debug("CLIENT REST REQUEST!");
+        log.debug(ApplicationConstants.CLIENT_REST_REQUEST_MESSAGE);
 
         List<UserResponseDTO> userList = userService.findAllUsers().stream()
             .map(UserResponseDTO::fromEntity)

@@ -1,5 +1,6 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.constants.EmailConstants;
 import com.starter.springboot.rest.dto.EmailDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +26,7 @@ public class EmailService {
     public Boolean sendSimpleMessage(EmailDTO emailDTO)
     {
         if (emailDTO.getRecipients() == null || emailDTO.getRecipients().isEmpty()) {
-            LOGGER.error("No recipients provided for email with subject: {}", emailDTO.getSubject());
+            LOGGER.error(EmailConstants.NO_RECIPIENTS_PROVIDED_MESSAGE, emailDTO.getSubject());
             return false;
         }
 
@@ -37,11 +38,11 @@ public class EmailService {
         try
         {
             emailSender.send(mailMessage);
-            LOGGER.info("Email successfully sent to: {}", String.join(",", emailDTO.getRecipients()));
+            LOGGER.info(EmailConstants.EMAIL_SENT_SUCCESS_MESSAGE, String.join(",", emailDTO.getRecipients()));
             return true;
         }
         catch (Exception e) {
-            LOGGER.error("Sending e-mail error: {}", e.getMessage());
+            LOGGER.error(EmailConstants.EMAIL_SENDING_ERROR_MESSAGE, e.getMessage());
             return false;
         }
     }

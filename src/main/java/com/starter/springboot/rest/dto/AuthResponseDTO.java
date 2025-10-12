@@ -2,6 +2,7 @@ package com.starter.springboot.rest.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 
@@ -25,9 +26,9 @@ public record AuthResponseDTO(
 
     public static AuthResponseDTO fromTokenCreation(String username, TokenCreationResponse response) {
         String statusValue = switch (response.status()) {
-            case OK -> "SUCCESS";
-            case ACCEPTED -> "OTP_PENDING";
-            case TOO_MANY_REQUESTS -> "RATE_LIMITED";
+            case OK -> ApplicationConstants.SUCCESS_STATUS;
+            case ACCEPTED -> ApplicationConstants.OTP_PENDING_STATUS;
+            case TOO_MANY_REQUESTS -> ApplicationConstants.RATE_LIMITED_STATUS;
             default -> response.status().name();
         };
 
@@ -47,8 +48,8 @@ public record AuthResponseDTO(
     public static AuthResponseDTO success(String username, JWTToken token, Boolean rememberMe) {
         return new AuthResponseDTO(
             username,
-            "SUCCESS",
-            "Authentication successful",
+            ApplicationConstants.SUCCESS_STATUS,
+            ApplicationConstants.SUCCESS_MESSAGE,
             Boolean.FALSE,
             token,
             Instant.now(),
@@ -61,7 +62,7 @@ public record AuthResponseDTO(
     public static AuthResponseDTO failed(String username, String message) {
         return new AuthResponseDTO(
             username,
-            "FAILED",
+            ApplicationConstants.FAILED_STATUS,
             message,
             Boolean.FALSE,
             null,

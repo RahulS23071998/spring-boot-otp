@@ -1,5 +1,8 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.constants.ApplicationConstants;
+import com.starter.springboot.constants.DatabaseConstants;
+import com.starter.springboot.constants.SecurityConstants;
 import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.domain.UserStatus;
@@ -68,13 +71,13 @@ public class UserService {
         if (user.isPresent()) {
             return user.get().getEmail();
         }
-        throw new EntityNotFoundException("User with username " + username + " not found");
+        throw new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_MESSAGE + username + " not found");
     }
 
     @Transactional
     public User createUser(User user) {
         userRepository.findByUsername(user.getUsername()).ifPresent(existing -> {
-            throw new EntityExistsException("User with username " + user.getUsername() + " already exists");
+            throw new EntityExistsException(ApplicationConstants.USER_ALREADY_EXISTS_MESSAGE + user.getUsername() + " already exists");
         });
         Date now = Date.from(Instant.now());
         user.setLastPasswordResetDate(now);
@@ -85,12 +88,12 @@ public class UserService {
             user.setEnabled(Boolean.TRUE);
         }
         if (user.getRole() == null) {
-            Role defaultRole = roleRepository.findByName("ROLE_USER")
-                    .orElseThrow(() -> new EntityNotFoundException("Default role ROLE_USER not configured"));
+            Role defaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
+                    .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.DEFAULT_ROLE_NOT_CONFIGURED_MESSAGE));
             user.setRole(defaultRole);
         }
         if (user.getAuthority() == null && user.getRole() != null) {
-            authorityRepository.findByName(user.getRole().getName().replace("ROLE_", ""))
+            authorityRepository.findByName(user.getRole().getName().replace(SecurityConstants.ROLE_PREFIX, ""))
                     .ifPresent(user::setAuthority);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -100,7 +103,7 @@ public class UserService {
     @Transactional
     public User updateStatus(Long userId, UserStatus status, Boolean enabled) {
         if (status == null && enabled == null) {
-            throw new IllegalArgumentException("Either status or enabled must be provided");
+            throw new IllegalArgumentException(ApplicationConstants.STATUS_OR_ENABLED_REQUIRED_MESSAGE);
         }
         return userRepository.findById(userId)
             .map(existing -> {
@@ -112,37 +115,37 @@ public class UserService {
                 }
                 return userRepository.save(existing);
             })
-            .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
     }
 
     @Transactional
     public User changePasswordById(Long userId, java.util.Map<String, String> payload) {
         return userRepository.findById(userId)
             .map(user -> changePasswordInternal(user, payload))
-            .orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
     }
 
     @Transactional
     public User changePasswordByUsername(String username, java.util.Map<String, String> payload) {
         return userRepository.findByUsername(username)
             .map(user -> changePasswordInternal(user, payload))
-            .orElseThrow(() -> new EntityNotFoundException("User with username " + username + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_MESSAGE + username + " not found"));
     }
 
     private User changePasswordInternal(User user, java.util.Map<String, String> payload) {
-        String oldPassword = payload.get("oldpassword");
-        String newPassword = payload.get("newpassword");
-        String confirmNewPassword = payload.get("confirmnewpassword");
+        String oldPassword = payload.get(ApplicationConstants.OLD_PASSWORD_FIELD);
+        String newPassword = payload.get(ApplicationConstants.NEW_PASSWORD_FIELD);
+        String confirmNewPassword = payload.get(ApplicationConstants.CONFIRM_PASSWORD_FIELD);
 
         if (newPassword == null || confirmNewPassword == null) {
-            throw new IllegalArgumentException("New password and confirm new password must be provided");
+            throw new IllegalArgumentException(ApplicationConstants.PASSWORD_FIELDS_REQUIRED_MESSAGE);
         }
         if (!newPassword.equals(confirmNewPassword)) {
-            throw new IllegalArgumentException("New password and confirm new password do not match");
+            throw new IllegalArgumentException(ApplicationConstants.PASSWORD_MISMATCH_MESSAGE);
         }
         if (oldPassword == null || !passwordEncoder.matches(oldPassword, user.getPassword())) {
             // Use BadCredentialsException to indicate authentication failure
-            throw new org.springframework.security.authentication.BadCredentialsException("Old password is incorrect");
+            throw new org.springframework.security.authentication.BadCredentialsException(ApplicationConstants.OLD_PASSWORD_INCORRECT_MESSAGE);
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));

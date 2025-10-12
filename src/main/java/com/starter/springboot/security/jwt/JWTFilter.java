@@ -1,5 +1,6 @@
 package com.starter.springboot.security.jwt;
 
+import com.starter.springboot.constants.ApplicationConstants;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,8 +73,8 @@ public class JWTFilter extends GenericFilterBean {
     private String resolveToken(HttpServletRequest request)
     {
         String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
-            return bearerToken.substring(7, bearerToken.length());
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(ApplicationConstants.BEARER_PREFIX)){
+            return bearerToken.substring(ApplicationConstants.BEARER_PREFIX.length(), bearerToken.length());
         }
         String jwt = request.getParameter(JWTConfigurer.AUTHORIZATION_TOKEN);
         if (StringUtils.hasText(jwt)) {

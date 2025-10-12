@@ -1,5 +1,7 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.constants.OtpConstants;
+import com.starter.springboot.services.dto.OtpValidationResult;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +43,7 @@ class OtpGeneratorTest {
     void setUp() {
         lenient().when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         lenient().when(otpProperties.getExpiryMinutes()).thenReturn(EXPIRY_MINUTES);
+        lenient().when(otpProperties.getMaxAttempts()).thenReturn(3);
     }
 
     @Test
@@ -59,7 +62,9 @@ class OtpGeneratorTest {
         
         // Verify Redis interaction
         verify(valueOperations).set(eq(redisKey), anyString(), eq((long) EXPIRY_MINUTES), eq(TimeUnit.MINUTES));
-        verify(otpProperties).getExpiryMinutes();
+        verify(valueOperations).set(eq(redisKey + OtpConstants.STATUS_KEY_SUFFIX), eq(OtpConstants.STATUS_ACTIVE), eq((long) EXPIRY_MINUTES), eq(TimeUnit.MINUTES));
+        verify(valueOperations).set(eq(redisKey + OtpConstants.FAILURE_KEY_SUFFIX), eq("0"), eq((long) EXPIRY_MINUTES), eq(TimeUnit.MINUTES));
+        verify(otpProperties, times(3)).getExpiryMinutes();
     }
 
     @Test
@@ -75,6 +80,8 @@ class OtpGeneratorTest {
         assertNotNull(otp);
         String expectedHash = DigestUtils.sha256Hex(String.valueOf(otp));
         verify(valueOperations).set(redisKey, expectedHash, (long) EXPIRY_MINUTES, TimeUnit.MINUTES);
+        verify(valueOperations).set(redisKey + OtpConstants.STATUS_KEY_SUFFIX, OtpConstants.STATUS_ACTIVE, (long) EXPIRY_MINUTES, TimeUnit.MINUTES);
+        verify(valueOperations).set(redisKey + OtpConstants.FAILURE_KEY_SUFFIX, "0", (long) EXPIRY_MINUTES, TimeUnit.MINUTES);
     }
 
     @Test
@@ -113,16 +120,21 @@ class OtpGeneratorTest {
         int testOtp = 123456;
         String hashedOtp = DigestUtils.sha256Hex(String.valueOf(testOtp));
         String redisKey = REDIS_KEY_PREFIX + TEST_KEY;
+        String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
         
+        when(valueOperations.get(statusKey)).thenReturn(OtpConstants.STATUS_ACTIVE);
         when(valueOperations.get(redisKey)).thenReturn(hashedOtp);
 
         // When
-        boolean result = otpGenerator.validateOTPBasedOnKey(TEST_KEY, testOtp);
+        OtpValidationResult result = otpGenerator.validateOtpStatus(TEST_KEY, testOtp);
 
         // Then
-        assertTrue(result, "Should validate correct OTP successfully");
+        assertTrue(result.isSuccess(), "Should validate correct OTP successfully");
+        verify(valueOperations).get(statusKey);
         verify(valueOperations).get(redisKey);
         verify(redisTemplate).delete(redisKey);
+        verify(redisTemplate).delete(redisKey + ":status");
+        verify(redisTemplate).delete(redisKey + ":failures");
     }
 
     @Test
@@ -133,50 +145,72 @@ class OtpGeneratorTest {
         int incorrectOtp = 654321;
         String hashedCorrectOtp = DigestUtils.sha256Hex(String.valueOf(correctOtp));
         String redisKey = REDIS_KEY_PREFIX + TEST_KEY;
+        String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
+        String failureKey = redisKey + OtpConstants.FAILURE_KEY_SUFFIX;
         
+        when(valueOperations.get(statusKey)).thenReturn(OtpConstants.STATUS_ACTIVE);
         when(valueOperations.get(redisKey)).thenReturn(hashedCorrectOtp);
+        when(valueOperations.increment(failureKey, 1)).thenReturn(1L);
 
         // When
-        boolean result = otpGenerator.validateOTPBasedOnKey(TEST_KEY, incorrectOtp);
+        OtpValidationResult result = otpGenerator.validateOtpStatus(TEST_KEY, incorrectOtp);
 
         // Then
-        assertFalse(result, "Should reject incorrect OTP");
+        assertTrue(result.isInvalid(), "Should reject incorrect OTP");
+        verify(valueOperations).get(statusKey);
         verify(valueOperations).get(redisKey);
+        verify(valueOperations).increment(failureKey, 1);
+        verify(redisTemplate).expire(failureKey, EXPIRY_MINUTES, TimeUnit.MINUTES);
         verify(redisTemplate, never()).delete(redisKey);
+        verify(redisTemplate, never()).delete(redisKey + ":status");
+        verify(redisTemplate, never()).delete(redisKey + ":failures");
     }
 
     @Test
-    @DisplayName("Should return false when OTP not found in Redis")
-    void shouldReturnFalseWhenOtpNotFoundInRedis() {
+    @DisplayName("Should return invalid result when OTP not found in Redis")
+    void shouldReturnInvalidResultWhenOtpNotFoundInRedis() {
         // Given
         String redisKey = REDIS_KEY_PREFIX + TEST_KEY;
+        String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
+        String failureKey = redisKey + OtpConstants.FAILURE_KEY_SUFFIX;
+        when(valueOperations.get(statusKey)).thenReturn(OtpConstants.STATUS_ACTIVE);
         when(valueOperations.get(redisKey)).thenReturn(null);
 
         // When
-        boolean result = otpGenerator.validateOTPBasedOnKey(TEST_KEY, 123456);
+        OtpValidationResult result = otpGenerator.validateOtpStatus(TEST_KEY, 123456);
 
         // Then
-        assertFalse(result, "Should return false when OTP not found in Redis");
+        assertTrue(result.isInvalid(), "Should return invalid result when OTP not found in Redis");
+        verify(valueOperations).get(statusKey);
         verify(valueOperations).get(redisKey);
         verify(redisTemplate, never()).delete(redisKey);
+        verify(redisTemplate, never()).delete(statusKey);
+        verify(redisTemplate, never()).delete(failureKey);
     }
 
     @Test
-    @DisplayName("Should delete OTP from cache after successful validation")
-    void shouldDeleteOtpFromCacheAfterSuccessfulValidation() {
+    @DisplayName("Should delete OTP and metadata after successful validation")
+    void shouldDeleteOtpAndMetadataAfterSuccessfulValidation() {
         // Given
         int testOtp = 123456;
         String hashedOtp = DigestUtils.sha256Hex(String.valueOf(testOtp));
         String redisKey = REDIS_KEY_PREFIX + TEST_KEY;
+        String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
+        String failureKey = redisKey + OtpConstants.FAILURE_KEY_SUFFIX;
         
+        when(valueOperations.get(statusKey)).thenReturn(OtpConstants.STATUS_ACTIVE);
         when(valueOperations.get(redisKey)).thenReturn(hashedOtp);
 
         // When
-        boolean result = otpGenerator.validateOTPBasedOnKey(TEST_KEY, testOtp);
+        OtpValidationResult result = otpGenerator.validateOtpStatus(TEST_KEY, testOtp);
 
         // Then
-        assertTrue(result);
+        assertTrue(result.isSuccess());
+        verify(valueOperations).get(statusKey);
+        verify(valueOperations).get(redisKey);
         verify(redisTemplate).delete(redisKey);
+        verify(redisTemplate).delete(statusKey);
+        verify(redisTemplate).delete(failureKey);
     }
 
     @Test
@@ -187,15 +221,25 @@ class OtpGeneratorTest {
         int incorrectOtp = 654321;
         String hashedCorrectOtp = DigestUtils.sha256Hex(String.valueOf(correctOtp));
         String redisKey = REDIS_KEY_PREFIX + TEST_KEY;
+        String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
+        String failureKey = redisKey + OtpConstants.FAILURE_KEY_SUFFIX;
         
+        when(valueOperations.get(statusKey)).thenReturn(OtpConstants.STATUS_ACTIVE);
         when(valueOperations.get(redisKey)).thenReturn(hashedCorrectOtp);
+        when(valueOperations.increment(failureKey, 1)).thenReturn(1L);
 
         // When
-        boolean result = otpGenerator.validateOTPBasedOnKey(TEST_KEY, incorrectOtp);
+        OtpValidationResult result = otpGenerator.validateOtpStatus(TEST_KEY, incorrectOtp);
 
         // Then
-        assertFalse(result);
+        assertTrue(result.isInvalid());
+        verify(valueOperations).get(statusKey);
+        verify(valueOperations).get(redisKey);
+        verify(valueOperations).increment(failureKey, 1);
+        verify(redisTemplate).expire(failureKey, EXPIRY_MINUTES, TimeUnit.MINUTES);
         verify(redisTemplate, never()).delete(redisKey);
+        verify(redisTemplate, never()).delete(redisKey + ":status");
+        verify(redisTemplate, never()).delete(redisKey + ":failures");
     }
 
     @Test
@@ -209,6 +253,8 @@ class OtpGeneratorTest {
 
         // Then
         verify(redisTemplate).delete(redisKey);
+        verify(redisTemplate).delete(redisKey + ":status");
+        verify(redisTemplate).delete(redisKey + ":failures");
     }
 
     @Test
@@ -227,14 +273,22 @@ class OtpGeneratorTest {
     @DisplayName("Should handle null key in validateOTP")
     void shouldHandleNullKeyInValidateOtp() {
         // Given
-        when(valueOperations.get("otp:null")).thenReturn(null);
+        String redisKey = REDIS_KEY_PREFIX + "null";
+        String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
+        String failureKey = redisKey + OtpConstants.FAILURE_KEY_SUFFIX;
+        when(valueOperations.get(statusKey)).thenReturn(OtpConstants.STATUS_ACTIVE);
+        when(valueOperations.get(redisKey)).thenReturn(null);
 
         // When
-        boolean result = otpGenerator.validateOTPBasedOnKey(null, 123456);
+        OtpValidationResult result = otpGenerator.validateOtpStatus(null, 123456);
 
         // Then
-        assertFalse(result);
-        verify(valueOperations).get("otp:null");
+        assertTrue(result.isInvalid());
+        verify(valueOperations).get(statusKey);
+        verify(valueOperations).get(redisKey);
+        verify(redisTemplate, never()).delete(redisKey);
+        verify(redisTemplate, never()).delete(statusKey);
+        verify(redisTemplate, never()).delete(failureKey);
     }
 
     @Test
@@ -245,6 +299,8 @@ class OtpGeneratorTest {
 
         // Then
         verify(redisTemplate).delete("otp:null");
+        verify(redisTemplate).delete("otp:null:status");
+        verify(redisTemplate).delete("otp:null:failures");
     }
 
     @Test
@@ -272,16 +328,27 @@ class OtpGeneratorTest {
         int testOtp = 123456;
         String hashedOtp = DigestUtils.sha256Hex(String.valueOf(testOtp));
 
+        when(valueOperations.get(REDIS_KEY_PREFIX + emailKey + ":status")).thenReturn("ACTIVE");
+        when(valueOperations.get(REDIS_KEY_PREFIX + phoneKey + ":status")).thenReturn("ACTIVE");
+        when(valueOperations.get(REDIS_KEY_PREFIX + alphanumericKey + ":status")).thenReturn("ACTIVE");
         when(valueOperations.get(REDIS_KEY_PREFIX + emailKey)).thenReturn(hashedOtp);
         when(valueOperations.get(REDIS_KEY_PREFIX + phoneKey)).thenReturn(hashedOtp);
         when(valueOperations.get(REDIS_KEY_PREFIX + alphanumericKey)).thenReturn(hashedOtp);
 
         // When & Then
-        assertTrue(otpGenerator.validateOTPBasedOnKey(emailKey, testOtp));
-        assertTrue(otpGenerator.validateOTPBasedOnKey(phoneKey, testOtp));
-        assertTrue(otpGenerator.validateOTPBasedOnKey(alphanumericKey, testOtp));
+        assertTrue(otpGenerator.validateOtpStatus(emailKey, testOtp).isSuccess());
+        assertTrue(otpGenerator.validateOtpStatus(phoneKey, testOtp).isSuccess());
+        assertTrue(otpGenerator.validateOtpStatus(alphanumericKey, testOtp).isSuccess());
 
-        verify(redisTemplate, times(3)).delete(anyString());
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + emailKey);
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + emailKey + ":status");
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + emailKey + ":failures");
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + phoneKey);
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + phoneKey + ":status");
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + phoneKey + ":failures");
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + alphanumericKey);
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + alphanumericKey + ":status");
+        verify(redisTemplate).delete(REDIS_KEY_PREFIX + alphanumericKey + ":failures");
     }
 
     @Test
