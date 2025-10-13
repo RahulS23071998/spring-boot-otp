@@ -5,6 +5,7 @@ import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.domain.UserStatus;
 import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.security.DomainUserDetails;
 import com.starter.springboot.services.OtpService;
 import com.starter.springboot.services.RedisTokenService;
 import io.jsonwebtoken.Claims;
@@ -84,14 +85,13 @@ class TokenProviderTest {
     void shouldSuccessfullyCreateTokenWithoutOtpWhenOtpNotRequired() throws Exception {
         // Given
         testUser.setIsOtpRequired(false);
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
         doNothing().when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
         
         // Initialize the TokenProvider
         tokenProvider.afterPropertiesSet();
 
         // When
-        TokenCreationResponse response = tokenProvider.createToken(testAuthentication, false);
+        TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), false);
 
         // Then
         assertNotNull(response);
@@ -101,8 +101,8 @@ class TokenProviderTest {
         assertEquals("Bearer", response.token().getTokenType());
         assertEquals(TOKEN_VALIDITY, response.token().getExpiresIn());
         
-        verify(userRepository).findByUsername(TEST_USERNAME);
-        verify(otpService, never()).generateOtp(anyString());
+        verify(userRepository, never()).findByUsername(anyString());
+        verify(otpService, never()).generateOtp(anyString(), anyString());
         verify(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
     }
 
@@ -111,14 +111,14 @@ class TokenProviderTest {
     void shouldRequireOtpWhenUserHasOtpEnabled() throws Exception {
         // Given
         testUser.setIsOtpRequired(true);
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
-        when(otpService.generateOtp(TEST_USERNAME)).thenReturn(true);
+        Authentication authenticationWithPrincipal = buildAuthenticationWithDomainUserDetails();
+        when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(true);
         
         // Initialize the TokenProvider
         tokenProvider.afterPropertiesSet();
 
         // When
-        TokenCreationResponse response = tokenProvider.createToken(testAuthentication, false);
+        TokenCreationResponse response = tokenProvider.createToken(authenticationWithPrincipal, false);
 
         // Then
         assertNotNull(response);
@@ -127,8 +127,8 @@ class TokenProviderTest {
         assertTrue(response.otpRequired());
         assertEquals("OTP required to complete authentication.", response.message());
         
-        verify(userRepository).findByUsername(TEST_USERNAME);
-        verify(otpService).generateOtp(TEST_USERNAME);
+        verify(userRepository, never()).findByUsername(anyString());
+        verify(otpService).generateOtp(TEST_USERNAME, TEST_EMAIL);
         verify(redisTokenService, never()).registerJti(anyLong(), anyString(), anyLong());
     }
 
@@ -137,14 +137,14 @@ class TokenProviderTest {
     void shouldRejectTokenCreationWhenOtpGenerationFails() throws Exception {
         // Given
         testUser.setIsOtpRequired(true);
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
-        when(otpService.generateOtp(TEST_USERNAME)).thenReturn(false);
+        Authentication authenticationWithPrincipal = buildAuthenticationWithDomainUserDetails();
+        when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(false);
         
         // Initialize the TokenProvider
         tokenProvider.afterPropertiesSet();
 
         // When
-        TokenCreationResponse response = tokenProvider.createToken(testAuthentication, false);
+        TokenCreationResponse response = tokenProvider.createToken(authenticationWithPrincipal, false);
 
         // Then
         assertNotNull(response);
@@ -153,8 +153,8 @@ class TokenProviderTest {
         assertTrue(response.otpRequired());
         assertEquals("Maximum OTP attempts exceeded. Try again later.", response.message());
         
-        verify(userRepository).findByUsername(TEST_USERNAME);
-        verify(otpService).generateOtp(TEST_USERNAME);
+        verify(userRepository, never()).findByUsername(anyString());
+        verify(otpService).generateOtp(TEST_USERNAME, TEST_EMAIL);
         verify(redisTokenService, never()).registerJti(anyLong(), anyString(), anyLong());
     }
 
@@ -163,14 +163,13 @@ class TokenProviderTest {
     void shouldSuccessfullyCreateTokenWithRememberMeOption() throws Exception {
         // Given
         testUser.setIsOtpRequired(false);
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
         doNothing().when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(REMEMBER_ME_VALIDITY));
         
         // Initialize the TokenProvider
         tokenProvider.afterPropertiesSet();
 
         // When
-        TokenCreationResponse response = tokenProvider.createToken(testAuthentication, true);
+        TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), true);
 
         // Then
         assertNotNull(response);
@@ -178,6 +177,7 @@ class TokenProviderTest {
         assertNotNull(response.token());
         assertEquals(REMEMBER_ME_VALIDITY, response.token().getExpiresIn());
         
+        verify(userRepository, never()).findByUsername(anyString());
         verify(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(REMEMBER_ME_VALIDITY));
     }
 
@@ -345,19 +345,19 @@ class TokenProviderTest {
     }
 
     @Test
-    @DisplayName("Should throw EntityNotFoundException when user not found during token creation")
-    void shouldThrowEntityNotFoundExceptionWhenUserNotFoundDuringTokenCreation() throws Exception {
+    @DisplayName("Should throw IllegalArgumentException when principal is not DomainUserDetails")
+    void shouldThrowIllegalArgumentExceptionWhenPrincipalNotDomainUserDetails() throws Exception {
         // Given
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.empty());
+        Authentication authenticationWithStringPrincipal = new UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD);
         tokenProvider.afterPropertiesSet();
 
         // When & Then
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
-                () -> tokenProvider.createToken(testAuthentication, false));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> tokenProvider.createToken(authenticationWithStringPrincipal, false));
 
-        assertEquals("User with username " + TEST_USERNAME + " not found!", exception.getMessage());
-        verify(userRepository).findByUsername(TEST_USERNAME);
-        verify(otpService, never()).generateOtp(anyString());
+        assertTrue(exception.getMessage().contains("Authentication principal is not an instance of DomainUserDetails"));
+        verify(userRepository, never()).findByUsername(anyString());
+        verify(otpService, never()).generateOtp(anyString(), anyString());
     }
 
     @Test
@@ -419,14 +419,13 @@ class TokenProviderTest {
     void shouldContinueTokenCreationWhenRedisRegistrationFails() throws Exception {
         // Given
         testUser.setIsOtpRequired(false);
-        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
         doThrow(new RuntimeException("Redis connection failed"))
                 .when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
         
         tokenProvider.afterPropertiesSet();
 
         // When
-        TokenCreationResponse response = tokenProvider.createToken(testAuthentication, false);
+        TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), false);
 
         // Then
         assertNotNull(response);
@@ -434,7 +433,7 @@ class TokenProviderTest {
         assertNotNull(response.token());
         assertFalse(response.otpRequired());
         
-        verify(userRepository).findByUsername(TEST_USERNAME);
+        verify(userRepository, never()).findByUsername(anyString());
         verify(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
     }
 
@@ -476,7 +475,14 @@ class TokenProviderTest {
 
     private Authentication createTestAuthentication() {
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        return new UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD, authorities);
+        DomainUserDetails domainUserDetails = DomainUserDetails.fromUser(testUser, authorities);
+        return new UsernamePasswordAuthenticationToken(domainUserDetails, TEST_PASSWORD, authorities);
+    }
+
+    private Authentication buildAuthenticationWithDomainUserDetails() {
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        DomainUserDetails domainUserDetails = DomainUserDetails.fromUser(testUser, authorities);
+        return new UsernamePasswordAuthenticationToken(domainUserDetails, TEST_PASSWORD, authorities);
     }
 
     private String generateValidToken() throws Exception {

@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Authenticate a user from the database.
@@ -46,9 +45,7 @@ public class UserDetailsService implements org.springframework.security.core.use
             }
             List<GrantedAuthority> grantedAuthorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
 
-            return new org.springframework.security.core.userdetails.User(lowercaseLogin,
-                    user.getPassword(),
-                    grantedAuthorities);
+            return DomainUserDetails.fromUser(user, grantedAuthorities);
         }).orElseThrow(() -> new UsernameNotFoundException("User " + lowercaseLogin + ApplicationConstants.USER_NOT_FOUND_DATABASE_MESSAGE));
     }
 }

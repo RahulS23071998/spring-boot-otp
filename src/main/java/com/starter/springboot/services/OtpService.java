@@ -26,7 +26,6 @@ public class OtpService {
 
     private final OtpGenerator otpGenerator;
     private final EmailService emailService;
-    private final UserService userService;
     private final OtpProperties otpProperties;
     private final StringRedisTemplate redisTemplate;
 
@@ -40,13 +39,11 @@ public class OtpService {
 
     public OtpService(OtpGenerator otpGenerator,
                        EmailService emailService,
-                       UserService userService,
                        OtpProperties otpProperties,
                        StringRedisTemplate redisTemplate,
                        OtpAuditEntryRepository otpAuditEntryRepository) {
         this.otpGenerator = otpGenerator;
         this.emailService = emailService;
-        this.userService = userService;
         this.otpProperties = otpProperties;
         this.redisTemplate = redisTemplate;
         this.otpAuditEntryRepository = otpAuditEntryRepository;
@@ -58,7 +55,7 @@ public class OtpService {
      * @param key - provided key (username in this case)
      * @return boolean value (true|false)
      */
-    public Boolean generateOtp(String key)
+    public Boolean generateOtp(String key, String userEmail)
     {
         String attemptsKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key + OtpConstants.ATTEMPTS_KEY_SUFFIX;
 
@@ -71,7 +68,6 @@ public class OtpService {
             return false;
         }
 
-
         Integer otpValue = otpGenerator.generateOTP(key);
         if (otpValue == -1)
         {
@@ -81,7 +77,6 @@ public class OtpService {
 
         LOGGER.debug("Generated OTP for key: {}", key);
 
-        String userEmail = userService.findEmailByUsername(key);
         if (Objects.isNull(userEmail) || userEmail.isBlank()) {
             LOGGER.error(EmailConstants.NO_EMAIL_FOR_USERNAME_MESSAGE, key);
             return false;

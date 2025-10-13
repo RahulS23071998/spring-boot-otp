@@ -3,6 +3,7 @@ package com.starter.springboot.security.jwt;
 import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.security.DomainUserDetails;
 import com.starter.springboot.services.OtpService;
 import com.starter.springboot.services.RedisTokenService;
 import io.jsonwebtoken.Claims;
@@ -81,12 +82,10 @@ public class TokenProvider implements InitializingBean {
      */
     public TokenCreationResponse createToken(Authentication authentication, Boolean rememberMe) {
         String username = authentication.getName();
-        User user = userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new EntityNotFoundException("User with username " + username + " not found!"));
+        DomainUserDetails userDetails = resolveDomainUserDetails(authentication);
 
-        if (Boolean.TRUE.equals(user.getIsOtpRequired())) {
-            boolean otpIssued = otpService.generateOtp(user.getUsername());
+        if (Boolean.TRUE.equals(userDetails.isOtpRequired())) {
+            boolean otpIssued = otpService.generateOtp(userDetails.getUsername(), userDetails.getEmail());
             if (Boolean.FALSE.equals(otpIssued)) {
                 return TokenCreationResponse.rejected("Maximum OTP attempts exceeded. Try again later.");
             }
@@ -99,8 +98,8 @@ public class TokenProvider implements InitializingBean {
         // register jti in redis whitelist for this user
         try {
             long ttl = resolveExpiration(rememberMe);
-            if (Objects.nonNull(user.getId())) {
-                redisTokenService.registerJti(user.getId(), jti, ttl);
+            if (Objects.nonNull(userDetails.getUserId())) {
+                redisTokenService.registerJti(userDetails.getUserId(), jti, ttl);
             }
         } catch (Exception e) {
             log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
@@ -254,4 +253,16 @@ public class TokenProvider implements InitializingBean {
     private long resolveExpiration(Boolean rememberMe) {
         return Boolean.TRUE.equals(rememberMe) ? this.tokenValidityInSecondsForRememberMe : this.tokenValidityInSeconds;
     }
+
+    private DomainUserDetails resolveDomainUserDetails(Authentication authentication) {
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof DomainUserDetails domainUserDetails) {
+            return domainUserDetails;
+        }
+        throw new IllegalArgumentException(
+                "Authentication principal is not an instance of DomainUserDetails. Received: "
+                        + principal.getClass()
+        );
+    }
+
 }

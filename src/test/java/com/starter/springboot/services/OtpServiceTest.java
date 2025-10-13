@@ -33,9 +33,6 @@ class OtpServiceTest {
     private EmailService emailService;
 
     @Mock
-    private UserService userService;
-
-    @Mock
     private OtpProperties otpProperties;
 
     @Mock
@@ -52,6 +49,7 @@ class OtpServiceTest {
 
     private static final String TEST_USERNAME = "testuser";
     private static final String TEST_EMAIL = "test@example.com";
+
     private static final Integer TEST_OTP = 123456;
     private static final int MAX_ATTEMPTS = 3;
     private static final int ATTEMPT_WINDOW_MINUTES = 15;
@@ -73,11 +71,10 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
         when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertTrue(result);
@@ -88,9 +85,6 @@ class OtpServiceTest {
         
         // Verify OTP generation
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        
-        // Verify user email lookup
-        verify(userService).findEmailByUsername(TEST_USERNAME);
         
         // Verify email sent
         ArgumentCaptor<EmailDTO> emailCaptor = ArgumentCaptor.forClass(EmailDTO.class);
@@ -139,13 +133,12 @@ class OtpServiceTest {
         when(valueOperations.increment(attemptsKey, 1)).thenReturn((long) MAX_ATTEMPTS + 1);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertFalse(result);
         verify(valueOperations).increment(attemptsKey, 1);
         verify(otpGenerator, never()).generateOTP(anyString());
-        verify(userService, never()).findEmailByUsername(anyString());
         verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
@@ -160,12 +153,11 @@ class OtpServiceTest {
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(-1);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(userService, never()).findEmailByUsername(anyString());
         verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
@@ -178,15 +170,13 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(null);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, null);
 
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(userService).findEmailByUsername(TEST_USERNAME);
         verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
@@ -199,15 +189,13 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn("");
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, "");
 
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(userService).findEmailByUsername(TEST_USERNAME);
         verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
@@ -220,16 +208,14 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
         when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(false);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(userService).findEmailByUsername(TEST_USERNAME);
         verify(emailService).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
@@ -257,11 +243,10 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(2L); // Second attempt
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
         when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertTrue(result);
@@ -277,11 +262,10 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
         when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertTrue(result);
@@ -306,15 +290,13 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn("   ");
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, "   ");
 
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(userService).findEmailByUsername(TEST_USERNAME);
         verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
@@ -327,17 +309,15 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn((long) MAX_ATTEMPTS);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(userService.findEmailByUsername(TEST_USERNAME)).thenReturn(TEST_EMAIL);
         when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
 
         // When
-        Boolean result = otpService.generateOtp(TEST_USERNAME);
+        Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
 
         // Then
         assertTrue(result);
         verify(valueOperations).increment(attemptsKey, 1);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(userService).findEmailByUsername(TEST_USERNAME);
         verify(emailService).sendSimpleMessage(any(EmailDTO.class));
         verify(otpAuditEntryRepository).save(any(OtpAuditEntry.class));
     }
