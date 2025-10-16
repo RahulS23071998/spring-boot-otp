@@ -90,9 +90,14 @@ public class OtpService {
         emailDTO.setBody(EmailConstants.OTP_EMAIL_BODY_PREFIX + otpValue);
         emailDTO.setRecipients(recipients);
 
-        Boolean sent = emailService.sendSimpleMessage(emailDTO);
-        if (Boolean.FALSE.equals(sent)) {
-            LOGGER.error(EmailConstants.FAILED_TO_SEND_OTP_EMAIL_MESSAGE, key);
+        try {
+            Boolean emailResult = emailService.sendSimpleMessageAsync(emailDTO).get();
+            if (!emailResult) {
+                LOGGER.error("Failed to send OTP email to: {}", userEmail);
+                return false;
+            }
+        } catch (Exception e) {
+            LOGGER.error("Error sending OTP email to: {}", userEmail, e);
             return false;
         }
 

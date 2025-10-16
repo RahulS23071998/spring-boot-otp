@@ -6,14 +6,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class EmailService {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
     private final JavaMailSender emailSender;
 
@@ -23,7 +25,7 @@ public class EmailService {
 
     /**
      * Method for sending simple e-mail message.
-     * @param emailDTO - data to be send.
+     * @param emailDTO - data to be sent.
      */
     public Boolean sendSimpleMessage(EmailDTO emailDTO)
     {
@@ -49,5 +51,12 @@ public class EmailService {
         }
     }
 
-
+    /**
+     * Asynchronously send a simple e-mail message while reusing synchronous implementation.
+     * @param emailDTO - data to be sent.
+     */
+    @Async
+    public CompletableFuture<Boolean> sendSimpleMessageAsync(EmailDTO emailDTO) {
+        return CompletableFuture.completedFuture(sendSimpleMessage(emailDTO));
+    }
 }

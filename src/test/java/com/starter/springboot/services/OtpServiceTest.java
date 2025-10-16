@@ -16,6 +16,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.time.LocalDate;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -71,7 +72,7 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class))).thenReturn(CompletableFuture.completedFuture(true));
 
         // When
         Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
@@ -88,7 +89,7 @@ class OtpServiceTest {
         
         // Verify email sent
         ArgumentCaptor<EmailDTO> emailCaptor = ArgumentCaptor.forClass(EmailDTO.class);
-        verify(emailService).sendSimpleMessage(emailCaptor.capture());
+        verify(emailService).sendSimpleMessageAsync(emailCaptor.capture());
         
         EmailDTO sentEmail = emailCaptor.getValue();
         assertEquals("Spring Boot OTP Password.", sentEmail.getSubject());
@@ -139,7 +140,7 @@ class OtpServiceTest {
         assertFalse(result);
         verify(valueOperations).increment(attemptsKey, 1);
         verify(otpGenerator, never()).generateOTP(anyString());
-        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -158,7 +159,7 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -177,7 +178,7 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -196,7 +197,7 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -208,7 +209,7 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(false);
+        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class))).thenReturn(CompletableFuture.completedFuture(false));
 
         // When
         Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
@@ -216,7 +217,7 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -243,7 +244,7 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(2L); // Second attempt
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class))).thenReturn(CompletableFuture.completedFuture(true));
 
         // When
         Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
@@ -262,7 +263,7 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class))).thenReturn(CompletableFuture.completedFuture(true));
 
         // When
         Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
@@ -297,7 +298,7 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -309,7 +310,7 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn((long) MAX_ATTEMPTS);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(emailService.sendSimpleMessage(any(EmailDTO.class))).thenReturn(true);
+        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class))).thenReturn(CompletableFuture.completedFuture(true));
 
         // When
         Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
@@ -318,7 +319,7 @@ class OtpServiceTest {
         assertTrue(result);
         verify(valueOperations).increment(attemptsKey, 1);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService).sendSimpleMessage(any(EmailDTO.class));
+        verify(emailService).sendSimpleMessageAsync(any(EmailDTO.class));
         verify(otpAuditEntryRepository).save(any(OtpAuditEntry.class));
     }
 

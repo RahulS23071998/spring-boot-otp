@@ -7,6 +7,7 @@ import com.starter.springboot.security.DomainUserDetails;
 import com.starter.springboot.services.OtpService;
 import com.starter.springboot.services.RedisTokenService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -58,6 +59,7 @@ public class TokenProvider implements InitializingBean {
             throw new IllegalArgumentException("JWT secret is too short. Provide Base64-encoded key of at least 256 bits.");
         }
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.jwtParser = Jwts.parserBuilder().setSigningKey(this.key).build();
     }
 
     private final OtpService otpService;
@@ -65,6 +67,8 @@ public class TokenProvider implements InitializingBean {
     private final UserRepository userRepository;
 
     private final RedisTokenService redisTokenService;
+
+    private JwtParser jwtParser;
 
     public TokenProvider(OtpService otpService, UserRepository userRepository, RedisTokenService redisTokenService) {
         this.otpService = otpService;
@@ -94,18 +98,18 @@ public class TokenProvider implements InitializingBean {
 
         // generate jti and token
         String jti = UUID.randomUUID().toString();
-        String tokenValue = generateToken(authentication, rememberMe, jti);
+        long expirationSeconds = resolveExpiration(rememberMe);
+        String tokenValue = generateToken(authentication, expirationSeconds, jti);
         // register jti in redis whitelist for this user
         try {
-            long ttl = resolveExpiration(rememberMe);
             if (Objects.nonNull(userDetails.getUserId())) {
-                redisTokenService.registerJti(userDetails.getUserId(), jti, ttl);
+                redisTokenService.registerJti(userDetails.getUserId(), jti, expirationSeconds);
             }
         } catch (Exception e) {
             log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
         }
 
-        JWTToken token = JWTToken.bearerToken(tokenValue, resolveExpiration(rememberMe));
+        JWTToken token = JWTToken.bearerToken(tokenValue, expirationSeconds);
         return TokenCreationResponse.accepted(token);
     }
 
@@ -129,16 +133,16 @@ public class TokenProvider implements InitializingBean {
         );
 
         String jti = UUID.randomUUID().toString();
-        String tokenValue = generateToken(authentication, rememberMe, jti);
+        long expirationSeconds = resolveExpiration(rememberMe);
+        String tokenValue = generateToken(authentication, expirationSeconds, jti);
         try {
-            long ttl = resolveExpiration(rememberMe);
             if (Objects.nonNull(user.getId())) {
-                redisTokenService.registerJti(user.getId(), jti, ttl);
+                redisTokenService.registerJti(user.getId(), jti, expirationSeconds);
             }
         } catch (Exception e) {
             log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
         }
-        return JWTToken.bearerToken(tokenValue, resolveExpiration(rememberMe));
+        return JWTToken.bearerToken(tokenValue, expirationSeconds);
     }
 
     /**
@@ -149,14 +153,12 @@ public class TokenProvider implements InitializingBean {
      */
     public Authentication getAuthentication(String token)
     {
-        Claims claims = Jwts.parserBuilder()
-            .setSigningKey(key)
-            .build()
+        Claims claims = jwtParser
             .parseClaimsJws(token)
             .getBody();
 
         String principal = claims.getSubject();
-        Collection<? extends GrantedAuthority> authorities = Arrays
+        Collection<GrantedAuthority> authorities = Arrays
             .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
@@ -174,7 +176,7 @@ public class TokenProvider implements InitializingBean {
     {
         try
         {
-            Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(authToken).getBody();
+            Claims claims = jwtParser.parseClaimsJws(authToken).getBody();
             String username = claims.getSubject();
             Date issuedAt = claims.getIssuedAt();
             String jti = claims.getId();
@@ -227,18 +229,18 @@ public class TokenProvider implements InitializingBean {
      * Generating token from authentication object
      *
      * @param authentication provided authentication
-     * @param rememberMe remember me indicator
+     * @param expirationSeconds token validity in seconds
      * @return String value of jwt token
      */
-    private String generateToken(Authentication authentication, Boolean rememberMe, String jti)
+    private String generateToken(Authentication authentication, long expirationSeconds, String jti)
     {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        long now = new Date().getTime();
+        long now = System.currentTimeMillis();
         Date issuedAt = new Date(now);
-        Date validity = new Date(now + resolveExpiration(rememberMe) * 1000);
+        Date validity = new Date(now + expirationSeconds * 1000);
 
         return Jwts.builder()
             .setId(jti)
