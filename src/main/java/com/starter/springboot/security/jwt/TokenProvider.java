@@ -4,8 +4,8 @@ import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.security.DomainUserDetails;
-import com.starter.springboot.services.OtpService;
-import com.starter.springboot.services.RedisTokenService;
+import com.starter.springboot.services.IOtpService;
+import com.starter.springboot.services.IRedisTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -62,15 +62,15 @@ public class TokenProvider implements InitializingBean {
         this.jwtParser = Jwts.parserBuilder().setSigningKey(this.key).build();
     }
 
-    private final OtpService otpService;
+    private final IOtpService otpService;
 
     private final UserRepository userRepository;
 
-    private final RedisTokenService redisTokenService;
+    private final IRedisTokenService redisTokenService;
 
     private JwtParser jwtParser;
 
-    public TokenProvider(OtpService otpService, UserRepository userRepository, RedisTokenService redisTokenService) {
+    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService) {
         this.otpService = otpService;
         this.userRepository = userRepository;
         this.redisTokenService = redisTokenService;

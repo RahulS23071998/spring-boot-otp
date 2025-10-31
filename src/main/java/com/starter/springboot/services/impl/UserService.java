@@ -1,7 +1,6 @@
-package com.starter.springboot.services;
+package com.starter.springboot.services.impl;
 
 import com.starter.springboot.constants.ApplicationConstants;
-import com.starter.springboot.constants.DatabaseConstants;
 import com.starter.springboot.constants.SecurityConstants;
 import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
@@ -9,6 +8,8 @@ import com.starter.springboot.domain.UserStatus;
 import com.starter.springboot.repositories.AuthorityRepository;
 import com.starter.springboot.repositories.RoleRepository;
 import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.services.IRedisTokenService;
+import com.starter.springboot.services.IUserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +26,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
@@ -37,13 +38,13 @@ public class UserService {
 
     private final AuthorityRepository authorityRepository;
 
-    private final RedisTokenService redisTokenService;
+    private final IRedisTokenService redisTokenService;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
                        AuthorityRepository authorityRepository,
-                       RedisTokenService redisTokenService) {
+                       IRedisTokenService redisTokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -56,6 +57,7 @@ public class UserService {
      *
      * @return List of user objects.
      */
+    @Override
     public List<User> findAllUsers() {
         return this.userRepository.findAll();
     }
@@ -66,6 +68,7 @@ public class UserService {
      * @param username - provided username
      * @return e-mail
      */
+    @Override
     public String findEmailByUsername(String username)
     {
         Optional<User> user = userRepository.findByUsername(username);
@@ -75,6 +78,8 @@ public class UserService {
         throw new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_MESSAGE + username + " not found");
     }
 
+
+    @Override
     @Transactional
     public User createUser(User user) {
         userRepository.findByUsername(user.getUsername()).ifPresent(existing -> {
@@ -101,6 +106,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Override
     @Transactional
     public User updateStatus(Long userId, UserStatus status, Boolean enabled) {
         if (Objects.isNull(status) && Objects.isNull(enabled)) {
@@ -119,6 +125,7 @@ public class UserService {
             .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
     }
 
+    @Override
     @Transactional
     public User changePasswordById(Long userId, java.util.Map<String, String> payload) {
         return userRepository.findById(userId)
@@ -126,6 +133,7 @@ public class UserService {
             .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
     }
 
+    @Override
     @Transactional
     public User changePasswordByUsername(String username, java.util.Map<String, String> payload) {
         return userRepository.findByUsername(username)
@@ -151,17 +159,17 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(java.util.Date.from(java.time.Instant.now()));
-        User saved = userRepository.save(user);
+        User savedUser = userRepository.save(user);
         // Remove any whitelisted token for this user so old tokens are invalidated immediately
         try {
-            if (Objects.nonNull(saved.getId())) {
-                redisTokenService.removeWhitelist(saved.getId());
+            if (Objects.nonNull(savedUser.getId())) {
+                redisTokenService.removeWhitelist(savedUser.getId());
             }
         } catch (Exception e) {
             // Log and continue; token invalidation best-effort
-            LOGGER.warn("Failed to remove token whitelist for user {}: {}", saved.getId(), e.getMessage());
+            LOGGER.warn("Failed to remove token whitelist for user {}: {}", savedUser.getId(), e.getMessage());
         }
-        return saved;
+        return savedUser;
     }
 
 }

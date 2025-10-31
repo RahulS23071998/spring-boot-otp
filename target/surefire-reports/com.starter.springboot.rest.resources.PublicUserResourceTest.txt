@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.starter.springboot.rest.resources.PublicUserResourceTest
 -------------------------------------------------------------------------------
-Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.679 s -- in com.starter.springboot.rest.resources.PublicUserResourceTest
+Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.729 s -- in com.starter.springboot.rest.resources.PublicUserResourceTest

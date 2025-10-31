@@ -48,6 +48,10 @@ otp:
   max-attempts: 3
   attempt-window-minutes: 10
 
+  audit-purge:
+    enabled: true
+    retention-days: 30
+
 jwt:
   header: Authorization
   secret: c3Ryb25nLXNwcmluZy1ib290LXNlY3JldC1rZXktMTIzNDU2Nzg5MA==

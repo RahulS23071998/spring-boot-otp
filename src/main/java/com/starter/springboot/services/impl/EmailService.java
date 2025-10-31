@@ -1,7 +1,8 @@
-package com.starter.springboot.services;
+package com.starter.springboot.services.impl;
 
 import com.starter.springboot.constants.EmailConstants;
 import com.starter.springboot.rest.dto.EmailDTO;
+import com.starter.springboot.services.IEmailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
@@ -13,7 +14,7 @@ import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 @Service
-public class EmailService {
+public class EmailService implements IEmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailService.class);
 
@@ -27,6 +28,7 @@ public class EmailService {
      * Method for sending simple e-mail message.
      * @param emailDTO - data to be sent.
      */
+    @Override
     public Boolean sendSimpleMessage(EmailDTO emailDTO)
     {
         if (Objects.isNull(emailDTO.getRecipients()) || emailDTO.getRecipients().isEmpty()) {
@@ -55,6 +57,7 @@ public class EmailService {
      * Asynchronously send a simple e-mail message while reusing synchronous implementation.
      * @param emailDTO - data to be sent.
      */
+    @Override
     @Async
     public CompletableFuture<Boolean> sendSimpleMessageAsync(EmailDTO emailDTO) {
         return CompletableFuture.completedFuture(sendSimpleMessage(emailDTO));

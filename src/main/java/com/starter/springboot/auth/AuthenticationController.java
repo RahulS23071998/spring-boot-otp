@@ -11,7 +11,7 @@ import com.starter.springboot.rest.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
-import com.starter.springboot.services.OtpService;
+import com.starter.springboot.services.IOtpService;
 import com.starter.springboot.services.dto.OtpValidationResult;
 import com.starter.springboot.services.dto.OtpValidationStatus;
 import org.slf4j.Logger;
@@ -41,12 +41,12 @@ public class AuthenticationController {
 
     private final TokenProvider tokenProvider;
 
-    private final OtpService otpService;
+    private final IOtpService otpService;
 
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationController(TokenProvider tokenProvider,
-                                    OtpService otpService,
+                                    IOtpService otpService,
                                     AuthenticationManager authenticationManager) {
         this.tokenProvider = tokenProvider;
         this.otpService = otpService;

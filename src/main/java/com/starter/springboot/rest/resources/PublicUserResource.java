@@ -7,7 +7,7 @@ import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.rest.dto.UserRequestDTO;
 import com.starter.springboot.rest.dto.UserResponseDTO;
-import com.starter.springboot.services.UserService;
+import com.starter.springboot.services.IUserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -34,9 +34,9 @@ import java.util.Map;
 @RequestMapping(ApplicationConstants.API_BASE_PATH + ApplicationConstants.USERS_ENDPOINT)
 public class PublicUserResource {
 
-    private final UserService userService;
+    private final IUserService userService;
 
-    public PublicUserResource(UserService userService) {
+    public PublicUserResource(IUserService userService) {
         this.userService = userService;
     }
 

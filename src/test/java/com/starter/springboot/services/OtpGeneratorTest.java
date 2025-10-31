@@ -2,6 +2,8 @@ package com.starter.springboot.services;
 
 import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.services.dto.OtpValidationResult;
+import com.starter.springboot.services.impl.OtpGenerator;
+import com.starter.springboot.services.impl.OtpProperties;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

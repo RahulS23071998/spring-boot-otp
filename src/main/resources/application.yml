@@ -17,3 +17,8 @@ logging:
     org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: off
     org.hibernate.stat: off
     org.hibernate: warn
+
+otp:
+  audit-purge:
+    enabled: true
+    retention-days: 90

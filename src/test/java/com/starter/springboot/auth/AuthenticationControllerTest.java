@@ -7,7 +7,7 @@ import com.starter.springboot.rest.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
-import com.starter.springboot.services.OtpService;
+import com.starter.springboot.services.IOtpService;
 import com.starter.springboot.services.dto.OtpValidationResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -45,7 +45,7 @@ class AuthenticationControllerTest {
     private TokenProvider tokenProvider;
 
     @Mock
-    private OtpService otpService;
+    private IOtpService otpService;
 
     @Mock
     private AuthenticationManager authenticationManager;

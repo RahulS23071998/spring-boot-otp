@@ -1,10 +1,13 @@
-package com.starter.springboot.services;
+package com.starter.springboot.services.impl;
 
 import com.starter.springboot.constants.EmailConstants;
 import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.otp.OtpAuditEntry;
 import com.starter.springboot.repositories.OtpAuditEntryRepository;
 import com.starter.springboot.rest.dto.EmailDTO;
+import com.starter.springboot.services.IEmailService;
+import com.starter.springboot.services.IOtpGenerator;
+import com.starter.springboot.services.IOtpService;
 import com.starter.springboot.services.dto.OtpValidationResult;
 import com.starter.springboot.services.dto.OtpValidationStatus;
 import java.time.LocalDate;
@@ -20,12 +23,12 @@ import org.springframework.stereotype.Service;
 
 @Description(value = OtpConstants.OTP_SERVICE_DESCRIPTION)
 @Service
-public class OtpService {
+public class OtpService implements IOtpService {
 
     private final Logger LOGGER = LoggerFactory.getLogger(OtpService.class);
 
-    private final OtpGenerator otpGenerator;
-    private final EmailService emailService;
+    private final IOtpGenerator otpGenerator;
+    private final IEmailService emailService;
     private final OtpProperties otpProperties;
     private final StringRedisTemplate redisTemplate;
 
@@ -33,12 +36,14 @@ public class OtpService {
      * Constructor dependency injector
      * @param otpGenerator - otpGenerator dependency
      * @param emailService - email service dependency
-     * @param userService - user service dependency
+     * @param otpProperties - otp properties dependency
+     * @param redisTemplate - redis template dependency
+     * @param otpAuditEntryRepository - otp audit entry repository dependency
      */
     private final OtpAuditEntryRepository otpAuditEntryRepository;
 
-    public OtpService(OtpGenerator otpGenerator,
-                       EmailService emailService,
+    public OtpService(IOtpGenerator otpGenerator,
+                       IEmailService emailService,
                        OtpProperties otpProperties,
                        StringRedisTemplate redisTemplate,
                        OtpAuditEntryRepository otpAuditEntryRepository) {
@@ -55,6 +60,7 @@ public class OtpService {
      * @param key - provided key (username in this case)
      * @return boolean value (true|false)
      */
+    @Override
     public Boolean generateOtp(String key, String userEmail)
     {
         String attemptsKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key + OtpConstants.ATTEMPTS_KEY_SUFFIX;
@@ -65,6 +71,7 @@ public class OtpService {
         }
         if (attempts > otpProperties.getMaxAttempts()) {
             LOGGER.warn("OTP request limit exceeded for key: {}", key);
+            notifyLockout(key, userEmail);
             return false;
         }
 
@@ -72,6 +79,7 @@ public class OtpService {
         if (otpValue == -1)
         {
             LOGGER.error("OTP generator returned error code for key: {}", key);
+            notifyDeliveryFailure(userEmail, key);
             return  false;
         }
 
@@ -79,6 +87,7 @@ public class OtpService {
 
         if (Objects.isNull(userEmail) || userEmail.isBlank()) {
             LOGGER.error(EmailConstants.NO_EMAIL_FOR_USERNAME_MESSAGE, key);
+            notifyDeliveryFailure(null, key);
             return false;
         }
 
@@ -91,18 +100,48 @@ public class OtpService {
         emailDTO.setRecipients(recipients);
 
         try {
-            Boolean emailResult = emailService.sendSimpleMessageAsync(emailDTO).get();
-            if (!emailResult) {
+            Boolean emailResult = emailService.sendSimpleMessageAsync(emailDTO).get(5, TimeUnit.SECONDS);
+            if (!Boolean.TRUE.equals(emailResult)) {
                 LOGGER.error("Failed to send OTP email to: {}", userEmail);
+                notifyDeliveryFailure(userEmail, key);
                 return false;
             }
         } catch (Exception e) {
             LOGGER.error("Error sending OTP email to: {}", userEmail, e);
+            notifyDeliveryFailure(userEmail, key);
             return false;
         }
 
         persistAuditEntry(key);
         return true;
+    }
+
+    private void notifyLockout(String key, String userEmail) {
+        if (Objects.isNull(userEmail) || userEmail.isBlank()) {
+            LOGGER.debug("Skipping lockout notification for key {} due to missing email", key);
+            return;
+        }
+        sendSystemNotification(userEmail, EmailConstants.OTP_LOCKED_EMAIL_SUBJECT, OtpConstants.MAX_ATTEMPTS_EXCEEDED_MESSAGE);
+    }
+
+    private void notifyDeliveryFailure(String userEmail, String key) {
+        if (Objects.isNull(userEmail) || userEmail.isBlank()) {
+            LOGGER.debug("Skipping delivery failure notification for key {} due to missing email", key);
+            return;
+        }
+        sendSystemNotification(userEmail, EmailConstants.OTP_DELIVERY_FAILURE_SUBJECT, String.format(OtpConstants.OTP_DELIVERY_FAILURE_MESSAGE_TEMPLATE, key));
+    }
+
+    private void sendSystemNotification(String recipient, String subject, String messageBody) {
+        EmailDTO systemEmail = new EmailDTO();
+        systemEmail.setSubject(subject);
+        systemEmail.setBody(messageBody);
+        systemEmail.setRecipients(List.of(recipient));
+        try {
+            emailService.sendSimpleMessageAsync(systemEmail).get(3, TimeUnit.SECONDS);
+        } catch (Exception ex) {
+            LOGGER.warn("System notification email '{}' to {} failed", subject, recipient, ex);
+        }
     }
 
     private void persistAuditEntry(String username) {
@@ -123,6 +162,7 @@ public class OtpService {
      * @param otpNumber - provided OTP number
      * @return validation result
      */
+    @Override
     public OtpValidationResult validateOTP(String key, Integer otpNumber) {
         if (Objects.isNull(otpNumber)) {
             return OtpValidationResult.invalid();

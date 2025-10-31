@@ -1,5 +1,6 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.services.impl.RedisTokenService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

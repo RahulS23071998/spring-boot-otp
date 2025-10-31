@@ -1,9 +1,13 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.constants.EmailConstants;
+import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.otp.OtpAuditEntry;
 import com.starter.springboot.repositories.OtpAuditEntryRepository;
 import com.starter.springboot.rest.dto.EmailDTO;
 import com.starter.springboot.services.dto.OtpValidationResult;
+import com.starter.springboot.services.impl.OtpProperties;
+import com.starter.springboot.services.impl.OtpService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +20,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -28,10 +33,10 @@ import static org.mockito.Mockito.*;
 class OtpServiceTest {
 
     @Mock
-    private OtpGenerator otpGenerator;
+    private IOtpGenerator otpGenerator;
 
     @Mock
-    private EmailService emailService;
+    private IEmailService emailService;
 
     @Mock
     private OtpProperties otpProperties;
@@ -62,6 +67,8 @@ class OtpServiceTest {
         lenient().when(otpProperties.getMaxAttempts()).thenReturn(MAX_ATTEMPTS);
         lenient().when(otpProperties.getAttemptWindowMinutes()).thenReturn(ATTEMPT_WINDOW_MINUTES);
         lenient().when(otpProperties.getExpiryMinutes()).thenReturn(EXPIRY_MINUTES);
+        lenient().when(emailService.sendSimpleMessageAsync(any(EmailDTO.class)))
+            .thenReturn(CompletableFuture.completedFuture(true));
     }
 
     @Test
@@ -92,8 +99,8 @@ class OtpServiceTest {
         verify(emailService).sendSimpleMessageAsync(emailCaptor.capture());
         
         EmailDTO sentEmail = emailCaptor.getValue();
-        assertEquals("Spring Boot OTP Password.", sentEmail.getSubject());
-        assertEquals("OTP Password: " + TEST_OTP, sentEmail.getBody());
+        assertEquals(EmailConstants.OTP_EMAIL_SUBJECT, sentEmail.getSubject());
+        assertEquals(EmailConstants.OTP_EMAIL_BODY_PREFIX + TEST_OTP, sentEmail.getBody());
         assertEquals(1, sentEmail.getRecipients().size());
         assertEquals(TEST_EMAIL, sentEmail.getRecipients().get(0));
         
@@ -127,8 +134,8 @@ class OtpServiceTest {
     }
 
     @Test
-    @DisplayName("Should return false when max attempts exceeded")
-    void shouldReturnFalseWhenMaxAttemptsExceeded() {
+    @DisplayName("Should return false when max attempts exceeded and trigger lockout notification")
+    void shouldReturnFalseWhenMaxAttemptsExceededAndTriggerLockoutNotification() {
         // Given
         String attemptsKey = "otp:" + TEST_USERNAME + ":attempts";
         when(valueOperations.increment(attemptsKey, 1)).thenReturn((long) MAX_ATTEMPTS + 1);
@@ -140,8 +147,15 @@ class OtpServiceTest {
         assertFalse(result);
         verify(valueOperations).increment(attemptsKey, 1);
         verify(otpGenerator, never()).generateOTP(anyString());
-        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(argThat(email ->
+            EmailConstants.OTP_EMAIL_SUBJECT.equals(email.getSubject())
+        ));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
+        verify(emailService).sendSimpleMessageAsync(argThat(email ->
+            email.getRecipients().equals(List.of(TEST_EMAIL)) &&
+                EmailConstants.OTP_LOCKED_EMAIL_SUBJECT.equals(email.getSubject()) &&
+                OtpConstants.MAX_ATTEMPTS_EXCEEDED_MESSAGE.equals(email.getBody())
+        ));
     }
 
     @Test
@@ -159,7 +173,9 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(argThat(email ->
+            EmailConstants.OTP_EMAIL_SUBJECT.equals(email.getSubject())
+        ));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -178,7 +194,9 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(argThat(email ->
+            EmailConstants.OTP_EMAIL_SUBJECT.equals(email.getSubject())
+        ));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -209,7 +227,8 @@ class OtpServiceTest {
         
         when(valueOperations.increment(attemptsKey, 1)).thenReturn(1L);
         when(otpGenerator.generateOTP(TEST_USERNAME)).thenReturn(TEST_OTP);
-        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class))).thenReturn(CompletableFuture.completedFuture(false));
+        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class)))
+            .thenReturn(CompletableFuture.completedFuture(false));
 
         // When
         Boolean result = otpService.generateOtp(TEST_USERNAME, TEST_EMAIL);
@@ -217,7 +236,13 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService).sendSimpleMessageAsync(any(EmailDTO.class));
+        verify(emailService, times(2)).sendSimpleMessageAsync(argThat(email ->
+            email.getRecipients().equals(List.of(TEST_EMAIL))
+        ));
+        verify(emailService).sendSimpleMessageAsync(argThat(email ->
+            EmailConstants.OTP_DELIVERY_FAILURE_SUBJECT.equals(email.getSubject()) &&
+                email.getBody().contains(TEST_USERNAME)
+        ));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 
@@ -298,7 +323,9 @@ class OtpServiceTest {
         // Then
         assertFalse(result);
         verify(otpGenerator).generateOTP(TEST_USERNAME);
-        verify(emailService, never()).sendSimpleMessageAsync(any(EmailDTO.class));
+        verify(emailService, never()).sendSimpleMessageAsync(argThat(email ->
+            EmailConstants.OTP_EMAIL_SUBJECT.equals(email.getSubject())
+        ));
         verify(otpAuditEntryRepository, never()).save(any(OtpAuditEntry.class));
     }
 

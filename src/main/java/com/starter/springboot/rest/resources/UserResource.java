@@ -2,7 +2,7 @@ package com.starter.springboot.rest.resources;
 
 import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.rest.dto.UserResponseDTO;
-import com.starter.springboot.services.UserService;
+import com.starter.springboot.services.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -20,9 +20,9 @@ public class UserResource {
 
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
-    private final UserService userService;
+    private final IUserService userService;
 
-    public UserResource(UserService userService) {
+    public UserResource(IUserService userService) {
         this.userService = userService;
     }
 

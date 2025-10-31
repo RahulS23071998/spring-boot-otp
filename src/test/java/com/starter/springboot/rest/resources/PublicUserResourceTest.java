@@ -6,7 +6,7 @@ import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.domain.UserStatus;
 import com.starter.springboot.rest.dto.UserRequestDTO;
-import com.starter.springboot.services.UserService;
+import com.starter.springboot.services.impl.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

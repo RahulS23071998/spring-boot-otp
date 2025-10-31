@@ -1,8 +1,8 @@
-package com.starter.springboot.services;
+package com.starter.springboot.services.impl;
 
 import com.starter.springboot.constants.OtpConstants;
+import com.starter.springboot.services.IOtpGenerator;
 import com.starter.springboot.services.dto.OtpValidationResult;
-import com.starter.springboot.services.dto.OtpValidationStatus;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 @Description(value = "Service for generating and validating OTP.")
 @Service
-public class OtpGenerator {
+public class OtpGenerator implements IOtpGenerator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OtpGenerator.class);
     private static final SecureRandom SECURE_RANDOM = new SecureRandom();
@@ -28,6 +28,7 @@ public class OtpGenerator {
         this.otpProperties = otpProperties;
     }
 
+    @Override
     public Integer generateOTP(String key) {
         int otp = 100000 + SECURE_RANDOM.nextInt(900000);
         String hashedOtp = DigestUtils.sha256Hex(String.valueOf(otp));
@@ -45,6 +46,7 @@ public class OtpGenerator {
         return otp;
     }
 
+    @Override
     public OtpValidationResult validateOtpStatus(String key, int otpNumber) {
         String redisKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key;
         String statusKey = redisKey + OtpConstants.STATUS_KEY_SUFFIX;
@@ -84,6 +86,7 @@ public class OtpGenerator {
         return OtpValidationResult.invalid();
     }
 
+    @Override
     public void clearOTPFromCache(String key) {
         String redisKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key;
         redisTemplate.delete(redisKey);

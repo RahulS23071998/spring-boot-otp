@@ -1,6 +1,7 @@
 package com.starter.springboot.services;
 
 import com.starter.springboot.rest.dto.EmailDTO;
+import com.starter.springboot.services.impl.EmailService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

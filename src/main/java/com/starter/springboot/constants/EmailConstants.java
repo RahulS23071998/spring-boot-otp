@@ -24,6 +24,10 @@ public final class EmailConstants {
     public static final String EMAIL_SENDING_ERROR_MESSAGE = "Sending e-mail error: {}";
     public static final String NO_EMAIL_FOR_USERNAME_MESSAGE = "No email found for username: {}";
     public static final String FAILED_TO_SEND_OTP_EMAIL_MESSAGE = "Failed to send OTP email to user: {}";
+
+    // System notification subjects
+    public static final String OTP_LOCKED_EMAIL_SUBJECT = "OTP access temporarily locked";
+    public static final String OTP_DELIVERY_FAILURE_SUBJECT = "OTP delivery failed";
     
     // Configuration Properties
     public static final String MAIL_CONFIG_PREFIX = "spring.mail";

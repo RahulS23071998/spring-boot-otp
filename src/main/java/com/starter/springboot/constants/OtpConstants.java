@@ -17,6 +17,12 @@ public final class OtpConstants {
     public static final String INVALID_OTP_MESSAGE = "Invalid OTP provided.";
     public static final String LOCKED_OTP_MESSAGE = "OTP has been locked due to too many invalid attempts.";
 
+    public static final String MAX_ATTEMPTS_EXCEEDED_MESSAGE = "Maximum OTP attempts exceeded. Try again later.";
+    public static final String OTP_DELIVERY_FAILURE_MESSAGE_TEMPLATE = "Unable to deliver OTP e-mail for account '%s' at this time. Please try again.";
+
+    public static final String OTP_AUDIT_PURGE_DESCRIPTION = "Scheduled task that removes expired OTP audit entries.";
+    public static final String OTP_AUDIT_PURGE_CRON = "${otp.audit-purge.cron:0 0 2 * * *}";
+
     // OTP Service Description
     public static final String OTP_SERVICE_DESCRIPTION = "Service responsible for handling OTP related functionality.";
 

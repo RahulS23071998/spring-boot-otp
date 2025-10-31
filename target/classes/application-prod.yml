@@ -24,6 +24,10 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: false
 
+otp:
+  audit-purge:
+    enabled: true
+    retention-days: 365
 
 jwt:
     header: Authorization

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.security.jwt.TokenProviderTest" time="0.769" tests="18" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.services.OtpAuditRetentionServiceTest" time="0.215" tests="3" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -57,40 +57,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="shouldThrowIllegalStateExceptionWhenJwtSecretNotConfigured" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.3"/>
-  <testcase name="shouldSuccessfullyExtractAuthenticationFromValidToken" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.217"/>
-  <testcase name="shouldSuccessfullyCreateTokenWithoutOtpWhenOtpNotRequired" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.025"/>
-  <testcase name="shouldHandleRedisWhitelistCheckFailureGracefully" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.019">
-    <system-out><![CDATA[12:42:17.512 [main] WARN com.starter.springboot.security.jwt.TokenProvider -- Redis whitelist check failed: Redis connection failed
+  <testcase name="shouldPurgeEntriesOlderThanRetentionWindow" classname="com.starter.springboot.services.OtpAuditRetentionServiceTest" time="0.206">
+    <system-out><![CDATA[12:42:18.090 [main] INFO com.starter.springboot.services.impl.OtpAuditRetentionService -- Purged 5 OTP audit entries with expiry before 2025-09-30
 ]]></system-out>
   </testcase>
-  <testcase name="shouldSuccessfullyCreateTokenAfterVerifiedOtp" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.011"/>
-  <testcase name="shouldRejectTokenCreationWhenOtpGenerationFails" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.013"/>
-  <testcase name="shouldSuccessfullyValidateTokenWithAllChecksPassing" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.018"/>
-  <testcase name="shouldThrowIllegalArgumentExceptionWhenPrincipalNotDomainUserDetails" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.011"/>
-  <testcase name="shouldRejectTokenWhenIssuedBeforePasswordReset" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.028">
-    <system-out><![CDATA[12:42:17.584 [main] INFO com.starter.springboot.security.jwt.TokenProvider -- Rejecting JWT for user testuser: issuedAt=Thu Oct 30 12:42:17 IST 2025 <= lastPasswordResetDate=Thu Oct 30 12:43:17 IST 2025
-]]></system-out>
-  </testcase>
-  <testcase name="shouldThrowEntityNotFoundExceptionWhenUserNotFoundDuringOtpTokenCreation" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.011"/>
-  <testcase name="shouldContinueTokenCreationWhenRedisRegistrationFails" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.01">
-    <system-out><![CDATA[12:42:17.625 [main] WARN com.starter.springboot.security.jwt.TokenProvider -- Failed to register jti in redis whitelist: Redis connection failed
-]]></system-out>
-  </testcase>
-  <testcase name="shouldThrowIllegalStateExceptionWhenJwtSecretIsBlank" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.006"/>
-  <testcase name="shouldRequireOtpWhenUserHasOtpEnabled" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.019"/>
-  <testcase name="shouldRejectMalformedJwtToken" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.01">
-    <system-out><![CDATA[12:42:17.664 [main] ERROR com.starter.springboot.security.jwt.TokenProvider -- Invalid JWT token: Malformed JWT JSON: ?{?'
-]]></system-out>
-  </testcase>
-  <testcase name="shouldSuccessfullyCreateTokenWithRememberMeOption" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.01"/>
-  <testcase name="shouldThrowIllegalArgumentExceptionWhenJwtSecretTooShort" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.004"/>
-  <testcase name="shouldRejectTokenWhenUserNotFound" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.019">
-    <system-out><![CDATA[12:42:17.701 [main] WARN com.starter.springboot.security.jwt.TokenProvider -- User not found while validating JWT: testuser
-]]></system-out>
-  </testcase>
-  <testcase name="shouldRejectTokenWhenJtiNotWhitelisted" classname="com.starter.springboot.security.jwt.TokenProviderTest" time="0.014">
-    <system-out><![CDATA[12:42:17.716 [main] INFO com.starter.springboot.security.jwt.TokenProvider -- JTI for user testuser is not whitelisted in redis
-]]></system-out>
-  </testcase>
+  <testcase name="shouldSkipPurgeWhenFeatureDisabled" classname="com.starter.springboot.services.OtpAuditRetentionServiceTest" time="0.004"/>
+  <testcase name="shouldUseZeroRetentionWhenConfiguredNegative" classname="com.starter.springboot.services.OtpAuditRetentionServiceTest" time="0.004"/>
 </testsuite>
