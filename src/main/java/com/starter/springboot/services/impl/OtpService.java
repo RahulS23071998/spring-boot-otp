@@ -8,12 +8,14 @@ import com.starter.springboot.rest.dto.EmailDTO;
 import com.starter.springboot.services.IEmailService;
 import com.starter.springboot.services.IOtpGenerator;
 import com.starter.springboot.services.IOtpService;
+import com.starter.springboot.services.dto.OtpGenerationResult;
 import com.starter.springboot.services.dto.OtpValidationResult;
 import com.starter.springboot.services.dto.OtpValidationStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,11 +60,32 @@ public class OtpService implements IOtpService {
      * Method for generate OTP number
      *
      * @param key - provided key (username in this case)
-     * @return boolean value (true|false)
+     * @param userEmail - user's email address
+     * @return OtpGenerationResult containing success status and message
      */
     @Override
-    public Boolean generateOtp(String key, String userEmail)
+    public OtpGenerationResult generateOtp(String key, String userEmail)
     {
+        // Rate limiting: Check if OTP was sent recently (within 15 seconds)
+        String rateLimitKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key + OtpConstants.RATE_LIMIT_KEY_SUFFIX;
+        String lastSentTime = redisTemplate.opsForValue().get(rateLimitKey);
+
+        if (Objects.nonNull(lastSentTime)) {
+            try {
+                long lastSentMillis = Long.parseLong(lastSentTime);
+                long currentTimeMillis = System.currentTimeMillis();
+                long timeDiffSeconds = (currentTimeMillis - lastSentMillis) / 1000;
+
+                if (timeDiffSeconds < OtpConstants.OTP_RATE_LIMIT_SECONDS) {
+                    LOGGER.warn("OTP rate limit exceeded for key: {}. Last sent {} seconds ago", key, timeDiffSeconds);
+                    return OtpGenerationResult.rateLimited();
+                }
+            } catch (NumberFormatException e) {
+                LOGGER.warn("Invalid timestamp format in Redis for key: {}", rateLimitKey);
+                // Continue with OTP generation if timestamp is corrupted
+            }
+        }
+
         String attemptsKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key + OtpConstants.ATTEMPTS_KEY_SUFFIX;
 
         Long attempts = redisTemplate.opsForValue().increment(attemptsKey, 1);
@@ -72,7 +95,7 @@ public class OtpService implements IOtpService {
         if (attempts > otpProperties.getMaxAttempts()) {
             LOGGER.warn("OTP request limit exceeded for key: {}", key);
             notifyLockout(key, userEmail);
-            return false;
+            return OtpGenerationResult.maxAttemptsExceeded();
         }
 
         Integer otpValue = otpGenerator.generateOTP(key);
@@ -80,7 +103,7 @@ public class OtpService implements IOtpService {
         {
             LOGGER.error("OTP generator returned error code for key: {}", key);
             notifyDeliveryFailure(userEmail, key);
-            return  false;
+            return OtpGenerationResult.deliveryFailed();
         }
 
         LOGGER.debug("Generated OTP for key: {}", key);
@@ -88,7 +111,7 @@ public class OtpService implements IOtpService {
         if (Objects.isNull(userEmail) || userEmail.isBlank()) {
             LOGGER.error(EmailConstants.NO_EMAIL_FOR_USERNAME_MESSAGE, key);
             notifyDeliveryFailure(null, key);
-            return false;
+            return OtpGenerationResult.deliveryFailed();
         }
 
         List<String> recipients = new ArrayList<>();
@@ -99,21 +122,37 @@ public class OtpService implements IOtpService {
         emailDTO.setBody(EmailConstants.OTP_EMAIL_BODY_PREFIX + otpValue);
         emailDTO.setRecipients(recipients);
 
+        final String otpKey = key;
+        final String recipientEmail = userEmail;
+
         try {
-            Boolean emailResult = emailService.sendSimpleMessageAsync(emailDTO).get(5, TimeUnit.SECONDS);
-            if (!Boolean.TRUE.equals(emailResult)) {
-                LOGGER.error("Failed to send OTP email to: {}", userEmail);
+            // Send email asynchronously without blocking
+            CompletableFuture<Boolean> emailDispatch = emailService.sendSimpleMessageAsync(emailDTO);
+            emailDispatch.thenAccept(emailSent -> {
+                if (!Boolean.TRUE.equals(emailSent)) {
+                    LOGGER.error("Failed to send OTP email to: {}", recipientEmail);
+                    notifyDeliveryFailure(recipientEmail, otpKey);
+                } else {
+                    LOGGER.debug("OTP email sent successfully to: {}", recipientEmail);
+                }
+            }).exceptionally(ex -> {
+                LOGGER.error("Error dispatching OTP email to: {}", userEmail, ex);
                 notifyDeliveryFailure(userEmail, key);
-                return false;
-            }
+                return null;
+            });
         } catch (Exception e) {
-            LOGGER.error("Error sending OTP email to: {}", userEmail, e);
+            LOGGER.error("Error initiating OTP email dispatch to: {}", userEmail, e);
             notifyDeliveryFailure(userEmail, key);
-            return false;
+            return OtpGenerationResult.deliveryFailed();
         }
 
         persistAuditEntry(key);
-        return true;
+
+        // Store timestamp for rate limiting (expires in 15 seconds + buffer)
+        redisTemplate.opsForValue().set(rateLimitKey, String.valueOf(System.currentTimeMillis()));
+        redisTemplate.expire(rateLimitKey, OtpConstants.OTP_RATE_LIMIT_SECONDS + 5, TimeUnit.SECONDS);
+
+        return OtpGenerationResult.success();
     }
 
     private void notifyLockout(String key, String userEmail) {
@@ -138,9 +177,17 @@ public class OtpService implements IOtpService {
         systemEmail.setBody(messageBody);
         systemEmail.setRecipients(List.of(recipient));
         try {
-            emailService.sendSimpleMessageAsync(systemEmail).get(3, TimeUnit.SECONDS);
+            CompletableFuture<Boolean> notificationDispatch = emailService.sendSimpleMessageAsync(systemEmail);
+            notificationDispatch.thenAccept(sent -> {
+                if (!Boolean.TRUE.equals(sent)) {
+                    LOGGER.warn("System notification email '{}' to {} failed", subject, recipient);
+                }
+            }).exceptionally(ex -> {
+                LOGGER.warn("System notification email '{}' to {} failed", subject, recipient, ex);
+                return null;
+            });
         } catch (Exception ex) {
-            LOGGER.warn("System notification email '{}' to {} failed", subject, recipient, ex);
+            LOGGER.warn("Failed to dispatch system notification email '{}' to {}", subject, recipient, ex);
         }
     }
 
@@ -169,6 +216,10 @@ public class OtpService implements IOtpService {
         }
         OtpValidationResult result = otpGenerator.validateOtpStatus(key, otpNumber);
         if (result.getStatus() == OtpValidationStatus.SUCCESS) {
+            // Reset attempts counter on successful validation
+            String attemptsKey = OtpConstants.OTP_REDIS_KEY_PREFIX + key + OtpConstants.ATTEMPTS_KEY_SUFFIX;
+            redisTemplate.delete(attemptsKey);
+            LOGGER.debug("Reset attempts counter for key: {}", key);
             return OtpValidationResult.success();
         }
         if (result.getStatus() == OtpValidationStatus.LOCKED) {

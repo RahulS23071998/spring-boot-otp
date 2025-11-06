@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.TimeoutException;
 
 /**
  * Global exception handler that converts exceptions into structured HTTP responses.
@@ -156,6 +157,21 @@ public class RestExceptionHandler {
                 details
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    @ExceptionHandler(TimeoutException.class)
+    public ResponseEntity<ErrorResponse> handleTimeoutException(TimeoutException ex, HttpServletRequest request) {
+        LOGGER.warn("Request timeout: {} - {}", request.getRequestURI(), ex.getMessage());
+        Map<String, Object> details = new HashMap<>();
+        details.put("path", request.getRequestURI());
+        details.put("cause", ex.getMessage());
+        ErrorResponse body = ErrorResponse.of(
+                HttpStatus.GATEWAY_TIMEOUT.value(),
+                HttpStatus.GATEWAY_TIMEOUT.getReasonPhrase(),
+                "Request timeout - operation took too long to complete",
+                details
+        );
+        return ResponseEntity.status(HttpStatus.GATEWAY_TIMEOUT).body(body);
     }
 
 }

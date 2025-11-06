@@ -6,4 +6,5 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\security\jwt\TokenProviderTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\services\EmailServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\services\OtpGeneratorTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\security\OtpAwareAuthenticationProviderTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\auth\AuthenticationControllerTest.java

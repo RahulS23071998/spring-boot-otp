@@ -4,6 +4,7 @@ import com.starter.springboot.constants.DatabaseConstants;
 import com.starter.springboot.converters.LocalDateToSqlDateConverter;
 import com.starter.springboot.converters.LocalDateToUtilDateConverter;
 import com.starter.springboot.converters.StringToDateConverter;
+import com.starter.springboot.domain.BaseAuditedEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -15,7 +16,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = DatabaseConstants.OTP_AUDIT_ENTRIES_TABLE)
-public class OtpAuditEntry {
+public class OtpAuditEntry extends BaseAuditedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +31,7 @@ public class OtpAuditEntry {
     private LocalDate expiresOn;
 
     @Convert(converter = StringToDateConverter.class)
-    @Column(name = DatabaseConstants.PARTNER_EXPIRY_COLUMN, columnDefinition = DatabaseConstants.DATE_COLUMN_DEFINITION)
+    @Column(name = DatabaseConstants.PARTNER_EXPIRY_COLUMN)
     private String partnerExpiry;
 
     @Column(name = DatabaseConstants.OTP_USERNAME_COLUMN, nullable = false)

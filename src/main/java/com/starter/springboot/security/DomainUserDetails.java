@@ -1,5 +1,9 @@
 package com.starter.springboot.security;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.starter.springboot.domain.Authority;
 import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
@@ -21,20 +25,37 @@ public class DomainUserDetails extends org.springframework.security.core.userdet
     private final String authorityName;
     private final Date lastPasswordResetDate;
 
-    private DomainUserDetails(User user, Collection<? extends GrantedAuthority> authorities) {
-        super(user.getUsername(), user.getPassword(), authorities);
-        this.userId = user.getId();
-        this.email = user.getEmail();
-        this.otpRequired = user.getIsOtpRequired();
-        Role role = user.getRole();
-        this.roleName = role != null ? role.getName() : null;
-        Authority authority = user.getAuthority();
-        this.authorityName = authority != null ? authority.getName() : null;
-        this.lastPasswordResetDate = user.getLastPasswordResetDate();
+    @JsonCreator
+    DomainUserDetails(@JsonProperty("username") String username,
+                      @JsonProperty("password") String password,
+                      @JsonProperty("authorities") @JsonDeserialize(contentAs = SimpleGrantedAuthority.class) Collection<? extends GrantedAuthority> authorities,
+                      @JsonProperty("userId") Long userId,
+                      @JsonProperty("email") String email,
+                      @JsonProperty("otpRequired") Boolean otpRequired,
+                      @JsonProperty("roleName") String roleName,
+                      @JsonProperty("authorityName") String authorityName,
+                      @JsonProperty("lastPasswordResetDate") Date lastPasswordResetDate) {
+        super(username, password, authorities);
+        this.userId = userId;
+        this.email = email;
+        this.otpRequired = otpRequired;
+        this.roleName = roleName;
+        this.authorityName = authorityName;
+        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     public static DomainUserDetails fromUser(User user, Collection<? extends GrantedAuthority> authorities) {
-        return new DomainUserDetails(user, authorities);
+        Role role = user.getRole();
+        Authority authority = user.getAuthority();
+        return new DomainUserDetails(user.getUsername(),
+                                     user.getPassword(),
+                                     authorities,
+                                     user.getId(),
+                                     user.getEmail(),
+                                     user.getIsOtpRequired(),
+                                     role != null ? role.getName() : null,
+                                     authority != null ? authority.getName() : null,
+                                     user.getLastPasswordResetDate());
     }
 
     public Long getUserId() {

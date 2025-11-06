@@ -3,6 +3,8 @@ spring:
             name: Starter Project
     profiles:
         active: dev
+    liquibase:
+        change-log: classpath:db/changelog/db.changelog-master.xml
     jpa:
         properties:
             hibernate:

@@ -20,7 +20,7 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = DatabaseConstants.USER_TABLE)
-public class User {
+public class User extends BaseAuditedEntity {
 
     @Id
     @Column(name = DatabaseConstants.USER_ID_COLUMN)

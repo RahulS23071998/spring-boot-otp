@@ -1,11 +1,20 @@
 package com.starter.springboot.security.jwt;
 
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.starter.springboot.constants.ApplicationConstants;
+import com.starter.springboot.domain.Authority;
+import com.starter.springboot.domain.Role;
 import com.starter.springboot.domain.User;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.security.DomainUserDetails;
 import com.starter.springboot.services.IOtpService;
 import com.starter.springboot.services.IRedisTokenService;
+import com.starter.springboot.services.dto.OtpGenerationResult;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -18,6 +27,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +38,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.time.Duration;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -60,6 +71,29 @@ public class TokenProvider implements InitializingBean {
         }
         this.key = Keys.hmacShaKeyFor(keyBytes);
         this.jwtParser = Jwts.parserBuilder().setSigningKey(this.key).build();
+        // Initialize ObjectMapper with JavaTimeModule to enable Jackson serialization/deserialization of Java 8 date/time types (LocalDateTime, etc.)
+        // Without this module, Jackson would fail to serialize User objects containing LocalDateTime fields during caching
+        if (this.objectMapper == null) {
+            this.objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        }
+        // Register custom deserializer for SimpleGrantedAuthority to handle JSON deserialization from cached data
+        // SimpleGrantedAuthority serializes as {"authority":"ROLE_USER"}, so we need a custom deserializer to reconstruct it
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(SimpleGrantedAuthority.class, new SimpleGrantedAuthorityDeserializer());
+        this.objectMapper.registerModule(module);
+    }
+
+    /**
+     * Custom Jackson deserializer for SimpleGrantedAuthority to handle JSON deserialization from cached data.
+     * SimpleGrantedAuthority serializes as {"authority":"ROLE_USER"}, so this deserializer reads the "authority" field.
+     */
+    private static class SimpleGrantedAuthorityDeserializer extends JsonDeserializer<SimpleGrantedAuthority> {
+        @Override
+        public SimpleGrantedAuthority deserialize(com.fasterxml.jackson.core.JsonParser p, DeserializationContext ctxt) throws java.io.IOException {
+            JsonNode node = p.getCodec().readTree(p);
+            String authority = node.get("authority").asText();
+            return new SimpleGrantedAuthority(authority);
+        }
     }
 
     private final IOtpService otpService;
@@ -68,12 +102,20 @@ public class TokenProvider implements InitializingBean {
 
     private final IRedisTokenService redisTokenService;
 
+    private final StringRedisTemplate redisTemplate;
+
+    protected ObjectMapper objectMapper;
+
     private JwtParser jwtParser;
 
-    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService) {
+    // Cache TTL for OTP user details (in minutes)
+    private static final int OTP_CACHE_TTL_MINUTES = 5;
+
+    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService, StringRedisTemplate redisTemplate) {
         this.otpService = otpService;
         this.userRepository = userRepository;
         this.redisTokenService = redisTokenService;
+        this.redisTemplate = redisTemplate;
     }
 
 
@@ -89,10 +131,12 @@ public class TokenProvider implements InitializingBean {
         DomainUserDetails userDetails = resolveDomainUserDetails(authentication);
 
         if (Boolean.TRUE.equals(userDetails.isOtpRequired())) {
-            boolean otpIssued = otpService.generateOtp(userDetails.getUsername(), userDetails.getEmail());
-            if (Boolean.FALSE.equals(otpIssued)) {
-                return TokenCreationResponse.rejected("Maximum OTP attempts exceeded. Try again later.");
+            OtpGenerationResult otpResult = otpService.generateOtp(userDetails.getUsername(), userDetails.getEmail());
+            if (!otpResult.isSuccess()) {
+                return TokenCreationResponse.rejected(otpResult.getMessage());
             }
+            // Cache user details to avoid DB query in createTokenAfterVerifiedOtp
+            cacheUserDetailsForOtp(username, userDetails);
             return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
         }
 
@@ -122,9 +166,30 @@ public class TokenProvider implements InitializingBean {
      */
     public JWTToken createTokenAfterVerifiedOtp(String username, Boolean rememberMe)
     {
-        User user = userRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_SIMPLE_MESSAGE));
+        User user;
+        DomainUserDetails cached = getCachedUserDetailsForOtp(username);
+        if (cached != null) {
+            // Construct User from cached DomainUserDetails
+            user = new User();
+            user.setId(cached.getUserId());
+            user.setUsername(cached.getUsername());
+            user.setPassword(cached.getPassword());
+            user.setEmail(cached.getEmail());
+            user.setIsOtpRequired(cached.isOtpRequired());
+            user.setLastPasswordResetDate(cached.getLastPasswordResetDate());
+            Role role = new Role();
+            role.setName(cached.getRoleName());
+            user.setRole(role);
+            Authority authority = new Authority();
+            authority.setName(cached.getAuthorityName());
+            user.setAuthority(authority);
+            log.debug("Using cached user details for token creation after OTP verification: {}", username);
+        } else {
+            // Fallback to DB query
+            user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_SIMPLE_MESSAGE));
+        }
 
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority(user.getRole().getName()));
 
@@ -265,6 +330,44 @@ public class TokenProvider implements InitializingBean {
                 "Authentication principal is not an instance of DomainUserDetails. Received: "
                         + principal.getClass()
         );
+    }
+
+    // No need for CachedUserDetails, we'll cache User directly
+
+    /**
+     * Cache user details during OTP authentication to avoid repeated DB queries
+     * @param username the username
+     * @param userDetails the user details to cache
+     */
+    public void cacheUserDetailsForOtp(String username, DomainUserDetails userDetails) {
+        try {
+            String cacheKey = "otp:user:" + username;
+            String jsonValue = objectMapper.writeValueAsString(userDetails);
+            redisTemplate.opsForValue().set(cacheKey, jsonValue, Duration.ofMinutes(OTP_CACHE_TTL_MINUTES));
+            log.debug("Cached user details for OTP authentication: {}", username);
+        } catch (Exception e) {
+            log.warn("Failed to cache user details for OTP: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * Retrieve cached user details for OTP authentication
+     * @param username the username
+     * @return cached user details or null if not found
+     */
+    public DomainUserDetails getCachedUserDetailsForOtp(String username) {
+        try {
+            String cacheKey = "otp:user:" + username;
+            String json = redisTemplate.opsForValue().get(cacheKey);
+            if (json != null) {
+                DomainUserDetails userDetails = objectMapper.readValue(json, DomainUserDetails.class);
+                log.debug("Retrieved cached user details for OTP authentication: {}", username);
+                return userDetails;
+            }
+        } catch (Exception e) {
+            log.warn("Failed to retrieve cached user details for OTP: {}", e.getMessage());
+        }
+        return null;
     }
 
 }

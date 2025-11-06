@@ -57,7 +57,7 @@ public final class DatabaseConstants {
     public static final int DEVICE_ID_MAX_LENGTH = 128;
     
     // Column Definitions
-    public static final String DATE_COLUMN_DEFINITION = "DATE";
+    public static final String DATE_COLUMN_DEFINITION = "TIMESTAMP";
     
     // JPA Mappings
     public static final String ROLE_MAPPING_FIELD = "role";

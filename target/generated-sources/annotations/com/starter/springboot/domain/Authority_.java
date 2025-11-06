@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(Authority.class)
-public abstract class Authority_ {
+public abstract class Authority_ extends com.starter.springboot.domain.BaseAuditedEntity_ {
 
 	public static volatile SingularAttribute<Authority, String> name;
 	public static volatile SingularAttribute<Authority, String> description;

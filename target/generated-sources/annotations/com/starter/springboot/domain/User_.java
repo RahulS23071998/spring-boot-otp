@@ -7,7 +7,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(User.class)
-public abstract class User_ {
+public abstract class User_ extends com.starter.springboot.domain.BaseAuditedEntity_ {
 
 	public static volatile SingularAttribute<User, Date> lastPasswordResetDate;
 	public static volatile SingularAttribute<User, String> firstName;

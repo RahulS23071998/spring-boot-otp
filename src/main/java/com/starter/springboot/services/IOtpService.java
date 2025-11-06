@@ -1,5 +1,6 @@
 package com.starter.springboot.services;
 
+import com.starter.springboot.services.dto.OtpGenerationResult;
 import com.starter.springboot.services.dto.OtpValidationResult;
 
 /**
@@ -13,9 +14,9 @@ public interface IOtpService {
      *
      * @param key - provided key (username in this case)
      * @param userEmail - user's email address
-     * @return boolean value (true|false)
+     * @return OtpGenerationResult containing success status and message
      */
-    Boolean generateOtp(String key, String userEmail);
+    OtpGenerationResult generateOtp(String key, String userEmail);
 
     /**
      * Method for validating provided OTP

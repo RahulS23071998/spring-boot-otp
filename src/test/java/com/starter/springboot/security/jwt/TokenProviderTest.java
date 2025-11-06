@@ -6,6 +6,7 @@ import com.starter.springboot.domain.User;
 import com.starter.springboot.domain.UserStatus;
 import com.starter.springboot.repositories.UserRepository;
 import com.starter.springboot.security.DomainUserDetails;
+import com.starter.springboot.services.dto.OtpGenerationResult;
 import com.starter.springboot.services.impl.OtpService;
 import com.starter.springboot.services.impl.RedisTokenService;
 import io.jsonwebtoken.Claims;
@@ -24,10 +25,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.security.Key;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -49,6 +56,12 @@ class TokenProviderTest {
 
     @Mock
     private RedisTokenService redisTokenService;
+
+    @Mock
+    private StringRedisTemplate redisTemplate;
+
+    @Mock
+    private ValueOperations<String, String> valueOperations;
 
     @InjectMocks
     private TokenProvider tokenProvider;
@@ -78,6 +91,11 @@ class TokenProviderTest {
         ReflectionTestUtils.setField(tokenProvider, "secretKey", VALID_SECRET);
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInSeconds", TOKEN_VALIDITY);
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInSecondsForRememberMe", REMEMBER_ME_VALIDITY);
+
+        // Mock Redis operations
+        lenient().when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        lenient().when(valueOperations.get(anyString())).thenReturn(null);
+        lenient().doNothing().when(valueOperations).set(anyString(), anyString(), any());
     }
 
     @Test
@@ -112,7 +130,7 @@ class TokenProviderTest {
         // Given
         testUser.setIsOtpRequired(true);
         Authentication authenticationWithPrincipal = buildAuthenticationWithDomainUserDetails();
-        when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(true);
+        when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(OtpGenerationResult.success());
         
         // Initialize the TokenProvider
         tokenProvider.afterPropertiesSet();
@@ -138,7 +156,7 @@ class TokenProviderTest {
         // Given
         testUser.setIsOtpRequired(true);
         Authentication authenticationWithPrincipal = buildAuthenticationWithDomainUserDetails();
-        when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(false);
+        when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(OtpGenerationResult.maxAttemptsExceeded());
         
         // Initialize the TokenProvider
         tokenProvider.afterPropertiesSet();
@@ -513,5 +531,109 @@ class TokenProviderTest {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    @Test
+    @DisplayName("Should successfully cache user details for OTP")
+    void shouldSuccessfullyCacheUserDetailsForOtp() throws Exception {
+        // Given
+        DomainUserDetails userDetails = DomainUserDetails.fromUser(testUser, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+
+        // Initialize the TokenProvider
+        tokenProvider.afterPropertiesSet();
+
+        // When
+        tokenProvider.cacheUserDetailsForOtp(TEST_USERNAME, userDetails);
+
+        // Then
+        verify(valueOperations).set(
+                eq("otp:user:" + TEST_USERNAME),
+                anyString(), // JSON value - hard to verify exact content without parsing
+                eq(Duration.ofMinutes(5))
+        );
+    }
+
+    @Test
+    @DisplayName("Should handle Redis failure when caching user details for OTP")
+    void shouldHandleRedisFailureWhenCachingUserDetailsForOtp() throws Exception {
+        // Given
+        DomainUserDetails userDetails = DomainUserDetails.fromUser(testUser, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        doThrow(new RuntimeException("Redis connection failed")).when(valueOperations).set(anyString(), anyString(), any());
+
+        // Initialize the TokenProvider
+        tokenProvider.afterPropertiesSet();
+
+        // When
+        tokenProvider.cacheUserDetailsForOtp(TEST_USERNAME, userDetails);
+
+        // Then
+        // Method should not throw, just log warning
+        verify(valueOperations).set(
+                eq("otp:user:" + TEST_USERNAME),
+                anyString(),
+                eq(Duration.ofMinutes(5))
+        );
+    }
+
+    @Test
+    @DisplayName("Should successfully retrieve cached user details for OTP")
+    void shouldSuccessfullyRetrieveCachedUserDetailsForOtp() throws Exception {
+        // Given
+        DomainUserDetails originalUserDetails = DomainUserDetails.fromUser(testUser, List.of(new SimpleGrantedAuthority("ROLE_USER")));
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
+        String jsonValue = mapper.writeValueAsString(originalUserDetails);
+
+        when(valueOperations.get("otp:user:" + TEST_USERNAME)).thenReturn(jsonValue);
+
+        // Initialize the TokenProvider with custom ObjectMapper
+        ReflectionTestUtils.setField(tokenProvider, "objectMapper", mapper);
+        tokenProvider.afterPropertiesSet();
+
+        // When
+        DomainUserDetails retrievedUserDetails = tokenProvider.getCachedUserDetailsForOtp(TEST_USERNAME);
+
+        // Then
+        assertNotNull(retrievedUserDetails);
+        assertEquals(TEST_USERNAME, retrievedUserDetails.getUsername());
+        assertEquals(TEST_EMAIL, retrievedUserDetails.getEmail());
+        assertEquals(TEST_USER_ID, retrievedUserDetails.getUserId());
+        assertTrue(retrievedUserDetails.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_USER")));
+        verify(valueOperations).get("otp:user:" + TEST_USERNAME);
+    }
+
+    @Test
+    @DisplayName("Should return null when no cached user details found for OTP")
+    void shouldReturnNullWhenNoCachedUserDetailsFoundForOtp() throws Exception {
+        // Given
+        when(valueOperations.get("otp:user:" + TEST_USERNAME)).thenReturn(null);
+
+        // Initialize the TokenProvider
+        tokenProvider.afterPropertiesSet();
+
+        // When
+        DomainUserDetails retrievedUserDetails = tokenProvider.getCachedUserDetailsForOtp(TEST_USERNAME);
+
+        // Then
+        assertNull(retrievedUserDetails);
+        verify(valueOperations).get("otp:user:" + TEST_USERNAME);
+    }
+
+    @Test
+    @DisplayName("Should return null and handle deserialization failure gracefully")
+    void shouldReturnNullAndHandleDeserializationFailureGracefully() throws Exception {
+        // Given
+        String invalidJson = "{invalid json}";
+
+        when(valueOperations.get("otp:user:" + TEST_USERNAME)).thenReturn(invalidJson);
+
+        // Initialize the TokenProvider
+        tokenProvider.afterPropertiesSet();
+
+        // When
+        DomainUserDetails retrievedUserDetails = tokenProvider.getCachedUserDetailsForOtp(TEST_USERNAME);
+
+        // Then
+        assertNull(retrievedUserDetails);
+        verify(valueOperations).get("otp:user:" + TEST_USERNAME);
     }
 }

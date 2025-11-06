@@ -2,10 +2,12 @@ package com.starter.springboot.config;
 
 import com.starter.springboot.security.jwt.JWTConfigurer;
 import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.security.OtpAwareAuthenticationProvider;
+import com.starter.springboot.repositories.UserRepository;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,7 +16,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
@@ -28,12 +29,16 @@ public class SecurityConfiguration {
 
     private final Http401UnauthorizedEntryPoint authenticationEntryPoint;
 
-    private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
+
+    private final StringRedisTemplate redisTemplate;
 
     public SecurityConfiguration(Http401UnauthorizedEntryPoint authenticationEntryPoint,
-                                 UserDetailsService userDetailsService) {
+                                 UserRepository userRepository,
+                                 StringRedisTemplate redisTemplate) {
         this.authenticationEntryPoint = authenticationEntryPoint;
-        this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Bean
@@ -42,11 +47,8 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
+    public OtpAwareAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
+        return new OtpAwareAuthenticationProvider(userRepository, passwordEncoder, redisTemplate);
     }
 
     @Bean

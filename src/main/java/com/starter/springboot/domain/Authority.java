@@ -10,7 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = DatabaseConstants.AUTHORITY_TABLE)
-public class Authority {
+public class Authority extends BaseAuditedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

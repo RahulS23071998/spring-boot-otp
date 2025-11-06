@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = DatabaseConstants.ROLE_TABLE)
 @DynamicInsert
 @DynamicUpdate
-public class Role {
+public class Role extends BaseAuditedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
