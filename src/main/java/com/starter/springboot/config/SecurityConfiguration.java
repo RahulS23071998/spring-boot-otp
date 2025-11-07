@@ -1,9 +1,9 @@
 package com.starter.springboot.config;
 
+import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.jwt.JWTConfigurer;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.security.OtpAwareAuthenticationProvider;
-import com.starter.springboot.repositories.UserRepository;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -60,7 +60,10 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/users/public/**").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
+                        .requestMatchers("/actuator/**").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/api/**").authenticated()
                 )

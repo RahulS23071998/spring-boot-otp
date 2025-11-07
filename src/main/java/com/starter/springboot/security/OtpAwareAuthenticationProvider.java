@@ -1,10 +1,10 @@
 package com.starter.springboot.security;
 
-import com.starter.springboot.domain.User;
-import com.starter.springboot.exceptions.UserNotActivatedException;
-import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.starter.springboot.exception.UserNotActivatedException;
+import com.starter.springboot.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -16,7 +16,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

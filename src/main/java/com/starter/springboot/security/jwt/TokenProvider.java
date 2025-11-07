@@ -7,14 +7,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.starter.springboot.constants.ApplicationConstants;
-import com.starter.springboot.domain.Authority;
-import com.starter.springboot.domain.Role;
-import com.starter.springboot.domain.User;
-import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.dto.OtpGenerationResult;
+import com.starter.springboot.entity.Authority;
+import com.starter.springboot.entity.Role;
+import com.starter.springboot.entity.User;
+import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.DomainUserDetails;
-import com.starter.springboot.services.IOtpService;
-import com.starter.springboot.services.IRedisTokenService;
-import com.starter.springboot.services.dto.OtpGenerationResult;
+import com.starter.springboot.service.IOtpService;
+import com.starter.springboot.service.IRedisTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -22,7 +22,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,6 +29,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import jakarta.annotation.PostConstruct;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.security.Key;
@@ -43,7 +44,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-public class TokenProvider implements InitializingBean {
+public class TokenProvider {
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
@@ -60,8 +61,8 @@ public class TokenProvider implements InitializingBean {
     @Value("${jwt.expirationRememberMe:${jwt.expiration}}")
     private long tokenValidityInSecondsForRememberMe;
     
-    @Override
-    public void afterPropertiesSet() {
+    @PostConstruct
+    public void initialize() {
         if (Objects.isNull(secretKey) || secretKey.isBlank()) {
             throw new IllegalStateException("JWT secret (`jwt.secret`) is not configured.");
         }

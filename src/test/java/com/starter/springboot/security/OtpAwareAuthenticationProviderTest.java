@@ -1,9 +1,9 @@
 package com.starter.springboot.security;
 
-import com.starter.springboot.domain.Role;
-import com.starter.springboot.domain.User;
-import com.starter.springboot.exceptions.UserNotActivatedException;
-import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.entity.Role;
+import com.starter.springboot.entity.User;
+import com.starter.springboot.exception.UserNotActivatedException;
+import com.starter.springboot.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,8 +45,8 @@ class OtpAwareAuthenticationProviderTest {
     @InjectMocks
     private OtpAwareAuthenticationProvider authenticationProvider;
 
-    private static final String TEST_USERNAME = "testuser";
-    private static final String TEST_PASSWORD = "testPassword123";
+    private static final String TEST_USERNAME = "diona.smith";
+    private static final String TEST_PASSWORD = "SecurePass123";
     private static final String ENCODED_PASSWORD = "$2a$10$encodedPassword";
     private static final String ROLE_NAME = "ROLE_USER";
 
@@ -67,9 +67,9 @@ class OtpAwareAuthenticationProviderTest {
         testUser.setId(1L);
         testUser.setUsername(TEST_USERNAME);
         testUser.setPassword(ENCODED_PASSWORD);
-        testUser.setFirstName("Test");
-        testUser.setLastName("User");
-        testUser.setEmail("test@example.com");
+        testUser.setFirstName("Diona");
+        testUser.setLastName("Smith");
+        testUser.setEmail("diona.smith@example.com");
         testUser.setEnabled(true);
         testUser.setRole(testRole);
         testUser.setIsOtpRequired(true);
@@ -108,7 +108,7 @@ class OtpAwareAuthenticationProviderTest {
         assertEquals(ENCODED_PASSWORD, userDetails.getPassword());
         assertTrue(userDetails.isOtpRequired());
         assertEquals(1L, userDetails.getUserId());
-        assertEquals("test@example.com", userDetails.getEmail());
+        assertEquals("diona.smith@example.com", userDetails.getEmail());
 
         // Verify interactions
         verify(userRepository).findByUsername(TEST_USERNAME.toLowerCase());

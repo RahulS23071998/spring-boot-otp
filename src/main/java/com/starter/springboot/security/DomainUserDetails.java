@@ -3,10 +3,10 @@ package com.starter.springboot.security;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.starter.springboot.entity.Authority;
+import com.starter.springboot.entity.Role;
+import com.starter.springboot.entity.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import com.starter.springboot.domain.Authority;
-import com.starter.springboot.domain.Role;
-import com.starter.springboot.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;

@@ -25,7 +25,7 @@ public class JWTFilter extends GenericFilterBean {
 
     private final Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
-    private TokenProvider tokenProvider;
+    private final TokenProvider tokenProvider;
 
     public JWTFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;

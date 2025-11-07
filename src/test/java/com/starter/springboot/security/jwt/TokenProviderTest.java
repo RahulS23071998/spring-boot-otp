@@ -1,14 +1,14 @@
 package com.starter.springboot.security.jwt;
 
-import com.starter.springboot.domain.Authority;
-import com.starter.springboot.domain.Role;
-import com.starter.springboot.domain.User;
-import com.starter.springboot.domain.UserStatus;
-import com.starter.springboot.repositories.UserRepository;
+import com.starter.springboot.entity.Authority;
+import com.starter.springboot.entity.Role;
+import com.starter.springboot.entity.User;
+import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.DomainUserDetails;
-import com.starter.springboot.services.dto.OtpGenerationResult;
-import com.starter.springboot.services.impl.OtpService;
-import com.starter.springboot.services.impl.RedisTokenService;
+import com.starter.springboot.dto.OtpGenerationResult;
+import com.starter.springboot.service.impl.OtpService;
+import com.starter.springboot.service.impl.RedisTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -76,17 +76,11 @@ class TokenProviderTest {
     private static final long REMEMBER_ME_VALIDITY = 2592000; // 30 days in seconds
 
     private User testUser;
-    private Role testRole;
-    private Authority testAuthority;
-    private Authentication testAuthentication;
 
     @BeforeEach
     void setUp() {
         testUser = createTestUser();
-        testRole = createTestRole();
-        testAuthority = createTestAuthority();
-        testAuthentication = createTestAuthentication();
-        
+
         // Set up valid configuration
         ReflectionTestUtils.setField(tokenProvider, "secretKey", VALID_SECRET);
         ReflectionTestUtils.setField(tokenProvider, "tokenValidityInSeconds", TOKEN_VALIDITY);
@@ -100,13 +94,13 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should successfully create token without OTP when OTP not required")
-    void shouldSuccessfullyCreateTokenWithoutOtpWhenOtpNotRequired() throws Exception {
+    void shouldSuccessfullyCreateTokenWithoutOtpWhenOtpNotRequired()  {
         // Given
         testUser.setIsOtpRequired(false);
         doNothing().when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
         
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), false);
@@ -126,14 +120,14 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should require OTP when user has OTP enabled")
-    void shouldRequireOtpWhenUserHasOtpEnabled() throws Exception {
+    void shouldRequireOtpWhenUserHasOtpEnabled()  {
         // Given
         testUser.setIsOtpRequired(true);
         Authentication authenticationWithPrincipal = buildAuthenticationWithDomainUserDetails();
         when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(OtpGenerationResult.success());
         
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         TokenCreationResponse response = tokenProvider.createToken(authenticationWithPrincipal, false);
@@ -152,14 +146,14 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should reject token creation when OTP generation fails")
-    void shouldRejectTokenCreationWhenOtpGenerationFails() throws Exception {
+    void shouldRejectTokenCreationWhenOtpGenerationFails()  {
         // Given
         testUser.setIsOtpRequired(true);
         Authentication authenticationWithPrincipal = buildAuthenticationWithDomainUserDetails();
         when(otpService.generateOtp(TEST_USERNAME, TEST_EMAIL)).thenReturn(OtpGenerationResult.maxAttemptsExceeded());
         
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         TokenCreationResponse response = tokenProvider.createToken(authenticationWithPrincipal, false);
@@ -178,13 +172,13 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should successfully create token with remember me option")
-    void shouldSuccessfullyCreateTokenWithRememberMeOption() throws Exception {
+    void shouldSuccessfullyCreateTokenWithRememberMeOption()  {
         // Given
         testUser.setIsOtpRequired(false);
         doNothing().when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(REMEMBER_ME_VALIDITY));
         
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), true);
@@ -201,13 +195,13 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should successfully create token after verified OTP")
-    void shouldSuccessfullyCreateTokenAfterVerifiedOtp() throws Exception {
+    void shouldSuccessfullyCreateTokenAfterVerifiedOtp()  {
         // Given
         when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
         doNothing().when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
         
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         JWTToken token = tokenProvider.createTokenAfterVerifiedOtp(TEST_USERNAME, false);
@@ -224,9 +218,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should successfully extract authentication from valid token")
-    void shouldSuccessfullyExtractAuthenticationFromValidToken() throws Exception {
+    void shouldSuccessfullyExtractAuthenticationFromValidToken() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String token = generateValidToken();
 
         // When
@@ -244,9 +238,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should successfully validate token with all checks passing")
-    void shouldSuccessfullyValidateTokenWithAllChecksPassing() throws Exception {
+    void shouldSuccessfullyValidateTokenWithAllChecksPassing() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String token = generateValidToken();
         
         // Extract JTI from token for whitelist check
@@ -267,9 +261,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should reject token when user not found")
-    void shouldRejectTokenWhenUserNotFound() throws Exception {
+    void shouldRejectTokenWhenUserNotFound() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String token = generateValidToken();
         when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.empty());
 
@@ -284,9 +278,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should reject token when issued before password reset")
-    void shouldRejectTokenWhenIssuedBeforePasswordReset() throws Exception {
+    void shouldRejectTokenWhenIssuedBeforePasswordReset() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String token = generateValidToken();
         
         // Set password reset date after token was issued
@@ -305,9 +299,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should reject token when JTI not whitelisted")
-    void shouldRejectTokenWhenJtiNotWhitelisted() throws Exception {
+    void shouldRejectTokenWhenJtiNotWhitelisted() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String token = generateValidToken();
         
         Claims claims = extractClaimsFromToken(token);
@@ -327,9 +321,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should handle Redis whitelist check failure gracefully")
-    void shouldHandleRedisWhitelistCheckFailureGracefully() throws Exception {
+    void shouldHandleRedisWhitelistCheckFailureGracefully() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String token = generateValidToken();
         
         Claims claims = extractClaimsFromToken(token);
@@ -349,9 +343,9 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should reject malformed JWT token")
-    void shouldRejectMalformedJwtToken() throws Exception {
+    void shouldRejectMalformedJwtToken() {
         // Given
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
         String malformedToken = "invalid.jwt.token";
 
         // When
@@ -364,10 +358,10 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should throw IllegalArgumentException when principal is not DomainUserDetails")
-    void shouldThrowIllegalArgumentExceptionWhenPrincipalNotDomainUserDetails() throws Exception {
+    void shouldThrowIllegalArgumentExceptionWhenPrincipalNotDomainUserDetails()  {
         // Given
         Authentication authenticationWithStringPrincipal = new UsernamePasswordAuthenticationToken(TEST_USERNAME, TEST_PASSWORD);
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
@@ -380,10 +374,10 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should throw EntityNotFoundException when user not found during OTP token creation")
-    void shouldThrowEntityNotFoundExceptionWhenUserNotFoundDuringOtpTokenCreation() throws Exception {
+    void shouldThrowEntityNotFoundExceptionWhenUserNotFoundDuringOtpTokenCreation()  {
         // Given
         when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.empty());
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When & Then
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
@@ -401,7 +395,7 @@ class TokenProviderTest {
 
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> tokenProvider.afterPropertiesSet());
+                () -> tokenProvider.initialize());
 
         assertEquals("JWT secret (`jwt.secret`) is not configured.", exception.getMessage());
     }
@@ -414,7 +408,7 @@ class TokenProviderTest {
 
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> tokenProvider.afterPropertiesSet());
+                () -> tokenProvider.initialize());
 
         assertEquals("JWT secret (`jwt.secret`) is not configured.", exception.getMessage());
     }
@@ -427,20 +421,20 @@ class TokenProviderTest {
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> tokenProvider.afterPropertiesSet());
+                () -> tokenProvider.initialize());
 
         assertEquals("JWT secret is too short. Provide Base64-encoded key of at least 256 bits.", exception.getMessage());
     }
 
     @Test
     @DisplayName("Should continue token creation when Redis registration fails")
-    void shouldContinueTokenCreationWhenRedisRegistrationFails() throws Exception {
+    void shouldContinueTokenCreationWhenRedisRegistrationFails() {
         // Given
         testUser.setIsOtpRequired(false);
         doThrow(new RuntimeException("Redis connection failed"))
                 .when(redisTokenService).registerJti(eq(TEST_USER_ID), anyString(), eq(TOKEN_VALIDITY));
         
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), false);
@@ -491,19 +485,13 @@ class TokenProviderTest {
         return authority;
     }
 
-    private Authentication createTestAuthentication() {
-        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
-        DomainUserDetails domainUserDetails = DomainUserDetails.fromUser(testUser, authorities);
-        return new UsernamePasswordAuthenticationToken(domainUserDetails, TEST_PASSWORD, authorities);
-    }
-
     private Authentication buildAuthenticationWithDomainUserDetails() {
         List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_USER"));
         DomainUserDetails domainUserDetails = DomainUserDetails.fromUser(testUser, authorities);
         return new UsernamePasswordAuthenticationToken(domainUserDetails, TEST_PASSWORD, authorities);
     }
 
-    private String generateValidToken() throws Exception {
+    private String generateValidToken() {
         // Create a key from the valid secret
         byte[] keyBytes = Decoders.BASE64.decode(VALID_SECRET);
         Key key = Keys.hmacShaKeyFor(keyBytes);
@@ -522,7 +510,7 @@ class TokenProviderTest {
                 .compact();
     }
 
-    private Claims extractClaimsFromToken(String token) throws Exception {
+    private Claims extractClaimsFromToken(String token) {
         byte[] keyBytes = Decoders.BASE64.decode(VALID_SECRET);
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
@@ -535,12 +523,12 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should successfully cache user details for OTP")
-    void shouldSuccessfullyCacheUserDetailsForOtp() throws Exception {
+    void shouldSuccessfullyCacheUserDetailsForOtp() {
         // Given
         DomainUserDetails userDetails = DomainUserDetails.fromUser(testUser, List.of(new SimpleGrantedAuthority("ROLE_USER")));
 
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         tokenProvider.cacheUserDetailsForOtp(TEST_USERNAME, userDetails);
@@ -555,13 +543,13 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should handle Redis failure when caching user details for OTP")
-    void shouldHandleRedisFailureWhenCachingUserDetailsForOtp() throws Exception {
+    void shouldHandleRedisFailureWhenCachingUserDetailsForOtp() {
         // Given
         DomainUserDetails userDetails = DomainUserDetails.fromUser(testUser, List.of(new SimpleGrantedAuthority("ROLE_USER")));
         doThrow(new RuntimeException("Redis connection failed")).when(valueOperations).set(anyString(), anyString(), any());
 
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         tokenProvider.cacheUserDetailsForOtp(TEST_USERNAME, userDetails);
@@ -587,7 +575,7 @@ class TokenProviderTest {
 
         // Initialize the TokenProvider with custom ObjectMapper
         ReflectionTestUtils.setField(tokenProvider, "objectMapper", mapper);
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         DomainUserDetails retrievedUserDetails = tokenProvider.getCachedUserDetailsForOtp(TEST_USERNAME);
@@ -603,12 +591,12 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should return null when no cached user details found for OTP")
-    void shouldReturnNullWhenNoCachedUserDetailsFoundForOtp() throws Exception {
+    void shouldReturnNullWhenNoCachedUserDetailsFoundForOtp() {
         // Given
         when(valueOperations.get("otp:user:" + TEST_USERNAME)).thenReturn(null);
 
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         DomainUserDetails retrievedUserDetails = tokenProvider.getCachedUserDetailsForOtp(TEST_USERNAME);
@@ -620,14 +608,14 @@ class TokenProviderTest {
 
     @Test
     @DisplayName("Should return null and handle deserialization failure gracefully")
-    void shouldReturnNullAndHandleDeserializationFailureGracefully() throws Exception {
+    void shouldReturnNullAndHandleDeserializationFailureGracefully() {
         // Given
         String invalidJson = "{invalid json}";
 
         when(valueOperations.get("otp:user:" + TEST_USERNAME)).thenReturn(invalidJson);
 
         // Initialize the TokenProvider
-        tokenProvider.afterPropertiesSet();
+        tokenProvider.initialize();
 
         // When
         DomainUserDetails retrievedUserDetails = tokenProvider.getCachedUserDetailsForOtp(TEST_USERNAME);

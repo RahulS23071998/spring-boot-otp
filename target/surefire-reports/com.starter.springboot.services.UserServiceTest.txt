@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.starter.springboot.services.UserServiceTest
--------------------------------------------------------------------------------
-Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.148 s -- in com.starter.springboot.services.UserServiceTest

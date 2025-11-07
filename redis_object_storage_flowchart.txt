@@ -1,0 +1,59 @@
+                              Flowchart: Why Not Store Java Objects Directly in Redis?
+
+                                        +---------------------------+
+                                        | Want to store User object |
+                                        |      in Redis?            |
+                                        +---------------------------+
+                                                    |
+                                                    v
+                                        +---------------------------+
+                                        | Redis is a key-value      |
+                                        | store: only strings/bytes |
+                                        +---------------------------+
+                                                    |
+                                                    v
+                                        +---------------------------+
+                                        | Must serialize object     |
+                                        | to storable format        |
+                                        +---------------------------+
+                                                    |
+                                                    v
+                                        +---------------------------+
+                                        | Serialization options:    |
+                                        | - JSON (text-based)       |
+                                        | - Java serialization      |
+                                        |   (binary)                |
+                                        +---------------------------+
+                                                    |
+                                                    v
+                                        +---------------------------+
+                                        | Using Java serialization? |
+                                        | (e.g., Serializable)      |
+                                        +---------------------------+
+                                               /         \
+                                              /           \
+                                             /             \
+                                            v               v
+                                        +----------------+  +---------------------+
+                                        | Pros:          |  | Cons:               |
+                                        | - Native Java  |  | - Verbose & heavy   |
+                                        +----------------+  +---------------------+
+                                        | - Simple       |  | - Brittle (breaks   |
+                                        +----------------+  |   with class changes)|
+                                                          |  +---------------------+
+                                                          |  | - Tied to class     |
+                                                          |  |   versions          |
+                                                          |  +---------------------+
+                                                          |  | - Security risks    |
+                                                          |  |   (deserialization) |
+                                                          |  +---------------------+
+                                                          |  | - Not ideal for     |
+                                                          |  |   lightweight cache |
+                                                          |  +---------------------+
+                                                          |
+                                                          v
+                                        +---------------------------+
+                                        | Recommendation: Use JSON |
+                                        | instead (lightweight,     |
+                                        | portable, safe)           |
+                                        +---------------------------+
