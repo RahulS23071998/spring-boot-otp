@@ -7,6 +7,7 @@ import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
+import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.impl.RedisTokenService;
 import com.starter.springboot.service.impl.UserService;
 import jakarta.persistence.EntityExistsException;
@@ -52,6 +53,9 @@ class UserServiceTest {
 
     @Mock
     private RedisTokenService redisTokenService;
+
+    @Mock
+    private IPasswordChangeAuthorizationService authorizationService;
 
     @InjectMocks
     private UserService userService;
@@ -241,11 +245,12 @@ class UserServiceTest {
         // Given
         Map<String, String> payload = createPasswordChangePayload();
         testUser.setPassword(ENCODED_PASSWORD);
-        
+
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches(TEST_PASSWORD, ENCODED_PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
+        doNothing().when(authorizationService).authorizePasswordChange(testUser);
 
         // When
         User updatedUser = userService.changePasswordById(TEST_USER_ID, payload);
@@ -270,11 +275,12 @@ class UserServiceTest {
         // Given
         Map<String, String> payload = createPasswordChangePayload();
         testUser.setPassword(ENCODED_PASSWORD);
-        
+
         when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches(TEST_PASSWORD, ENCODED_PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
+        doNothing().when(authorizationService).authorizePasswordChangeByUsername(TEST_USERNAME);
 
         // When
         User updatedUser = userService.changePasswordByUsername(TEST_USERNAME, payload);
@@ -315,6 +321,7 @@ class UserServiceTest {
         // Given
         Map<String, String> payload = createPasswordChangePayload();
         when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.empty());
+        doNothing().when(authorizationService).authorizePasswordChangeByUsername(TEST_USERNAME);
 
         // When & Then
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
@@ -333,8 +340,9 @@ class UserServiceTest {
         payload.put("oldpassword", TEST_PASSWORD);
         payload.put("newpassword", null);
         payload.put("confirmnewpassword", "newPassword123");
-        
+
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
+        doNothing().when(authorizationService).authorizePasswordChange(testUser);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
@@ -351,8 +359,9 @@ class UserServiceTest {
         payload.put("oldpassword", TEST_PASSWORD);
         payload.put("newpassword", "newPassword123");
         payload.put("confirmnewpassword", "differentPassword");
-        
+
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
+        doNothing().when(authorizationService).authorizePasswordChange(testUser);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
@@ -367,9 +376,10 @@ class UserServiceTest {
         // Given
         Map<String, String> payload = createPasswordChangePayload();
         testUser.setPassword(ENCODED_PASSWORD);
-        
+
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches(TEST_PASSWORD, ENCODED_PASSWORD)).thenReturn(false);
+        doNothing().when(authorizationService).authorizePasswordChange(testUser);
 
         // When & Then
         BadCredentialsException exception = assertThrows(BadCredentialsException.class,
@@ -386,11 +396,12 @@ class UserServiceTest {
         // Given
         Map<String, String> payload = createPasswordChangePayload();
         testUser.setPassword(ENCODED_PASSWORD);
-        
+
         when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
         when(passwordEncoder.matches(TEST_PASSWORD, ENCODED_PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
+        doNothing().when(authorizationService).authorizePasswordChange(testUser);
         doThrow(new RuntimeException("Redis connection failed")).when(redisTokenService).removeWhitelist(TEST_USER_ID);
 
         // When

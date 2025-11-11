@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.controller.AuthenticationControllerTest" time="2.941" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.AuthCacheServiceTest" time="0.058" tests="14" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -64,72 +64,58 @@
     <property name="maven.repo.local" value="C:\Users\Rahul.S\.m2\repository"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testInvalidOtpVerification" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="2.666">
-    <system-out><![CDATA[16:39:53.743 [main] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
-16:39:54.536 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:54.537 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:54.540 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 2 ms
-16:39:54.755 [main] WARN com.starter.springboot.controller.AuthenticationController -- OTP validation failed for user: diona.smith with status INVALID
-]]></system-out>
-    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
-  </testcase>
-  <testcase name="testAuthenticationExceptionHandling" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.04">
-    <system-out><![CDATA[16:39:54.860 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:54.860 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:54.860 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-16:39:54.881 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
-16:39:54.883 [main] WARN com.starter.springboot.controller.AuthenticationController -- Authentication failed for user: diona.smith: Account locked
+  <testcase name="shouldSkipTokenWhitelistRemovalWhenUserIdIsNull" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.013">
+    <system-out><![CDATA[16:39:56.590 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for user: testuser
 ]]></system-out>
   </testcase>
-  <testcase name="testInvalidUsernameOrPassword" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.023">
-    <system-out><![CDATA[16:39:54.899 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:54.899 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:54.899 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-16:39:54.907 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
-16:39:54.907 [main] WARN com.starter.springboot.controller.AuthenticationController -- Authentication failed for user: diona.smith due to bad credentials
+  <testcase name="shouldClearAuthenticationCacheForUserSuccessfully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.004">
+    <system-out><![CDATA[16:39:56.594 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for user: testuser
 ]]></system-out>
   </testcase>
-  <testcase name="testAuthenticationRequiresOtp" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.035">
-    <system-out><![CDATA[16:39:54.923 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:54.923 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:54.924 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
-16:39:54.935 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
-16:39:54.942 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication completed for user: diona.smith
+  <testcase name="shouldClearAuthCacheEvenWhenTokenRemovalFails" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.003">
+    <system-out><![CDATA[16:39:56.597 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for user: testuser
+16:39:56.597 [main] WARN com.starter.springboot.service.impl.AuthCacheService -- Failed to remove token whitelist for user testuser (ID: 1): Token removal failed
 ]]></system-out>
   </testcase>
-  <testcase name="testSuccessfulOtpVerification" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.023">
-    <system-out><![CDATA[16:39:54.960 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:54.960 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:54.960 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-16:39:54.967 [main] INFO com.starter.springboot.controller.AuthenticationController -- OTP verified successfully for user: diona.smith
+  <testcase name="shouldHandleRedisExceptionDuringCacheClearingGracefully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.002">
+    <system-out><![CDATA[16:39:56.600 [main] WARN com.starter.springboot.service.impl.AuthCacheService -- Failed to clear authentication cache for user testuser: Redis connection failed
 ]]></system-out>
   </testcase>
-  <testcase name="testSuccessfulAuthenticationWithoutOtp" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.027">
-    <system-out><![CDATA[16:39:54.986 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:54.987 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:54.987 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-16:39:54.996 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
-16:39:54.997 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication completed for user: diona.smith
+  <testcase name="shouldHandleCaseInsensitiveUsernameForCacheClearing" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.003">
+    <system-out><![CDATA[16:39:56.603 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for user: TESTUSER
 ]]></system-out>
   </testcase>
-  <testcase name="testOtpRequiredExceptionHandling" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.044">
-    <system-out><![CDATA[16:39:55.017 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:55.017 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:55.017 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-16:39:55.024 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
-16:39:55.025 [main] INFO com.starter.springboot.controller.AuthenticationController -- OTP required for user: diona.smith
+  <testcase name="shouldHandleRedisExceptionDuringAllCacheClearingGracefully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.003">
+    <system-out><![CDATA[16:39:56.607 [main] WARN com.starter.springboot.service.impl.AuthCacheService -- Failed to clear all authentication caches: Redis connection failed
 ]]></system-out>
   </testcase>
-  <testcase name="testTokenCreationWithRememberMe" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.033">
-    <system-out><![CDATA[16:39:55.064 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
-16:39:55.064 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
-16:39:55.064 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
-16:39:55.072 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
-16:39:55.073 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication completed for user: diona.smith
+  <testcase name="shouldHandleNullCacheKeysSetGracefully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.002"/>
+  <testcase name="shouldHandleRedisExceptionInComprehensiveCacheClearingGracefully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.004">
+    <system-out><![CDATA[16:39:56.614 [main] WARN com.starter.springboot.service.impl.AuthCacheService -- Failed to clear authentication cache for user testuser: Redis connection failed
+16:39:56.614 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared token whitelist for user: testuser (ID: 1)
+]]></system-out>
+  </testcase>
+  <testcase name="shouldNotAttemptCacheClearingWhenUsernameIsNull" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.002">
+    <system-out><![CDATA[16:39:56.617 [main] WARN com.starter.springboot.service.impl.AuthCacheService -- Cannot clear auth cache for empty username
+]]></system-out>
+  </testcase>
+  <testcase name="shouldHandleCaseInsensitiveUsernameInComprehensiveCacheClearing" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.003">
+    <system-out><![CDATA[16:39:56.621 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for user: TESTUSER
+16:39:56.621 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared token whitelist for user: TESTUSER (ID: 1)
+]]></system-out>
+  </testcase>
+  <testcase name="shouldClearAllAuthenticationCachesSuccessfully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.003">
+    <system-out><![CDATA[16:39:56.624 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for 3 users
+]]></system-out>
+  </testcase>
+  <testcase name="shouldHandleEmptyCacheKeysSetGracefully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.002"/>
+  <testcase name="shouldNotAttemptCacheClearingWhenUsernameIsEmpty" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.002">
+    <system-out><![CDATA[16:39:56.630 [main] WARN com.starter.springboot.service.impl.AuthCacheService -- Cannot clear auth cache for empty username
+]]></system-out>
+  </testcase>
+  <testcase name="shouldClearAllCachesForUserSuccessfully" classname="com.starter.springboot.service.AuthCacheServiceTest" time="0.002">
+    <system-out><![CDATA[16:39:56.633 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared authentication cache for user: testuser
+16:39:56.633 [main] INFO com.starter.springboot.service.impl.AuthCacheService -- Cleared token whitelist for user: testuser (ID: 1)
 ]]></system-out>
   </testcase>
 </testsuite>

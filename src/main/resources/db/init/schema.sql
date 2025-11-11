@@ -140,7 +140,33 @@ INSERT IGNORE INTO user (
     (SELECT id FROM authority WHERE name = 'USER' LIMIT 1),
     CURRENT_TIMESTAMP,
     'system'
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'user');
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'rahulvijay');
+
+-- ================================================
+-- 9. INSERT SAMPLE USER (ROLE_USER)
+-- ================================================
+-- Username: testuser
+-- Password: Test@123456 (bcrypt hash: $2a$10$example.hash.for.test.user)
+-- OTP Enabled: false
+INSERT IGNORE INTO user (
+    username, password, first_name, last_name, email, enabled, status,
+    last_password_reset_date, is_otp_required, role_id, authority_id,
+    created_date, created_by
+) SELECT
+    'rameez',
+    '$2y$10$qi.33noj4UCq..k4DYNgGewalolmmG1pKOGOyanWopSvNzsuYuNpS',
+    'Test',
+    'User',
+    'frederickraghul@gmail.com',
+    true,
+    'ACTIVE',
+    NULL,
+    false,
+    (SELECT id FROM role WHERE name = 'ROLE_USER' LIMIT 1),
+    (SELECT id FROM authority WHERE name = 'USER' LIMIT 1),
+    CURRENT_TIMESTAMP,
+    'system'
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'rameez');
 
 -- ================================================
 -- End of Schema and Initial Data

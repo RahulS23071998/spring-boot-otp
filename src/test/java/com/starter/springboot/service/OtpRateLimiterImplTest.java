@@ -86,7 +86,7 @@ class OtpRateLimiterImplTest {
         // Then
         assertNotNull(result);
         assertFalse(result.isSuccess());
-        assertEquals("Please wait 15 seconds before requesting a new OTP.", result.getMessage());
+        assertEquals("Please wait 10 seconds before requesting a new OTP.", result.getMessage());
     }
 
     @Test

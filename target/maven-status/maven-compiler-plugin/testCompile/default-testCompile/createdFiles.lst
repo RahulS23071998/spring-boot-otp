@@ -9,7 +9,9 @@ com\starter\springboot\security\jwt\TokenProviderTest.class
 com\starter\springboot\security\OtpAwareAuthenticationProviderTest.class
 com\starter\springboot\service\OtpAuditServiceImplTest.class
 com\starter\springboot\service\OtpServiceTest.class
+com\starter\springboot\service\AuthCacheServiceTest.class
 com\starter\springboot\service\OtpAuditRetentionServiceTest.class
 com\starter\springboot\controller\PublicUserResourceTest.class
 com\starter\springboot\service\RedisTokenServiceTest.class
+com\starter\springboot\service\PasswordChangeAuthorizationServiceTest.class
 com\starter\springboot\service\OtpNotificationServiceImplTest.class
