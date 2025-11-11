@@ -1,3 +1,4 @@
+com\starter\springboot\config\SecurityConfigurationTest.class
 com\starter\springboot\controller\AuthenticationControllerTest.class
 com\starter\springboot\service\UserServiceTest.class
 com\starter\springboot\service\EmailServiceTest.class
