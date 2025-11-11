@@ -15,8 +15,15 @@ spring:
         prepStmtCacheSize: 250
         prepStmtCacheSqlLimit: 2048
         useServerPrepStmts: true
+  
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+      data-locations: classpath:db/init/schema.sql
 
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -59,22 +66,46 @@ jwt:
 
 server:
   port: 8080
+  shutdown: graceful
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
 # Actuator/Monitoring Configuration
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,env,configprops,beans,mappings,threaddump,heapdump
+        include: health,info,metrics,env,configprops,beans,mappings,threaddump,heapdump,shutdown
       base-path: /actuator
   endpoint:
     health:
-      show-details: when-authorized
+      show-details: always
+    info:
+      enabled: true
+    build:
+      enabled: false
     metrics:
       enabled: true
-  info:
-    env:
-      enabled: true
+    shutdown:
+      enabled: false
+
+# Custom Info Endpoint Configuration
+info:
+  app:
+    name: Spring Boot OTP Authentication
+    description: Secure One-Time Password (OTP) authentication system with JWT tokens
+    version: 1.0.0
+    java-version: 17
+    spring-boot-version: 3.2.3
+  system:
+    os: Windows
+    architecture: x64
+  contact:
+    name: Spring Boot OTP Team
+    email: frederickraghul@springboot.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
 
 # Swagger/OpenAPI Configuration
 springdoc:

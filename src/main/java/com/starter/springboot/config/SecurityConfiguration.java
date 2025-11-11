@@ -61,10 +61,10 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                         .requestMatchers("/actuator/**").hasRole("ADMIN")
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/").permitAll()
+                        .requestMatchers("/api/greeting/**").authenticated()
                         .requestMatchers("/api/**").authenticated()
                 )
                 .with(new JWTConfigurer(tokenProvider), Customizer.withDefaults());

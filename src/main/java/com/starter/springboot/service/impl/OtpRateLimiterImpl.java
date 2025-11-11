@@ -40,8 +40,9 @@ public class OtpRateLimiterImpl implements IOtpRateLimiter {
                 long timeDiffSeconds = (currentTimeMillis - lastSentMillis) / 1000;
 
                 if (timeDiffSeconds < OtpConstants.OTP_RATE_LIMIT_SECONDS) {
-                    LOGGER.warn("OTP rate limit exceeded for key: {}. Last sent {} seconds ago", key, timeDiffSeconds);
-                    return OtpGenerationResult.rateLimited();
+                    long remainingSeconds = OtpConstants.OTP_RATE_LIMIT_SECONDS - timeDiffSeconds;
+                    LOGGER.warn("OTP rate limit exceeded for key: {}. Last sent {} seconds ago, {} seconds remaining", key, timeDiffSeconds, remainingSeconds);
+                    return OtpGenerationResult.rateLimited((int) remainingSeconds);
                 }
             } catch (NumberFormatException e) {
                 LOGGER.warn("Invalid timestamp format in Redis for key: {}", rateLimitKey);

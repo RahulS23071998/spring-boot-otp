@@ -8,6 +8,8 @@ import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
+import com.starter.springboot.service.IAuthCacheService;
+import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.IRedisTokenService;
 import com.starter.springboot.service.IUserService;
 import jakarta.persistence.EntityExistsException;
@@ -41,16 +43,24 @@ public class UserService implements IUserService {
 
     private final IRedisTokenService redisTokenService;
 
+    private final IAuthCacheService authCacheService;
+
+    private final IPasswordChangeAuthorizationService authorizationService;
+
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
                        AuthorityRepository authorityRepository,
-                       IRedisTokenService redisTokenService) {
+                       IRedisTokenService redisTokenService,
+                       IAuthCacheService authCacheService,
+                       IPasswordChangeAuthorizationService authorizationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.authorityRepository = authorityRepository;
         this.redisTokenService = redisTokenService;
+        this.authCacheService = authCacheService;
+        this.authorizationService = authorizationService;
     }
 
     /**
@@ -129,17 +139,25 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public User changePasswordById(Long userId, java.util.Map<String, String> payload) {
-        return userRepository.findById(userId)
-            .map(user -> changePasswordInternal(user, payload))
+        User user = userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
+        
+        // Authorize the password change (user can only change their own password or admin can change any)
+        authorizationService.authorizePasswordChange(user);
+        
+        return changePasswordInternal(user, payload);
     }
 
     @Override
     @Transactional
     public User changePasswordByUsername(String username, java.util.Map<String, String> payload) {
-        return userRepository.findByUsername(username)
-            .map(user -> changePasswordInternal(user, payload))
+        // Authorize the password change before fetching the user
+        authorizationService.authorizePasswordChangeByUsername(username);
+        
+        User user = userRepository.findByUsername(username)
             .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_MESSAGE + username + " not found"));
+        
+        return changePasswordInternal(user, payload);
     }
 
     private User changePasswordInternal(User user, java.util.Map<String, String> payload) {
@@ -161,14 +179,17 @@ public class UserService implements IUserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(java.util.Date.from(java.time.Instant.now()));
         User savedUser = userRepository.save(user);
-        // Remove any whitelisted token for this user so old tokens are invalidated immediately
+        
+        // Clear all caches (authentication cache and token whitelist) for this user
+        // This ensures the new password is used immediately on next authentication
         try {
-            if (Objects.nonNull(savedUser.getId())) {
-                redisTokenService.removeWhitelist(savedUser.getId());
+            if (Objects.nonNull(savedUser.getId()) && Objects.nonNull(savedUser.getUsername())) {
+                authCacheService.clearAllCachesForUser(savedUser.getUsername(), savedUser.getId());
+                LOGGER.info("Cleared all caches for user after password change: {}", savedUser.getUsername());
             }
         } catch (Exception e) {
-            // Log and continue; token invalidation best-effort
-            LOGGER.warn("Failed to remove token whitelist for user {}: {}", savedUser.getId(), e.getMessage());
+            // Log and continue; cache clearing is best-effort
+            LOGGER.warn("Failed to clear caches for user {}: {}", savedUser.getId(), e.getMessage());
         }
         return savedUser;
     }

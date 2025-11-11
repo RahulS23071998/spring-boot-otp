@@ -1,14 +1,12 @@
 spring:
-    application:
-            name: Starter Project
-    profiles:
-        active: dev
-    liquibase:
-        change-log: classpath:db/changelog/db.changelog-master.xml
-    jpa:
-        properties:
-            hibernate:
-                generate_statistics: false
+  application:
+    name: Starter Project
+  profiles:
+    active: dev
+  jpa:
+    properties:
+      hibernate:
+        generate_statistics: false
 
 logging:
   level:
@@ -24,3 +22,27 @@ otp:
   audit-purge:
     enabled: true
     retention-days: 90
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+# Custom Info Endpoint Configuration
+info:
+  app:
+    name: Spring Boot OTP Authentication
+    description: Secure One-Time Password (OTP) authentication system with JWT tokens
+    version: 1.0.0
+    java-version: 17
+    spring-boot-version: 3.2.3
+  system:
+    os: Windows
+    architecture: x64
+  contact:
+    name: Spring Boot OTP Team
+    email: frederickraghul@springboot.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT

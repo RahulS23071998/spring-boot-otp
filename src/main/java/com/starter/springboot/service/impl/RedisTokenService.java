@@ -3,13 +3,19 @@ package com.starter.springboot.service.impl;
 import com.starter.springboot.service.IRedisTokenService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Production Redis Token Service implementation.
+ * Disabled in test profile to allow TestRedisConfiguration to provide the mock service.
+ */
 @Service
+@Profile("!test")
 public class RedisTokenService implements IRedisTokenService {
     private static final Logger log = LoggerFactory.getLogger(RedisTokenService.class);
 

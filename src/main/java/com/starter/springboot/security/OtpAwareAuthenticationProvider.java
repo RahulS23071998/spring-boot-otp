@@ -65,19 +65,27 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
         User user = null;
 
         // Try to get from cache first
-        String cachedUserJson = redisTemplate.opsForValue().get(cacheKey);
-        if (cachedUserJson != null) {
-            try {
-                user = objectMapper.readValue(cachedUserJson, User.class);
-                log.debug("Loaded user from cache: {}", lowercaseLogin);
-            } catch (Exception e) {
-                log.warn("Failed to deserialize cached user for {}: {}", lowercaseLogin, e.getMessage());
-                redisTemplate.delete(cacheKey); // Remove corrupted cache
-                cachedUserJson = null;
+        try {
+            String cachedUserJson = redisTemplate.opsForValue().get(cacheKey);
+            if (cachedUserJson != null) {
+                try {
+                    user = objectMapper.readValue(cachedUserJson, User.class);
+                    log.debug("Loaded user from cache: {}", lowercaseLogin);
+                } catch (Exception e) {
+                    log.warn("Failed to deserialize cached user for {}: {}", lowercaseLogin, e.getMessage());
+                    try {
+                        redisTemplate.delete(cacheKey); // Remove corrupted cache
+                    } catch (Exception ex) {
+                        log.debug("Failed to delete corrupted cache: {}", ex.getMessage());
+                    }
+                    cachedUserJson = null;
+                }
             }
+        } catch (Exception e) {
+            log.debug("Redis cache unavailable, will use database: {}", e.getMessage());
         }
 
-        if (cachedUserJson == null) {
+        if (user == null) {
             // Load user from database
             user = userRepository.findByUsername(lowercaseLogin)
                     .orElseThrow(() -> {
@@ -91,7 +99,7 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
                 redisTemplate.opsForValue().set(cacheKey, userJson, USER_CACHE_TTL_MINUTES, TimeUnit.MINUTES);
                 log.debug("Cached user: {}", lowercaseLogin);
             } catch (Exception e) {
-                log.warn("Failed to cache user {}: {}", lowercaseLogin, e.getMessage());
+                log.debug("Failed to cache user {}: {}", lowercaseLogin, e.getMessage());
             }
         }
 

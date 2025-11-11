@@ -1,28 +1,37 @@
 spring:
-    devtools:
-        restart:
-            enabled: false
-    datasource:
-        url: jdbc:mysql://localhost/production?useUnicode=true&characterEncoding=utf8&useSSL=false
-        name:
-        username: root
-        password: prod
-        hikari:
-            data-source-properties:
-                cachePrepStmts: true
-                prepStmtCacheSize: 250
-                prepStmtCacheSqlLimit: 2048
-                useServerPrepStmts: true
-    jpa:
-        database-platform: org.hibernate.dialect.MySQLInnoDBDialect
-        database: MYSQL
-        show_sql: false
-        open-in-view: false
-        factory-class: org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean
-        properties:
-            hibernate.cache.use_second_level_cache: false
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: false
+  devtools:
+    restart:
+      enabled: false
+  datasource:
+    url: jdbc:mysql://localhost/production?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: prod
+    hikari:
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+
+  sql:
+    init:
+      mode: always
+      continue-on-error: false
+      data-locations: classpath:db/init/schema.sql
+
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQLInnoDBDialect
+    database: MYSQL
+    show_sql: false
+    open-in-view: false
+    factory-class: org.springframework.data.envers.repository.support.EnversRevisionRepositoryFactoryBean
+    properties:
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
 
 otp:
   audit-purge:
@@ -30,15 +39,18 @@ otp:
     retention-days: 365
 
 jwt:
-    header: Authorization
-    secret: c3Ryb25nLXNwcmluZy1ib290LXNlY3JldC1rZXktMTIzNDU2Nzg5MA==
-    expiration: 300
+  header: Authorization
+  secret: c3Ryb25nLXNwcmluZy1ib290LXNlY3JldC1rZXktMTIzNDU2Nzg5MA==
+  expiration: 300
 
 server:
-    port: 8080
-    compression:
-        enabled: true
-        mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
+  port: 8080
+  shutdown: graceful
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  compression:
+    enabled: true
+    mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
 
 # Actuator/Monitoring Configuration (Production - Limited endpoints)
 management:
@@ -55,6 +67,24 @@ management:
   info:
     env:
       enabled: false
+
+# Custom Info Endpoint Configuration
+info:
+  app:
+    name: Spring Boot OTP Authentication
+    description: Secure One-Time Password (OTP) authentication system with JWT tokens
+    version: 1.0.0
+    java-version: 17
+    spring-boot-version: 3.2.3
+  system:
+    os: Production Environment
+    architecture: x64
+  contact:
+    name: Support Team
+    email: support@company.com
+  license:
+    name: MIT License
+    url: https://opensource.org/licenses/MIT
 
 # Swagger/OpenAPI Configuration (Disabled in production for security)
 springdoc:

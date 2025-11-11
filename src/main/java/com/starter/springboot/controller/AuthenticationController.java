@@ -13,6 +13,15 @@ import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.service.IOtpService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,15 +34,19 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 
+/**
+ * REST Controller for handling authentication and OTP verification.
+ * Provides endpoints for user login with OTP-based authentication.
+ */
 @RestController
 @RequestMapping(ApplicationConstants.AUTH_ENDPOINT)
 @Validated
+@Tag(name = "Authentication", description = "Authentication and OTP verification endpoints")
 public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
@@ -53,7 +66,56 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = ApplicationConstants.AUTHENTICATE_ENDPOINT)
-    public ResponseEntity<AuthResponseDTO> authorize(@Valid @RequestBody LoginDTO loginDTO) {
+    @Operation(summary = "Authenticate user with credentials", 
+        description = "Authenticate a user with username and password. If OTP is enabled for the user, " +
+                      "the response will indicate that OTP verification is required. An OTP will be sent to the user's email.")
+    @RequestBody(description = "Login credentials with optional device/client information",
+        content = @Content(schema = @Schema(implementation = LoginDTO.class),
+            examples = @ExampleObject(value = """
+                {
+                  "username": "john.doe",
+                  "password": "SecurePass123!",
+                  "rememberMe": false,
+                  "clientId": "mobile-app",
+                  "deviceId": "device-001"
+                }
+                """)))
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Authentication successful, JWT token provided or OTP required",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = AuthResponseDTO.class),
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": true,
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                      "rememberMe": false,
+                      "clientId": "mobile-app",
+                      "deviceId": "device-001"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "401", description = "Invalid credentials or OTP not verified",
+            content = @Content(mediaType = "application/json", 
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": false,
+                      "message": "Invalid credentials"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "403", description = "Account locked or authentication failed",
+            content = @Content(mediaType = "application/json", 
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": false,
+                      "message": "Account locked"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "400", description = "Invalid request format or validation error")
+    })
+    public ResponseEntity<AuthResponseDTO> authorize(
+        @Valid @org.springframework.web.bind.annotation.RequestBody LoginDTO loginDTO) {
         LOGGER.info("Authentication attempt for user: {}", loginDTO.getUsername());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -86,7 +148,54 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = ApplicationConstants.VERIFY_ENDPOINT)
-    public ResponseEntity<AuthResponseDTO> verifyOtp(@Valid @RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
+    @Operation(summary = "Verify OTP and generate JWT token",
+        description = "Verify the One-Time Password (OTP) sent to user's email. Upon successful verification, " +
+                      "a JWT token will be generated for authenticated API requests. The OTP is valid for a limited time period.")
+    @RequestBody(description = "OTP verification request with username and OTP code",
+        content = @Content(schema = @Schema(implementation = VerifyTokenRequestDTO.class),
+            examples = @ExampleObject(value = """
+                {
+                  "username": "john.doe",
+                  "otp": 123456,
+                  "rememberMe": false,
+                  "clientId": "mobile-app",
+                  "deviceId": "device-001"
+                }
+                """)))
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "OTP verified successfully, JWT token provided",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = AuthResponseDTO.class),
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": true,
+                      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2huLmRvZSIsImlhdCI6MTYzNDU2NzIwMH0...",
+                      "rememberMe": false
+                    }
+                    """))),
+        @ApiResponse(responseCode = "401", description = "Invalid OTP",
+            content = @Content(mediaType = "application/json", 
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": false,
+                      "message": "Invalid OTP"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "423", description = "Account locked due to multiple failed OTP attempts",
+            content = @Content(mediaType = "application/json", 
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": false,
+                      "message": "Account locked due to multiple failed OTP attempts"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "400", description = "Invalid request format or missing required fields")
+    })
+    public ResponseEntity<AuthResponseDTO> verifyOtp(
+        @Valid @org.springframework.web.bind.annotation.RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
         String username = verifyTokenRequest.getUsername();
         Integer otp = verifyTokenRequest.getOtp();
         Boolean rememberMe = verifyTokenRequest.getRememberMe();

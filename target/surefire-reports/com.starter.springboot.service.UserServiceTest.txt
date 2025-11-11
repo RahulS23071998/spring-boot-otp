@@ -1,0 +1,92 @@
+-------------------------------------------------------------------------------
+Test set: com.starter.springboot.service.UserServiceTest
+-------------------------------------------------------------------------------
+Tests run: 18, Failures: 4, Errors: 3, Skipped: 0, Time elapsed: 0.138 s <<< FAILURE! -- in com.starter.springboot.service.UserServiceTest
+com.starter.springboot.service.UserServiceTest.shouldSuccessfullyChangePasswordByUsername -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChangeByUsername(String)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordByUsername(UserService.java:155)
+	at com.starter.springboot.service.UserServiceTest.shouldSuccessfullyChangePasswordByUsername(UserServiceTest.java:280)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.starter.springboot.service.UserServiceTest.shouldThrowEntityNotFoundExceptionWhenChangingPasswordForNonExistingUserByUsername -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <jakarta.persistence.EntityNotFoundException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3115)
+	at com.starter.springboot.service.UserServiceTest.shouldThrowEntityNotFoundExceptionWhenChangingPasswordForNonExistingUserByUsername(UserServiceTest.java:320)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChangeByUsername(String)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordByUsername(UserService.java:155)
+	at com.starter.springboot.service.UserServiceTest.lambda$shouldThrowEntityNotFoundExceptionWhenChangingPasswordForNonExistingUserByUsername$6(UserServiceTest.java:321)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+
+com.starter.springboot.service.UserServiceTest.shouldSuccessfullyChangePasswordById -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChange(com.starter.springboot.entity.User)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordById(UserService.java:146)
+	at com.starter.springboot.service.UserServiceTest.shouldSuccessfullyChangePasswordById(UserServiceTest.java:251)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.starter.springboot.service.UserServiceTest.shouldHandleTokenWhitelistRemovalFailureGracefully -- Time elapsed: 0.002 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChange(com.starter.springboot.entity.User)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordById(UserService.java:146)
+	at com.starter.springboot.service.UserServiceTest.shouldHandleTokenWhitelistRemovalFailureGracefully(UserServiceTest.java:397)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+com.starter.springboot.service.UserServiceTest.shouldThrowIllegalArgumentExceptionWhenPasswordsDoNotMatch -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IllegalArgumentException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3115)
+	at com.starter.springboot.service.UserServiceTest.shouldThrowIllegalArgumentExceptionWhenPasswordsDoNotMatch(UserServiceTest.java:358)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChange(com.starter.springboot.entity.User)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordById(UserService.java:146)
+	at com.starter.springboot.service.UserServiceTest.lambda$shouldThrowIllegalArgumentExceptionWhenPasswordsDoNotMatch$8(UserServiceTest.java:359)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+
+com.starter.springboot.service.UserServiceTest.shouldThrowBadCredentialsExceptionWhenOldPasswordIsIncorrect -- Time elapsed: 0.003 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <org.springframework.security.authentication.BadCredentialsException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3115)
+	at com.starter.springboot.service.UserServiceTest.shouldThrowBadCredentialsExceptionWhenOldPasswordIsIncorrect(UserServiceTest.java:375)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChange(com.starter.springboot.entity.User)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordById(UserService.java:146)
+	at com.starter.springboot.service.UserServiceTest.lambda$shouldThrowBadCredentialsExceptionWhenOldPasswordIsIncorrect$9(UserServiceTest.java:376)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+
+com.starter.springboot.service.UserServiceTest.shouldThrowIllegalArgumentExceptionWhenNewPasswordIsNull -- Time elapsed: 0.002 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IllegalArgumentException> but was: <java.lang.NullPointerException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3115)
+	at com.starter.springboot.service.UserServiceTest.shouldThrowIllegalArgumentExceptionWhenNewPasswordIsNull(UserServiceTest.java:340)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+Caused by: java.lang.NullPointerException: Cannot invoke "com.starter.springboot.service.IPasswordChangeAuthorizationService.authorizePasswordChange(com.starter.springboot.entity.User)" because "<local4>.authorizationService" is null
+	at com.starter.springboot.service.impl.UserService.changePasswordById(UserService.java:146)
+	at com.starter.springboot.service.UserServiceTest.lambda$shouldThrowIllegalArgumentExceptionWhenNewPasswordIsNull$7(UserServiceTest.java:341)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+

@@ -77,3 +77,16 @@
 // const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 //
 // greetArr("Hello")("Rahul");
+
+const owners = ['Rahul','Suresh','Kiran'];
+console.log(owners.sort())
+console.log(owners);
+
+const arr = [200,450,-400,3000,-650,-130,70,1300];
+console.log(arr.sort((a, b) => a - b));
+console.log(arr);
+
+const str= 'hello world world';
+const s = str.replaceAll('world','rahul');
+const s1 = str.replace('world','rahul');
+console.log(s,'\n'+s1);

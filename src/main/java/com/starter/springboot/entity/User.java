@@ -62,7 +62,6 @@ public class User extends BaseAuditedEntity {
     private UserStatus status;
 
     @Column(name = DatabaseConstants.LAST_PASSWORD_RESET_DATE_COLUMN)
-    @NotNull
     private Date lastPasswordResetDate;
 
     @Column(name = DatabaseConstants.IS_OTP_REQUIRED_COLUMN)

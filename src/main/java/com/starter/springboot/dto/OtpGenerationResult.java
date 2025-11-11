@@ -17,8 +17,8 @@ public final class OtpGenerationResult {
         return new OtpGenerationResult(true, null);
     }
 
-    public static OtpGenerationResult rateLimited() {
-        return new OtpGenerationResult(false, "Please wait 15 seconds before requesting a new OTP.");
+    public static OtpGenerationResult rateLimited(int remainingSeconds) {
+        return new OtpGenerationResult(false, String.format("Please wait %d seconds before requesting a new OTP.", Math.max(1, remainingSeconds)));
     }
 
     public static OtpGenerationResult maxAttemptsExceeded() {

@@ -1,0 +1,15 @@
+com\starter\springboot\controller\AuthenticationControllerTest.class
+com\starter\springboot\service\UserServiceTest.class
+com\starter\springboot\service\EmailServiceTest.class
+com\starter\springboot\controller\AuthenticationControllerTest$1.class
+com\starter\springboot\service\OtpGeneratorTest.class
+com\starter\springboot\service\EmailServiceTest$1.class
+com\starter\springboot\service\OtpRateLimiterImplTest.class
+com\starter\springboot\security\jwt\TokenProviderTest.class
+com\starter\springboot\security\OtpAwareAuthenticationProviderTest.class
+com\starter\springboot\service\OtpAuditServiceImplTest.class
+com\starter\springboot\service\OtpServiceTest.class
+com\starter\springboot\service\OtpAuditRetentionServiceTest.class
+com\starter\springboot\controller\PublicUserResourceTest.class
+com\starter\springboot\service\RedisTokenServiceTest.class
+com\starter\springboot\service\OtpNotificationServiceImplTest.class
