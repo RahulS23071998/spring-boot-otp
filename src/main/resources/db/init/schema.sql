@@ -3,13 +3,18 @@
 -- ================================================
 -- This script creates all necessary tables and initializes the database
 -- with admin and user roles, authorities, and sample users.
+--
+-- NOTE: IDs are generated using Snowflake algorithm (Twitter's distributed
+-- unique ID generation). Initial data uses pre-generated Snowflake-style IDs
+-- to maintain consistency. New entities get IDs from the application.
+-- Database AUTO_INCREMENT has been removed from ID columns.
 -- ================================================
 
 -- ================================================
 -- 1. CREATE ROLE TABLE
 -- ================================================
 CREATE TABLE IF NOT EXISTS role (
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT NOT NULL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE,
     description VARCHAR(500),
     created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -23,7 +28,7 @@ CREATE TABLE IF NOT EXISTS role (
 -- 2. CREATE AUTHORITY TABLE
 -- ================================================
 CREATE TABLE IF NOT EXISTS authority (
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT NOT NULL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     description VARCHAR(500),
     created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,7 +42,7 @@ CREATE TABLE IF NOT EXISTS authority (
 -- 3. CREATE USER TABLE
 -- ================================================
 CREATE TABLE IF NOT EXISTS user (
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT NOT NULL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -63,7 +68,7 @@ CREATE TABLE IF NOT EXISTS user (
 -- 4. CREATE OTP AUDIT ENTRIES TABLE
 -- ================================================
 CREATE TABLE IF NOT EXISTS otp_audit_entries (
-    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id BIGINT NOT NULL PRIMARY KEY,
     issued_on DATE NOT NULL,
     expires_on DATE NOT NULL,
     partner_expiry VARCHAR(255),
@@ -79,16 +84,16 @@ CREATE TABLE IF NOT EXISTS otp_audit_entries (
 -- ================================================
 -- 5. INSERT ROLES
 -- ================================================
-INSERT IGNORE INTO role (name, description, created_date, created_by) VALUES
-('ROLE_ADMIN', 'Administrator role with full access to all features', CURRENT_TIMESTAMP, 'system'),
-('ROLE_USER', 'Standard user role with limited access to features', CURRENT_TIMESTAMP, 'system');
+INSERT IGNORE INTO role (id, name, description, created_date, created_by) VALUES
+(1988213221802115073, 'ROLE_ADMIN', 'Administrator role with full access to all features', CURRENT_TIMESTAMP, 'system'),
+(1988213221802115074, 'ROLE_USER', 'Standard user role with limited access to features', CURRENT_TIMESTAMP, 'system');
 
 -- ================================================
 -- 6. INSERT AUTHORITIES
 -- ================================================
-INSERT IGNORE INTO authority (name, description, created_date, created_by) VALUES
-('ADMIN', 'Administrator authority', CURRENT_TIMESTAMP, 'system'),
-('USER', 'User authority', CURRENT_TIMESTAMP, 'system');
+INSERT IGNORE INTO authority (id, name, description, created_date, created_by) VALUES
+(1988213221802115075, 'ADMIN', 'Administrator authority', CURRENT_TIMESTAMP, 'system'),
+(1988213221802115076, 'USER', 'User authority', CURRENT_TIMESTAMP, 'system');
 
 -- ================================================
 -- 7. INSERT SAMPLE ADMIN USER
@@ -97,15 +102,16 @@ INSERT IGNORE INTO authority (name, description, created_date, created_by) VALUE
 -- Password: Admin@123456 (bcrypt hash: $2a$10$slYQmyNdGzin7olVN3p5Be0DlH.PKZbv5H8KnzzVgXXbVxzy/QMOG)
 -- OTP Enabled: false
 INSERT IGNORE INTO user (
-    username, password, first_name, last_name, email, enabled, status, 
-    last_password_reset_date, is_otp_required, role_id, authority_id, 
+    id, username, password, first_name, last_name, email, enabled, status,
+    last_password_reset_date, is_otp_required, role_id, authority_id,
     created_date, created_by
-) SELECT 
+) SELECT
+    1988213221802115077,
     'admin',
     '$2y$10$/CRi5UMb21iS5oQ98e8uIObrwQgu2ovKaWDw2xNd0i052.FhYMc6W',
     'System',
     'Administrator',
-    'admin@example.com',
+    'frederickraghul@gmail.com',
     true,
     'ACTIVE',
     NULL,
@@ -123,10 +129,11 @@ WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'admin');
 -- Password: User@123456 (bcrypt hash: $2a$10$vR/ucTlQSGlaQvzjvTD1..sRPv8XJ7pHFMqe8XW0dFI8HKjYT.B1e)
 -- OTP Enabled: false
 INSERT IGNORE INTO user (
-    username, password, first_name, last_name, email, enabled, status, 
-    last_password_reset_date, is_otp_required, role_id, authority_id, 
+    id, username, password, first_name, last_name, email, enabled, status,
+    last_password_reset_date, is_otp_required, role_id, authority_id,
     created_date, created_by
-) SELECT 
+) SELECT
+    1988213221802115078,
     'rahulvijay',
     '$2y$10$qi.33noj4UCq..k4DYNgGewalolmmG1pKOGOyanWopSvNzsuYuNpS',
     'Rahul',
@@ -149,10 +156,11 @@ WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'rahulvijay');
 -- Password: Test@123456 (bcrypt hash: $2a$10$example.hash.for.test.user)
 -- OTP Enabled: false
 INSERT IGNORE INTO user (
-    username, password, first_name, last_name, email, enabled, status,
+    id, username, password, first_name, last_name, email, enabled, status,
     last_password_reset_date, is_otp_required, role_id, authority_id,
     created_date, created_by
 ) SELECT
+    1988213221802115079,
     'rameez',
     '$2y$10$qi.33noj4UCq..k4DYNgGewalolmmG1pKOGOyanWopSvNzsuYuNpS',
     'Test',

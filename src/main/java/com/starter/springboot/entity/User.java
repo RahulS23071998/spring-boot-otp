@@ -5,26 +5,26 @@ import java.util.Date;
 import com.starter.springboot.constants.DatabaseConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 
 @Entity
 @Table(name = DatabaseConstants.USER_TABLE)
-public class User extends BaseAuditedEntity {
+@EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
+public class User extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Id
     @Column(name = DatabaseConstants.USER_ID_COLUMN)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = DatabaseConstants.USERNAME_COLUMN, length = DatabaseConstants.USERNAME_MAX_LENGTH, unique = true)

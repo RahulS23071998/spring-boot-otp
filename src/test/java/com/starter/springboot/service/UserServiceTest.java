@@ -7,7 +7,6 @@ import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
-import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.impl.RedisTokenService;
 import com.starter.springboot.service.impl.UserService;
 import jakarta.persistence.EntityExistsException;
@@ -56,6 +55,9 @@ class UserServiceTest {
 
     @Mock
     private IPasswordChangeAuthorizationService authorizationService;
+
+    @Mock
+    private IAuthCacheService authCacheService;
 
     @InjectMocks
     private UserService userService;
@@ -260,7 +262,7 @@ class UserServiceTest {
         verify(userRepository).findById(TEST_USER_ID);
         verify(passwordEncoder).matches(TEST_PASSWORD, ENCODED_PASSWORD);
         verify(passwordEncoder).encode("newPassword123");
-        verify(redisTokenService).removeWhitelist(TEST_USER_ID);
+        verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
         
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -290,7 +292,7 @@ class UserServiceTest {
         verify(userRepository).findByUsername(TEST_USERNAME);
         verify(passwordEncoder).matches(TEST_PASSWORD, ENCODED_PASSWORD);
         verify(passwordEncoder).encode("newPassword123");
-        verify(redisTokenService).removeWhitelist(TEST_USER_ID);
+        verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
         
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -402,14 +404,14 @@ class UserServiceTest {
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         doNothing().when(authorizationService).authorizePasswordChange(testUser);
-        doThrow(new RuntimeException("Redis connection failed")).when(redisTokenService).removeWhitelist(TEST_USER_ID);
+        doThrow(new RuntimeException("Redis connection failed")).when(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
 
         // When
         User updatedUser = userService.changePasswordById(TEST_USER_ID, payload);
 
         // Then
         assertNotNull(updatedUser);
-        verify(redisTokenService).removeWhitelist(TEST_USER_ID);
+        verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
         verify(userRepository).save(any(User.class));
     }
 

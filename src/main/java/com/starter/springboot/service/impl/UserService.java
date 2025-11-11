@@ -8,6 +8,8 @@ import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
+import com.starter.springboot.service.IAuthCacheService;
+import com.starter.springboot.service.IdGeneratorService;
 import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.IRedisTokenService;
 import com.starter.springboot.service.IUserService;
@@ -44,18 +46,26 @@ public class UserService implements IUserService {
 
     private final IPasswordChangeAuthorizationService authorizationService;
 
+    private final IdGeneratorService idGeneratorService;
+
+    private final IAuthCacheService authCacheService;
+
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
                        AuthorityRepository authorityRepository,
                        IRedisTokenService redisTokenService,
-                       IPasswordChangeAuthorizationService authorizationService) {
+                       IPasswordChangeAuthorizationService authorizationService,
+                       IdGeneratorService idGeneratorService,
+                       IAuthCacheService authCacheService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.authorityRepository = authorityRepository;
         this.redisTokenService = redisTokenService;
         this.authorizationService = authorizationService;
+        this.idGeneratorService = idGeneratorService;
+        this.authCacheService = authCacheService;
     }
 
     /**
@@ -174,17 +184,15 @@ public class UserService implements IUserService {
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(java.util.Date.from(java.time.Instant.now()));
         User savedUser = userRepository.save(user);
-        
-        // Clear token whitelist for this user
+
+        // Clear authentication cache and token whitelist for this user
         // This ensures the new password is used immediately on next authentication
         try {
-            if (Objects.nonNull(savedUser.getId())) {
-                redisTokenService.removeWhitelist(savedUser.getId());
-                LOGGER.info("Cleared token whitelist for user after password change: {}", savedUser.getUsername());
-            }
+            authCacheService.clearAllCachesForUser(savedUser.getUsername(), savedUser.getId());
+            LOGGER.info("Cleared authentication cache and token whitelist for user after password change: {}", savedUser.getUsername());
         } catch (Exception e) {
-            // Log and continue; token clearing is best-effort
-            LOGGER.warn("Failed to clear token whitelist for user {}: {}", savedUser.getId(), e.getMessage());
+            // Log and continue; cache clearing is best haha
+            LOGGER.warn("Failed to clear caches for user {}: {}", savedUser.getUsername(), e.getMessage());
         }
         return savedUser;
     }

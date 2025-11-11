@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,10 +16,10 @@ import java.util.Set;
 @Table(name = DatabaseConstants.ROLE_TABLE)
 @DynamicInsert
 @DynamicUpdate
-public class Role extends BaseAuditedEntity {
+@EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
+public class Role extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull

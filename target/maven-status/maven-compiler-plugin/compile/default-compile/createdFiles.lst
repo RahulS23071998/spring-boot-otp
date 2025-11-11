@@ -9,6 +9,7 @@ com\starter\springboot\security\jwt\TokenProvider.class
 com\starter\springboot\config\SecurityConfiguration.class
 com\starter\springboot\config\EmbeddedRedisConfig.class
 com\starter\springboot\dto\ErrorResponse.class
+com\starter\springboot\entity\BaseEntityWithId.class
 com\starter\springboot\config\SwaggerConfig.class
 com\starter\springboot\service\impl\OtpAuditRetentionService.class
 com\starter\springboot\service\IOtpAuditRetentionService.class
@@ -67,6 +68,7 @@ com\starter\springboot\service\impl\OtpAuditServiceImpl.class
 com\starter\springboot\entity\Authority_.class
 com\starter\springboot\service\impl\OtpRateLimiterImpl.class
 com\starter\springboot\service\impl\PasswordChangeAuthorizationService.class
+com\starter\springboot\entity\IdGeneratorEntityListener.class
 com\starter\springboot\exception\RestExceptionHandler.class
 com\starter\springboot\service\impl\OtpProperties.class
 com\starter\springboot\security\OtpAwareAuthenticationProvider.class
