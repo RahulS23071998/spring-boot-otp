@@ -9,12 +9,14 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.dto.OtpGenerationResult;
 import com.starter.springboot.entity.Authority;
+import com.starter.springboot.entity.RefreshToken;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.DomainUserDetails;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRedisTokenService;
+import com.starter.springboot.service.IRefreshTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -29,6 +31,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import jakarta.annotation.PostConstruct;
 
@@ -60,6 +63,9 @@ public class TokenProvider {
 
     @Value("${jwt.expirationRememberMe:${jwt.expiration}}")
     private long tokenValidityInSecondsForRememberMe;
+
+    @Value("${jwt.refreshExpiration:604800}") // Default 7 days (7 * 24 * 60 * 60)
+    private long refreshTokenValidityInSeconds;
     
     @PostConstruct
     public void initialize() {
@@ -103,6 +109,8 @@ public class TokenProvider {
 
     private final IRedisTokenService redisTokenService;
 
+    private final IRefreshTokenService refreshTokenService;
+
     private final StringRedisTemplate redisTemplate;
 
     protected ObjectMapper objectMapper;
@@ -112,61 +120,19 @@ public class TokenProvider {
     // Cache TTL for OTP user details (in minutes)
     private static final int OTP_CACHE_TTL_MINUTES = 5;
 
-    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService, StringRedisTemplate redisTemplate) {
-        this.otpService = otpService;
-        this.userRepository = userRepository;
-        this.redisTokenService = redisTokenService;
-        this.redisTemplate = redisTemplate;
-    }
-
-
     /**
-     * Create token from authentication. If OTP is required, the caller must complete the OTP flow.
-     *
-     * @param authentication authentication object
-     * @param rememberMe remember me indicator
-     * @return payload containing HTTP status and optional JWT token
+     * Internal record to hold token creation data
      */
-    public TokenCreationResponse createToken(Authentication authentication, Boolean rememberMe) {
-        String username = authentication.getName();
-        DomainUserDetails userDetails = resolveDomainUserDetails(authentication);
-
-        if (Boolean.TRUE.equals(userDetails.isOtpRequired())) {
-            OtpGenerationResult otpResult = otpService.generateOtp(userDetails.getUsername(), userDetails.getEmail());
-            if (!otpResult.isSuccess()) {
-                return TokenCreationResponse.rejected(otpResult.getMessage());
-            }
-            // Cache user details to avoid DB query in createTokenAfterVerifiedOtp
-            cacheUserDetailsForOtp(username, userDetails);
-            return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
-        }
-
-        // generate jti and token
-        String jti = UUID.randomUUID().toString();
-        long expirationSeconds = resolveExpiration(rememberMe);
-        String tokenValue = generateToken(authentication, expirationSeconds, jti);
-        // register jti in redis whitelist for this user
-        try {
-            if (Objects.nonNull(userDetails.getUserId())) {
-                redisTokenService.registerJti(userDetails.getUserId(), jti, expirationSeconds);
-            }
-        } catch (Exception e) {
-            log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
-        }
-
-        JWTToken token = JWTToken.bearerToken(tokenValue, expirationSeconds);
-        return TokenCreationResponse.accepted(token);
-    }
+    private record TokenCreationData(User user, String tokenValue, long expirationSeconds) {}
 
     /**
-     * Create token after verified OTP code
+     * Internal method to create token data after OTP verification
      *
      * @param username provided username
      * @param rememberMe remember me indicator
-     * @return String token value
+     * @return TokenCreationData containing user, token value, and expiration
      */
-    public JWTToken createTokenAfterVerifiedOtp(String username, Boolean rememberMe)
-    {
+    private TokenCreationData createTokenInternal(String username, Boolean rememberMe) {
         User user;
         DomainUserDetails cached = getCachedUserDetailsForOtp(username);
         if (cached != null) {
@@ -201,6 +167,7 @@ public class TokenProvider {
         String jti = UUID.randomUUID().toString();
         long expirationSeconds = resolveExpiration(rememberMe);
         String tokenValue = generateToken(authentication, expirationSeconds, jti);
+
         try {
             if (Objects.nonNull(user.getId())) {
                 redisTokenService.registerJti(user.getId(), jti, expirationSeconds);
@@ -208,7 +175,103 @@ public class TokenProvider {
         } catch (Exception e) {
             log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
         }
-        return JWTToken.bearerToken(tokenValue, expirationSeconds);
+
+        return new TokenCreationData(user, tokenValue, expirationSeconds);
+    }
+
+    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService, IRefreshTokenService refreshTokenService, StringRedisTemplate redisTemplate) {
+        this.otpService = otpService;
+        this.userRepository = userRepository;
+        this.redisTokenService = redisTokenService;
+        this.refreshTokenService = refreshTokenService;
+        this.redisTemplate = redisTemplate;
+    }
+
+
+    /**
+     * Create token from authentication. If OTP is required, the caller must complete the OTP flow.
+     *
+     * @param authentication authentication object
+     * @param rememberMe remember me indicator
+     * @return payload containing HTTP status and optional JWT token
+     */
+    public TokenCreationResponse createToken(Authentication authentication, Boolean rememberMe) {
+        String username = authentication.getName();
+        DomainUserDetails userDetails = resolveDomainUserDetails(authentication);
+
+        if (Boolean.TRUE.equals(userDetails.isOtpRequired())) {
+            OtpGenerationResult otpResult = otpService.generateOtp(userDetails.getUsername(), userDetails.getEmail());
+            if (!otpResult.isSuccess()) {
+                return TokenCreationResponse.rejected(otpResult.getMessage());
+            }
+            // Cache user details to avoid DB query in createTokenAfterVerifiedOtp
+            cacheUserDetailsForOtp(username, userDetails);
+            return TokenCreationResponse.pendingOtp("OTP required to complete authentication.");
+        }
+
+        // generate jti and tokens
+        String jti = UUID.randomUUID().toString();
+        long expirationSeconds = resolveExpiration(rememberMe);
+        String tokenValue = generateToken(authentication, expirationSeconds, jti);
+
+        // Create refresh token
+        String refreshTokenValue = null;
+        long refreshTokenExpirationSeconds = refreshTokenValidityInSeconds;
+        if (Objects.nonNull(userDetails.getUserId())) {
+            try {
+                RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserId(), refreshTokenExpirationSeconds);
+                refreshTokenValue = refreshToken.getToken();
+            } catch (Exception e) {
+                log.warn("Failed to create refresh token: {}", e.getMessage());
+            }
+        }
+
+        // register jti in redis whitelist for this user
+        try {
+            if (Objects.nonNull(userDetails.getUserId())) {
+                redisTokenService.registerJti(userDetails.getUserId(), jti, expirationSeconds);
+            }
+        } catch (Exception e) {
+            log.warn("Failed to register jti in redis whitelist: {}", e.getMessage());
+        }
+
+        JWTToken token = JWTToken.bearerTokenWithRefresh(tokenValue, refreshTokenValue, expirationSeconds, refreshTokenExpirationSeconds);
+        return TokenCreationResponse.accepted(token);
+    }
+
+    /**
+     * Create access token after verified OTP code (without creating refresh token)
+     *
+     * @param username provided username
+     * @param rememberMe remember me indicator
+     * @return JWTToken with access token only
+     */
+    public JWTToken createAccessTokenAfterVerifiedOtp(String username, Boolean rememberMe) {
+        TokenCreationData tokenData = createTokenInternal(username, rememberMe);
+        return JWTToken.bearerToken(tokenData.tokenValue(), tokenData.expirationSeconds());
+    }
+
+    /**
+     * Create token after verified OTP code
+     *
+     * @param username provided username
+     * @param rememberMe remember me indicator
+     * @return JWTToken with access and refresh tokens
+     */
+    public JWTToken createTokenAfterVerifiedOtp(String username, Boolean rememberMe) {
+        TokenCreationData tokenData = createTokenInternal(username, rememberMe);
+
+        // Create refresh token
+        String refreshTokenValue = null;
+        long refreshTokenExpirationSeconds = refreshTokenValidityInSeconds;
+        try {
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(tokenData.user().getId(), refreshTokenExpirationSeconds);
+            refreshTokenValue = refreshToken.getToken();
+        } catch (Exception e) {
+            log.warn("Failed to create refresh token: {}", e.getMessage());
+        }
+
+        return JWTToken.bearerTokenWithRefresh(tokenData.tokenValue(), refreshTokenValue, tokenData.expirationSeconds(), refreshTokenExpirationSeconds);
     }
 
     /**
@@ -238,8 +301,8 @@ public class TokenProvider {
      * @param authToken - JWT token
      * @return true | false
      */
-    public boolean validateToken(String authToken)
-    {
+    @Transactional(readOnly = true)
+    public boolean validateToken(String authToken) {
         try
         {
             Claims claims = jwtParser.parseClaimsJws(authToken).getBody();
@@ -298,8 +361,7 @@ public class TokenProvider {
      * @param expirationSeconds token validity in seconds
      * @return String value of jwt token
      */
-    private String generateToken(Authentication authentication, long expirationSeconds, String jti)
-    {
+    private String generateToken(Authentication authentication, long expirationSeconds, String jti) {
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
@@ -320,6 +382,14 @@ public class TokenProvider {
 
     private long resolveExpiration(Boolean rememberMe) {
         return Boolean.TRUE.equals(rememberMe) ? this.tokenValidityInSecondsForRememberMe : this.tokenValidityInSeconds;
+    }
+
+    /**
+     * Get refresh token validity in seconds
+     * @return refresh token validity in seconds
+     */
+    public long getRefreshTokenValidityInSeconds() {
+        return refreshTokenValidityInSeconds;
     }
 
     private DomainUserDetails resolveDomainUserDetails(Authentication authentication) {

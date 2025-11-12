@@ -27,28 +27,22 @@ public class PasswordChangeAuthorizationService implements IPasswordChangeAuthor
     @Override
     public void authorizePasswordChange(User targetUser) {
         Objects.requireNonNull(targetUser, "Target user cannot be null");
-        
-        String authenticatedUsername = getAuthenticatedUsername();
-        String targetUsername = targetUser.getUsername();
-
-        // Check if user is changing their own password or is an admin
-        boolean isSameUser = authenticatedUsername.equalsIgnoreCase(targetUsername);
-        boolean isAdmin = isAuthenticatedUserAdmin();
-
-        if (!isSameUser && !isAdmin) {
-            LOGGER.warn("Unauthorized password change attempt: User {} attempted to change password for user {}", 
-                    authenticatedUsername, targetUsername);
-            throw new AccessDeniedException("You can only change your own password. Contact an administrator to change other users' passwords.");
-        }
-
-        LOGGER.debug("Password change authorized for user {} by {} (admin: {})", 
-                targetUsername, authenticatedUsername, isAdmin);
+        authorizePasswordChangeForUsername(targetUser.getUsername());
     }
 
     @Override
     public void authorizePasswordChangeByUsername(String targetUsername) {
         Objects.requireNonNull(targetUsername, "Target username cannot be null");
-        
+        authorizePasswordChangeForUsername(targetUsername);
+    }
+
+    /**
+     * Core authorization logic for password changes.
+     * Checks if the authenticated user can change the password for the target username.
+     *
+     * @param targetUsername the username whose password is being changed
+     */
+    private void authorizePasswordChangeForUsername(String targetUsername) {
         String authenticatedUsername = getAuthenticatedUsername();
 
         // Check if user is changing their own password or is an admin
@@ -56,12 +50,12 @@ public class PasswordChangeAuthorizationService implements IPasswordChangeAuthor
         boolean isAdmin = isAuthenticatedUserAdmin();
 
         if (!isSameUser && !isAdmin) {
-            LOGGER.warn("Unauthorized password change attempt: User {} attempted to change password for user {}", 
+            LOGGER.warn("Unauthorized password change attempt: User {} attempted to change password for user {}",
                     authenticatedUsername, targetUsername);
             throw new AccessDeniedException("You can only change your own password. Contact an administrator to change other users' passwords.");
         }
 
-        LOGGER.debug("Password change authorized for user {} by {} (admin: {})", 
+        LOGGER.debug("Password change authorized for user {} by {} (admin: {})",
                 targetUsername, authenticatedUsername, isAdmin);
     }
 

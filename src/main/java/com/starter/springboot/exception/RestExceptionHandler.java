@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.validation.BindException;
@@ -101,7 +102,7 @@ public class RestExceptionHandler {
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorResponse> handleResponseStatus(ResponseStatusException ex, HttpServletRequest request) {
         // ResponseStatusException.getStatusCode() returns HttpStatusCode in recent Spring versions.
-        var statusCode = ex.getStatusCode();
+        HttpStatusCode statusCode = ex.getStatusCode();
         HttpStatus status = HttpStatus.resolve(statusCode.value());
         if (status == null) {
             status = HttpStatus.INTERNAL_SERVER_ERROR;

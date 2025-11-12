@@ -3,18 +3,22 @@ package com.starter.springboot.controller;
 import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.constants.SecurityConstants;
+import com.starter.springboot.entity.RefreshToken;
+import com.starter.springboot.entity.User;
+import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.dto.OtpValidationResult;
 import com.starter.springboot.dto.OtpValidationStatus;
 import com.starter.springboot.dto.AuthResponseDTO;
 import com.starter.springboot.dto.LoginDTO;
+import com.starter.springboot.dto.RefreshTokenRequestDTO;
 import com.starter.springboot.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.service.IOtpService;
+import com.starter.springboot.service.IRefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -55,13 +59,21 @@ public class AuthenticationController {
 
     private final IOtpService otpService;
 
+    private final IRefreshTokenService refreshTokenService;
+
+    private final UserRepository userRepository;
+
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationController(TokenProvider tokenProvider,
                                     IOtpService otpService,
+                                    IRefreshTokenService refreshTokenService,
+                                    UserRepository userRepository,
                                     AuthenticationManager authenticationManager) {
         this.tokenProvider = tokenProvider;
         this.otpService = otpService;
+        this.refreshTokenService = refreshTokenService;
+        this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
     }
 
@@ -218,5 +230,85 @@ public class AuthenticationController {
 
         LOGGER.info("OTP verified successfully for user: {}", username);
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping(value = ApplicationConstants.REFRESH_ENDPOINT)
+    @Operation(summary = "Refresh access token using refresh token",
+        description = "Exchange a valid refresh token for a new access token and refresh token pair. " +
+                     "The old refresh token is revoked and a new one is issued for security.")
+    @RequestBody(description = "Refresh token request",
+        content = @Content(schema = @Schema(implementation = RefreshTokenRequestDTO.class),
+            examples = @ExampleObject(value = """
+                {
+                  "refreshToken": "abc123-def456-ghi789-jkl012"
+                }
+                """)))
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Token refreshed successfully",
+            content = @Content(mediaType = "application/json",
+                schema = @Schema(implementation = AuthResponseDTO.class),
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "john.doe",
+                      "success": true,
+                      "token": {
+                        "id_token": "new.jwt.token.here",
+                        "refresh_token": "new.refresh.token.here",
+                        "token_type": "Bearer",
+                        "expires_in": 3600,
+                        "refresh_token_expires_in": 604800
+                      },
+                      "issued_at": "2025-11-11T18:35:26.000Z"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "401", description = "Invalid or expired refresh token",
+            content = @Content(mediaType = "application/json",
+                examples = @ExampleObject(value = """
+                    {
+                      "username": null,
+                      "success": false,
+                      "message": "Invalid refresh token"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "400", description = "Invalid request format")
+    })
+    public ResponseEntity<AuthResponseDTO> refreshToken(
+        @Valid @org.springframework.web.bind.annotation.RequestBody RefreshTokenRequestDTO refreshRequest) {
+
+        try {
+            // Validate refresh token
+            RefreshToken refreshToken = refreshTokenService.validateRefreshToken(refreshRequest.refreshToken());
+
+            // Get user details
+            User user = userRepository.findById(refreshToken.getUserId())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            // Create new tokens (this will rotate the refresh token)
+            RefreshToken newRefreshToken = refreshTokenService.rotateRefreshToken(
+                    refreshRequest.refreshToken(), user.getId(),
+                    tokenProvider.getRefreshTokenValidityInSeconds()
+            );
+
+            // Create new access token (bypass OTP check for refresh)
+            JWTToken token = tokenProvider.createAccessTokenAfterVerifiedOtp(user.getUsername(), false);
+
+            // Create the final token with access token and rotated refresh token
+            JWTToken updatedToken = new JWTToken(
+                    token.getIdToken(),
+                    newRefreshToken.getToken(),
+                    token.getTokenType(),
+                    token.getExpiresIn(),
+                    tokenProvider.getRefreshTokenValidityInSeconds()
+            );
+
+            AuthResponseDTO response = AuthResponseDTO.success(user.getUsername(), updatedToken, false);
+            LOGGER.info("Token refreshed successfully for user: {}", user.getUsername());
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            LOGGER.warn("Token refresh failed: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(AuthResponseDTO.failed(null, "Invalid refresh token"));
+        }
     }
 }

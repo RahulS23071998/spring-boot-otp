@@ -90,3 +90,13 @@ const str= 'hello world world';
 const s = str.replaceAll('world','rahul');
 const s1 = str.replace('world','rahul');
 console.log(s,'\n'+s1);
+
+const maskCreditCard = function(number){
+    const str = number+'';
+    const lastFourDigits = str.slice(-4);
+    console.log(lastFourDigits);
+    return lastFourDigits.padStart(str.length,'*')
+}
+
+console.log(maskCreditCard(123456789));
+console.log(maskCreditCard('123456789'));

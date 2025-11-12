@@ -12,6 +12,7 @@ import com.starter.springboot.service.IAuthCacheService;
 import com.starter.springboot.service.IdGeneratorService;
 import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.IRedisTokenService;
+import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.IUserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,14 +21,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserService implements IUserService {
@@ -50,6 +50,8 @@ public class UserService implements IUserService {
 
     private final IAuthCacheService authCacheService;
 
+    private final IRefreshTokenService refreshTokenService;
+
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
@@ -57,7 +59,8 @@ public class UserService implements IUserService {
                        IRedisTokenService redisTokenService,
                        IPasswordChangeAuthorizationService authorizationService,
                        IdGeneratorService idGeneratorService,
-                       IAuthCacheService authCacheService) {
+                       IAuthCacheService authCacheService,
+                       IRefreshTokenService refreshTokenService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -66,6 +69,7 @@ public class UserService implements IUserService {
         this.authorizationService = authorizationService;
         this.idGeneratorService = idGeneratorService;
         this.authCacheService = authCacheService;
+        this.refreshTokenService = refreshTokenService;
     }
 
     /**
@@ -74,6 +78,7 @@ public class UserService implements IUserService {
      * @return List of user objects.
      */
     @Override
+    @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return this.userRepository.findAll();
     }
@@ -85,6 +90,7 @@ public class UserService implements IUserService {
      * @return e-mail
      */
     @Override
+    @Transactional(readOnly = true)
     public String findEmailByUsername(String username)
     {
         Optional<User> user = userRepository.findByUsername(username);
@@ -143,7 +149,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public User changePasswordById(Long userId, java.util.Map<String, String> payload) {
+    public User changePasswordById(Long userId, Map<String, String> payload) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
         
@@ -155,7 +161,7 @@ public class UserService implements IUserService {
 
     @Override
     @Transactional
-    public User changePasswordByUsername(String username, java.util.Map<String, String> payload) {
+    public User changePasswordByUsername(String username, Map<String, String> payload) {
         // Authorize the password change before fetching the user
         authorizationService.authorizePasswordChangeByUsername(username);
         
@@ -165,7 +171,7 @@ public class UserService implements IUserService {
         return changePasswordInternal(user, payload);
     }
 
-    private User changePasswordInternal(User user, java.util.Map<String, String> payload) {
+    private User changePasswordInternal(User user, Map<String, String> payload) {
         String oldPassword = payload.get(ApplicationConstants.OLD_PASSWORD_FIELD);
         String newPassword = payload.get(ApplicationConstants.NEW_PASSWORD_FIELD);
         String confirmNewPassword = payload.get(ApplicationConstants.CONFIRM_PASSWORD_FIELD);
@@ -182,16 +188,17 @@ public class UserService implements IUserService {
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
-        user.setLastPasswordResetDate(java.util.Date.from(java.time.Instant.now()));
+        user.setLastPasswordResetDate(Date.from(java.time.Instant.now()));
         User savedUser = userRepository.save(user);
 
-        // Clear authentication cache and token whitelist for this user
+        // Clear authentication cache, token whitelist, and refresh tokens for this user
         // This ensures the new password is used immediately on next authentication
         try {
             authCacheService.clearAllCachesForUser(savedUser.getUsername(), savedUser.getId());
-            LOGGER.info("Cleared authentication cache and token whitelist for user after password change: {}", savedUser.getUsername());
+            refreshTokenService.revokeAllUserRefreshTokens(savedUser.getId());
+            LOGGER.info("Cleared authentication cache, token whitelist, and refresh tokens for user after password change: {}", savedUser.getUsername());
         } catch (Exception e) {
-            // Log and continue; cache clearing is best haha
+            // Log and continue; cache clearing is best-effort
             LOGGER.warn("Failed to clear caches for user {}: {}", savedUser.getUsername(), e.getMessage());
         }
         return savedUser;

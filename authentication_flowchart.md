@@ -33,13 +33,22 @@ flowchart TD
     BBB --> CCC["Validate Current Password: PasswordEncoder.matches()"]
     CCC --> DDD["Update Password: PasswordEncoder.encode()"]
     DDD --> EEE["Save User: userRepository.save()"]
-    EEE --> FFF["Clear Caches: authCacheService.clearAllCachesForUser()"]
+    EEE --> FFF["Clear Caches: authCacheService.clearAllCachesForUser() + revokeAllUserRefreshTokens()"]
     FFF --> GGG["Clear Auth Cache: Redis delete auth:user:{username}"]
     FFF --> HHH["Clear Token Whitelist: IRedisTokenService.removeWhitelist(userId)"]
-    HHH --> III["Return Success: UserResponseDTO"]
+    FFF --> III["Revoke Refresh Tokens: refreshTokenService.revokeAllUserRefreshTokens(userId)"]
+    III --> JJJ["Return Success: UserResponseDTO"]
     %% Cache Impact on Authentication
-    III --> JJJ["Next Login: Forces DB lookup (cache cleared)"]
-    JJJ --> D
+    JJJ --> KKK["Next Login: Forces DB lookup (cache cleared)"]
+    KKK --> D
+    %% Refresh Token Flow
+    LLL["Access Token Expired"] --> MMM["refreshToken: POST /auth/refresh"]
+    MMM --> NNN["Validate Refresh Token: refreshTokenService.validateRefreshToken()"]
+    NNN --> OOO["Get User: userRepository.findById()"]
+    OOO --> PPP["Rotate Refresh Token: refreshTokenService.rotateRefreshToken()"]
+    PPP --> QQQ["Create New Access Token: TokenProvider.createAccessTokenAfterVerifiedOtp()"]
+    QQQ --> RRR["Return New Tokens: JWTToken with access + refresh tokens"]
+    RRR --> SSS["Client Updates Tokens"]
     %% Negative Paths
     E -->|Invalid Credentials| Y["BadCredentialsException: HttpStatus.UNAUTHORIZED"]
     G -->|Rate Limit Exceeded| Z["rateLimited: OtpGenerationResult.rateLimited() - Redis key otp:{username}:rate_limit (15s)"]
@@ -56,32 +65,45 @@ flowchart TD
     FF["Scheduled: purgeExpiredEntries via OtpAuditRetentionService @Scheduled(cron=OtpConstants.OTP_AUDIT_PURGE_CRON)"]
     FF --> GG["Delete Expired: OtpAuditEntryRepository.deleteByExpiresOnBefore()"]
     FF --> HH["Log: SLF4J info/debug"]
+    %% Negative Paths for Refresh
+    NNN -->|Invalid Token| TTT["Invalid Refresh Token: HttpStatus.UNAUTHORIZED"]
     %% End
     N --> II["Success: Authentication completed"]
     X --> II
-    III --> II
+    JJJ --> II
+    RRR --> II
     Y --> JJ["Failure: Authentication failed"]
     Z --> JJ
     BB --> JJ
     CC --> JJ
     KKK --> JJ
+    TTT --> JJ
 ```
 
 ## Key Changes Made
 
 ### Password Change Integration
-- **Added password change flow** (`AAA` → `III`) showing the complete process
-- **Cache clearing mechanism** (`FFF` → `HHH`) that clears both auth cache and token whitelist
-- **Cache impact** (`III` → `JJJ`) showing how password changes force fresh DB lookups
+- **Added password change flow** (`AAA` → `JJJ`) showing the complete process
+- **Enhanced cache clearing** (`FFF` → `III`) that clears auth cache, token whitelist, AND refresh tokens
+- **Cache impact** (`JJJ` → `KKK`) showing how password changes force fresh DB lookups
+
+### Refresh Token Implementation
+- **Refresh token flow** (`LLL` → `SSS`) for seamless token renewal
+- **Token rotation** (`PPP`) for enhanced security - old refresh tokens are revoked when new ones are issued
+- **Updated access token creation** (`QQQ`) uses TokenProvider.createAccessTokenAfterVerifiedOtp() to avoid OTP-triggered side effects during refresh
+- **Dual token response** - both access and refresh tokens returned on authentication and refresh
 
 ### Security Improvements
 - **Immediate cache invalidation** prevents authentication with old passwords
 - **Token whitelist clearing** ensures old JWTs are invalidated
+- **Refresh token revocation** on password change prevents token reuse
+- **Token rotation** prevents refresh token replay attacks
 - **Fresh DB lookup** guarantees latest user data is used
 
 ### Flow Connections
 - Password change success connects back to authentication flow
-- Cache clearing prevents stale authentication data
-- Error handling for invalid current passwords
+- Refresh token flow handles expired access tokens seamlessly
+- Comprehensive error handling for all authentication scenarios
+- Scheduled cleanup for expired tokens
 
-This updated flowchart reflects the security improvements made to ensure password changes take effect immediately across the authentication system.
+This updated flowchart reflects the complete JWT authentication system with refresh tokens, ensuring both security and user experience optimization.

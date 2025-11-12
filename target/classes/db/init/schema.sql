@@ -82,6 +82,23 @@ CREATE TABLE IF NOT EXISTS otp_audit_entries (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ================================================
+-- 4.5. CREATE REFRESH TOKENS TABLE
+-- ================================================
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+    id BIGINT NOT NULL PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    token VARCHAR(500) NOT NULL UNIQUE,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    revoked_at DATETIME NULL,
+    replaced_by_token VARCHAR(500) NULL,
+    INDEX idx_refresh_token_user (user_id),
+    INDEX idx_refresh_token_expires (expires_at),
+    INDEX idx_refresh_token_token (token),
+    CONSTRAINT fk_refresh_token_user FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ================================================
 -- 5. INSERT ROLES
 -- ================================================
 INSERT IGNORE INTO role (id, name, description, created_date, created_by) VALUES

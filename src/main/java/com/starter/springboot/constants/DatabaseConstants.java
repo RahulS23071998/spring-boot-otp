@@ -10,6 +10,7 @@ public final class DatabaseConstants {
     public static final String ROLE_TABLE = "role";
     public static final String AUTHORITY_TABLE = "authority";
     public static final String OTP_AUDIT_ENTRIES_TABLE = "otp_audit_entries";
+    public static final String REFRESH_TOKENS_TABLE = "refresh_tokens";
     
     // User Table Columns
     public static final String USER_ID_COLUMN = "id";
@@ -38,6 +39,14 @@ public final class DatabaseConstants {
     public static final String EXPIRES_ON_COLUMN = "expires_on";
     public static final String PARTNER_EXPIRY_COLUMN = "partner_expiry";
     public static final String OTP_USERNAME_COLUMN = "username";
+
+    // Refresh Tokens Table Columns
+    public static final String REFRESH_TOKEN_USER_ID_COLUMN = "user_id";
+    public static final String REFRESH_TOKEN_TOKEN_COLUMN = "token";
+    public static final String REFRESH_TOKEN_EXPIRES_AT_COLUMN = "expires_at";
+    public static final String REFRESH_TOKEN_CREATED_AT_COLUMN = "created_at";
+    public static final String REFRESH_TOKEN_REVOKED_AT_COLUMN = "revoked_at";
+    public static final String REFRESH_TOKEN_REPLACED_BY_TOKEN_COLUMN = "replaced_by_token";
     
     // Column Constraints
     public static final int USERNAME_MAX_LENGTH = 50;
@@ -47,6 +56,7 @@ public final class DatabaseConstants {
     public static final int EMAIL_MAX_LENGTH = 50;
     public static final int STATUS_MAX_LENGTH = 20;
     public static final int AUTHORITY_NAME_MAX_LENGTH = 50;
+    public static final int REFRESH_TOKEN_MAX_LENGTH = 500;
     
     // Validation Constraints
     public static final int MIN_USERNAME_LENGTH = 1;
@@ -61,6 +71,11 @@ public final class DatabaseConstants {
     
     // JPA Mappings
     public static final String ROLE_MAPPING_FIELD = "role";
+
+    // Index Names
+    public static final String IDX_REFRESH_TOKEN_USER = "idx_refresh_token_user";
+    public static final String IDX_REFRESH_TOKEN_EXPIRES = "idx_refresh_token_expires";
+    public static final String IDX_REFRESH_TOKEN_TOKEN = "idx_refresh_token_token";
     
     private DatabaseConstants() {
         // Private constructor to prevent instantiation
