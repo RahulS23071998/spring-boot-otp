@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.starter.springboot.controller.AuthenticationControllerTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.822 s -- in com.starter.springboot.controller.AuthenticationControllerTest
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.660 s -- in com.starter.springboot.controller.AuthenticationControllerTest
