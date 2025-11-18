@@ -2,13 +2,18 @@ package com.starter.springboot.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starter.springboot.dto.OtpValidationResult;
+import com.starter.springboot.dto.RefreshTokenRequestDTO;
+import com.starter.springboot.entity.RefreshToken;
+import com.starter.springboot.entity.User;
 import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.dto.LoginDTO;
 import com.starter.springboot.dto.VerifyTokenRequestDTO;
+import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.service.IOtpService;
+import com.starter.springboot.service.IRefreshTokenService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +30,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.time.Instant;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 
@@ -45,6 +53,12 @@ class AuthenticationControllerTest {
 
     @Mock
     private IOtpService otpService;
+
+    @Mock
+    private IRefreshTokenService refreshTokenService;
+
+    @Mock
+    private UserRepository userRepository;
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -290,6 +304,216 @@ class AuthenticationControllerTest {
 
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(tokenProvider).createToken(eq(authentication), eq(true));
+    }
+
+    @Test
+    @DisplayName("Should successfully refresh token with valid refresh token")
+    void testSuccessfulTokenRefresh() throws Exception {
+        // Arrange
+        String oldRefreshToken = "old-refresh-token-value";
+        String newRefreshToken = "new-refresh-token-value";
+        String newAccessToken = "new-access-token";
+        Long userId = 1L;
+        
+        RefreshTokenRequestDTO refreshRequest = new RefreshTokenRequestDTO(oldRefreshToken);
+        
+        User user = new User();
+        user.setId(userId);
+        user.setUsername("diona.smith");
+        
+        RefreshToken oldToken = new RefreshToken();
+        oldToken.setId(1L);
+        oldToken.setUserId(userId);
+        oldToken.setToken(oldRefreshToken);
+        oldToken.setExpiresAt(Instant.now().plusSeconds(604800));
+        oldToken.setRevokedAt(null);
+        
+        RefreshToken newToken = new RefreshToken();
+        newToken.setId(2L);
+        newToken.setUserId(userId);
+        newToken.setToken(newRefreshToken);
+        newToken.setExpiresAt(Instant.now().plusSeconds(604800));
+        newToken.setRevokedAt(null);
+        
+        JWTToken accessToken = JWTToken.bearerToken(newAccessToken, 3600L);
+        JWTToken finalToken = new JWTToken(newAccessToken, newRefreshToken, "Bearer", 3600L, 604800L);
+        
+        when(refreshTokenService.validateRefreshToken(oldRefreshToken)).thenReturn(oldToken);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(refreshTokenService.rotateRefreshToken(oldRefreshToken, userId, 604800L)).thenReturn(newToken);
+        when(tokenProvider.createAccessTokenAfterVerifiedOtp("diona.smith", false)).thenReturn(accessToken);
+        when(tokenProvider.getRefreshTokenValidityInSeconds()).thenReturn(604800L);
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(refreshRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is("diona.smith")))
+                .andExpect(jsonPath("$.status", is("SUCCESS")))
+                .andExpect(jsonPath("$.token.id_token", is(newAccessToken)))
+                .andExpect(jsonPath("$.token.refresh_token", is(newRefreshToken)))
+                .andExpect(jsonPath("$.token.token_type", is("Bearer")))
+                .andExpect(jsonPath("$.token.expires_in", is(3600)))
+                .andExpect(jsonPath("$.token.refresh_token_expires_in", is(604800)));
+        
+        verify(refreshTokenService).validateRefreshToken(oldRefreshToken);
+        verify(userRepository).findById(userId);
+        verify(refreshTokenService).rotateRefreshToken(oldRefreshToken, userId, 604800L);
+        verify(tokenProvider).createAccessTokenAfterVerifiedOtp("diona.smith", false);
+    }
+
+    @Test
+    @DisplayName("Should return UNAUTHORIZED for invalid refresh token")
+    void testRefreshTokenWithInvalidToken() throws Exception {
+        // Arrange
+        String invalidRefreshToken = "invalid-refresh-token";
+        RefreshTokenRequestDTO refreshRequest = new RefreshTokenRequestDTO(invalidRefreshToken);
+        
+        when(refreshTokenService.validateRefreshToken(invalidRefreshToken))
+                .thenThrow(new RuntimeException("Invalid refresh token"));
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(refreshRequest)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Invalid refresh token")));
+        
+        verify(refreshTokenService).validateRefreshToken(invalidRefreshToken);
+    }
+
+    @Test
+    @DisplayName("Should return UNAUTHORIZED for expired refresh token")
+    void testRefreshTokenWithExpiredToken() throws Exception {
+        // Arrange
+        String expiredRefreshToken = "expired-refresh-token";
+        RefreshTokenRequestDTO refreshRequest = new RefreshTokenRequestDTO(expiredRefreshToken);
+        
+        when(refreshTokenService.validateRefreshToken(expiredRefreshToken))
+                .thenThrow(new RuntimeException("Invalid refresh token"));
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(refreshRequest)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Invalid refresh token")));
+        
+        verify(refreshTokenService).validateRefreshToken(expiredRefreshToken);
+    }
+
+    @Test
+    @DisplayName("Should return UNAUTHORIZED when user not found during refresh")
+    void testRefreshTokenWhenUserNotFound() throws Exception {
+        // Arrange
+        String refreshTokenValue = "valid-refresh-token";
+        Long userId = 999L;
+        
+        RefreshTokenRequestDTO refreshRequest = new RefreshTokenRequestDTO(refreshTokenValue);
+        
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setId(1L);
+        refreshToken.setUserId(userId);
+        refreshToken.setToken(refreshTokenValue);
+        refreshToken.setExpiresAt(Instant.now().plusSeconds(604800));
+        refreshToken.setRevokedAt(null);
+        
+        when(refreshTokenService.validateRefreshToken(refreshTokenValue)).thenReturn(refreshToken);
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(refreshRequest)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Invalid refresh token")));
+        
+        verify(refreshTokenService).validateRefreshToken(refreshTokenValue);
+        verify(userRepository).findById(userId);
+    }
+
+    @Test
+    @DisplayName("Should perform token rotation during refresh")
+    void testTokenRotationDuringRefresh() throws Exception {
+        // Arrange
+        String oldRefreshToken = "old-refresh-token-value";
+        String newRefreshToken = "new-refresh-token-value";
+        String newAccessToken = "new-access-token";
+        Long userId = 1L;
+        
+        RefreshTokenRequestDTO refreshRequest = new RefreshTokenRequestDTO(oldRefreshToken);
+        
+        User user = new User();
+        user.setId(userId);
+        user.setUsername("testuser");
+        
+        RefreshToken oldToken = new RefreshToken();
+        oldToken.setId(1L);
+        oldToken.setUserId(userId);
+        oldToken.setToken(oldRefreshToken);
+        oldToken.setExpiresAt(Instant.now().plusSeconds(604800));
+        oldToken.setRevokedAt(null);
+        
+        RefreshToken newToken = new RefreshToken();
+        newToken.setId(2L);
+        newToken.setUserId(userId);
+        newToken.setToken(newRefreshToken);
+        newToken.setExpiresAt(Instant.now().plusSeconds(604800));
+        newToken.setRevokedAt(null);
+        
+        JWTToken accessToken = JWTToken.bearerToken(newAccessToken, 3600L);
+        JWTToken finalToken = new JWTToken(newAccessToken, newRefreshToken, "Bearer", 3600L, 604800L);
+        
+        when(refreshTokenService.validateRefreshToken(oldRefreshToken)).thenReturn(oldToken);
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        when(refreshTokenService.rotateRefreshToken(oldRefreshToken, userId, 604800L)).thenReturn(newToken);
+        when(tokenProvider.createAccessTokenAfterVerifiedOtp("testuser", false)).thenReturn(accessToken);
+        when(tokenProvider.getRefreshTokenValidityInSeconds()).thenReturn(604800L);
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(refreshRequest)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.token.refresh_token", is(newRefreshToken)));
+        
+        verify(refreshTokenService).rotateRefreshToken(oldRefreshToken, userId, 604800L);
+    }
+
+    @Test
+    @DisplayName("Should return BAD_REQUEST for missing refresh token")
+    void testRefreshTokenWithMissingToken() throws Exception {
+        // Arrange
+        String jsonPayload = "{}";
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonPayload))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Should handle refresh token service exception gracefully")
+    void testRefreshTokenWithServiceException() throws Exception {
+        // Arrange
+        String refreshTokenValue = "problematic-token";
+        RefreshTokenRequestDTO refreshRequest = new RefreshTokenRequestDTO(refreshTokenValue);
+        
+        when(refreshTokenService.validateRefreshToken(refreshTokenValue))
+                .thenThrow(new RuntimeException("Database error"));
+        
+        // Act & Assert
+        mockMvc.perform(post("/auth/refresh")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(refreshRequest)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Invalid refresh token")));
     }
 
 }

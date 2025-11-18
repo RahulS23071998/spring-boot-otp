@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.258" tests="17" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.RefreshTokenServiceTest" time="0.181" tests="19" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -70,36 +70,35 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldAuthorizePasswordChangeByUsernameWhenUserChangesOwnPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.17"/>
-  <testcase name="shouldReturnTrueWhenAuthenticatedUserHasAdminAuthority" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldDenyPasswordChangeByUsernameWhenNonAdminChangesOtherPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003">
-    <system-out><![CDATA[2025-11-18T18:32:00.008+05:30  WARN 31036 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Unauthorized password change attempt: User authenticatedUser attempted to change password for user targetUser
+  <testcase name="shouldSuccessfullyCreateRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.125"/>
+  <testcase name="shouldValidateOnlyNonRevokedAndNonExpiredTokens" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.002"/>
+  <testcase name="shouldSuccessfullyValidateActiveRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003"/>
+  <testcase name="shouldRevokeOldTokenDuringRotation" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003"/>
+  <testcase name="shouldSaveRevokedTokenWithTimestamp" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.002"/>
+  <testcase name="shouldThrowExceptionForRevokedRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.004">
+    <system-out><![CDATA[2025-11-18T18:32:00.336+05:30  WARN 31036 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Invalid or expired refresh token
 ]]></system-out>
   </testcase>
-  <testcase name="shouldThrowNullPointerExceptionWhenTargetUsernameIsNull" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldThrowIllegalStateExceptionWhenAuthenticatedUserHasNoUsername" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.005">
-    <system-out><![CDATA[2025-11-18T18:32:00.015+05:30 ERROR 31036 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Authenticated user has no username
+  <testcase name="shouldCreateNewTokenWhenRotatingInvalidToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003"/>
+  <testcase name="shouldSuccessfullyRevokeRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.002"/>
+  <testcase name="shouldCreateRefreshTokenWithCorrectUserId" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.002"/>
+  <testcase name="shouldHandleCleanupWhenNoExpiredTokensExist" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.002"/>
+  <testcase name="shouldThrowExceptionForInvalidRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003">
+    <system-out><![CDATA[2025-11-18T18:32:00.350+05:30  WARN 31036 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Invalid or expired refresh token
 ]]></system-out>
   </testcase>
-  <testcase name="shouldReturnFalseWhenAuthenticatedUserIsNotAdmin" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.004"/>
-  <testcase name="shouldAuthorizePasswordChangeWhenUserChangesOwnPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.007"/>
-  <testcase name="shouldReturnTrueWhenAuthenticatedUserHasRoleAdminAuthority" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.004"/>
-  <testcase name="shouldReturnAuthenticatedUsernameFromSecurityContext" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.004"/>
-  <testcase name="shouldThrowNullPointerExceptionWhenTargetUserIsNull" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldThrowIllegalStateExceptionWhenAuthenticationNotAuthenticated" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003">
-    <system-out><![CDATA[2025-11-18T18:32:00.044+05:30 ERROR 31036 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : No authenticated user found in security context
+  <testcase name="shouldNotFailWhenRevokingNonExistentToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003"/>
+  <testcase name="shouldSuccessfullyRevokeAllUserRefreshTokens" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.001"/>
+  <testcase name="shouldGenerateUniqueTokenOnCreation" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003"/>
+  <testcase name="shouldThrowExceptionForExpiredRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003">
+    <system-out><![CDATA[2025-11-18T18:32:00.362+05:30  WARN 31036 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Invalid or expired refresh token
 ]]></system-out>
   </testcase>
-  <testcase name="shouldAuthorizePasswordChangeByUsernameWhenAdminChangesAnyPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.01"/>
-  <testcase name="shouldReturnTrueWhenAuthenticatedUserIsAdmin" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldReturnFalseWhenNoAuthenticatedUserForAdminCheck" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldThrowIllegalStateExceptionWhenNoAuthenticatedUser" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.014">
-    <system-out><![CDATA[2025-11-18T18:32:00.075+05:30 ERROR 31036 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : No authenticated user found in security context
+  <testcase name="shouldSetCorrectExpirationTimeOnTokenCreation" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.005"/>
+  <testcase name="shouldSuccessfullyCleanupExpiredTokens" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003">
+    <system-out><![CDATA[2025-11-18T18:32:00.370+05:30  INFO 31036 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Cleaned up 10 expired refresh tokens
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDenyPasswordChangeWhenNonAdminChangesOtherPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003">
-    <system-out><![CDATA[2025-11-18T18:32:00.081+05:30  WARN 31036 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Unauthorized password change attempt: User authenticatedUser attempted to change password for user targetUser
-]]></system-out>
-  </testcase>
-  <testcase name="shouldAuthorizePasswordChangeWhenAdminChangesAnyPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.004"/>
+  <testcase name="shouldSuccessfullyRotateRefreshToken" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.003"/>
+  <testcase name="shouldHandleRevokingAllTokensWhenUserHasNoTokens" classname="com.starter.springboot.service.RefreshTokenServiceTest" time="0.001"/>
 </testsuite>

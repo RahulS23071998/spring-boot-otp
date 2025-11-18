@@ -1,0 +1,617 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.starter:spring-boot >-----------------------
+[INFO] Building spring-boot 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The artifact org.hibernate:hibernate-jpamodelgen:jar:6.2.5.Final has been relocated to org.hibernate.orm:hibernate-jpamodelgen:jar:6.2.5.Final
+[INFO] 
+[INFO] --- spring-boot:3.2.3:build-info (default) @ spring-boot ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ spring-boot ---
+[INFO] Copying 5 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ spring-boot ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ spring-boot ---
+[INFO] Copying 0 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ spring-boot ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ spring-boot ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.starter.springboot.config.SecurityConfigurationTest
+18:30:24.878 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.starter.springboot.config.SecurityConfigurationTest]: SecurityConfigurationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:30:25.087 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.config.SecurityConfigurationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.3)
+
+2025-11-18T18:30:25.734+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.config.SecurityConfigurationTest   : Starting SecurityConfigurationTest using Java 17.0.9 with PID 27200 (started by Rahul.S in C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp)
+2025-11-18T18:30:25.738+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.config.SecurityConfigurationTest   : The following 1 profile is active: "dev"
+2025-11-18T18:30:25.739+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.boot.SpringApplication               : Loading source class com.starter.springboot.Application
+2025-11-18T18:30:25.765+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.c.s.GenericWebApplicationContext   : Refreshing org.springframework.web.context.support.GenericWebApplicationContext@50d3bf39
+2025-11-18T18:30:27.912+05:30  INFO 27200 --- [Starter Project] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-18T18:30:27.914+05:30  INFO 27200 --- [Starter Project] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-18T18:30:27.946+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.a.AutoConfigurationPackages        : @EnableAutoConfiguration was declared on a class in the package 'com.starter.springboot'. Automatic @Repository and @Entity scanning is enabled.
+2025-11-18T18:30:28.208+05:30  INFO 27200 --- [Starter Project] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 282 ms. Found 5 JPA repository interfaces.
+2025-11-18T18:30:28.227+05:30  INFO 27200 --- [Starter Project] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-18T18:30:28.229+05:30  INFO 27200 --- [Starter Project] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-18T18:30:28.265+05:30  INFO 27200 --- [Starter Project] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.AuthorityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-18T18:30:28.266+05:30  INFO 27200 --- [Starter Project] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.OtpAuditEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-18T18:30:28.269+05:30  INFO 27200 --- [Starter Project] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-18T18:30:28.271+05:30  INFO 27200 --- [Starter Project] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-18T18:30:28.272+05:30  INFO 27200 --- [Starter Project] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-18T18:30:28.272+05:30  INFO 27200 --- [Starter Project] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 24 ms. Found 0 Redis repository interfaces.
+2025-11-18T18:30:32.183+05:30  INFO 27200 --- [Starter Project] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-18T18:30:32.248+05:30  INFO 27200 --- [Starter Project] [           main] com.zaxxer.hikari.HikariDataSource       : MySQL Local Connection - Starting...
+2025-11-18T18:30:32.556+05:30  INFO 27200 --- [Starter Project] [           main] com.zaxxer.hikari.pool.HikariPool        : MySQL Local Connection - Added connection com.mysql.cj.jdbc.ConnectionImpl@18419ab7
+2025-11-18T18:30:32.559+05:30  INFO 27200 --- [Starter Project] [           main] com.zaxxer.hikari.HikariDataSource       : MySQL Local Connection - Start completed.
+2025-11-18T18:30:32.629+05:30  WARN 27200 --- [Starter Project] [           main] org.hibernate.orm.deprecation            : HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-18T18:30:32.631+05:30  WARN 27200 --- [Starter Project] [           main] org.hibernate.orm.deprecation            : HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-11-18T18:30:34.565+05:30  INFO 27200 --- [Starter Project] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-18T18:30:35.522+05:30  INFO 27200 --- [Starter Project] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-18T18:30:37.043+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 14 mappings in 'requestMappingHandlerMapping'
+2025-11-18T18:30:37.346+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-11-18T18:30:38.145+05:30  INFO 27200 --- [Starter Project] [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 10 endpoint(s) beneath base path '/actuator'
+2025-11-18T18:30:38.271+05:30  INFO 27200 --- [Starter Project] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2012ed86, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5c512d91, org.springframework.security.web.context.SecurityContextHolderFilter@49ce2726, org.springframework.security.web.header.HeaderWriterFilter@29810fa0, org.springframework.web.filter.CorsFilter@6022a4c4, org.springframework.security.web.authentication.logout.LogoutFilter@2c956132, com.starter.springboot.security.jwt.JWTFilter@11092844, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@41313f58, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7476c5c2, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2640893e, org.springframework.security.web.session.SessionManagementFilter@4b77d80e, org.springframework.security.web.access.ExceptionTranslationFilter@96effb1, org.springframework.security.web.access.intercept.AuthorizationFilter@68017525]
+2025-11-18T18:30:38.670+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:39.625+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.w.s.ServletContextInitializerBeans : Mapping filters: webMvcObservationFilter urls=[/*] order=-2147483647, springSecurityFilterChain urls=[/*] order=-100, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105
+2025-11-18T18:30:39.626+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.w.s.ServletContextInitializerBeans : Mapping servlets: 
+2025-11-18T18:30:39.668+05:30 DEBUG 27200 --- [Starter Project] [           main] s.b.w.s.f.OrderedCharacterEncodingFilter : Filter 'characterEncodingFilter' configured for use
+2025-11-18T18:30:39.668+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.f.ServerHttpObservationFilter      : Filter 'webMvcObservationFilter' configured for use
+2025-11-18T18:30:39.669+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.w.s.f.OrderedFormContentFilter     : Filter 'formContentFilter' configured for use
+2025-11-18T18:30:39.669+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.w.s.f.OrderedRequestContextFilter  : Filter 'requestContextFilter' configured for use
+2025-11-18T18:30:39.669+05:30 DEBUG 27200 --- [Starter Project] [           main] .DelegatingFilterProxyRegistrationBean$1 : Filter 'springSecurityFilterChain' configured for use
+2025-11-18T18:30:39.670+05:30  INFO 27200 --- [Starter Project] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:39.671+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:39.675+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+2025-11-18T18:30:39.796+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.config.SecurityConfigurationTest   : Started SecurityConfigurationTest in 14.465 seconds (process running for 16.414)
+2025-11-18T18:30:39.853+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.a.ApplicationAvailabilityBean      : Application availability state LivenessState changed to CORRECT
+2025-11-18T18:30:39.857+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.b.a.ApplicationAvailabilityBean      : Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2025-11-18T18:30:40.045+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2025-11-18T18:30:40.049+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2025-11-18T18:30:40.056+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.exception.RestExceptionHandler     : Unhandled exception: NoResourceFoundException - No static resource api/public/test.
+2025-11-18T18:30:40.117+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:40.122+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ErrorResponse[timestamp=2025-11-18T13:00:40.057893400Z, status=500, error=Internal Server Error, mes (truncated)...]
+2025-11-18T18:30:40.243+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:40.303+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@4178d53c]
+2025-11-18T18:30:40.349+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:40.349+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ErrorResponse[timestamp=2025-11-18T13:00:40.348233400Z, status=400, error=Bad Request, message=Valid (truncated)...]
+2025-11-18T18:30:40.939+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.GreetingController#hello()
+2025-11-18T18:30:40.960+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json]
+2025-11-18T18:30:40.962+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{message=Hello World!, timestamp=2025-11-18T13:00:40.959380900Z, status=SUCCESS}]
+2025-11-18T18:30:41.239+05:30 DEBUG 27200 --- [Starter Project] [           main] s.b.a.e.w.s.WebMvcEndpointHandlerMapping : Mapped to Actuator web endpoint 'health'
+2025-11-18T18:30:41.243+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/octet-stream" to []
+2025-11-18T18:30:41.911+05:30  WARN 27200 --- [Starter Project] [oundedElastic-1] o.s.b.a.d.r.RedisReactiveHealthIndicator : Redis health check failed
+
+org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.translateException(LettuceConnectionFactory.java:1795) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1726) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1528) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.lambda$getConnection$0(LettuceConnectionFactory.java:1508) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.doInLock(LettuceConnectionFactory.java:1469) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1505) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getSharedReactiveConnection(LettuceConnectionFactory.java:1216) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:1091) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:118) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at reactor.core.publisher.MonoSupplier.call(MonoSupplier.java:67) ~[reactor-core-3.6.3.jar:3.6.3]
+	at reactor.core.publisher.FluxSubscribeOnCallable$CallableSubscribeOnSubscription.run(FluxSubscribeOnCallable.java:228) ~[reactor-core-3.6.3.jar:3.6.3]
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68) ~[reactor-core-3.6.3.jar:3.6.3]
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28) ~[reactor-core-3.6.3.jar:3.6.3]
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264) ~[na:na]
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136) ~[na:na]
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+Caused by: org.springframework.data.redis.connection.PoolException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.getConnection(LettucePoolingConnectionProvider.java:104) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1724) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	... 16 common frames omitted
+Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to localhost/<unresolved>:6379
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:78) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:56) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at io.lettuce.core.AbstractRedisClient.getConnection(AbstractRedisClient.java:350) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at io.lettuce.core.RedisClient.connect(RedisClient.java:215) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.lambda$getConnection$1(StandaloneConnectionProvider.java:112) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.getConnection(StandaloneConnectionProvider.java:112) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.lambda$getConnection$0(LettucePoolingConnectionProvider.java:93) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	at io.lettuce.core.support.ConnectionPoolSupport$RedisPooledObjectFactory.create(ConnectionPoolSupport.java:211) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at io.lettuce.core.support.ConnectionPoolSupport$RedisPooledObjectFactory.create(ConnectionPoolSupport.java:201) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:71) ~[commons-pool2-2.12.0.jar:2.12.0]
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:566) ~[commons-pool2-2.12.0.jar:2.12.0]
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:306) ~[commons-pool2-2.12.0.jar:2.12.0]
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:233) ~[commons-pool2-2.12.0.jar:2.12.0]
+	at io.lettuce.core.support.ConnectionPoolSupport$1.borrowObject(ConnectionPoolSupport.java:122) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at io.lettuce.core.support.ConnectionPoolSupport$1.borrowObject(ConnectionPoolSupport.java:117) ~[lettuce-core-6.3.1.RELEASE.jar:6.3.1.RELEASE/12e6995]
+	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.getConnection(LettucePoolingConnectionProvider.java:99) ~[spring-data-redis-3.2.3.jar:3.2.3]
+	... 17 common frames omitted
+Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: no further information: localhost/127.0.0.1:6379: localhost/127.0.0.1:6379
+Caused by: java.net.ConnectException: Connection refused: no further information: localhost/127.0.0.1:6379
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method) ~[na:na]
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672) ~[na:na]
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946) ~[na:na]
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:337) ~[netty-transport-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:335) ~[netty-transport-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:776) ~[netty-transport-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724) ~[netty-transport-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650) ~[netty-transport-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562) ~[netty-transport-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997) ~[netty-common-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) ~[netty-common-4.1.107.Final.jar:4.1.107.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) ~[netty-common-4.1.107.Final.jar:4.1.107.Final]
+	at java.base/java.lang.Thread.run(Thread.java:840) ~[na:na]
+
+2025-11-18T18:30:41.920+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/vnd.spring-boot.actuator.v3+json', given [*/*] and supported [application/vnd.spring-boot.actuator.v3+json, application/vnd.spring-boot.actuator.v2+json, application/json]
+2025-11-18T18:30:41.928+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [org.springframework.boot.actuate.health.SystemHealth@5bdb605c]
+2025-11-18T18:30:41.945+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springdoc.webmvc.api.OpenApiWebMvcResource#openapiJson(HttpServletRequest, String, Locale)
+2025-11-18T18:30:42.583+05:30  INFO 27200 --- [Starter Project] [           main] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 626 ms
+2025-11-18T18:30:42.604+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [*/*] and supported [application/json]
+2025-11-18T18:30:42.609+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Writing [{123, 34, 111, 112, 101, 110, 97, 112, 105, 34, 58, 34, 51, 46, 48, 46, 49, 34, 44, 34, 105, 110, 10 (truncated)...]
+2025-11-18T18:30:42.641+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:42.643+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@36971bef]
+2025-11-18T18:30:42.644+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:42.645+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ErrorResponse[timestamp=2025-11-18T13:00:42.644323400Z, status=400, error=Bad Request, message=Valid (truncated)...]
+2025-11-18T18:30:42.673+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2025-11-18T18:30:42.673+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.r.ResourceHttpRequestHandler     : Resource not found
+2025-11-18T18:30:42.673+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.exception.RestExceptionHandler     : Unhandled exception: NoResourceFoundException - No static resource .
+2025-11-18T18:30:42.674+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:42.674+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ErrorResponse[timestamp=2025-11-18T13:00:42.673322400Z, status=500, error=Internal Server Error, mes (truncated)...]
+[INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 18.20 s -- in com.starter.springboot.config.SecurityConfigurationTest
+[INFO] Running com.starter.springboot.controller.AuthenticationControllerTest
+2025-11-18T18:30:43.010+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.011+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.012+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.012+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.013+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-18T18:30:43.022+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#verifyOtp(VerifyTokenRequestDTO)
+2025-11-18T18:30:43.025+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@23e1dd4a]
+2025-11-18T18:30:43.032+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : OTP validation failed for user: diona.smith with status INVALID
+2025-11-18T18:30:43.036+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.043+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid OTP provided., otpRequired=fals (truncated)...]
+2025-11-18T18:30:43.129+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.130+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.130+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.130+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.131+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-18T18:30:43.135+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.142+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=expired-refresh-token]]
+2025-11-18T18:30:43.149+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: Invalid refresh token
+2025-11-18T18:30:43.150+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.151+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+2025-11-18T18:30:43.162+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.164+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.165+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.165+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.165+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.172+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:43.174+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@968ebd0]
+2025-11-18T18:30:43.179+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
+2025-11-18T18:30:43.180+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication failed for user: diona.smith: Account locked
+2025-11-18T18:30:43.182+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.182+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Account locked, otpRequired=false, toke (truncated)...]
+2025-11-18T18:30:43.192+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.193+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.194+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.194+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.194+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.195+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:43.196+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@7f180c74]
+2025-11-18T18:30:43.202+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
+2025-11-18T18:30:43.202+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication failed for user: diona.smith due to bad credentials
+2025-11-18T18:30:43.204+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.205+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid credentials, otpRequired=false, (truncated)...]
+2025-11-18T18:30:43.214+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.216+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.216+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.216+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.216+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.219+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.221+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=old-refresh-token-value]]
+2025-11-18T18:30:43.225+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refreshed successfully for user: testuser
+2025-11-18T18:30:43.226+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.226+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=testuser, status=SUCCESS, message=Authentication successful, otpRequired=fa (truncated)...]
+2025-11-18T18:30:43.240+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.243+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.244+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.244+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.244+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.246+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:43.247+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@307e1c7b]
+2025-11-18T18:30:43.249+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
+2025-11-18T18:30:43.250+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication completed for user: diona.smith
+2025-11-18T18:30:43.253+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.253+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=OTP_PENDING, message=OTP required for authentication, o (truncated)...]
+2025-11-18T18:30:43.263+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.266+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.268+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.268+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.268+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.270+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.272+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=problematic-token]]
+2025-11-18T18:30:43.276+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: Database error
+2025-11-18T18:30:43.277+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.278+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+2025-11-18T18:30:43.287+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.289+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.290+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.290+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.290+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.292+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#verifyOtp(VerifyTokenRequestDTO)
+2025-11-18T18:30:43.294+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@7c362e56]
+2025-11-18T18:30:43.296+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : OTP verified successfully for user: diona.smith
+2025-11-18T18:30:43.299+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.300+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
+2025-11-18T18:30:43.312+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.314+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.315+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.315+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.315+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.315+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.316+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=null]]
+2025-11-18T18:30:43.321+05:30  WARN 27200 --- [Starter Project] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.starter.springboot.dto.AuthResponseDTO> com.starter.springboot.controller.AuthenticationController.refreshToken(com.starter.springboot.dto.RefreshTokenRequestDTO): [Field error in object 'refreshTokenRequestDTO' on field 'refreshToken': rejected value [null]; codes [NotBlank.refreshTokenRequestDTO.refreshToken,NotBlank.refreshToken,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [refreshTokenRequestDTO.refreshToken,refreshToken]; arguments []; default message [refreshToken]]; default message [Refresh token is required]] ]
+2025-11-18T18:30:43.329+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.330+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.330+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.331+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.331+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.336+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:43.337+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@5f25535d]
+2025-11-18T18:30:43.341+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
+2025-11-18T18:30:43.342+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication completed for user: diona.smith
+2025-11-18T18:30:43.343+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.344+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=null, otpRequired=false, token=com.sta (truncated)...]
+2025-11-18T18:30:43.354+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.355+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.355+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.355+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.357+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2025-11-18T18:30:43.357+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.359+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=old-refresh-token-value]]
+2025-11-18T18:30:43.362+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refreshed successfully for user: diona.smith
+2025-11-18T18:30:43.363+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.363+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
+2025-11-18T18:30:43.378+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.380+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.380+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.380+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.381+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2025-11-18T18:30:43.382+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:43.384+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@44e4247a]
+2025-11-18T18:30:43.386+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
+2025-11-18T18:30:43.386+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : OTP required for user: diona.smith
+2025-11-18T18:30:43.396+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.399+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.399+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.399+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.400+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.402+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.404+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=invalid-refresh-token]]
+2025-11-18T18:30:43.408+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: Invalid refresh token
+2025-11-18T18:30:43.410+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.410+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+2025-11-18T18:30:43.419+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.420+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.421+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.421+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.421+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.423+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-11-18T18:30:43.424+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@5902527f]
+2025-11-18T18:30:43.426+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
+2025-11-18T18:30:43.426+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication completed for user: diona.smith
+2025-11-18T18:30:43.428+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.428+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=null, otpRequired=false, token=com.sta (truncated)...]
+2025-11-18T18:30:43.443+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.444+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.445+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.445+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.445+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.446+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-11-18T18:30:43.448+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=valid-refresh-token]]
+2025-11-18T18:30:43.450+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: User not found
+2025-11-18T18:30:43.451+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.452+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.712 s -- in com.starter.springboot.controller.AuthenticationControllerTest
+[INFO] Running com.starter.springboot.controller.PublicUserResourceTest
+2025-11-18T18:30:43.539+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.541+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.542+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.542+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.542+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.545+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#createUser(UserRequestDTO)
+2025-11-18T18:30:43.551+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.UserRequestDTO@57c32102]
+2025-11-18T18:30:43.577+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.579+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.579+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.580+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.580+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.582+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.583+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=NewSecurePass456, username=Diona.smith, currentPassword=CurrentSecurePass123}]
+2025-11-18T18:30:43.585+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.586+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [UserResponseDTO[id=1, username=Diona.smith, firstName=Diona, lastName=Smith, email=Diona.smith@examp (truncated)...]
+2025-11-18T18:30:43.595+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.596+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.596+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.596+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.596+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.597+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#createUser(UserRequestDTO)
+2025-11-18T18:30:43.600+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.UserRequestDTO@3d356e85]
+2025-11-18T18:30:43.617+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.619+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.620+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.620+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.620+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.621+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.623+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=newPassword123, userid=1, currentPassword=password}]
+2025-11-18T18:30:43.630+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.634+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.634+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.634+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.634+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.636+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.638+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=weak, userid=1, currentPassword=password}]
+2025-11-18T18:30:43.649+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.651+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.651+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.652+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.652+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.653+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.654+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=NewSecurePass456, userid=1, currentPassword=CurrentSecurePass123}]
+2025-11-18T18:30:43.656+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.656+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [UserResponseDTO[id=1, username=Diona.smith, firstName=Diona, lastName=Smith, email=Diona.smith@examp (truncated)...]
+2025-11-18T18:30:43.665+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.669+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.669+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.669+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.669+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.671+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.672+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=NewSecurePass456, userid=1, currentPassword=WrongSecurePass789}]
+2025-11-18T18:30:43.699+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.702+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.702+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.703+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.703+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.704+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.705+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=NewSecurePass456, userid=invalid-id, currentPassword=CurrentSecurePass123}]
+2025-11-18T18:30:43.713+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.715+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.715+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.715+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.715+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.716+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.717+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=NewSecurePass456, currentPassword=CurrentSecurePass123}]
+2025-11-18T18:30:43.725+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.727+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.728+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.728+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.728+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.729+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#updateStatus(Long, String, Boolean)
+2025-11-18T18:30:43.738+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.738+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [UserResponseDTO[id=1, username=Diona.smith, firstName=Diona, lastName=Smith, email=Diona.smith@examp (truncated)...]
+2025-11-18T18:30:43.748+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.750+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.751+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.751+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.751+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.753+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#createUser(UserRequestDTO)
+2025-11-18T18:30:43.755+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.UserRequestDTO@782bbb5e]
+2025-11-18T18:30:43.759+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.759+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [UserResponseDTO[id=1, username=Diona.smith, firstName=Diona, lastName=Smith, email=Diona.smith@examp (truncated)...]
+2025-11-18T18:30:43.768+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.770+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.771+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.771+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.771+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.772+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#updateStatus(Long, String, Boolean)
+2025-11-18T18:30:43.775+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-11-18T18:30:43.776+05:30 DEBUG 27200 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [UserResponseDTO[id=1, username=testuser, firstName=John, lastName=Doe, email=john.doe@example.com, e (truncated)...]
+2025-11-18T18:30:43.786+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 3 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-11-18T18:30:43.787+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-11-18T18:30:43.788+05:30  INFO 27200 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2025-11-18T18:30:43.788+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2025-11-18T18:30:43.788+05:30  INFO 27200 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2025-11-18T18:30:43.789+05:30 DEBUG 27200 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.PublicUserResource#changePasswordPublic(Map)
+2025-11-18T18:30:43.790+05:30 DEBUG 27200 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [{newPassword=newPassword123, username=nonexistent, currentPassword=password}]
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.334 s -- in com.starter.springboot.controller.PublicUserResourceTest
+[INFO] Running com.starter.springboot.security.jwt.TokenProviderTest
+2025-11-18T18:30:44.087+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to create refresh token: Cannot invoke "com.starter.springboot.service.IRefreshTokenService.createRefreshToken(java.lang.Long, long)" because "<local4>.refreshTokenService" is null
+2025-11-18T18:30:44.102+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Redis whitelist check failed: Redis connection failed
+2025-11-18T18:30:44.114+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to create refresh token: Cannot invoke "com.starter.springboot.service.IRefreshTokenService.createRefreshToken(java.lang.Long, long)" because "<local4>.refreshTokenService" is null
+2025-11-18T18:30:44.160+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Rejecting JWT for user testuser: issuedAt=Tue Nov 18 18:30:44 IST 2025 <= lastPasswordResetDate=Tue Nov 18 18:31:44 IST 2025
+2025-11-18T18:30:44.182+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to create refresh token: Cannot invoke "com.starter.springboot.service.IRefreshTokenService.createRefreshToken(java.lang.Long, long)" because "<local4>.refreshTokenService" is null
+2025-11-18T18:30:44.183+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to register jti in redis whitelist: Redis connection failed
+2025-11-18T18:30:44.257+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Invalid JWT token: Malformed JWT JSON: ?{?'
+2025-11-18T18:30:44.268+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to create refresh token: Cannot invoke "com.starter.springboot.service.IRefreshTokenService.createRefreshToken(java.lang.Long, long)" because "<local4>.refreshTokenService" is null
+2025-11-18T18:30:44.297+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to cache user details for OTP: Redis connection failed
+2025-11-18T18:30:44.308+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : User not found while validating JWT: testuser
+2025-11-18T18:30:44.319+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : JTI for user testuser is not whitelisted in redis
+2025-11-18T18:30:44.325+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.security.jwt.TokenProvider         : Failed to retrieve cached user details for OTP: Unexpected character ('i' (code 105)): was expecting double-quote to start field name
+ at [Source: (String)"{invalid json}"; line: 1, column: 3]
+[INFO] Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.530 s -- in com.starter.springboot.security.jwt.TokenProviderTest
+[INFO] Running com.starter.springboot.security.OtpAwareAuthenticationProviderTest
+2025-11-18T18:30:44.392+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : Invalid password for user: diona.smith
+2025-11-18T18:30:44.403+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User diona.smith authenticated successfully. OTP Required: true
+2025-11-18T18:30:44.410+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User account disabled: diona.smith
+2025-11-18T18:30:44.415+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User diona.smith authenticated successfully. OTP Required: true
+2025-11-18T18:30:44.421+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User testuser authenticated successfully. OTP Required: true
+2025-11-18T18:30:44.427+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User not found: diona.smith
+2025-11-18T18:30:44.437+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User diona.smith authenticated successfully. OTP Required: false
+2025-11-18T18:30:44.443+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User diona.smith authenticated successfully. OTP Required: true
+2025-11-18T18:30:44.450+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User diona.smith authenticated successfully. OTP Required: true
+2025-11-18T18:30:44.456+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User account disabled: diona.smith
+2025-11-18T18:30:44.462+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.OtpAwareAuthenticationProvider   : User diona.smith authenticated successfully. OTP Required: true
+[INFO] Tests run: 13, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.134 s -- in com.starter.springboot.security.OtpAwareAuthenticationProviderTest
+[INFO] Running com.starter.springboot.service.AuthCacheServiceTest
+2025-11-18T18:30:44.488+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for user: testuser
+2025-11-18T18:30:44.492+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for user: testuser
+2025-11-18T18:30:44.497+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for user: testuser
+2025-11-18T18:30:44.498+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Failed to remove token whitelist for user testuser (ID: 1): Token removal failed
+2025-11-18T18:30:44.505+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Failed to clear authentication cache for user testuser: Redis connection failed
+2025-11-18T18:30:44.508+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for user: TESTUSER
+2025-11-18T18:30:44.512+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Failed to clear all authentication caches: Redis connection failed
+2025-11-18T18:30:44.519+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Failed to clear authentication cache for user testuser: Redis connection failed
+2025-11-18T18:30:44.519+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared token whitelist for user: testuser (ID: 1)
+2025-11-18T18:30:44.522+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cannot clear auth cache for empty username
+2025-11-18T18:30:44.525+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for user: TESTUSER
+2025-11-18T18:30:44.525+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared token whitelist for user: TESTUSER (ID: 1)
+2025-11-18T18:30:44.529+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for 3 users
+2025-11-18T18:30:44.538+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cannot clear auth cache for empty username
+2025-11-18T18:30:44.542+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared authentication cache for user: testuser
+2025-11-18T18:30:44.542+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.AuthCacheService      : Cleared token whitelist for user: testuser (ID: 1)
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.072 s -- in com.starter.springboot.service.AuthCacheServiceTest
+[INFO] Running com.starter.springboot.service.EmailServiceTest
+2025-11-18T18:30:44.608+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Sending e-mail error: Mail server error
+2025-11-18T18:30:44.611+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Email successfully sent to: test1@example.com,test2@example.com,test3@example.com
+2025-11-18T18:30:44.614+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Email successfully sent to: test@example.com
+2025-11-18T18:30:44.617+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Email successfully sent to: test@example.com,user@example.com
+2025-11-18T18:30:44.620+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Email successfully sent to: test@example.com
+2025-11-18T18:30:44.622+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : No recipients provided for email with subject: Test Subject
+2025-11-18T18:30:44.624+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : No recipients provided for email with subject: Test Subject
+2025-11-18T18:30:44.626+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Email successfully sent to: test@example.com
+2025-11-18T18:30:44.629+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Sending e-mail error: Unexpected error
+2025-11-18T18:30:44.631+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.EmailService          : Email successfully sent to: test@example.com
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.090 s -- in com.starter.springboot.service.EmailServiceTest
+[INFO] Running com.starter.springboot.service.OtpAuditRetentionServiceTest
+2025-11-18T18:30:44.804+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.s.impl.OtpAuditRetentionService    : Purged 5 OTP audit entries with expiry before 2025-10-19
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.180 s -- in com.starter.springboot.service.OtpAuditRetentionServiceTest
+[INFO] Running com.starter.springboot.service.OtpAuditServiceImplTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s -- in com.starter.springboot.service.OtpAuditServiceImplTest
+[INFO] Running com.starter.springboot.service.OtpGeneratorTest
+2025-11-18T18:30:44.864+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.OtpGenerator          : Failed to store OTP for key test@example.com: Redis connection failed
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.100 s -- in com.starter.springboot.service.OtpGeneratorTest
+[INFO] Running com.starter.springboot.service.OtpNotificationServiceImplTest
+2025-11-18T18:30:45.003+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.s.impl.OtpNotificationServiceImpl  : No email found for username: testUser
+2025-11-18T18:30:45.013+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.s.impl.OtpNotificationServiceImpl  : Error initiating OTP email dispatch to: test@example.com
+
+java.lang.RuntimeException: Email service error
+	at com.starter.springboot.service.impl.OtpNotificationServiceImpl.sendOtpEmailAsync(OtpNotificationServiceImpl.java:62) ~[classes/:na]
+	at com.starter.springboot.service.OtpNotificationServiceImplTest.shouldHandleEmailServiceException(OtpNotificationServiceImplTest.java:106) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[na:na]
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728) ~[junit-platform-commons-1.10.2.jar:1.10.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.1.2.jar:3.1.2]
+
+2025-11-18T18:30:45.018+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.s.impl.OtpNotificationServiceImpl  : No email found for username: testUser
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.075 s -- in com.starter.springboot.service.OtpNotificationServiceImplTest
+[INFO] Running com.starter.springboot.service.OtpRateLimiterImplTest
+2025-11-18T18:30:45.040+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.OtpRateLimiterImpl    : Invalid timestamp format in Redis for key: otp:testUser:last_sent
+2025-11-18T18:30:45.043+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.OtpRateLimiterImpl    : OTP rate limit exceeded for key: testUser. Last sent 5 seconds ago, 10 seconds remaining
+2025-11-18T18:30:45.051+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.OtpRateLimiterImpl    : OTP request limit exceeded for key: testUser
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.030 s -- in com.starter.springboot.service.OtpRateLimiterImplTest
+[INFO] Running com.starter.springboot.service.OtpServiceTest
+2025-11-18T18:30:45.254+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.springboot.service.impl.OtpService   : Failed to send OTP email to: test@example.com
+2025-11-18T18:30:45.275+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.springboot.service.impl.OtpService   : OTP generator returned error code for key: testuser
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.217 s -- in com.starter.springboot.service.OtpServiceTest
+[INFO] Running com.starter.springboot.service.PasswordChangeAuthorizationServiceTest
+2025-11-18T18:30:45.381+05:30  WARN 27200 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Unauthorized password change attempt: User authenticatedUser attempted to change password for user targetUser
+2025-11-18T18:30:45.387+05:30 ERROR 27200 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Authenticated user has no username
+2025-11-18T18:30:45.409+05:30 ERROR 27200 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : No authenticated user found in security context
+2025-11-18T18:30:45.423+05:30 ERROR 27200 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : No authenticated user found in security context
+2025-11-18T18:30:45.428+05:30  WARN 27200 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Unauthorized password change attempt: User authenticatedUser attempted to change password for user targetUser
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.158 s -- in com.starter.springboot.service.PasswordChangeAuthorizationServiceTest
+[INFO] Running com.starter.springboot.service.RedisTokenServiceTest
+2025-11-18T18:30:45.444+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.RedisTokenService     : Failed to remove whitelist for user 123: Redis connection failed
+2025-11-18T18:30:45.453+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.RedisTokenService     : Failed to register jti for user 123: Redis connection failed
+2025-11-18T18:30:45.485+05:30 ERROR 27200 --- [Starter Project] [           main] c.s.s.service.impl.RedisTokenService     : Failed to check jti whitelist for user 123: Redis connection failed
+[INFO] Tests run: 17, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.065 s -- in com.starter.springboot.service.RedisTokenServiceTest
+[INFO] Running com.starter.springboot.service.RefreshTokenServiceTest
+2025-11-18T18:30:45.588+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Invalid or expired refresh token
+2025-11-18T18:30:45.596+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Invalid or expired refresh token
+2025-11-18T18:30:45.607+05:30  WARN 27200 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Invalid or expired refresh token
+2025-11-18T18:30:45.612+05:30  INFO 27200 --- [Starter Project] [           main] c.s.s.service.impl.RefreshTokenService   : Cleaned up 10 expired refresh tokens
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.111 s -- in com.starter.springboot.service.RefreshTokenServiceTest
+[INFO] Running com.starter.springboot.service.UserServiceTest
+2025-11-18T18:30:45.848+05:30  WARN 27200 --- [Starter Project] [           main] c.s.springboot.service.impl.UserService  : Failed to clear caches for user testuser: Cannot invoke "com.starter.springboot.service.IRefreshTokenService.revokeAllUserRefreshTokens(java.lang.Long)" because "this.refreshTokenService" is null
+2025-11-18T18:30:45.868+05:30  WARN 27200 --- [Starter Project] [           main] c.s.springboot.service.impl.UserService  : Failed to clear caches for user testuser: Cannot invoke "com.starter.springboot.service.IRefreshTokenService.revokeAllUserRefreshTokens(java.lang.Long)" because "this.refreshTokenService" is null
+2025-11-18T18:30:45.873+05:30  WARN 27200 --- [Starter Project] [           main] c.s.springboot.service.impl.UserService  : Failed to clear caches for user testuser: Redis connection failed
+[INFO] Tests run: 18, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.279 s -- in com.starter.springboot.service.UserServiceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 237, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  26.797 s
+[INFO] Finished at: 2025-11-18T18:30:46+05:30
+[INFO] ------------------------------------------------------------------------
