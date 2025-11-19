@@ -5,6 +5,7 @@ com\starter\springboot\service\EmailServiceTest.class
 com\starter\springboot\controller\AuthenticationControllerTest$1.class
 com\starter\springboot\service\OtpGeneratorTest.class
 com\starter\springboot\service\EmailServiceTest$1.class
+com\starter\springboot\repository\RefreshTokenRepositoryTest.class
 com\starter\springboot\service\OtpRateLimiterImplTest.class
 com\starter\springboot\service\RefreshTokenServiceTest.class
 com\starter\springboot\security\jwt\TokenProviderTest.class

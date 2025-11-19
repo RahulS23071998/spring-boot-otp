@@ -23,11 +23,6 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     Optional<RefreshToken> findByTokenAndRevokedAtIsNullAndExpiresAtAfter(String token, Instant now);
 
     /**
-     * Find all active refresh tokens for a user
-     */
-    List<RefreshToken> findByUserIdAndRevokedAtIsNullAndExpiresAtAfter(Long userId, Instant now);
-
-    /**
      * Revoke all active refresh tokens for a user
      */
     @Modifying
@@ -41,8 +36,4 @@ public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long
     @Query("DELETE FROM RefreshToken rt WHERE rt.expiresAt < :now")
     int deleteExpiredTokens(@Param("now") Instant now);
 
-    /**
-     * Check if token exists and is active
-     */
-    boolean existsByTokenAndRevokedAtIsNullAndExpiresAtAfter(String token, Instant now);
 }

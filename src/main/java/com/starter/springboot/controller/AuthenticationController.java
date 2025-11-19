@@ -85,11 +85,11 @@ public class AuthenticationController {
         content = @Content(schema = @Schema(implementation = LoginDTO.class),
             examples = @ExampleObject(value = """
                 {
-                  "username": "john.doe",
-                  "password": "SecurePass123!",
-                  "rememberMe": false,
-                  "clientId": "mobile-app",
-                  "deviceId": "device-001"
+                  "username": "admin",
+                  "password": "nimda",
+                  "rememberMe": true,
+                  "clientId": "web-portal",
+                  "deviceId": "device-1234"
                 }
                 """)))
     @ApiResponses(value = {
@@ -98,7 +98,7 @@ public class AuthenticationController {
                 schema = @Schema(implementation = AuthResponseDTO.class),
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": true,
                       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
                       "rememberMe": false,
@@ -110,7 +110,7 @@ public class AuthenticationController {
             content = @Content(mediaType = "application/json", 
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": false,
                       "message": "Invalid credentials"
                     }
@@ -119,7 +119,7 @@ public class AuthenticationController {
             content = @Content(mediaType = "application/json", 
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": false,
                       "message": "Account locked"
                     }
@@ -167,9 +167,9 @@ public class AuthenticationController {
         content = @Content(schema = @Schema(implementation = VerifyTokenRequestDTO.class),
             examples = @ExampleObject(value = """
                 {
-                  "username": "john.doe",
+                  "username": "admin",
                   "otp": 123456,
-                  "rememberMe": false,
+                  "rememberMe": true,
                   "clientId": "mobile-app",
                   "deviceId": "device-001"
                 }
@@ -180,7 +180,7 @@ public class AuthenticationController {
                 schema = @Schema(implementation = AuthResponseDTO.class),
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": true,
                       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqb2huLmRvZSIsImlhdCI6MTYzNDU2NzIwMH0...",
                       "rememberMe": false
@@ -190,7 +190,7 @@ public class AuthenticationController {
             content = @Content(mediaType = "application/json", 
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": false,
                       "message": "Invalid OTP"
                     }
@@ -199,7 +199,7 @@ public class AuthenticationController {
             content = @Content(mediaType = "application/json", 
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": false,
                       "message": "Account locked due to multiple failed OTP attempts"
                     }
@@ -249,11 +249,11 @@ public class AuthenticationController {
                 schema = @Schema(implementation = AuthResponseDTO.class),
                 examples = @ExampleObject(value = """
                     {
-                      "username": "john.doe",
+                      "username": "admin",
                       "success": true,
                       "token": {
-                        "id_token": "new.jwt.token.here",
-                        "refresh_token": "new.refresh.token.here",
+                        "id_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyMjA4NTdkMS1kNjM5LTRlYWMtOWU...",
+                        "refresh_token": "aed31a06-dc69-4075-a3e8-156c90188c65-db4ba010...",
                         "token_type": "Bearer",
                         "expires_in": 3600,
                         "refresh_token_expires_in": 604800
