@@ -1,12 +1,13 @@
 package com.starter.springboot.security;
 
-import com.starter.springboot.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.starter.springboot.entity.User;
 import com.starter.springboot.exception.UserNotActivatedException;
 import com.starter.springboot.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +22,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Custom Authentication Provider optimized for OTP-based authentication.
- * Handles credential validation and OTP requirements in a single provider.
- * 
- * Benefits over DaoAuthenticationProvider:
- * - Direct control over authentication flow
- * - Integrated OTP status awareness
- * - Custom error handling for business logic
- * - Audit logging at authentication point
- * - Single source of truth for auth decisions
- */
 public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
 
     private static final Logger log = LoggerFactory.getLogger(OtpAwareAuthenticationProvider.class);
@@ -40,96 +29,41 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final StringRedisTemplate redisTemplate;
-    private final ObjectMapper objectMapper = new ObjectMapper();
 
-    // Cache TTL for user authentication data (in minutes)
     private static final int USER_CACHE_TTL_MINUTES = 5;
+
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public OtpAwareAuthenticationProvider(UserRepository userRepository, PasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.redisTemplate = redisTemplate;
-        this.objectMapper.registerModule(new JavaTimeModule());
     }
 
     @Override
     @Transactional
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
 
-        log.debug("Authenticating user: {}", username);
+        final String rawUsername = authentication.getName();
+        final String password = String.valueOf(authentication.getCredentials());
+        final String username = rawUsername.toLowerCase();
 
-        String lowercaseLogin = username.toLowerCase();
-        String cacheKey = "auth:user:" + lowercaseLogin;
-        User user = null;
+        log.debug("Starting authentication for {}", username);
 
-        // Try to get from cache first
-        try {
-            String cachedUserJson = redisTemplate.opsForValue().get(cacheKey);
-            if (cachedUserJson != null) {
-                try {
-                    user = objectMapper.readValue(cachedUserJson, User.class);
-                    log.debug("Loaded user from cache: {}", lowercaseLogin);
-                } catch (Exception e) {
-                    log.warn("Failed to deserialize cached user for {}: {}", lowercaseLogin, e.getMessage());
-                    try {
-                        redisTemplate.delete(cacheKey); // Remove corrupted cache
-                    } catch (Exception ex) {
-                        log.debug("Failed to delete corrupted cache: {}", ex.getMessage());
-                    }
-                    cachedUserJson = null;
-                }
-            }
-        } catch (Exception e) {
-            log.debug("Redis cache unavailable, will use database: {}", e.getMessage());
-        }
+        User user = loadUserFromCacheOrDb(username);
 
-        if (user == null) {
-            // Load user from database
-            user = userRepository.findByUsername(lowercaseLogin)
-                    .orElseThrow(() -> {
-                        log.warn("User not found: {}", lowercaseLogin);
-                        return new BadCredentialsException("Invalid username or password");
-                    });
+        validateUserState(user, username);
+        validatePassword(user, password, username);
 
-            // Cache the user for short time to avoid stale data
-            try {
-                String userJson = objectMapper.writeValueAsString(user);
-                redisTemplate.opsForValue().set(cacheKey, userJson, USER_CACHE_TTL_MINUTES, TimeUnit.MINUTES);
-                log.debug("Cached user: {}", lowercaseLogin);
-            } catch (Exception e) {
-                log.debug("Failed to cache user {}: {}", lowercaseLogin, e.getMessage());
-            }
-        }
+        List<GrantedAuthority> authorities = buildAuthorities(user);
 
-        // Validate user is activated
-        if (Objects.isNull(user.getEnabled()) || !user.getEnabled()) {
-            log.warn("User account disabled: {}", lowercaseLogin);
-            throw new UserNotActivatedException("User account is not activated");
-        }
-
-        // Validate password
-        if (!passwordEncoder.matches(password, user.getPassword())) {
-            log.warn("Invalid password for user: {}", lowercaseLogin);
-            throw new BadCredentialsException("Invalid username or password");
-        }
-
-        // Build authorities
-        List<GrantedAuthority> authorities = List.of(
-                new SimpleGrantedAuthority(user.getRole().getName())
-        );
-
-        // Create DomainUserDetails with OTP information
         DomainUserDetails userDetails = DomainUserDetails.fromUser(user, authorities);
 
-        log.info("User {} authenticated successfully. OTP Required: {}", lowercaseLogin, user.getIsOtpRequired());
+        log.info("User '{}' authenticated. OTP Required: {}", username, user.getIsOtpRequired());
 
-        // Return authenticated token with DomainUserDetails as principal
-        // This preserves OTP information in the authentication object
         return new UsernamePasswordAuthenticationToken(
                 userDetails,
-                password,
+                null, //we should not store password in authentication object because we are storing it in cache
                 authorities
         );
     }
@@ -137,5 +71,68 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
     @Override
     public boolean supports(Class<?> authentication) {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
+    }
+
+    private User loadUserFromCacheOrDb(String username) {
+        final String cacheKey = "auth:user:" + username;
+
+        // Try cache first
+        try {
+            String cachedJson = redisTemplate.opsForValue().get(cacheKey);
+            if (cachedJson != null) {
+                try {
+                    User cachedUser = objectMapper.readValue(cachedJson, User.class);
+                    log.debug("Loaded user {} from cache", username);
+                    return cachedUser;
+                } catch (Exception ex) {
+                    log.warn("Corrupted cache for {}. Removing entry.", username);
+                    redisTemplate.delete(cacheKey);
+                }
+            }
+        } catch (Exception ex) {
+            log.warn("Redis unavailable: {}", ex.getMessage());
+        }
+
+        // Load from DB
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> {
+                    log.warn("User '{}' not found", username);
+                    return new BadCredentialsException("Invalid username or password");
+                });
+
+        cacheUser(username, user);
+        return user;
+    }
+
+    private void cacheUser(String username, User user) {
+        try {
+            redisTemplate.opsForValue().set(
+                    "auth:user:" + username,
+                    objectMapper.writeValueAsString(user),
+                    USER_CACHE_TTL_MINUTES,
+                    TimeUnit.MINUTES
+            );
+            log.debug("Cached user {}", username);
+        } catch (Exception ex) {
+            log.debug("Failed to cache user {}: {}", username, ex.getMessage());
+        }
+    }
+
+    private void validateUserState(User user, String username) {
+        if (!Boolean.TRUE.equals(user.getEnabled())) {
+            log.warn("User '{}' is not activated", username);
+            throw new UserNotActivatedException("User account is not activated");
+        }
+    }
+
+    private void validatePassword(User user, String rawPassword, String username) {
+        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
+            log.warn("Invalid password for '{}'", username);
+            throw new BadCredentialsException("Invalid username or password");
+        }
+    }
+
+    private List<GrantedAuthority> buildAuthorities(User user) {
+        return List.of(new SimpleGrantedAuthority(user.getRole().getName()));
     }
 }

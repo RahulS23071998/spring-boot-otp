@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.425" tests="12" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.389" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -63,1210 +63,1110 @@
     <property name="java.class.version" value="61.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldNotRevokeAlreadyRevokedTokensWhenRevokingAllActiveTokens" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.089">
-    <system-out><![CDATA[2025-11-20T15:46:41.521+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [RefreshTokenRepositoryTest]: using SpringBootContextLoader
-2025-11-20T15:46:41.522+05:30  INFO 16480 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.RefreshTokenRepositoryTest]: RefreshTokenRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-20T15:46:41.523+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [RefreshTokenRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
-2025-11-20T15:46:41.554+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [RefreshTokenRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
-2025-11-20T15:46:41.555+05:30  INFO 16480 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.RefreshTokenRepositoryTest
-2025-11-20T15:46:41.556+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [RefreshTokenRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
-2025-11-20T15:46:41.564+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldReturnEmptyWhenOtpAuditEntryNotFoundById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.041">
+    <system-out><![CDATA[2025-11-20T15:46:41.130+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [OtpAuditEntryRepositoryTest]: using SpringBootContextLoader
+2025-11-20T15:46:41.131+05:30  INFO 16480 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.OtpAuditEntryRepositoryTest]: OtpAuditEntryRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-11-20T15:46:41.132+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [OtpAuditEntryRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
+2025-11-20T15:46:41.164+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [OtpAuditEntryRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
+2025-11-20T15:46:41.165+05:30  INFO 16480 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.OtpAuditEntryRepositoryTest
+2025-11-20T15:46:41.166+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [OtpAuditEntryRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
+2025-11-20T15:46:41.180+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.575+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.594+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.596+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.637+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-Hibernate: 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-2025-11-20T15:46:41.642+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0 
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.190+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.192+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.202+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.209+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
     where
-        rt1_0.id=?
+        oae1_0.id=?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldNotFindRevokedRefreshToken" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.024">
-    <system-out><![CDATA[2025-11-20T15:46:41.658+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldCountTotalOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.02">
+    <system-out><![CDATA[2025-11-20T15:46:41.220+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.661+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.663+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.664+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.669+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.224+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.226+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.227+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.231+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        otp_audit_entries oae1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        otp_audit_entries oae1_0
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDeleteExpiredTokens" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.032">
-    <system-out><![CDATA[2025-11-20T15:46:41.687+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldDeleteExpiredOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.029">
+    <system-out><![CDATA[2025-11-20T15:46:41.264+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.689+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.272+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.693+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.273+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.697+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.275+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.708+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.279+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.expires_on<?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.expires_on<?
+2025-11-20T15:46:41.281+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
-        refresh_tokens 
+        otp_audit_entries 
     where
-        expires_at<?
-Hibernate: 
-    delete 
-    from
-        refresh_tokens 
-    where
-        expires_at<?
-2025-11-20T15:46:41.711+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
-]]></system-out>
-  </testcase>
-  <testcase name="shouldNotFindNonExistentToken" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.021">
-    <system-out><![CDATA[2025-11-20T15:46:41.720+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.721+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.727+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.729+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.732+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
-]]></system-out>
-  </testcase>
-  <testcase name="shouldReturnZeroWhenRevokingTokensForUserWithNoActiveTokens" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.018">
-    <system-out><![CDATA[2025-11-20T15:46:41.752+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.754+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.756+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.758+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.762+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-Hibernate: 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-]]></system-out>
-  </testcase>
-  <testcase name="shouldNotFindExpiredRefreshToken" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.028">
-    <system-out><![CDATA[2025-11-20T15:46:41.779+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.783+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.785+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.786+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.790+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
-]]></system-out>
-  </testcase>
-  <testcase name="shouldRevokeAllActiveTokensForUser" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.031">
-    <system-out><![CDATA[2025-11-20T15:46:41.800+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.803+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.804+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.808+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.814+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.818+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-Hibernate: 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-2025-11-20T15:46:41.820+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
-2025-11-20T15:46:41.822+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
-]]></system-out>
-  </testcase>
-  <testcase name="shouldReturnZeroWhenNoExpiredTokensToDelete" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.019">
-    <system-out><![CDATA[2025-11-20T15:46:41.831+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.833+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.835+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.837+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.840+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    delete 
-    from
-        refresh_tokens 
-    where
-        expires_at<?
+        id=?
 Hibernate: 
     delete 
     from
-        refresh_tokens 
+        otp_audit_entries 
     where
-        expires_at<?
-2025-11-20T15:46:41.842+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    delete 
+        id=?
+2025-11-20T15:46:41.283+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens 
+        otp_audit_entries oae1_0 
     where
-        expires_at<?
+        oae1_0.id=?
 Hibernate: 
-    delete 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens 
+        otp_audit_entries oae1_0 
     where
-        expires_at<?
+        oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldFindActiveRefreshTokenByTokenValue" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.033">
-    <system-out><![CDATA[2025-11-20T15:46:41.860+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldRetrieveAllOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.039">
+    <system-out><![CDATA[2025-11-20T15:46:41.313+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.863+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.865+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.867+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.875+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.token=? 
-        and rt1_0.revoked_at is null 
-        and rt1_0.expires_at>?
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.317+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.319+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.320+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.324+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
 ]]></system-out>
   </testcase>
-  <testcase name="shouldNotRevokeExpiredTokensWhenRevokingAllActiveTokens" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.024">
-    <system-out><![CDATA[2025-11-20T15:46:41.885+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldCreateAndSaveOtpAuditEntry" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.032">
+    <system-out><![CDATA[2025-11-20T15:46:41.336+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-Hibernate: 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.887+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.890+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.892+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-Hibernate: 
-    insert 
-    into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.898+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-Hibernate: 
-    update
-        refresh_tokens 
-    set
-        revoked_at=? 
-    where
-        user_id=? 
-        and revoked_at is null 
-        and expires_at>?
-2025-11-20T15:46:41.900+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
-    from
-        refresh_tokens rt1_0 
-    where
-        rt1_0.id=?
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0 
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.340+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.342+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.345+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.356+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
     where
-        rt1_0.id=?
+        oae1_0.id=?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldNotDeleteActiveTokensWhenDeletingExpiredTokens" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.019">
-    <system-out><![CDATA[2025-11-20T15:46:41.910+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldReturnZeroWhenNoEntriesToDelete" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.025">
+    <system-out><![CDATA[2025-11-20T15:46:41.367+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.913+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.371+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.915+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.378+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.918+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.379+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.921+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    delete 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.383+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens 
+        otp_audit_entries oae1_0 
     where
-        expires_at<?
+        oae1_0.expires_on<?
 Hibernate: 
-    delete 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens 
+        otp_audit_entries oae1_0 
     where
-        expires_at<?
+        oae1_0.expires_on<?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldNotDeleteRevokedButNotExpiredTokensWhenDeletingExpiredTokens" classname="com.starter.springboot.repository.RefreshTokenRepositoryTest" time="0.018">
-    <system-out><![CDATA[2025-11-20T15:46:41.930+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldDeleteMultipleExpiredEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.04">
+    <system-out><![CDATA[2025-11-20T15:46:41.405+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
+        otp_audit_entries oae1_0
 Hibernate: 
     select
-        rt1_0.id,
-        rt1_0.created_at,
-        rt1_0.expires_at,
-        rt1_0.replaced_by_token,
-        rt1_0.revoked_at,
-        rt1_0.token,
-        rt1_0.user_id 
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
     from
-        refresh_tokens rt1_0
-2025-11-20T15:46:41.933+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.409+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.935+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.411+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.937+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.412+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
-        refresh_tokens
-        (created_at, expires_at, replaced_by_token, revoked_at, token, user_id, id) 
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, default)
-2025-11-20T15:46:41.940+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.417+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.422+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.expires_on<?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.expires_on<?
+2025-11-20T15:46:41.424+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
-        refresh_tokens 
+        otp_audit_entries 
     where
-        expires_at<?
+        id=?
 Hibernate: 
     delete 
     from
-        refresh_tokens 
+        otp_audit_entries 
     where
-        expires_at<?
+        id=?
+2025-11-20T15:46:41.425+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    delete 
+    from
+        otp_audit_entries 
+    where
+        id=?
+Hibernate: 
+    delete 
+    from
+        otp_audit_entries 
+    where
+        id=?
+2025-11-20T15:46:41.426+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        otp_audit_entries oae1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        otp_audit_entries oae1_0
+]]></system-out>
+  </testcase>
+  <testcase name="shouldFindOtpAuditEntryById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.032">
+    <system-out><![CDATA[2025-11-20T15:46:41.440+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.453+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.455+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.458+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+]]></system-out>
+  </testcase>
+  <testcase name="shouldDeleteOtpAuditEntryById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.027">
+    <system-out><![CDATA[2025-11-20T15:46:41.471+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.474+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.476+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.477+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.480+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    delete 
+    from
+        otp_audit_entries 
+    where
+        id=?
+Hibernate: 
+    delete 
+    from
+        otp_audit_entries 
+    where
+        id=?
+2025-11-20T15:46:41.482+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.id=?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.id=?
+]]></system-out>
+  </testcase>
+  <testcase name="shouldNotDeleteEntriesWithExpiryDateOnOrAfterCutoffDate" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.024">
+    <system-out><![CDATA[2025-11-20T15:46:41.497+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0
+2025-11-20T15:46:41.501+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.502+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.505+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        otp_audit_entries
+        (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-11-20T15:46:41.508+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.expires_on<?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.expires_on<?
+2025-11-20T15:46:41.511+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    delete 
+    from
+        otp_audit_entries 
+    where
+        id=?
+Hibernate: 
+    delete 
+    from
+        otp_audit_entries 
+    where
+        id=?
+2025-11-20T15:46:41.512+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.id=?
+Hibernate: 
+    select
+        oae1_0.id,
+        oae1_0.created_by,
+        oae1_0.created_date,
+        oae1_0.expires_on,
+        oae1_0.issued_on,
+        oae1_0.last_modified_by,
+        oae1_0.last_modified_date,
+        oae1_0.partner_expiry,
+        oae1_0.username 
+    from
+        otp_audit_entries oae1_0 
+    where
+        oae1_0.id=?
 ]]></system-out>
   </testcase>
 </testsuite>

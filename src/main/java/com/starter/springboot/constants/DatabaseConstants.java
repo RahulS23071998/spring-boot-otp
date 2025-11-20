@@ -6,7 +6,7 @@ package com.starter.springboot.constants;
 public final class DatabaseConstants {
 
     // Table Names
-    public static final String USER_TABLE = "user";
+    public static final String USER_TABLE = "user_account";
     public static final String ROLE_TABLE = "role";
     public static final String AUTHORITY_TABLE = "authority";
     public static final String OTP_AUDIT_ENTRIES_TABLE = "otp_audit_entries";

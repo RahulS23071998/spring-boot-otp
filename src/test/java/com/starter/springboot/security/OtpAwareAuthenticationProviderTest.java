@@ -329,8 +329,8 @@ class OtpAwareAuthenticationProviderTest {
 
         // Then
         assertTrue(result.isAuthenticated());
-        assertTrue(result.getPrincipal() instanceof DomainUserDetails);
-        assertNotNull(result.getCredentials());
+        assertInstanceOf(DomainUserDetails.class, result.getPrincipal());
+        assertNull(result.getCredentials(),"Credentials should be cleared after authentication");
         assertNotNull(result.getAuthorities());
     }
 

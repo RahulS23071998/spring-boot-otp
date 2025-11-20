@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.199" tests="17" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.RoleRepositoryTest" time="0.286" tests="8" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -63,36 +63,700 @@
     <property name="java.class.version" value="61.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldAuthorizePasswordChangeByUsernameWhenUserChangesOwnPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.141"/>
-  <testcase name="shouldReturnTrueWhenAuthenticatedUserHasAdminAuthority" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldDenyPasswordChangeByUsernameWhenNonAdminChangesOtherPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003">
-    <system-out><![CDATA[2025-11-20T15:46:44.894+05:30  WARN 16480 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Unauthorized password change attempt: User authenticatedUser attempted to change password for user targetUser
+  <testcase name="shouldFindRoleByName" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.062">
+    <system-out><![CDATA[2025-11-20T15:46:41.950+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [RoleRepositoryTest]: using SpringBootContextLoader
+2025-11-20T15:46:41.951+05:30  INFO 16480 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.RoleRepositoryTest]: RoleRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-11-20T15:46:41.952+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [RoleRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
+2025-11-20T15:46:41.965+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [RoleRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
+2025-11-20T15:46:41.980+05:30  INFO 16480 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.RoleRepositoryTest
+2025-11-20T15:46:41.981+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [RoleRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
+2025-11-20T15:46:41.994+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.026+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.029+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.040+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldThrowNullPointerExceptionWhenTargetUsernameIsNull" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldThrowIllegalStateExceptionWhenAuthenticatedUserHasNoUsername" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003">
-    <system-out><![CDATA[2025-11-20T15:46:44.900+05:30 ERROR 16480 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Authenticated user has no username
+  <testcase name="shouldCreateAndSaveRole" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.027">
+    <system-out><![CDATA[2025-11-20T15:46:42.051+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.063+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.065+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.067+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.id=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldReturnFalseWhenAuthenticatedUserIsNotAdmin" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldAuthorizePasswordChangeWhenUserChangesOwnPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldReturnTrueWhenAuthenticatedUserHasRoleAdminAuthority" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldReturnAuthenticatedUsernameFromSecurityContext" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldThrowNullPointerExceptionWhenTargetUserIsNull" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldThrowIllegalStateExceptionWhenAuthenticationNotAuthenticated" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002">
-    <system-out><![CDATA[2025-11-20T15:46:44.920+05:30 ERROR 16480 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : No authenticated user found in security context
+  <testcase name="shouldReturnEmptyWhenRoleNotFoundByName" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.02">
+    <system-out><![CDATA[2025-11-20T15:46:42.083+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.087+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.089+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.093+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldAuthorizePasswordChangeByUsernameWhenAdminChangesAnyPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.004"/>
-  <testcase name="shouldReturnTrueWhenAuthenticatedUserIsAdmin" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.003"/>
-  <testcase name="shouldReturnFalseWhenNoAuthenticatedUserForAdminCheck" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002"/>
-  <testcase name="shouldThrowIllegalStateExceptionWhenNoAuthenticatedUser" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.002">
-    <system-out><![CDATA[2025-11-20T15:46:44.933+05:30 ERROR 16480 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : No authenticated user found in security context
+  <testcase name="shouldUpdateRoleDescription" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.033">
+    <system-out><![CDATA[2025-11-20T15:46:42.104+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.109+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.111+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.115+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
+2025-11-20T15:46:42.120+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    update
+        role 
+    set
+        description=?,
+        last_modified_date=? 
+    where
+        id=?
+Hibernate: 
+    update
+        role 
+    set
+        description=?,
+        last_modified_date=? 
+    where
+        id=?
+2025-11-20T15:46:42.123+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.name=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDenyPasswordChangeWhenNonAdminChangesOtherPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.004">
-    <system-out><![CDATA[2025-11-20T15:46:44.938+05:30  WARN 16480 --- [Starter Project] [           main] s.s.i.PasswordChangeAuthorizationService : Unauthorized password change attempt: User authenticatedUser attempted to change password for user targetUser
+  <testcase name="shouldRetrieveAllRoles" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.029">
+    <system-out><![CDATA[2025-11-20T15:46:42.146+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.149+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.151+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.156+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
 ]]></system-out>
   </testcase>
-  <testcase name="shouldAuthorizePasswordChangeWhenAdminChangesAnyPassword" classname="com.starter.springboot.service.PasswordChangeAuthorizationServiceTest" time="0.006"/>
+  <testcase name="shouldDeleteRoleById" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.029">
+    <system-out><![CDATA[2025-11-20T15:46:42.165+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.170+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.172+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.181+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    delete 
+    from
+        role 
+    where
+        id=?
+Hibernate: 
+    delete 
+    from
+        role 
+    where
+        id=?
+2025-11-20T15:46:42.187+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.id=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.id=?
+]]></system-out>
+  </testcase>
+  <testcase name="shouldFindRoleById" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.015">
+    <system-out><![CDATA[2025-11-20T15:46:42.197+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.201+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.202+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+]]></system-out>
+  </testcase>
+  <testcase name="shouldCountTotalRoles" classname="com.starter.springboot.repository.RoleRepositoryTest" time="0.024">
+    <system-out><![CDATA[2025-11-20T15:46:42.215+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0
+2025-11-20T15:46:42.218+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.219+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.225+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        role r1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        role r1_0
+2025-11-20T15:46:42.227+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.id=?
+Hibernate: 
+    select
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name 
+    from
+        role r1_0 
+    where
+        r1_0.id=?
+2025-11-20T15:46:42.229+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-11-20T15:46:42.231+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        count(*) 
+    from
+        role r1_0
+Hibernate: 
+    select
+        count(*) 
+    from
+        role r1_0
+]]></system-out>
+  </testcase>
 </testsuite>

@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS authority (
 -- ================================================
 -- 3. CREATE USER TABLE
 -- ================================================
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS user_account (
     id BIGINT NOT NULL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
     INDEX idx_refresh_token_user (user_id),
     INDEX idx_refresh_token_expires (expires_at),
     INDEX idx_refresh_token_token (token),
-    CONSTRAINT fk_refresh_token_user FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+    CONSTRAINT fk_refresh_token_user FOREIGN KEY (user_id) REFERENCES user_account(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ================================================
@@ -115,10 +115,7 @@ INSERT IGNORE INTO authority (id, name, description, created_date, created_by) V
 -- ================================================
 -- 7. INSERT SAMPLE ADMIN USER
 -- ================================================
--- Username: admin
--- Password: Admin@123456 (bcrypt hash: $2a$10$slYQmyNdGzin7olVN3p5Be0DlH.PKZbv5H8KnzzVgXXbVxzy/QMOG)
--- OTP Enabled: false
-INSERT IGNORE INTO user (
+INSERT IGNORE INTO user_account (
     id, username, password, first_name, last_name, email, enabled, status,
     last_password_reset_date, is_otp_required, role_id, authority_id,
     created_date, created_by
@@ -137,15 +134,12 @@ INSERT IGNORE INTO user (
     (SELECT id FROM authority WHERE name = 'ADMIN' LIMIT 1),
     CURRENT_TIMESTAMP,
     'system'
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'admin');
+WHERE NOT EXISTS (SELECT 1 FROM user_account WHERE username = 'admin');
 
 -- ================================================
 -- 8. INSERT SAMPLE USER
 -- ================================================
--- Username: user
--- Password: User@123456 (bcrypt hash: $2a$10$vR/ucTlQSGlaQvzjvTD1..sRPv8XJ7pHFMqe8XW0dFI8HKjYT.B1e)
--- OTP Enabled: false
-INSERT IGNORE INTO user (
+INSERT IGNORE INTO user_account (
     id, username, password, first_name, last_name, email, enabled, status,
     last_password_reset_date, is_otp_required, role_id, authority_id,
     created_date, created_by
@@ -164,15 +158,12 @@ INSERT IGNORE INTO user (
     (SELECT id FROM authority WHERE name = 'USER' LIMIT 1),
     CURRENT_TIMESTAMP,
     'system'
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'rahulvijay');
+WHERE NOT EXISTS (SELECT 1 FROM user_account WHERE username = 'rahulvijay');
 
 -- ================================================
 -- 9. INSERT SAMPLE USER (ROLE_USER)
 -- ================================================
--- Username: testuser
--- Password: Test@123456 (bcrypt hash: $2a$10$example.hash.for.test.user)
--- OTP Enabled: false
-INSERT IGNORE INTO user (
+INSERT IGNORE INTO user_account (
     id, username, password, first_name, last_name, email, enabled, status,
     last_password_reset_date, is_otp_required, role_id, authority_id,
     created_date, created_by
@@ -191,8 +182,4 @@ INSERT IGNORE INTO user (
     (SELECT id FROM authority WHERE name = 'USER' LIMIT 1),
     CURRENT_TIMESTAMP,
     'system'
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE username = 'rameez');
-
--- ================================================
--- End of Schema and Initial Data
--- ================================================
+WHERE NOT EXISTS (SELECT 1 FROM user_account WHERE username = 'rameez');
