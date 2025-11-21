@@ -43,6 +43,7 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\service\impl\OtpNotificationServiceImpl.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\constants\ValidationConstants.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\dto\UserRequestDTO.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\security\CachedUser.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\service\IOtpRateLimiter.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\utils\IdWorker.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\repository\RoleRepository.java

@@ -1,76 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.389" tests="10" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.281" tests="10" errors="0" skipped="0" failures="0">
   <properties>
-    <property name="java.specification.version" value="17"/>
+    <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
     <property name="java.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;"/>
-    <property name="java.vm.vendor" value="SAP SE"/>
+    <property name="java.vm.vendor" value="Microsoft"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
-    <property name="java.vendor.url" value="https://sapmachine.io/"/>
+    <property name="java.vendor.url" value="https://www.microsoft.com"/>
     <property name="user.timezone" value="Asia/Calcutta"/>
     <property name="org.jboss.logging.provider" value="slf4j"/>
     <property name="os.name" value="Windows 11"/>
-    <property name="java.vm.specification.version" value="17"/>
-    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="java.vm.specification.version" value="21"/>
     <property name="user.country" value="IN"/>
-    <property name="sun.boot.library.path" value="C:\Program Files\SapMachine\JDK\17\bin"/>
-    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire10454404304530616395\surefirebooter-20251120154618693_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire10454404304530616395 2025-11-20T15-46-18_490-jvmRun1 surefire-20251120154618693_1tmp surefire_0-20251120154618693_2tmp"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin"/>
+    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire6004941713595639298\surefirebooter-20251121132453855_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire6004941713595639298 2025-11-21T13-24-53_460-jvmRun1 surefire-20251121132453855_1tmp surefire_0-20251121132453855_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.13.0\commons-lang3-3.13.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Rahul.S"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.version.date" value="2023-10-17"/>
-    <property name="java.home" value="C:\Program Files\SapMachine\JDK\17"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="C:\Users\Rahul.S\.jdks\ms-21.0.9"/>
     <property name="file.separator" value="\"/>
     <property name="basedir" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp"/>
+    <property name="style.color" value="always"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="FILE_LOG_CHARSET" value="windows-1252"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire10454404304530616395\surefirebooter-20251120154618693_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire6004941713595639298\surefirebooter-20251121132453855_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="java.runtime.version" value="17.0.9+0-LTS"/>
+    <property name="java.runtime.version" value="21.0.9+10-LTS"/>
     <property name="user.name" value="Rahul.S"/>
+    <property name="stdout.encoding" value="Cp1252"/>
     <property name="path.separator" value=";"/>
     <property name="os.version" value="10.0"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
-    <property name="file.encoding" value="Cp1252"/>
+    <property name="file.encoding" value="UTF-8"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
-    <property name="java.vendor.version" value="SapMachine"/>
+    <property name="java.vendor.version" value="Microsoft-12574459"/>
+    <property name="maven.ext.class.path" value="C:\Users\Rahul.S\AppData\Local\Programs\IntelliJ IDEA 2025.2.1\plugins\maven\lib\maven-event-listener.jar"/>
     <property name="localRepository" value="C:\Users\Rahul.S\.m2\repository"/>
-    <property name="java.vendor.url.bug" value="https://github.com/SAP/SapMachine/issues/new"/>
+    <property name="java.vendor.url.bug" value="https://github.com/microsoft/openjdk/issues"/>
     <property name="java.io.tmpdir" value="C:\Users\Rahul.S\AppData\Local\Temp\"/>
-    <property name="java.version" value="17.0.9"/>
+    <property name="idea.version" value="2025.2.4"/>
+    <property name="java.version" value="21.0.9"/>
     <property name="user.dir" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp"/>
     <property name="os.arch" value="amd64"/>
+    <property name="jansi.passthrough" value="true"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="16480"/>
+    <property name="PID" value="22508"/>
     <property name="sun.os.patch.level" value=""/>
-    <property name="CONSOLE_LOG_CHARSET" value="windows-1252"/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Program Files\SapMachine\JDK\17\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\SapMachine\JDK\17\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\apache-maven-3.9.6\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\MinGW\bin;C:\Users\Rahul.S\AppData\Local\Microsoft\WindowsApps;C:\Users\Rahul.S\AppData\Local\GitHubDesktop\bin;C:\Users\Rahul.S\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Rahul.S\AppData\Roaming\npm;C:\Users\Rahul.S\AppData\Roaming\Cloud Foundry;C:\Users\Rahul.S\AppData\Local\Programs\Git\cmd;;."/>
+    <property name="java.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\SapMachine\JDK\17\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\apache-maven-3.9.6\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\MinGW\bin;C:\Users\Rahul.S\AppData\Local\Microsoft\WindowsApps;C:\Users\Rahul.S\AppData\Local\GitHubDesktop\bin;C:\Users\Rahul.S\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Rahul.S\AppData\Roaming\npm;C:\Users\Rahul.S\AppData\Roaming\Cloud Foundry;C:\Users\Rahul.S\AppData\Local\Programs\Git\cmd;;."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
-    <property name="java.vendor" value="SAP SE"/>
-    <property name="java.vm.version" value="17.0.9+0-LTS"/>
+    <property name="stderr.encoding" value="Cp1252"/>
+    <property name="java.vendor" value="Microsoft"/>
+    <property name="java.vm.version" value="21.0.9+10-LTS"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="java.class.version" value="61.0"/>
+    <property name="maven.repo.local" value="C:\Users\Rahul.S\.m2\repository"/>
+    <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldReturnEmptyWhenOtpAuditEntryNotFoundById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.041">
-    <system-out><![CDATA[2025-11-20T15:46:41.130+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [OtpAuditEntryRepositoryTest]: using SpringBootContextLoader
-2025-11-20T15:46:41.131+05:30  INFO 16480 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.OtpAuditEntryRepositoryTest]: OtpAuditEntryRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-20T15:46:41.132+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [OtpAuditEntryRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
-2025-11-20T15:46:41.164+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [OtpAuditEntryRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
-2025-11-20T15:46:41.165+05:30  INFO 16480 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.OtpAuditEntryRepositoryTest
-2025-11-20T15:46:41.166+05:30 DEBUG 16480 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [OtpAuditEntryRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
-2025-11-20T15:46:41.180+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldReturnEmptyWhenOtpAuditEntryNotFoundById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.028">
+    <system-out><![CDATA[2025-11-21T13:25:15.544+05:30 DEBUG 22508 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [OtpAuditEntryRepositoryTest]: using SpringBootContextLoader
+2025-11-21T13:25:15.552+05:30  INFO 22508 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.OtpAuditEntryRepositoryTest]: OtpAuditEntryRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-11-21T13:25:15.557+05:30 DEBUG 22508 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [OtpAuditEntryRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
+2025-11-21T13:25:15.580+05:30 DEBUG 22508 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [OtpAuditEntryRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
+2025-11-21T13:25:15.581+05:30  INFO 22508 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.OtpAuditEntryRepositoryTest
+2025-11-21T13:25:15.582+05:30 DEBUG 22508 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [OtpAuditEntryRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
+2025-11-21T13:25:15.594+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -96,7 +103,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.190+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.606+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -110,7 +117,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.192+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.608+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -124,7 +131,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.202+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.608+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -138,7 +145,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.209+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.612+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -170,8 +177,8 @@ Hibernate:
         oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCountTotalOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.02">
-    <system-out><![CDATA[2025-11-20T15:46:41.220+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldCountTotalOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.018">
+    <system-out><![CDATA[2025-11-21T13:25:15.623+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -197,7 +204,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.224+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.627+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -211,7 +218,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.226+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.628+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -225,7 +232,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.227+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.629+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -239,7 +246,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.231+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.633+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         count(*) 
     from
@@ -251,8 +258,8 @@ Hibernate:
         otp_audit_entries oae1_0
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDeleteExpiredOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.029">
-    <system-out><![CDATA[2025-11-20T15:46:41.264+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldDeleteExpiredOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.02">
+    <system-out><![CDATA[2025-11-21T13:25:15.643+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -278,7 +285,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.272+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.645+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -292,7 +299,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.273+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.647+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -306,7 +313,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.275+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.647+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -320,7 +327,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.279+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.650+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -350,7 +357,7 @@ Hibernate:
         otp_audit_entries oae1_0 
     where
         oae1_0.expires_on<?
-2025-11-20T15:46:41.281+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.653+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
         otp_audit_entries 
@@ -362,7 +369,7 @@ Hibernate:
         otp_audit_entries 
     where
         id=?
-2025-11-20T15:46:41.283+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.654+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -394,8 +401,8 @@ Hibernate:
         oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldRetrieveAllOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.039">
-    <system-out><![CDATA[2025-11-20T15:46:41.313+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldRetrieveAllOtpAuditEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.021">
+    <system-out><![CDATA[2025-11-21T13:25:15.665+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -421,7 +428,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.317+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.669+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -435,7 +442,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.319+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.671+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -449,7 +456,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.320+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.672+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -463,7 +470,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.324+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.677+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -491,8 +498,8 @@ Hibernate:
         otp_audit_entries oae1_0
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCreateAndSaveOtpAuditEntry" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.032">
-    <system-out><![CDATA[2025-11-20T15:46:41.336+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldCreateAndSaveOtpAuditEntry" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.028">
+    <system-out><![CDATA[2025-11-21T13:25:15.689+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -518,7 +525,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.340+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.694+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -532,7 +539,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.342+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.702+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -546,7 +553,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.345+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.704+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -560,7 +567,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.356+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.706+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -592,8 +599,8 @@ Hibernate:
         oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldReturnZeroWhenNoEntriesToDelete" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.025">
-    <system-out><![CDATA[2025-11-20T15:46:41.367+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldReturnZeroWhenNoEntriesToDelete" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.017">
+    <system-out><![CDATA[2025-11-21T13:25:15.717+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -619,7 +626,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.371+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.720+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -633,7 +640,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.378+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.721+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -647,7 +654,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.379+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.723+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -661,7 +668,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.383+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.726+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -693,8 +700,8 @@ Hibernate:
         oae1_0.expires_on<?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDeleteMultipleExpiredEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.04">
-    <system-out><![CDATA[2025-11-20T15:46:41.405+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldDeleteMultipleExpiredEntries" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.037">
+    <system-out><![CDATA[2025-11-21T13:25:15.737+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -720,7 +727,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.409+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.739+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -734,7 +741,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.411+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.741+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -748,7 +755,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.412+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.742+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -762,7 +769,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.417+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.744+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -776,7 +783,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.422+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.747+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -806,7 +813,7 @@ Hibernate:
         otp_audit_entries oae1_0 
     where
         oae1_0.expires_on<?
-2025-11-20T15:46:41.424+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.750+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
         otp_audit_entries 
@@ -818,7 +825,7 @@ Hibernate:
         otp_audit_entries 
     where
         id=?
-2025-11-20T15:46:41.425+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.753+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
         otp_audit_entries 
@@ -830,7 +837,7 @@ Hibernate:
         otp_audit_entries 
     where
         id=?
-2025-11-20T15:46:41.426+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.756+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         count(*) 
     from
@@ -842,8 +849,8 @@ Hibernate:
         otp_audit_entries oae1_0
 ]]></system-out>
   </testcase>
-  <testcase name="shouldFindOtpAuditEntryById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.032">
-    <system-out><![CDATA[2025-11-20T15:46:41.440+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldFindOtpAuditEntryById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.016">
+    <system-out><![CDATA[2025-11-21T13:25:15.780+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -869,7 +876,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.453+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.784+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -883,7 +890,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.455+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.786+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -897,7 +904,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.458+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.787+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -913,8 +920,8 @@ Hibernate:
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDeleteOtpAuditEntryById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.027">
-    <system-out><![CDATA[2025-11-20T15:46:41.471+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldDeleteOtpAuditEntryById" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.013">
+    <system-out><![CDATA[2025-11-21T13:25:15.796+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -940,7 +947,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.474+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.798+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -954,7 +961,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.476+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.799+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -968,7 +975,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.477+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.800+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -982,7 +989,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.480+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.802+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
         otp_audit_entries 
@@ -994,7 +1001,7 @@ Hibernate:
         otp_audit_entries 
     where
         id=?
-2025-11-20T15:46:41.482+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.803+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -1026,8 +1033,8 @@ Hibernate:
         oae1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldNotDeleteEntriesWithExpiryDateOnOrAfterCutoffDate" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.024">
-    <system-out><![CDATA[2025-11-20T15:46:41.497+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldNotDeleteEntriesWithExpiryDateOnOrAfterCutoffDate" classname="com.starter.springboot.repository.OtpAuditEntryRepositoryTest" time="0.016">
+    <system-out><![CDATA[2025-11-21T13:25:15.809+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -1053,7 +1060,7 @@ Hibernate:
         oae1_0.username 
     from
         otp_audit_entries oae1_0
-2025-11-20T15:46:41.501+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.812+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -1067,7 +1074,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.502+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.813+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -1081,7 +1088,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.505+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.814+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         otp_audit_entries
@@ -1095,7 +1102,7 @@ Hibernate:
         (created_by, created_date, expires_on, issued_on, last_modified_by, last_modified_date, partner_expiry, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-20T15:46:41.508+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.817+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,
@@ -1125,7 +1132,7 @@ Hibernate:
         otp_audit_entries oae1_0 
     where
         oae1_0.expires_on<?
-2025-11-20T15:46:41.511+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.819+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
         otp_audit_entries 
@@ -1137,7 +1144,7 @@ Hibernate:
         otp_audit_entries 
     where
         id=?
-2025-11-20T15:46:41.512+05:30 DEBUG 16480 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-11-21T13:25:15.820+05:30 DEBUG 22508 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         oae1_0.id,
         oae1_0.created_by,

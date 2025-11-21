@@ -2,6 +2,7 @@ package com.starter.springboot.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.exception.UserNotActivatedException;
 import com.starter.springboot.repository.UserRepository;
@@ -16,11 +17,13 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import com.starter.springboot.entity.Authority;
+import com.starter.springboot.entity.Role;
 
 public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
 
@@ -32,34 +35,43 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
 
     private static final int USER_CACHE_TTL_MINUTES = 5;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
 
     public OtpAwareAuthenticationProvider(UserRepository userRepository, PasswordEncoder passwordEncoder, StringRedisTemplate redisTemplate) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.redisTemplate = redisTemplate;
+
+        // configure ObjectMapper once
+        this.objectMapper = new ObjectMapper();
+        this.objectMapper.registerModule(new JavaTimeModule());
+        this.objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        this.objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
     }
 
     @Override
-    @Transactional
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        final String rawUsername = authentication.getName();
-        final String password = String.valueOf(authentication.getCredentials());
-        final String username = rawUsername.toLowerCase();
+        final String providedPassword = authentication.getCredentials() == null ? null : String.valueOf(authentication.getCredentials());
+        final String normalizedUsername = Objects.isNull(authentication.getName()) ? null : authentication.getName().toLowerCase();
 
-        log.debug("Starting authentication for {}", username);
+        log.debug("Starting authentication for {}", normalizedUsername);
 
-        User user = loadUserFromCacheOrDb(username);
+        if (Objects.isNull(normalizedUsername)) {
+            log.warn("Authentication failed: username is null");
+            throw new BadCredentialsException("Invalid username or password");
+        }
 
-        validateUserState(user, username);
-        validatePassword(user, password, username);
+        User user = loadUserFromCacheOrDb(normalizedUsername);
+
+        validateUserState(user, normalizedUsername);
+        validatePassword(user, providedPassword, normalizedUsername);
 
         List<GrantedAuthority> authorities = buildAuthorities(user);
 
         DomainUserDetails userDetails = DomainUserDetails.fromUser(user, authorities);
 
-        log.info("User '{}' authenticated. OTP Required: {}", username, user.getIsOtpRequired());
+        log.info("User '{}' authenticated. OTP Required: {}", normalizedUsername, user.getIsOtpRequired());
 
         return new UsernamePasswordAuthenticationToken(
                 userDetails,
@@ -73,20 +85,24 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
         return UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication);
     }
 
-    private User loadUserFromCacheOrDb(String username) {
-        final String cacheKey = "auth:user:" + username;
+    private User loadUserFromCacheOrDb(String normalizedUsername) {
+        final String cacheKey = "auth:user:" + normalizedUsername;
 
         // Try cache first
         try {
             String cachedJson = redisTemplate.opsForValue().get(cacheKey);
-            if (cachedJson != null) {
+            if (Objects.nonNull(cachedJson)) {
                 try {
-                    User cachedUser = objectMapper.readValue(cachedJson, User.class);
-                    log.debug("Loaded user {} from cache", username);
-                    return cachedUser;
+                    CachedUser cached = objectMapper.readValue(cachedJson, CachedUser.class);
+                    log.debug("Loaded user {} from cache", normalizedUsername);
+                    return toUser(cached);
                 } catch (Exception ex) {
-                    log.warn("Corrupted cache for {}. Removing entry.", username);
-                    redisTemplate.delete(cacheKey);
+                    log.warn("Corrupted cache for {}. Removing entry.", normalizedUsername);
+                    try {
+                        redisTemplate.delete(cacheKey);
+                    } catch (Exception e) {
+                        log.warn("Failed to delete corrupted cache for {}: {}", normalizedUsername, e.getMessage());
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -94,45 +110,102 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
         }
 
         // Load from DB
-        User user = userRepository.findByUsername(username)
+        User user = userRepository.findByUsername(normalizedUsername)
                 .orElseThrow(() -> {
-                    log.warn("User '{}' not found", username);
+                    log.warn("User '{}' not found", normalizedUsername);
                     return new BadCredentialsException("Invalid username or password");
                 });
 
-        cacheUser(username, user);
+        cacheUser(normalizedUsername, user);
         return user;
     }
 
-    private void cacheUser(String username, User user) {
+    private void cacheUser(String normalizedUsername, User user) {
         try {
+            CachedUser cached = fromUser(user);
             redisTemplate.opsForValue().set(
-                    "auth:user:" + username,
-                    objectMapper.writeValueAsString(user),
+                    "auth:user:" + normalizedUsername,
+                    objectMapper.writeValueAsString(cached),
                     USER_CACHE_TTL_MINUTES,
                     TimeUnit.MINUTES
             );
-            log.debug("Cached user {}", username);
+            log.debug("Cached user {}", normalizedUsername);
         } catch (Exception ex) {
-            log.debug("Failed to cache user {}: {}", username, ex.getMessage());
+            log.debug("Failed to cache user {}: {}", normalizedUsername, ex.getMessage());
         }
     }
 
-    private void validateUserState(User user, String username) {
+    private CachedUser fromUser(User user) {
+        String roleName = Objects.nonNull(user.getRole()) ? user.getRole().getName() : null;
+        String authorityName = Objects.nonNull(user.getAuthority()) ? user.getAuthority().getName() : null;
+        return new CachedUser(
+                user.getId(),
+                user.getUsername(),
+                null,
+                user.getEmail(),
+                user.getEnabled(),
+                user.getIsOtpRequired(),
+                roleName,
+                authorityName,
+                user.getLastPasswordResetDate()
+        );
+    }
+
+    private User toUser(CachedUser c) {
+        User userEntity = new User();
+        userEntity.setId(c.getId());
+        userEntity.setUsername(c.getUsername());
+        userEntity.setPassword(c.getPassword());
+        userEntity.setEmail(c.getEmail());
+        userEntity.setEnabled(c.getEnabled());
+        userEntity.setIsOtpRequired(c.getOtpRequired());
+        userEntity.setLastPasswordResetDate(c.getLastPasswordResetDate());
+        // set minimal Role/Authority objects so authority names are preserved when loaded from cache
+        if (Objects.nonNull(c.getRoleName())) {
+            Role roleEntity = new Role();
+            roleEntity.setName(c.getRoleName());
+            userEntity.setRole(roleEntity);
+        }
+        if (Objects.nonNull(c.getAuthorityName())) {
+            Authority authorityEntity = new Authority();
+            authorityEntity.setName(c.getAuthorityName());
+            userEntity.setAuthority(authorityEntity);
+        }
+        return userEntity;
+    }
+
+    private void validateUserState(User user, String normalizedUsername) {
         if (!Boolean.TRUE.equals(user.getEnabled())) {
-            log.warn("User '{}' is not activated", username);
+            log.warn("User '{}' is not activated", normalizedUsername);
             throw new UserNotActivatedException("User account is not activated");
         }
     }
 
-    private void validatePassword(User user, String rawPassword, String username) {
-        if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
-            log.warn("Invalid password for '{}'", username);
+    private void validatePassword(User user, String providedPassword, String normalizedUsername) {
+        if (Objects.isNull(providedPassword) || Objects.isNull(user.getPassword())) {
+            log.warn("Invalid password (null) for '{}'", normalizedUsername);
+            throw new BadCredentialsException("Invalid username or password");
+        }
+
+        if (!passwordEncoder.matches(providedPassword, user.getPassword())) {
+            log.warn("Invalid password for '{}'", normalizedUsername);
             throw new BadCredentialsException("Invalid username or password");
         }
     }
 
     private List<GrantedAuthority> buildAuthorities(User user) {
-        return List.of(new SimpleGrantedAuthority(user.getRole().getName()));
+        List<GrantedAuthority> list = new ArrayList<>();
+        // DomainUserDetails reads role/authority names later; user may not have full entities when loaded from cache
+        try {
+            if (Objects.nonNull(user.getRole()) && Objects.nonNull(user.getRole().getName())) {
+                list.add(new SimpleGrantedAuthority(user.getRole().getName()));
+            }
+        } catch (Exception ignored) {}
+        try {
+            if (Objects.nonNull(user.getAuthority()) && Objects.nonNull(user.getAuthority().getName())) {
+                list.add(new SimpleGrantedAuthority(user.getAuthority().getName()));
+            }
+        } catch (Exception ignored) {}
+        return list;
     }
 }

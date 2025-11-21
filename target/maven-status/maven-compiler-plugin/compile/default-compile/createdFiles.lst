@@ -70,6 +70,7 @@ com\starter\springboot\security\DomainUserDetails.class
 com\starter\springboot\security\jwt\JWTConfigurer.class
 com\starter\springboot\security\jwt\TokenProvider$TokenCreationData.class
 com\starter\springboot\security\jwt\TokenProvider$SimpleGrantedAuthorityDeserializer.class
+com\starter\springboot\security\CachedUser.class
 com\starter\springboot\utils\IdWorker.class
 com\starter\springboot\service\IdGeneratorService.class
 com\starter\springboot\service\impl\OtpAuditServiceImpl.class
