@@ -18,7 +18,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
@@ -29,6 +28,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
+import com.starter.springboot.service.IRefreshTokenService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -58,12 +58,17 @@ class TokenProviderTest {
     private RedisTokenService redisTokenService;
 
     @Mock
+    private IRefreshTokenService refreshTokenService;
+
+    @Mock
     private StringRedisTemplate redisTemplate;
 
     @Mock
     private ValueOperations<String, String> valueOperations;
 
-    @InjectMocks
+    @Mock
+    private JwtProperties jwtProperties;
+
     private TokenProvider tokenProvider;
 
     private static final String TEST_USERNAME = "testuser";
@@ -81,15 +86,22 @@ class TokenProviderTest {
     void setUp() {
         testUser = createTestUser();
 
-        // Set up valid configuration
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", VALID_SECRET);
-        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInSeconds", TOKEN_VALIDITY);
-        ReflectionTestUtils.setField(tokenProvider, "tokenValidityInSecondsForRememberMe", REMEMBER_ME_VALIDITY);
+        // Configure JwtProperties mock
+        lenient().when(jwtProperties.getSecret()).thenReturn(VALID_SECRET);
+        lenient().when(jwtProperties.getExpiration()).thenReturn(TOKEN_VALIDITY);
+        lenient().when(jwtProperties.getExpirationRememberMe()).thenReturn(REMEMBER_ME_VALIDITY);
+        lenient().when(jwtProperties.getRefreshExpiration()).thenReturn(604800L);
+
+        // Initialize TokenProvider with mocked dependencies
+        tokenProvider = new TokenProvider(otpService, userRepository, redisTokenService, refreshTokenService, redisTemplate, jwtProperties);
 
         // Mock Redis operations
         lenient().when(redisTemplate.opsForValue()).thenReturn(valueOperations);
         lenient().when(valueOperations.get(anyString())).thenReturn(null);
         lenient().doNothing().when(valueOperations).set(anyString(), anyString(), any());
+
+        // Initialize tokenProvider
+        tokenProvider.initialize();
     }
 
     @Test
@@ -391,11 +403,13 @@ class TokenProviderTest {
     @DisplayName("Should throw IllegalStateException when JWT secret is not configured")
     void shouldThrowIllegalStateExceptionWhenJwtSecretNotConfigured() {
         // Given
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", null);
+        JwtProperties nullSecretProps = mock(JwtProperties.class);
+        when(nullSecretProps.getSecret()).thenReturn(null);
+        TokenProvider testTokenProvider = new TokenProvider(otpService, userRepository, redisTokenService, refreshTokenService, redisTemplate, nullSecretProps);
 
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> tokenProvider.initialize());
+                testTokenProvider::initialize);
 
         assertEquals("JWT secret (`jwt.secret`) is not configured.", exception.getMessage());
     }
@@ -404,11 +418,13 @@ class TokenProviderTest {
     @DisplayName("Should throw IllegalStateException when JWT secret is blank")
     void shouldThrowIllegalStateExceptionWhenJwtSecretIsBlank() {
         // Given
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", "   ");
+        JwtProperties blankSecretProps = mock(JwtProperties.class);
+        when(blankSecretProps.getSecret()).thenReturn("   ");
+        TokenProvider testTokenProvider = new TokenProvider(otpService, userRepository, redisTokenService, refreshTokenService, redisTemplate, blankSecretProps);
 
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> tokenProvider.initialize());
+                testTokenProvider::initialize);
 
         assertEquals("JWT secret (`jwt.secret`) is not configured.", exception.getMessage());
     }
@@ -417,11 +433,13 @@ class TokenProviderTest {
     @DisplayName("Should throw IllegalArgumentException when JWT secret is too short")
     void shouldThrowIllegalArgumentExceptionWhenJwtSecretTooShort() {
         // Given
-        ReflectionTestUtils.setField(tokenProvider, "secretKey", SHORT_SECRET);
+        JwtProperties shortSecretProps = mock(JwtProperties.class);
+        when(shortSecretProps.getSecret()).thenReturn(SHORT_SECRET);
+        TokenProvider testTokenProvider = new TokenProvider(otpService, userRepository, redisTokenService, refreshTokenService, redisTemplate, shortSecretProps);
 
         // When & Then
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
-                () -> tokenProvider.initialize());
+                testTokenProvider::initialize);
 
         assertEquals("JWT secret is too short. Provide Base64-encoded key of at least 256 bits.", exception.getMessage());
     }

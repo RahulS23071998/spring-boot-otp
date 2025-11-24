@@ -24,7 +24,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -55,20 +54,11 @@ public class TokenProvider {
     
     private Key key;
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-
-    @Value("${jwt.expiration}")
-    private long tokenValidityInSeconds;
-
-    @Value("${jwt.expirationRememberMe:${jwt.expiration}}")
-    private long tokenValidityInSecondsForRememberMe;
-
-    @Value("${jwt.refreshExpiration:604800}") // Default 7 days (7 * 24 * 60 * 60)
-    private long refreshTokenValidityInSeconds;
+    private final JwtProperties jwtProperties;
     
     @PostConstruct
     public void initialize() {
+        String secretKey = jwtProperties.getSecret();
         if (Objects.isNull(secretKey) || secretKey.isBlank()) {
             throw new IllegalStateException("JWT secret (`jwt.secret`) is not configured.");
         }
@@ -179,12 +169,13 @@ public class TokenProvider {
         return new TokenCreationData(user, tokenValue, expirationSeconds);
     }
 
-    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService, IRefreshTokenService refreshTokenService, StringRedisTemplate redisTemplate) {
+    public TokenProvider(IOtpService otpService, UserRepository userRepository, IRedisTokenService redisTokenService, IRefreshTokenService refreshTokenService, StringRedisTemplate redisTemplate, JwtProperties jwtProperties) {
         this.otpService = otpService;
         this.userRepository = userRepository;
         this.redisTokenService = redisTokenService;
         this.refreshTokenService = refreshTokenService;
         this.redisTemplate = redisTemplate;
+        this.jwtProperties = jwtProperties;
     }
 
 
@@ -216,7 +207,7 @@ public class TokenProvider {
 
         // Create refresh token
         String refreshTokenValue = null;
-        long refreshTokenExpirationSeconds = refreshTokenValidityInSeconds;
+        long refreshTokenExpirationSeconds = jwtProperties.getRefreshExpiration();
         if (Objects.nonNull(userDetails.getUserId())) {
             try {
                 RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserId(), refreshTokenExpirationSeconds);
@@ -263,7 +254,7 @@ public class TokenProvider {
 
         // Create refresh token
         String refreshTokenValue = null;
-        long refreshTokenExpirationSeconds = refreshTokenValidityInSeconds;
+        long refreshTokenExpirationSeconds = jwtProperties.getRefreshExpiration();
         try {
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(tokenData.user().getId(), refreshTokenExpirationSeconds);
             refreshTokenValue = refreshToken.getToken();
@@ -381,7 +372,7 @@ public class TokenProvider {
     }
 
     private long resolveExpiration(Boolean rememberMe) {
-        return Boolean.TRUE.equals(rememberMe) ? this.tokenValidityInSecondsForRememberMe : this.tokenValidityInSeconds;
+        return Boolean.TRUE.equals(rememberMe) ? jwtProperties.getExpirationRememberMe() : jwtProperties.getExpiration();
     }
 
     /**
@@ -389,7 +380,7 @@ public class TokenProvider {
      * @return refresh token validity in seconds
      */
     public long getRefreshTokenValidityInSeconds() {
-        return refreshTokenValidityInSeconds;
+        return jwtProperties.getRefreshExpiration();
     }
 
     private DomainUserDetails resolveDomainUserDetails(Authentication authentication) {

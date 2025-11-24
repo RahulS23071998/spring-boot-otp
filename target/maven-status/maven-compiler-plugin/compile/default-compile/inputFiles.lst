@@ -48,6 +48,7 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\utils\IdWorker.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\repository\RoleRepository.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\EmailConfiguration.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\security\jwt\JwtProperties.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\service\IOtpAuditService.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\Application.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\dto\EmailDTO.java

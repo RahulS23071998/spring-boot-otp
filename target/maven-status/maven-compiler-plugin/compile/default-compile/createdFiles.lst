@@ -102,4 +102,5 @@ com\starter\springboot\config\AppInfoContributor.class
 com\starter\springboot\entity\RefreshToken_.class
 com\starter\springboot\service\impl\OtpGenerator.class
 com\starter\springboot\service\impl\OtpService.class
+com\starter\springboot\security\jwt\JwtProperties.class
 com\starter\springboot\dto\VerifyTokenRequestDTO.class
