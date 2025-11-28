@@ -6,6 +6,7 @@ import com.starter.springboot.entity.Authority;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.service.LocalizationService;
 import com.starter.springboot.service.impl.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -34,6 +35,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,6 +49,9 @@ class PublicUserResourceTest {
 
     @Mock
     private UserService userService;
+
+    @Mock
+    private LocalizationService localizationService;
 
     @InjectMocks
     private PublicUserResource publicUserResource;
@@ -112,6 +117,43 @@ class PublicUserResourceTest {
         Authority authority = new Authority();
         authority.setId(1L);
         sampleUser.setAuthority(authority);
+        mockLocalizationMessages();
+    }
+
+    private void mockLocalizationMessages() {
+        lenient().when(localizationService.getMessage(anyString()))
+            .thenAnswer(invocation -> resolveMessage(invocation.getArgument(0)));
+        lenient().when(localizationService.getMessage(anyString(), any()))
+            .thenAnswer(invocation -> {
+                Object[] args = extractArgs(invocation.getArguments());
+                return resolveMessage(invocation.getArgument(0), args);
+            });
+    }
+
+    private Object[] extractArgs(Object[] arguments) {
+        if (arguments.length <= 1) {
+            return new Object[0];
+        }
+        Object[] args = new Object[arguments.length - 1];
+        System.arraycopy(arguments, 1, args, 0, args.length);
+        return args;
+    }
+
+    private String resolveMessage(String key, Object... args) {
+        return switch (key) {
+            case "user.already_exists" -> format("User with username '%s' already exists", args);
+            case "user.invalid_userid_format" -> "Invalid userId format";
+            case "user.userid_or_username_required" -> "Either userId or username is required";
+            case "user.password_change_error" -> "Failed to change password";
+            default -> key;
+        };
+    }
+
+    private String format(String template, Object... args) {
+        if (args == null || args.length == 0) {
+            return template;
+        }
+        return String.format(template, args);
     }
 
     @Test

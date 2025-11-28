@@ -175,7 +175,6 @@ src/
 │       ├── application.yml               # Main configuration
 │       ├── application-dev.yml           # Development profile
 │       ├── application-prod.yml          # Production profile
-│       └── script.js                     # Utility script
 ├── test/
 │   └── java/com/starter/springboot/
 │       ├── controller/                   # Controller tests

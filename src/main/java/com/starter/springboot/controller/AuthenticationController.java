@@ -18,6 +18,7 @@ import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.LocalizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -65,16 +66,20 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
 
+    private final LocalizationService localizationService;
+
     public AuthenticationController(TokenProvider tokenProvider,
                                     IOtpService otpService,
                                     IRefreshTokenService refreshTokenService,
                                     UserRepository userRepository,
-                                    AuthenticationManager authenticationManager) {
+                                    AuthenticationManager authenticationManager,
+                                    LocalizationService localizationService) {
         this.tokenProvider = tokenProvider;
         this.otpService = otpService;
         this.refreshTokenService = refreshTokenService;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
+        this.localizationService = localizationService;
     }
 
     @PostMapping(value = ApplicationConstants.AUTHENTICATE_ENDPOINT)
@@ -150,7 +155,7 @@ public class AuthenticationController {
             throw ex;
         } catch (BadCredentialsException badCredentialsException) {
             LOGGER.warn("Authentication failed for user: {} due to bad credentials", loginDTO.getUsername());
-            AuthResponseDTO body = AuthResponseDTO.failed(loginDTO.getUsername(), SecurityConstants.INVALID_CREDENTIALS_MESSAGE).withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
+            AuthResponseDTO body = AuthResponseDTO.failed(loginDTO.getUsername(), localizationService.getMessage("auth.invalid_credentials")).withContext(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
         } catch (AuthenticationException exception) {
             LOGGER.warn("Authentication failed for user: {}: {}", loginDTO.getUsername(), exception.getMessage());
@@ -217,8 +222,8 @@ public class AuthenticationController {
             LOGGER.warn("OTP validation failed for user: {} with status {}", username, validationResult.getStatus());
             HttpStatus status = validationResult.getStatus() == OtpValidationStatus.LOCKED ? HttpStatus.LOCKED : HttpStatus.UNAUTHORIZED;
             String message = validationResult.getStatus() == OtpValidationStatus.LOCKED
-                ? OtpConstants.LOCKED_OTP_MESSAGE
-                : OtpConstants.INVALID_OTP_MESSAGE;
+                ? localizationService.getMessage("auth.locked_otp")
+                : localizationService.getMessage("auth.invalid_otp");
             return ResponseEntity.status(status)
                 .body(AuthResponseDTO.failed(username, message)
                     .withContext(rememberMe, verifyTokenRequest.getClientId(), verifyTokenRequest.getDeviceId()));
@@ -308,7 +313,7 @@ public class AuthenticationController {
         } catch (Exception e) {
             LOGGER.warn("Token refresh failed: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(AuthResponseDTO.failed(null, "Invalid refresh token"));
+                .body(AuthResponseDTO.failed(null, localizationService.getMessage("auth.invalid_refresh_token")));
         }
     }
 }

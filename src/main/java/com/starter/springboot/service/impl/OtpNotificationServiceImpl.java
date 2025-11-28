@@ -5,6 +5,7 @@ import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.dto.EmailDTO;
 import com.starter.springboot.service.IEmailService;
 import com.starter.springboot.service.IOtpNotificationService;
+import com.starter.springboot.service.LocalizationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,11 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
 
     private final IEmailService emailService;
 
-    public OtpNotificationServiceImpl(IEmailService emailService) {
+    private final LocalizationService localizationService;
+
+    public OtpNotificationServiceImpl(IEmailService emailService, LocalizationService localizationService) {
         this.emailService = emailService;
+        this.localizationService = localizationService;
     }
 
     @Override
@@ -33,7 +37,7 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
             LOGGER.debug("Skipping lockout notification for key {} due to missing email", key);
             return;
         }
-        sendSystemNotification(userEmail, EmailConstants.OTP_LOCKED_EMAIL_SUBJECT, OtpConstants.MAX_ATTEMPTS_EXCEEDED_MESSAGE);
+        sendSystemNotification(userEmail, EmailConstants.OTP_LOCKED_EMAIL_SUBJECT, localizationService.getMessage("auth.max_attempts_exceeded"));
     }
 
     @Override
@@ -42,7 +46,7 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
             LOGGER.debug("Skipping delivery failure notification for key {} due to missing email", key);
             return;
         }
-        sendSystemNotification(userEmail, EmailConstants.OTP_DELIVERY_FAILURE_SUBJECT, String.format(OtpConstants.OTP_DELIVERY_FAILURE_MESSAGE_TEMPLATE, key));
+        sendSystemNotification(userEmail, EmailConstants.OTP_DELIVERY_FAILURE_SUBJECT, localizationService.getMessage("auth.otp_delivery_failure", key));
     }
 
     @Override

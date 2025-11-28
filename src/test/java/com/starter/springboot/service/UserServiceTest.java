@@ -7,7 +7,12 @@ import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
-import com.starter.springboot.service.impl.RedisTokenService;
+import com.starter.springboot.service.IAuthCacheService;
+import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.IRedisTokenService;
+import com.starter.springboot.service.IdGeneratorService;
+import com.starter.springboot.service.IPasswordChangeAuthorizationService;
+import com.starter.springboot.service.LocalizationService;
 import com.starter.springboot.service.impl.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -51,13 +56,22 @@ class UserServiceTest {
     private AuthorityRepository authorityRepository;
 
     @Mock
-    private RedisTokenService redisTokenService;
+    private IRedisTokenService redisTokenService;
 
     @Mock
     private IPasswordChangeAuthorizationService authorizationService;
 
     @Mock
+    private IdGeneratorService idGeneratorService;
+
+    @Mock
     private IAuthCacheService authCacheService;
+
+    @Mock
+    private IRefreshTokenService refreshTokenService;
+
+    @Mock
+    private LocalizationService localizationService;
 
     @InjectMocks
     private UserService userService;
@@ -74,9 +88,10 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        testUser = createTestUser();
         testRole = createTestRole();
         testAuthority = createTestAuthority();
+        testUser = createTestUser();
+        mockLocalizationMessages();
     }
 
     @Test
@@ -263,6 +278,7 @@ class UserServiceTest {
         verify(passwordEncoder).matches(TEST_PASSWORD, ENCODED_PASSWORD);
         verify(passwordEncoder).encode("newPassword123");
         verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
+        verify(refreshTokenService).revokeAllUserRefreshTokens(TEST_USER_ID);
         
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -293,6 +309,7 @@ class UserServiceTest {
         verify(passwordEncoder).matches(TEST_PASSWORD, ENCODED_PASSWORD);
         verify(passwordEncoder).encode("newPassword123");
         verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
+        verify(refreshTokenService).revokeAllUserRefreshTokens(TEST_USER_ID);
         
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -443,7 +460,42 @@ class UserServiceTest {
         verify(authorityRepository).findByName("USER");
     }
 
-    // Helper methods
+    private void mockLocalizationMessages() {
+        lenient().when(localizationService.getMessage(anyString())).thenAnswer(invocation -> resolveMessage(invocation.getArgument(0)));
+        lenient().when(localizationService.getMessage(anyString(), any())).thenAnswer(invocation -> {
+            String key = invocation.getArgument(0);
+            Object[] args = extractArgs(invocation.getArguments());
+            return resolveMessage(key, args);
+        });
+    }
+
+    private Object[] extractArgs(Object[] invocationArgs) {
+        if (invocationArgs.length <= 1) {
+            return new Object[0];
+        }
+        Object[] args = new Object[invocationArgs.length - 1];
+        System.arraycopy(invocationArgs, 1, args, 0, args.length);
+        return args;
+    }
+
+    private String resolveMessage(String key, Object... args) {
+        return switch (key) {
+            case "user.not_found" -> format("User with username %s not found", args);
+            case "user.already_exists" -> format("User with username %s already exists", args);
+            case "user.default_role_not_configured" -> "Default role ROLE_USER not configured";
+            case "user.status_or_enabled_required" -> "Either status or enabled must be provided";
+            case "user.id_not_found" -> format("User with id %s not found", args);
+            case "user.password_fields_required" -> "New password and confirm new password must be provided";
+            case "user.password_mismatch" -> "New password and confirm new password do not match";
+            case "user.old_password_incorrect" -> "Old password is incorrect";
+            default -> key;
+        };
+    }
+
+    private String format(String template, Object... args) {
+        return (args == null || args.length == 0) ? template : String.format(template, args);
+    }
+
     private User createTestUser() {
         User user = new User();
         user.setId(TEST_USER_ID);

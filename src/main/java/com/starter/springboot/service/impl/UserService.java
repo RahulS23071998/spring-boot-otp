@@ -14,6 +14,7 @@ import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.IRedisTokenService;
 import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.IUserService;
+import com.starter.springboot.service.LocalizationService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -52,6 +53,8 @@ public class UserService implements IUserService {
 
     private final IRefreshTokenService refreshTokenService;
 
+    private final LocalizationService localizationService;
+
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        RoleRepository roleRepository,
@@ -60,7 +63,8 @@ public class UserService implements IUserService {
                        IPasswordChangeAuthorizationService authorizationService,
                        IdGeneratorService idGeneratorService,
                        IAuthCacheService authCacheService,
-                       IRefreshTokenService refreshTokenService) {
+                       IRefreshTokenService refreshTokenService,
+                       LocalizationService localizationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
@@ -70,6 +74,7 @@ public class UserService implements IUserService {
         this.idGeneratorService = idGeneratorService;
         this.authCacheService = authCacheService;
         this.refreshTokenService = refreshTokenService;
+        this.localizationService = localizationService;
     }
 
     /**
@@ -97,7 +102,7 @@ public class UserService implements IUserService {
         if (user.isPresent()) {
             return user.get().getEmail();
         }
-        throw new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_MESSAGE + username + " not found");
+        throw new EntityNotFoundException(localizationService.getMessage("user.not_found", username));
     }
 
 
@@ -105,7 +110,7 @@ public class UserService implements IUserService {
     @Transactional
     public User createUser(User user) {
         userRepository.findByUsername(user.getUsername()).ifPresent(existing -> {
-            throw new EntityExistsException(ApplicationConstants.USER_ALREADY_EXISTS_MESSAGE + user.getUsername() + " already exists");
+            throw new EntityExistsException(localizationService.getMessage("user.already_exists", user.getUsername()));
         });
         Date now = Date.from(Instant.now());
         user.setLastPasswordResetDate(now);
@@ -117,7 +122,7 @@ public class UserService implements IUserService {
         }
         if (Objects.isNull(user.getRole())) {
             Role defaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
-                    .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.DEFAULT_ROLE_NOT_CONFIGURED_MESSAGE));
+                    .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.default_role_not_configured")));
             user.setRole(defaultRole);
         }
         if (Objects.isNull(user.getAuthority()) && Objects.nonNull(user.getRole())) {
@@ -132,7 +137,7 @@ public class UserService implements IUserService {
     @Transactional
     public User updateStatus(Long userId, UserStatus status, Boolean enabled) {
         if (Objects.isNull(status) && Objects.isNull(enabled)) {
-            throw new IllegalArgumentException(ApplicationConstants.STATUS_OR_ENABLED_REQUIRED_MESSAGE);
+            throw new IllegalArgumentException(localizationService.getMessage("user.status_or_enabled_required"));
         }
         return userRepository.findById(userId)
             .map(existing -> {
@@ -144,14 +149,14 @@ public class UserService implements IUserService {
                 }
                 return userRepository.save(existing);
             })
-            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.id_not_found", userId)));
     }
 
     @Override
     @Transactional
     public User changePasswordById(Long userId, Map<String, String> payload) {
         User user = userRepository.findById(userId)
-            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_ID_NOT_FOUND_MESSAGE + userId + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.id_not_found", userId)));
         
         // Authorize the password change (user can only change their own password or admin can change any)
         authorizationService.authorizePasswordChange(user);
@@ -166,7 +171,7 @@ public class UserService implements IUserService {
         authorizationService.authorizePasswordChangeByUsername(username);
         
         User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new EntityNotFoundException(ApplicationConstants.USER_NOT_FOUND_MESSAGE + username + " not found"));
+            .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.not_found", username)));
         
         return changePasswordInternal(user, payload);
     }
@@ -177,14 +182,14 @@ public class UserService implements IUserService {
         String confirmNewPassword = payload.get(ApplicationConstants.CONFIRM_PASSWORD_FIELD);
 
         if (Objects.isNull(newPassword) || Objects.isNull(confirmNewPassword)) {
-            throw new IllegalArgumentException(ApplicationConstants.PASSWORD_FIELDS_REQUIRED_MESSAGE);
+            throw new IllegalArgumentException(localizationService.getMessage("user.password_fields_required"));
         }
         if (!newPassword.equals(confirmNewPassword)) {
-            throw new IllegalArgumentException(ApplicationConstants.PASSWORD_MISMATCH_MESSAGE);
+            throw new IllegalArgumentException(localizationService.getMessage("user.password_mismatch"));
         }
         if (Objects.isNull(oldPassword) || !passwordEncoder.matches(oldPassword, user.getPassword())) {
             // Use BadCredentialsException to indicate authentication failure
-            throw new BadCredentialsException(ApplicationConstants.OLD_PASSWORD_INCORRECT_MESSAGE);
+            throw new BadCredentialsException(localizationService.getMessage("user.old_password_incorrect"));
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));

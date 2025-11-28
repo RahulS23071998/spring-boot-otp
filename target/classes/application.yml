@@ -7,6 +7,12 @@ spring:
     properties:
       hibernate:
         generate_statistics: false
+  web:
+    locale: en_US
+  messages:
+    basename: messages
+    encoding: UTF-8
+    cache-duration: 3600
 
 logging:
   level:

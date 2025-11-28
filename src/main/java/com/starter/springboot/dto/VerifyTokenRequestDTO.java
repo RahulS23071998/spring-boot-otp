@@ -5,11 +5,11 @@ import jakarta.validation.constraints.NotNull;
 
 public class VerifyTokenRequestDTO {
 
-    @NotNull
-    @NotBlank
+    @NotNull(message = "{validation.notNull}")
+    @NotBlank(message = "{validation.notBlank}")
     private String username;
 
-    @NotNull
+    @NotNull(message = "{validation.otp.required}")
     private Integer otp;
 
     private Boolean rememberMe;

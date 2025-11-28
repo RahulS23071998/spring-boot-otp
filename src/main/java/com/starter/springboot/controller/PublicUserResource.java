@@ -9,6 +9,7 @@ import com.starter.springboot.dto.UserRequestDTO;
 import com.starter.springboot.dto.UserResponseDTO;
 import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.service.IUserService;
+import com.starter.springboot.service.LocalizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -48,8 +49,11 @@ public class PublicUserResource {
 
     private final IUserService userService;
 
-    public PublicUserResource(IUserService userService) {
+    private final LocalizationService localizationService;
+
+    public PublicUserResource(IUserService userService, LocalizationService localizationService) {
         this.userService = userService;
+        this.localizationService = localizationService;
     }
 
     @PostMapping(ApplicationConstants.PUBLIC_ENDPOINT)
@@ -111,7 +115,8 @@ public class PublicUserResource {
             User created = userService.createUser(toEntity(request));
             return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDTO.fromEntity(created));
         } catch (EntityExistsException exists) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, exists.getMessage());
+            String message = localizationService.getMessage("user.already_exists", request.getUsername());
+            throw new ResponseStatusException(HttpStatus.CONFLICT, message);
         }
     }
 
@@ -232,14 +237,14 @@ public class PublicUserResource {
                 try {
                     id = Long.parseLong(idVal);
                 } catch (NumberFormatException nfe) {
-                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.INVALID_USERID_FORMAT_MESSAGE);
+                    throw new ResponseStatusException(HttpStatus.BAD_REQUEST, localizationService.getMessage("user.invalid_userid_format"));
                 }
                 updated = userService.changePasswordById(id, payload);
             } else if (payload.containsKey(ApplicationConstants.USERNAME_PARAM)) {
                 String username = payload.get(ApplicationConstants.USERNAME_PARAM);
                 updated = userService.changePasswordByUsername(username, payload);
             } else {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.USERID_OR_USERNAME_REQUIRED_MESSAGE);
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, localizationService.getMessage("user.userid_or_username_required"));
             }
             return ResponseEntity.ok(UserResponseDTO.fromEntity(updated));
         } catch (AccessDeniedException ade) {
@@ -251,7 +256,7 @@ public class PublicUserResource {
         } catch (EntityNotFoundException enfe) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, enfe.getMessage());
         } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.PASSWORD_CHANGE_ERROR_MESSAGE);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, localizationService.getMessage("user.password_change_error"));
         }
     }
 

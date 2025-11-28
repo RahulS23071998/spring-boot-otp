@@ -37,6 +37,7 @@ com\starter\springboot\service\IOtpService.class
 com\starter\springboot\controller\PublicUserResource.class
 com\starter\springboot\service\impl\OtpProperties$AuditPurgeProperties.class
 com\starter\springboot\config\AuditingConfiguration.class
+com\starter\springboot\config\LocaleConfiguration.class
 com\starter\springboot\controller\AuthenticationController.class
 com\starter\springboot\entity\BaseAuditedEntity_.class
 com\starter\springboot\entity\User.class
@@ -81,6 +82,7 @@ com\starter\springboot\service\impl\PasswordChangeAuthorizationService.class
 com\starter\springboot\entity\IdGeneratorEntityListener.class
 com\starter\springboot\exception\RestExceptionHandler.class
 com\starter\springboot\service\impl\OtpProperties.class
+com\starter\springboot\service\LocalizationService.class
 com\starter\springboot\security\OtpAwareAuthenticationProvider.class
 com\starter\springboot\config\AppInfoProperties.class
 com\starter\springboot\controller\UserResource.class

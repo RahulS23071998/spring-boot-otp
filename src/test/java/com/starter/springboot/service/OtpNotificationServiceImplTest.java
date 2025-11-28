@@ -3,6 +3,7 @@ package com.starter.springboot.service;
 import com.starter.springboot.constants.EmailConstants;
 import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.dto.EmailDTO;
+import com.starter.springboot.service.LocalizationService;
 import com.starter.springboot.service.impl.OtpNotificationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -27,6 +29,9 @@ class OtpNotificationServiceImplTest {
     @Mock
     private IEmailService emailService;
 
+    @Mock
+    private LocalizationService localizationService;
+
     @InjectMocks
     private OtpNotificationServiceImpl notificationService;
 
@@ -35,6 +40,42 @@ class OtpNotificationServiceImplTest {
         // Setup lenient mocks for async operations
         lenient().when(emailService.sendSimpleMessageAsync(any(EmailDTO.class)))
                 .thenReturn(CompletableFuture.completedFuture(true));
+        mockLocalizationMessages();
+    }
+
+    private void mockLocalizationMessages() {
+        lenient().when(localizationService.getMessage(anyString()))
+                .thenAnswer(invocation -> resolveMessage(invocation.getArgument(0)));
+        lenient().when(localizationService.getMessage(anyString(), any()))
+                .thenAnswer(invocation -> {
+                    Object[] args = extractArgs(invocation.getArguments());
+                    return resolveMessage(invocation.getArgument(0), args);
+                });
+    }
+
+    private Object[] extractArgs(Object[] invocationArgs) {
+        if (invocationArgs.length <= 1) {
+            return new Object[0];
+        }
+        Object secondArg = invocationArgs[1];
+        if (secondArg instanceof Object[] array) {
+            return array;
+        }
+        Object[] args = new Object[invocationArgs.length - 1];
+        System.arraycopy(invocationArgs, 1, args, 0, args.length);
+        return args;
+    }
+
+    private String resolveMessage(String key, Object... args) {
+        return switch (key) {
+            case "auth.max_attempts_exceeded" -> OtpConstants.MAX_ATTEMPTS_EXCEEDED_MESSAGE;
+            case "auth.otp_delivery_failure" -> format(OtpConstants.OTP_DELIVERY_FAILURE_MESSAGE_TEMPLATE, args);
+            default -> key;
+        };
+    }
+
+    private String format(String template, Object... args) {
+        return (args == null || args.length == 0) ? template : String.format(template, args);
     }
 
     @Test

@@ -14,6 +14,7 @@ import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.LocalizationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,6 +40,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -62,6 +64,9 @@ class AuthenticationControllerTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
+
+    @Mock
+    private LocalizationService localizationService;
 
     @Mock
     private Authentication authentication;
@@ -94,6 +99,18 @@ class AuthenticationControllerTest {
         validVerifyRequest.setRememberMe(false);
         validVerifyRequest.setClientId("web-app-client");
         validVerifyRequest.setDeviceId("mobile-device-001");
+        mockLocalizationMessages();
+    }
+
+    private void mockLocalizationMessages() {
+        lenient().when(localizationService.getMessage("auth.invalid_credentials"))
+                .thenReturn("Invalid credentials");
+        lenient().when(localizationService.getMessage("auth.invalid_otp"))
+                .thenReturn("Invalid OTP provided.");
+        lenient().when(localizationService.getMessage("auth.locked_otp"))
+                .thenReturn("Account locked");
+        lenient().when(localizationService.getMessage("auth.invalid_refresh_token"))
+                .thenReturn("Invalid refresh token");
     }
 
     @Test

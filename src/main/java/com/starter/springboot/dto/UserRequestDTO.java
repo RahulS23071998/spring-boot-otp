@@ -12,27 +12,27 @@ import jakarta.validation.constraints.Size;
  */
 public class UserRequestDTO {
 
-    @NotBlank
-    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.USERNAME_MAX_LENGTH)
+    @NotBlank(message = "{validation.notBlank}")
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.USERNAME_MAX_LENGTH, message = "{validation.username.size}")
     private String username;
 
     /**
      * Password can be blank when updating without a password change.
      */
-    @Size(min = DatabaseConstants.MIN_PASSWORD_LENGTH, max = DatabaseConstants.PASSWORD_MAX_LENGTH)
+    @Size(min = DatabaseConstants.MIN_PASSWORD_LENGTH, max = DatabaseConstants.PASSWORD_MAX_LENGTH, message = "{validation.password.size}")
     private String password;
 
-    @NotBlank
-    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
+    @NotBlank(message = "{validation.notBlank}")
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.FIRST_NAME_MAX_LENGTH, message = "{validation.firstName.size}")
     private String firstName;
 
-    @NotBlank
-    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.LAST_NAME_MAX_LENGTH)
+    @NotBlank(message = "{validation.notBlank}")
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.LAST_NAME_MAX_LENGTH, message = "{validation.lastName.size}")
     private String lastName;
 
-    @NotBlank
-    @Email
-    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.EMAIL_MAX_LENGTH)
+    @NotBlank(message = "{validation.notBlank}")
+    @Email(message = "{jakarta.validation.constraints.Email.message}")
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.EMAIL_MAX_LENGTH, message = "{validation.email.size}")
     private String email;
 
     @NotNull
