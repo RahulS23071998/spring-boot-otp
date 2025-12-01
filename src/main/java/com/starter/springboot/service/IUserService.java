@@ -61,4 +61,12 @@ public interface IUserService {
      * @return the updated user
      */
     User changePasswordByUsername(String username, Map<String, String> payload);
+
+    /**
+     * Find or create a user from Google OAuth information
+     *
+     * @param googleUserInfo - map containing Google user information (sub, email, name, etc.)
+     * @return the user (existing or newly created)
+     */
+    User findOrCreateGoogleOAuthUser(Map<String, Object> googleUserInfo);
 }

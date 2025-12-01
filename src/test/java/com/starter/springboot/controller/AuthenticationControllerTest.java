@@ -1,10 +1,13 @@
 package com.starter.springboot.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.starter.springboot.dto.GoogleTokenDTO;
 import com.starter.springboot.dto.OtpValidationResult;
 import com.starter.springboot.dto.RefreshTokenRequestDTO;
+import com.starter.springboot.entity.AuthType;
 import com.starter.springboot.entity.RefreshToken;
 import com.starter.springboot.entity.User;
+import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.dto.LoginDTO;
 import com.starter.springboot.dto.VerifyTokenRequestDTO;
@@ -12,8 +15,10 @@ import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.service.IGoogleOAuthService;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.IUserService;
 import com.starter.springboot.service.LocalizationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +46,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -70,6 +76,12 @@ class AuthenticationControllerTest {
 
     @Mock
     private Authentication authentication;
+
+    @Mock
+    private IGoogleOAuthService googleOAuthService;
+
+    @Mock
+    private IUserService userService;
 
     @InjectMocks
     private AuthenticationController authenticationController;
@@ -531,6 +543,205 @@ class AuthenticationControllerTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.status", is("FAILED")))
                 .andExpect(jsonPath("$.message", is("Invalid refresh token")));
+    }
+
+    @Test
+    @DisplayName("Should successfully authenticate with valid Google OAuth token")
+    void testSuccessfulGoogleOAuthAuthentication() throws Exception {
+        // Arrange
+        String validGoogleToken = "valid-google-id-token";
+        GoogleTokenDTO googleTokenDTO = new GoogleTokenDTO(validGoogleToken);
+        googleTokenDTO.setRememberMe(true);
+        googleTokenDTO.setClientId("postman");
+        googleTokenDTO.setDeviceId("postman-test");
+
+        User googleUser = createGoogleUser(1L, "user@gmail.com", "Google", "User");
+        JWTToken accessToken = JWTToken.bearerToken("access-token-123", 3600L);
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setId(1L);
+        refreshToken.setUserId(1L);
+        refreshToken.setToken("refresh-token-123");
+
+        java.util.Map<String, Object> googleUserInfo = createGoogleUserInfo("google-sub-123", "user@gmail.com", "Google", "User", "Google User");
+
+        when(googleOAuthService.verifyAndExtractUserInfo(validGoogleToken)).thenReturn(googleUserInfo);
+        when(userService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(googleUser);
+        when(tokenProvider.createAccessTokenAfterVerifiedOtp("user@gmail.com", true)).thenReturn(accessToken);
+        when(refreshTokenService.createRefreshToken(1L, 604800L)).thenReturn(refreshToken);
+        when(tokenProvider.getRefreshTokenValidityInSeconds()).thenReturn(604800L);
+
+        // Act & Assert
+        mockMvc.perform(post("/auth/google")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(googleTokenDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is("user@gmail.com")))
+                .andExpect(jsonPath("$.status", is("SUCCESS")))
+                .andExpect(jsonPath("$.message", is("Authentication successful")))
+                .andExpect(jsonPath("$.token.id_token", is("access-token-123")))
+                .andExpect(jsonPath("$.token.token_type", is("Bearer")))
+                .andExpect(jsonPath("$.token.expires_in", is(3600)))
+                .andExpect(jsonPath("$.remember_me", is(true)))
+                .andExpect(jsonPath("$.client_id", is("postman")))
+                .andExpect(jsonPath("$.device_id", is("postman-test")))
+                .andExpect(jsonPath("$.otp_required", is(false)));
+
+        verify(googleOAuthService).verifyAndExtractUserInfo(validGoogleToken);
+        verify(userService).findOrCreateGoogleOAuthUser(googleUserInfo);
+        verify(tokenProvider).createAccessTokenAfterVerifiedOtp("user@gmail.com", true);
+        verify(refreshTokenService).createRefreshToken(1L, 604800L);
+    }
+
+    @Test
+    @DisplayName("Should return UNAUTHORIZED for invalid Google ID token")
+    void testGoogleOAuthWithInvalidToken() throws Exception {
+        // Arrange
+        String invalidGoogleToken = "invalid-google-id-token";
+        GoogleTokenDTO googleTokenDTO = new GoogleTokenDTO(invalidGoogleToken);
+
+        when(googleOAuthService.verifyAndExtractUserInfo(invalidGoogleToken)).thenReturn(null);
+
+        // Act & Assert
+        mockMvc.perform(post("/auth/google")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(googleTokenDTO)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Invalid Google ID token")));
+
+        verify(googleOAuthService).verifyAndExtractUserInfo(invalidGoogleToken);
+        verify(userService, never()).findOrCreateGoogleOAuthUser(org.mockito.ArgumentMatchers.any());
+    }
+
+    @Test
+    @DisplayName("Should return BAD_REQUEST for missing Google ID token")
+    void testGoogleOAuthWithMissingToken() throws Exception {
+        // Arrange
+        String jsonPayload = "{}";
+
+        // Act & Assert
+        mockMvc.perform(post("/auth/google")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonPayload))
+                .andExpect(status().isBadRequest());
+
+        verify(googleOAuthService, never()).verifyAndExtractUserInfo(org.mockito.ArgumentMatchers.anyString());
+    }
+
+    @Test
+    @DisplayName("Should successfully link Google OAuth to existing user")
+    void testGoogleOAuthLinkingExistingUser() throws Exception {
+        // Arrange
+        String validGoogleToken = "valid-google-id-token";
+        GoogleTokenDTO googleTokenDTO = new GoogleTokenDTO(validGoogleToken);
+        googleTokenDTO.setRememberMe(false);
+
+        User existingUser = createGoogleUser(2L, "existing@gmail.com", "Existing", "User");
+        existingUser.setAuthType(AuthType.GOOGLE_OAUTH);
+        existingUser.setGoogleId("google-sub-456");
+
+        JWTToken accessToken = JWTToken.bearerToken("access-token-456", 3600L);
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setId(2L);
+        refreshToken.setUserId(2L);
+        refreshToken.setToken("refresh-token-456");
+
+        java.util.Map<String, Object> googleUserInfo = createGoogleUserInfo("google-sub-456", "existing@gmail.com", "Existing", "User", "Existing User");
+
+        when(googleOAuthService.verifyAndExtractUserInfo(validGoogleToken)).thenReturn(googleUserInfo);
+        when(userService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(existingUser);
+        when(tokenProvider.createAccessTokenAfterVerifiedOtp("existing@gmail.com", false)).thenReturn(accessToken);
+        when(refreshTokenService.createRefreshToken(2L, 604800L)).thenReturn(refreshToken);
+        when(tokenProvider.getRefreshTokenValidityInSeconds()).thenReturn(604800L);
+
+        // Act & Assert
+        mockMvc.perform(post("/auth/google")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(googleTokenDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username", is("existing@gmail.com")))
+                .andExpect(jsonPath("$.token.id_token", is("access-token-456")))
+                .andExpect(jsonPath("$.remember_me", is(false)));
+
+        verify(userService).findOrCreateGoogleOAuthUser(googleUserInfo);
+    }
+
+    @Test
+    @DisplayName("Should handle empty Google user info")
+    void testGoogleOAuthWithEmptyUserInfo() throws Exception {
+        // Arrange
+        String validGoogleToken = "valid-google-id-token";
+        GoogleTokenDTO googleTokenDTO = new GoogleTokenDTO(validGoogleToken);
+
+        when(googleOAuthService.verifyAndExtractUserInfo(validGoogleToken)).thenReturn(java.util.Collections.emptyMap());
+
+        // Act & Assert
+        mockMvc.perform(post("/auth/google")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(googleTokenDTO)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Invalid Google ID token")));
+
+        verify(googleOAuthService).verifyAndExtractUserInfo(validGoogleToken);
+    }
+
+    @Test
+    @DisplayName("Should create new Google OAuth user without remember me flag")
+    void testCreateNewGoogleOAuthUserWithoutRememberMe() throws Exception {
+        // Arrange
+        String validGoogleToken = "valid-google-id-token";
+        GoogleTokenDTO googleTokenDTO = new GoogleTokenDTO(validGoogleToken);
+
+        User newGoogleUser = createGoogleUser(3L, "newuser@gmail.com", "New", "User");
+        JWTToken accessToken = JWTToken.bearerToken("access-token-789", 3600L);
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setId(3L);
+        refreshToken.setUserId(3L);
+        refreshToken.setToken("refresh-token-789");
+
+        java.util.Map<String, Object> googleUserInfo = createGoogleUserInfo("google-sub-789", "newuser@gmail.com", "New", "User", "New User");
+
+        when(googleOAuthService.verifyAndExtractUserInfo(validGoogleToken)).thenReturn(googleUserInfo);
+        when(userService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(newGoogleUser);
+        when(tokenProvider.createAccessTokenAfterVerifiedOtp(org.mockito.ArgumentMatchers.eq("newuser@gmail.com"), org.mockito.ArgumentMatchers.nullable(Boolean.class))).thenReturn(accessToken);
+        when(refreshTokenService.createRefreshToken(3L, 604800L)).thenReturn(refreshToken);
+        when(tokenProvider.getRefreshTokenValidityInSeconds()).thenReturn(604800L);
+
+        // Act & Assert
+        mockMvc.perform(post("/auth/google")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(googleTokenDTO)))
+                .andExpect(status().isOk());
+
+        verify(refreshTokenService).createRefreshToken(3L, 604800L);
+    }
+
+    private User createGoogleUser(Long id, String email, String firstName, String lastName) {
+        User user = new User();
+        user.setId(id);
+        user.setEmail(email);
+        user.setUsername(email);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setPassword("random-password");
+        user.setEnabled(true);
+        user.setStatus(UserStatus.ACTIVE);
+        user.setAuthType(AuthType.GOOGLE_OAUTH);
+        user.setGoogleId("google-id-" + id);
+        user.setIsOtpRequired(false);
+        return user;
+    }
+
+    private java.util.Map<String, Object> createGoogleUserInfo(String googleId, String email, String givenName, String familyName, String name) {
+        java.util.Map<String, Object> googleUserInfo = new java.util.HashMap<>();
+        googleUserInfo.put("sub", googleId);
+        googleUserInfo.put("email", email);
+        googleUserInfo.put("given_name", givenName);
+        googleUserInfo.put("family_name", familyName);
+        googleUserInfo.put("name", name);
+        googleUserInfo.put("picture", "https://example.com/picture.jpg");
+        return googleUserInfo;
     }
 
 }

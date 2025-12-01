@@ -8,6 +8,7 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\repository\RoleRepositoryTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\config\SecurityConfigurationTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\repository\RefreshTokenRepositoryTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\GoogleOAuthServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\security\OtpAwareAuthenticationProviderTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\OtpServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\AuthCacheServiceTest.java

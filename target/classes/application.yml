@@ -29,6 +29,11 @@ otp:
     enabled: true
     retention-days: 90
 
+google:
+  oauth:
+    client-id: 351355811776-90j5o6amqtsj377lud1df6im5mic1uvb.apps.googleusercontent.com
+    client-secret: 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
+
 management:
   endpoints:
     web:

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.UserRepositoryTest" time="0.185" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.repository.UserRepositoryTest" time="0.251" tests="11" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
     <property name="sun.jnu.encoding" value="Cp1252"/>
-    <property name="java.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;"/>
+    <property name="java.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\Rahul.S\.m2\repository\com\google\api-client\google-api-client\2.7.2\google-api-client-2.7.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\oauth-client\google-oauth-client\1.36.0\google-oauth-client-1.36.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-credentials\1.30.0\google-auth-library-credentials-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-oauth2-http\1.30.0\google-auth-library-oauth2-http-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auto\value\auto-value-annotations\1.11.0\auto-value-annotations-1.11.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-gson\1.45.2\google-http-client-gson-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-apache-v2\1.45.2\google-http-client-apache-v2-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpclient\4.5.14\httpclient-4.5.14.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client\1.45.2\google-http-client-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-context\1.68.2\grpc-context-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-api\1.68.2\grpc-api-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-api\0.31.1\opencensus-api-0.31.1.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-contrib-http-util\0.31.1\opencensus-contrib-http-util-0.31.1.jar;"/>
     <property name="java.vm.vendor" value="Microsoft"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="user.variant" value=""/>
@@ -16,9 +16,9 @@
     <property name="user.country" value="IN"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin"/>
-    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire8542407690832726014\surefirebooter-20251128153542438_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire8542407690832726014 2025-11-28T15-35-42_092-jvmRun1 surefire-20251128153542438_1tmp surefire_0-20251128153542438_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire18188580527596901591\surefirebooter-20251201151426171_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire18188580527596901591 2025-12-01T15-14-25_979-jvmRun1 surefire-20251201151426171_1tmp surefire_0-20251201151426171_2tmp"/>
     <property name="jdk.debug" value="release"/>
-    <property name="surefire.test.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;"/>
+    <property name="surefire.test.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\Rahul.S\.m2\repository\com\google\api-client\google-api-client\2.7.2\google-api-client-2.7.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\oauth-client\google-oauth-client\1.36.0\google-oauth-client-1.36.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-credentials\1.30.0\google-auth-library-credentials-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-oauth2-http\1.30.0\google-auth-library-oauth2-http-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auto\value\auto-value-annotations\1.11.0\auto-value-annotations-1.11.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-gson\1.45.2\google-http-client-gson-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-apache-v2\1.45.2\google-http-client-apache-v2-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpclient\4.5.14\httpclient-4.5.14.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client\1.45.2\google-http-client-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-context\1.68.2\grpc-context-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-api\1.68.2\grpc-api-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-api\0.31.1\opencensus-api-0.31.1.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-contrib-http-util\0.31.1\opencensus-contrib-http-util-0.31.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\Rahul.S"/>
     <property name="user.language" value="en"/>
@@ -34,7 +34,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire8542407690832726014\surefirebooter-20251128153542438_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire18188580527596901591\surefirebooter-20251201151426171_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.9+10-LTS"/>
@@ -56,7 +56,7 @@
     <property name="os.arch" value="amd64"/>
     <property name="jansi.passthrough" value="true"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="4264"/>
+    <property name="PID" value="14228"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="Cp1252"/>
@@ -70,22 +70,24 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldUpdateUserPassword" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.053">
-    <system-out><![CDATA[2025-11-28T15:36:03.270+05:30 DEBUG 4264 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [UserRepositoryTest]: using SpringBootContextLoader
-2025-11-28T15:36:03.271+05:30  INFO 4264 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.UserRepositoryTest]: UserRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2025-11-28T15:36:03.271+05:30 DEBUG 4264 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [UserRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
-2025-11-28T15:36:03.284+05:30 DEBUG 4264 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [UserRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
-2025-11-28T15:36:03.284+05:30  INFO 4264 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.UserRepositoryTest
-2025-11-28T15:36:03.285+05:30 DEBUG 4264 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [UserRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
-2025-11-28T15:36:03.296+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldReturnEmptyWhenUserNotFoundByGoogleId" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.035">
+    <system-out><![CDATA[2025-12-01T15:14:56.464+05:30 DEBUG 14228 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [UserRepositoryTest]: using SpringBootContextLoader
+2025-12-01T15:14:56.465+05:30  INFO 14228 --- [Starter Project] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.starter.springboot.repository.UserRepositoryTest]: UserRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2025-12-01T15:14:56.466+05:30 DEBUG 14228 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizerFactory implementations for test class [UserRepositoryTest]: [ImportsContextCustomizerFactory, ExcludeFilterContextCustomizerFactory, HttpGraphQlTesterContextCustomizerFactory, DuplicateJsonObjectContextCustomizerFactory, MockitoContextCustomizerFactory, TestRestTemplateContextCustomizerFactory, WebTestClientContextCustomizerFactory, OverrideAutoConfigurationContextCustomizerFactory, ObservabilityContextCustomizerFactory, TypeExcludeFiltersContextCustomizerFactory, PropertyMappingContextCustomizerFactory, WebDriverContextCustomizerFactory, MockServerContainerContextCustomizerFactory, DynamicPropertiesContextCustomizerFactory]
+2025-12-01T15:14:56.486+05:30 DEBUG 14228 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using ContextCustomizers for test class [UserRepositoryTest]: [ImportsContextCustomizer, ExcludeFilterContextCustomizer, DuplicateJsonObjectContextCustomizer, MockitoContextCustomizer, DisableAutoConfigurationContextCustomizer, DisableObservabilityContextCustomizer, TypeExcludeFiltersContextCustomizer, PropertyMappingContextCustomizer, WebDriverContextCustomizer]
+2025-12-01T15:14:56.487+05:30  INFO 14228 --- [Starter Project] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.repository.UserRepositoryTest
+2025-12-01T15:14:56.488+05:30 DEBUG 14228 --- [Starter Project] [           main] b.t.a.o.j.DataJpaTestContextBootstrapper : Using TestExecutionListeners for test class [UserRepositoryTest]: [ServletTestExecutionListener, DirtiesContextBeforeModesTestExecutionListener, ApplicationEventsTestExecutionListener, MockitoTestExecutionListener, DependencyInjectionTestExecutionListener, DirtiesContextTestExecutionListener, TransactionalTestExecutionListener, SqlScriptsTestExecutionListener, EventPublishingTestExecutionListener, WithSecurityContextTestExecutionListener, ReactorContextTestExecutionListener, ResetMocksTestExecutionListener, RestDocsTestExecutionListener, MockRestServiceServerResetTestExecutionListener, MockMvcPrintOnlyOnFailureTestExecutionListener, WebDriverTestExecutionListener, MockWebServiceServerTestExecutionListener]
+2025-12-01T15:14:56.505+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -100,12 +102,14 @@
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -117,7 +121,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.307+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.516+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -131,7 +135,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.311+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.517+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -145,29 +149,168 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.318+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.518+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.326+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.523+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.google_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.google_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="shouldUpdateUserPassword" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.025">
+    <system-out><![CDATA[2025-12-01T15:14:56.529+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+2025-12-01T15:14:56.533+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-12-01T15:14:56.534+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.535+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.540+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -184,12 +327,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -203,14 +348,16 @@ Hibernate:
         user_account u1_0 
     where
         u1_0.username=?
-2025-11-28T15:36:03.330+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.543+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     update
         user_account 
     set
+        auth_type=?,
         authority_id=?,
         email=?,
         enabled=?,
         first_name=?,
+        google_id=?,
         is_otp_required=?,
         last_modified_by=?,
         last_modified_date=?,
@@ -226,10 +373,12 @@ Hibernate:
     update
         user_account 
     set
+        auth_type=?,
         authority_id=?,
         email=?,
         enabled=?,
         first_name=?,
+        google_id=?,
         is_otp_required=?,
         last_modified_by=?,
         last_modified_date=?,
@@ -241,15 +390,17 @@ Hibernate:
         username=? 
     where
         id=?
-2025-11-28T15:36:03.334+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.546+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -266,12 +417,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -285,7 +438,7 @@ Hibernate:
         user_account u1_0 
     where
         u1_0.username=?
-2025-11-28T15:36:03.335+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.547+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         a1_0.id,
         a1_0.created_by,
@@ -311,7 +464,7 @@ Hibernate:
         authority a1_0 
     where
         a1_0.id=?
-2025-11-28T15:36:03.336+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.548+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         r1_0.id,
         r1_0.created_by,
@@ -339,16 +492,18 @@ Hibernate:
         r1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldFindUserByUsername" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.015">
-    <system-out><![CDATA[2025-11-28T15:36:03.344+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldFindUserByUsername" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.019">
+    <system-out><![CDATA[2025-12-01T15:14:56.556+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -363,12 +518,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -380,7 +537,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.347+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.561+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -394,7 +551,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.348+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.563+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -408,29 +565,31 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.349+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.565+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.353+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.568+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -447,141 +606,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
-        u1_0.is_otp_required,
-        u1_0.last_modified_by,
-        u1_0.last_modified_date,
-        u1_0.last_name,
-        u1_0.last_password_reset_date,
-        u1_0.password,
-        u1_0.role_id,
-        u1_0.status,
-        u1_0.username 
-    from
-        user_account u1_0 
-    where
-        u1_0.username=?
-]]></system-out>
-  </testcase>
-  <testcase name="shouldReturnEmptyWhenUserNotFoundByUsername" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.015">
-    <system-out><![CDATA[2025-11-28T15:36:03.360+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        u1_0.id,
-        u1_0.authority_id,
-        u1_0.created_by,
-        u1_0.created_date,
-        u1_0.email,
-        u1_0.enabled,
-        u1_0.first_name,
-        u1_0.is_otp_required,
-        u1_0.last_modified_by,
-        u1_0.last_modified_date,
-        u1_0.last_name,
-        u1_0.last_password_reset_date,
-        u1_0.password,
-        u1_0.role_id,
-        u1_0.status,
-        u1_0.username 
-    from
-        user_account u1_0
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.authority_id,
-        u1_0.created_by,
-        u1_0.created_date,
-        u1_0.email,
-        u1_0.enabled,
-        u1_0.first_name,
-        u1_0.is_otp_required,
-        u1_0.last_modified_by,
-        u1_0.last_modified_date,
-        u1_0.last_name,
-        u1_0.last_password_reset_date,
-        u1_0.password,
-        u1_0.role_id,
-        u1_0.status,
-        u1_0.username 
-    from
-        user_account u1_0
-2025-11-28T15:36:03.364+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        role
-        (created_date, description, last_modified_date, name, id) 
-    values
-        (?, ?, ?, ?, ?)
-Hibernate: 
-    insert 
-    into
-        role
-        (created_date, description, last_modified_date, name, id) 
-    values
-        (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.365+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        authority
-        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?)
-Hibernate: 
-    insert 
-    into
-        authority
-        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.366+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    insert 
-    into
-        user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-Hibernate: 
-    insert 
-    into
-        user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.369+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
-    select
-        u1_0.id,
-        u1_0.authority_id,
-        u1_0.created_by,
-        u1_0.created_date,
-        u1_0.email,
-        u1_0.enabled,
-        u1_0.first_name,
-        u1_0.is_otp_required,
-        u1_0.last_modified_by,
-        u1_0.last_modified_date,
-        u1_0.last_name,
-        u1_0.last_password_reset_date,
-        u1_0.password,
-        u1_0.role_id,
-        u1_0.status,
-        u1_0.username 
-    from
-        user_account u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.authority_id,
-        u1_0.created_by,
-        u1_0.created_date,
-        u1_0.email,
-        u1_0.enabled,
-        u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -597,16 +629,18 @@ Hibernate:
         u1_0.username=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCreateAndRetrieveUserById" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.011">
-    <system-out><![CDATA[2025-11-28T15:36:03.376+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldFindCorrectUserWithMultipleGoogleIds" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.043">
+    <system-out><![CDATA[2025-12-01T15:14:56.577+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -621,12 +655,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -638,7 +674,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.379+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.586+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -652,7 +688,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.380+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.588+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -666,32 +702,222 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.381+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.592+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.598+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        a1_0.id,
+        a1_0.created_by,
+        a1_0.created_date,
+        a1_0.description,
+        a1_0.last_modified_by,
+        a1_0.last_modified_date,
+        a1_0.name,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    left join
+        authority a1_0 
+            on a1_0.id=u1_0.authority_id 
+    left join
+        role r1_0 
+            on r1_0.id=u1_0.role_id 
+    where
+        u1_0.id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        a1_0.id,
+        a1_0.created_by,
+        a1_0.created_date,
+        a1_0.description,
+        a1_0.last_modified_by,
+        a1_0.last_modified_date,
+        a1_0.name,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        r1_0.id,
+        r1_0.created_by,
+        r1_0.created_date,
+        r1_0.description,
+        r1_0.last_modified_by,
+        r1_0.last_modified_date,
+        r1_0.name,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    left join
+        authority a1_0 
+            on a1_0.id=u1_0.authority_id 
+    left join
+        role r1_0 
+            on r1_0.id=u1_0.role_id 
+    where
+        u1_0.id=?
+2025-12-01T15:14:56.603+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.606+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    update
+        user_account 
+    set
+        auth_type=?,
+        authority_id=?,
+        email=?,
+        enabled=?,
+        first_name=?,
+        google_id=?,
+        is_otp_required=?,
+        last_modified_by=?,
+        last_modified_date=?,
+        last_name=?,
+        last_password_reset_date=?,
+        password=?,
+        role_id=?,
+        status=?,
+        username=? 
+    where
+        id=?
+Hibernate: 
+    update
+        user_account 
+    set
+        auth_type=?,
+        authority_id=?,
+        email=?,
+        enabled=?,
+        first_name=?,
+        google_id=?,
+        is_otp_required=?,
+        last_modified_by=?,
+        last_modified_date=?,
+        last_name=?,
+        last_password_reset_date=?,
+        password=?,
+        role_id=?,
+        status=?,
+        username=? 
+    where
+        id=?
+2025-12-01T15:14:56.610+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.google_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.google_id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDeleteUserById" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.018">
-    <system-out><![CDATA[2025-11-28T15:36:03.389+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldReturnEmptyWhenUserNotFoundByUsername" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.012">
+    <system-out><![CDATA[2025-12-01T15:14:56.619+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -706,12 +932,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -723,7 +951,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.393+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.622+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -737,7 +965,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.394+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.623+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -751,21 +979,247 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.395+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.624+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.397+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.626+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.username=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.username=?
+]]></system-out>
+  </testcase>
+  <testcase name="shouldCreateAndRetrieveUserById" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.014">
+    <system-out><![CDATA[2025-12-01T15:14:56.633+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+2025-12-01T15:14:56.637+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-12-01T15:14:56.638+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.640+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+]]></system-out>
+  </testcase>
+  <testcase name="shouldDeleteUserById" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.013">
+    <system-out><![CDATA[2025-12-01T15:14:56.647+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+2025-12-01T15:14:56.649+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-12-01T15:14:56.650+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.650+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.652+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     delete 
     from
         user_account 
@@ -777,9 +1231,10 @@ Hibernate:
         user_account 
     where
         id=?
-2025-11-28T15:36:03.400+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.653+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         a1_0.id,
         a1_0.created_by,
         a1_0.created_date,
@@ -792,6 +1247,7 @@ Hibernate:
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -820,6 +1276,7 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         a1_0.id,
         a1_0.created_by,
         a1_0.created_date,
@@ -832,6 +1289,7 @@ Hibernate:
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -859,16 +1317,18 @@ Hibernate:
         u1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldSetOtpRequiredForUser" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.02">
-    <system-out><![CDATA[2025-11-28T15:36:03.408+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldSetOtpRequiredForUser" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.017">
+    <system-out><![CDATA[2025-12-01T15:14:56.660+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -883,12 +1343,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -900,7 +1362,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.411+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.662+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -914,7 +1376,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.412+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.663+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -928,29 +1390,31 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.413+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.664+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.416+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.666+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -967,12 +1431,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -986,14 +1452,16 @@ Hibernate:
         user_account u1_0 
     where
         u1_0.username=?
-2025-11-28T15:36:03.418+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.668+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     update
         user_account 
     set
+        auth_type=?,
         authority_id=?,
         email=?,
         enabled=?,
         first_name=?,
+        google_id=?,
         is_otp_required=?,
         last_modified_by=?,
         last_modified_date=?,
@@ -1009,10 +1477,12 @@ Hibernate:
     update
         user_account 
     set
+        auth_type=?,
         authority_id=?,
         email=?,
         enabled=?,
         first_name=?,
+        google_id=?,
         is_otp_required=?,
         last_modified_by=?,
         last_modified_date=?,
@@ -1024,15 +1494,17 @@ Hibernate:
         username=? 
     where
         id=?
-2025-11-28T15:36:03.420+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.670+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1049,12 +1521,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1068,7 +1542,7 @@ Hibernate:
         user_account u1_0 
     where
         u1_0.username=?
-2025-11-28T15:36:03.421+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.671+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         a1_0.id,
         a1_0.created_by,
@@ -1094,7 +1568,7 @@ Hibernate:
         authority a1_0 
     where
         a1_0.id=?
-2025-11-28T15:36:03.422+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.672+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         r1_0.id,
         r1_0.created_by,
@@ -1122,16 +1596,18 @@ Hibernate:
         r1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldSaveUserWithAllProperties" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.011">
-    <system-out><![CDATA[2025-11-28T15:36:03.427+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldSaveUserWithAllProperties" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.01">
+    <system-out><![CDATA[2025-12-01T15:14:56.678+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1146,12 +1622,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1163,7 +1641,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.430+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.681+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -1177,7 +1655,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.431+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.682+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -1191,23 +1669,24 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.431+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.682+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.434+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.683+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         a1_0.id,
         a1_0.created_by,
         a1_0.created_date,
@@ -1220,6 +1699,7 @@ Hibernate:
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1248,6 +1728,7 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         a1_0.id,
         a1_0.created_by,
         a1_0.created_date,
@@ -1260,6 +1741,7 @@ Hibernate:
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1287,16 +1769,18 @@ Hibernate:
         u1_0.id=?
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCountTotalUsers" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.014">
-    <system-out><![CDATA[2025-11-28T15:36:03.439+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+  <testcase name="shouldFindUserByGoogleId" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.012">
+    <system-out><![CDATA[2025-12-01T15:14:56.690+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1311,12 +1795,14 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         u1_0.authority_id,
         u1_0.created_by,
         u1_0.created_date,
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1328,7 +1814,7 @@ Hibernate:
         u1_0.username 
     from
         user_account u1_0
-2025-11-28T15:36:03.441+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.692+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         role
@@ -1342,7 +1828,7 @@ Hibernate:
         (created_date, description, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?)
-2025-11-28T15:36:03.442+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.693+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         authority
@@ -1356,23 +1842,203 @@ Hibernate:
         (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
     values
         (?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.442+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.693+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.443+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.695+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    update
+        user_account 
+    set
+        auth_type=?,
+        authority_id=?,
+        email=?,
+        enabled=?,
+        first_name=?,
+        google_id=?,
+        is_otp_required=?,
+        last_modified_by=?,
+        last_modified_date=?,
+        last_name=?,
+        last_password_reset_date=?,
+        password=?,
+        role_id=?,
+        status=?,
+        username=? 
+    where
+        id=?
+Hibernate: 
+    update
+        user_account 
+    set
+        auth_type=?,
+        authority_id=?,
+        email=?,
+        enabled=?,
+        first_name=?,
+        google_id=?,
+        is_otp_required=?,
+        last_modified_by=?,
+        last_modified_date=?,
+        last_name=?,
+        last_password_reset_date=?,
+        password=?,
+        role_id=?,
+        status=?,
+        username=? 
+    where
+        id=?
+2025-12-01T15:14:56.697+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.google_id=?
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0 
+    where
+        u1_0.google_id=?
+]]></system-out>
+  </testcase>
+  <testcase name="shouldCountTotalUsers" classname="com.starter.springboot.repository.UserRepositoryTest" time="0.013">
+    <system-out><![CDATA[2025-12-01T15:14:56.702+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+Hibernate: 
+    select
+        u1_0.id,
+        u1_0.auth_type,
+        u1_0.authority_id,
+        u1_0.created_by,
+        u1_0.created_date,
+        u1_0.email,
+        u1_0.enabled,
+        u1_0.first_name,
+        u1_0.google_id,
+        u1_0.is_otp_required,
+        u1_0.last_modified_by,
+        u1_0.last_modified_date,
+        u1_0.last_name,
+        u1_0.last_password_reset_date,
+        u1_0.password,
+        u1_0.role_id,
+        u1_0.status,
+        u1_0.username 
+    from
+        user_account u1_0
+2025-12-01T15:14:56.705+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        role
+        (created_date, description, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?)
+2025-12-01T15:14:56.706+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        authority
+        (created_by, created_date, description, last_modified_by, last_modified_date, name, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.706+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+Hibernate: 
+    insert 
+    into
+        user_account
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.707+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+    select
+        u1_0.id,
+        u1_0.auth_type,
         a1_0.id,
         a1_0.created_by,
         a1_0.created_date,
@@ -1385,6 +2051,7 @@ Hibernate:
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1413,6 +2080,7 @@ Hibernate:
 Hibernate: 
     select
         u1_0.id,
+        u1_0.auth_type,
         a1_0.id,
         a1_0.created_by,
         a1_0.created_date,
@@ -1425,6 +2093,7 @@ Hibernate:
         u1_0.email,
         u1_0.enabled,
         u1_0.first_name,
+        u1_0.google_id,
         u1_0.is_otp_required,
         u1_0.last_modified_by,
         u1_0.last_modified_date,
@@ -1450,21 +2119,21 @@ Hibernate:
             on r1_0.id=u1_0.role_id 
     where
         u1_0.id=?
-2025-11-28T15:36:03.445+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+2025-12-01T15:14:56.709+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 Hibernate: 
     insert 
     into
         user_account
-        (authority_id, created_by, created_date, email, enabled, first_name, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
+        (auth_type, authority_id, created_by, created_date, email, enabled, first_name, google_id, is_otp_required, last_modified_by, last_modified_date, last_name, last_password_reset_date, password, role_id, status, username, id) 
     values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-2025-11-28T15:36:03.448+05:30 DEBUG 4264 --- [Starter Project] [           main] org.hibernate.SQL                        : 
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+2025-12-01T15:14:56.711+05:30 DEBUG 14228 --- [Starter Project] [           main] org.hibernate.SQL                        : 
     select
         count(*) 
     from

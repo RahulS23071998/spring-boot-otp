@@ -1,32 +1,33 @@
 package com.starter.springboot.controller;
 
 import com.starter.springboot.constants.ApplicationConstants;
-import com.starter.springboot.constants.OtpConstants;
-import com.starter.springboot.constants.SecurityConstants;
 import com.starter.springboot.entity.RefreshToken;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.repository.UserRepository;
+import com.starter.springboot.dto.AuthResponseDTO;
+import com.starter.springboot.dto.GoogleTokenDTO;
+import com.starter.springboot.dto.LoginDTO;
 import com.starter.springboot.dto.OtpValidationResult;
 import com.starter.springboot.dto.OtpValidationStatus;
-import com.starter.springboot.dto.AuthResponseDTO;
-import com.starter.springboot.dto.LoginDTO;
 import com.starter.springboot.dto.RefreshTokenRequestDTO;
 import com.starter.springboot.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.service.IGoogleOAuthService;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.IUserService;
 import com.starter.springboot.service.LocalizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.commons.collections4.MapUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,12 +38,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import java.util.Map;
 
 /**
  * REST Controller for handling authentication and OTP verification.
@@ -68,25 +72,33 @@ public class AuthenticationController {
 
     private final LocalizationService localizationService;
 
+    private final IGoogleOAuthService googleOAuthService;
+
+    private final IUserService userService;
+
     public AuthenticationController(TokenProvider tokenProvider,
                                     IOtpService otpService,
                                     IRefreshTokenService refreshTokenService,
                                     UserRepository userRepository,
                                     AuthenticationManager authenticationManager,
-                                    LocalizationService localizationService) {
+                                    LocalizationService localizationService,
+                                    IGoogleOAuthService googleOAuthService,
+                                    IUserService userService) {
         this.tokenProvider = tokenProvider;
         this.otpService = otpService;
         this.refreshTokenService = refreshTokenService;
         this.userRepository = userRepository;
         this.authenticationManager = authenticationManager;
         this.localizationService = localizationService;
+        this.googleOAuthService = googleOAuthService;
+        this.userService = userService;
     }
 
     @PostMapping(value = ApplicationConstants.AUTHENTICATE_ENDPOINT)
     @Operation(summary = "Authenticate user with credentials", 
         description = "Authenticate a user with username and password. If OTP is enabled for the user, " +
                       "the response will indicate that OTP verification is required. An OTP will be sent to the user's email.")
-    @RequestBody(description = "Login credentials with optional device/client information",
+    @io.swagger.v3.oas.annotations.parameters.RequestBody (description = "Login credentials with optional device/client information",
         content = @Content(schema = @Schema(implementation = LoginDTO.class),
             examples = @ExampleObject(value = """
                 {
@@ -131,8 +143,7 @@ public class AuthenticationController {
                     """))),
         @ApiResponse(responseCode = "400", description = "Invalid request format or validation error")
     })
-    public ResponseEntity<AuthResponseDTO> authorize(
-        @Valid @org.springframework.web.bind.annotation.RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<AuthResponseDTO> authorize(@Valid @RequestBody LoginDTO loginDTO) {
         LOGGER.info("Authentication attempt for user: {}", loginDTO.getUsername());
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
@@ -168,7 +179,7 @@ public class AuthenticationController {
     @Operation(summary = "Verify OTP and generate JWT token",
         description = "Verify the One-Time Password (OTP) sent to user's email. Upon successful verification, " +
                       "a JWT token will be generated for authenticated API requests. The OTP is valid for a limited time period.")
-    @RequestBody(description = "OTP verification request with username and OTP code",
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "OTP verification request with username and OTP code",
         content = @Content(schema = @Schema(implementation = VerifyTokenRequestDTO.class),
             examples = @ExampleObject(value = """
                 {
@@ -211,8 +222,7 @@ public class AuthenticationController {
                     """))),
         @ApiResponse(responseCode = "400", description = "Invalid request format or missing required fields")
     })
-    public ResponseEntity<AuthResponseDTO> verifyOtp(
-        @Valid @org.springframework.web.bind.annotation.RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
+    public ResponseEntity<AuthResponseDTO> verifyOtp(@Valid @RequestBody VerifyTokenRequestDTO verifyTokenRequest) {
         String username = verifyTokenRequest.getUsername();
         Integer otp = verifyTokenRequest.getOtp();
         Boolean rememberMe = verifyTokenRequest.getRememberMe();
@@ -241,7 +251,7 @@ public class AuthenticationController {
     @Operation(summary = "Refresh access token using refresh token",
         description = "Exchange a valid refresh token for a new access token and refresh token pair. " +
                      "The old refresh token is revoked and a new one is issued for security.")
-    @RequestBody(description = "Refresh token request",
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Refresh token request",
         content = @Content(schema = @Schema(implementation = RefreshTokenRequestDTO.class),
             examples = @ExampleObject(value = """
                 {
@@ -277,8 +287,7 @@ public class AuthenticationController {
                     """))),
         @ApiResponse(responseCode = "400", description = "Invalid request format")
     })
-    public ResponseEntity<AuthResponseDTO> refreshToken(
-        @Valid @org.springframework.web.bind.annotation.RequestBody RefreshTokenRequestDTO refreshRequest) {
+    public ResponseEntity<AuthResponseDTO> refreshToken(@Valid @RequestBody RefreshTokenRequestDTO refreshRequest) {
 
         try {
             // Validate refresh token
@@ -314,6 +323,97 @@ public class AuthenticationController {
             LOGGER.warn("Token refresh failed: {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(AuthResponseDTO.failed(null, localizationService.getMessage("auth.invalid_refresh_token")));
+        }
+    }
+
+    @PostMapping(value = ApplicationConstants.GOOGLE_OAUTH_ENDPOINT)
+    @Operation(summary = "Authenticate user with Google OAuth",
+        description = "Authenticate a user using Google OAuth 2.0. Send the Google ID token from the client. " +
+                      "The backend will verify the token, create/update the user, and issue JWT tokens directly without OTP.")
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Google OAuth token request",
+        content = @Content(schema = @Schema(implementation = GoogleTokenDTO.class),
+            examples = @ExampleObject(value = """
+                {
+                  "idToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ...",
+                  "rememberMe": true,
+                  "clientId": "postman",
+                  "deviceId": "postman-test"
+                }
+                """)))
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Google OAuth authentication successful, JWT tokens provided",
+            content = @Content(mediaType = "application/json", 
+                schema = @Schema(implementation = AuthResponseDTO.class),
+                examples = @ExampleObject(value = """
+                        {
+                             "username": "rahul.s@laderatechnology.com",
+                             "status": "SUCCESS",
+                             "message": "Authentication successful",
+                             "otp_required": false,
+                             "token": {
+                                 "id_token": "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIzMjB...",
+                                 "refresh_token": "6ecfcd95-0b9e-477f-b4bb...",
+                                 "token_type": "Bearer",
+                                 "expires_in": 3600,
+                                 "refresh_token_expires_in": 604800
+                             },
+                             "issued_at": "2025-11-30T17:28:50.054280900Z",
+                             "remember_me": true,
+                             "client_id": "postman",
+                             "device_id": "postman-test"
+                         }
+                    """))),
+        @ApiResponse(responseCode = "401", description = "Invalid or expired Google ID token",
+            content = @Content(mediaType = "application/json", 
+                examples = @ExampleObject(value = """
+                    {
+                      "status": "FAILED",
+                      "message": "Invalid Google ID token"
+                    }
+                    """))),
+        @ApiResponse(responseCode = "400", description = "Invalid request format or missing idToken")
+    })
+    public ResponseEntity<AuthResponseDTO> googleOAuth(@Valid @RequestBody GoogleTokenDTO googleTokenDTO) {
+        LOGGER.info("Google OAuth authentication attempt");
+
+        if (!StringUtils.hasText(googleTokenDTO.getIdToken())) {
+            return ResponseEntity.badRequest()
+                    .body(AuthResponseDTO.failed(null, "Missing Google ID token"));
+        }
+
+        Map<String, Object> googleUserInfo = googleOAuthService.verifyAndExtractUserInfo(googleTokenDTO.getIdToken());
+        if (MapUtils.isEmpty(googleUserInfo)) {
+            LOGGER.warn("Google OAuth authentication failed: Invalid ID token");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(AuthResponseDTO.failed(null, "Invalid Google ID token"));
+        }
+
+        try {
+            User user = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+            SecurityContextHolder.clearContext();
+
+            JWTToken token = tokenProvider.createAccessTokenAfterVerifiedOtp(user.getUsername(), googleTokenDTO.getRememberMe());
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(), tokenProvider.getRefreshTokenValidityInSeconds());
+
+            JWTToken fullToken = new JWTToken(
+                token.getIdToken(),
+                refreshToken.getToken(),
+                token.getTokenType(),
+                token.getExpiresIn(),
+                tokenProvider.getRefreshTokenValidityInSeconds()
+            );
+
+            AuthResponseDTO response = AuthResponseDTO.success(user.getUsername(), fullToken, googleTokenDTO.getRememberMe())
+                .withContext(googleTokenDTO.getRememberMe(), googleTokenDTO.getClientId(), googleTokenDTO.getDeviceId());
+
+            LOGGER.info("Google OAuth authentication successful for user: {}", user.getUsername());
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            LOGGER.error("Google OAuth authentication failed: {}", e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(AuthResponseDTO.failed(null, "Google OAuth authentication failed"));
         }
     }
 }

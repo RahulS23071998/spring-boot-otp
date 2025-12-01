@@ -186,4 +186,46 @@ class UserRepositoryTest {
         long count = userRepository.count();
         assertEquals(2, count);
     }
+
+    @Test
+    @DisplayName("Should find user by Google ID")
+    void shouldFindUserByGoogleId() {
+        testUser.setGoogleId("google-id-12345");
+        userRepository.save(testUser);
+        entityManager.flush();
+
+        Optional<User> found = userRepository.findByGoogleId("google-id-12345");
+
+        assertTrue(found.isPresent());
+        assertEquals("testuser", found.get().getUsername());
+        assertEquals("john@example.com", found.get().getEmail());
+        assertEquals("google-id-12345", found.get().getGoogleId());
+    }
+
+    @Test
+    @DisplayName("Should return empty when user not found by Google ID")
+    void shouldReturnEmptyWhenUserNotFoundByGoogleId() {
+        Optional<User> found = userRepository.findByGoogleId("non-existent-google-id");
+
+        assertFalse(found.isPresent());
+    }
+
+    @Test
+    @DisplayName("Should find correct user when multiple users have different Google IDs")
+    void shouldFindCorrectUserWithMultipleGoogleIds() {
+        testUser.setGoogleId("google-id-111");
+        userRepository.save(testUser);
+
+        User secondUser = createUser(2L, "anotheruser", "password456", "Jane", "Smith", "jane@example.com", true, UserStatus.ACTIVE, testRole, testAuthority);
+        secondUser.setGoogleId("google-id-222");
+        userRepository.save(secondUser);
+
+        entityManager.flush();
+
+        Optional<User> found = userRepository.findByGoogleId("google-id-222");
+
+        assertTrue(found.isPresent());
+        assertEquals("anotheruser", found.get().getUsername());
+        assertEquals("jane@example.com", found.get().getEmail());
+    }
 }

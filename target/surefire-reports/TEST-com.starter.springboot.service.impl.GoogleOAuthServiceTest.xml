@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.RedisTokenServiceTest" time="0.061" tests="17" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.537" tests="9" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -70,30 +70,40 @@
     <property name="java.class.version" value="65.0"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldHandleRedisExceptionOnRemove" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.005">
-    <system-out><![CDATA[2025-12-01T15:14:59.668+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.RedisTokenService     : Failed to remove whitelist for user 123: Redis connection failed
+  <testcase name="testVerifyAndExtractUserInfo_WithPartialUserInfo_ReturnsAvailableData" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.495">
+    <system-out><![CDATA[2025-12-01T15:14:58.387+05:30  INFO 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Successfully verified Google ID token for user: test@example.com
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCheckNullJtiReturnsFalseWhenStoredJtiExists" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.004"/>
-  <testcase name="shouldHandleRedisExceptionOnRegister" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.004">
-    <system-out><![CDATA[2025-12-01T15:14:59.678+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.RedisTokenService     : Failed to register jti for user 123: Redis connection failed
+  <testcase name="testVerifyAndExtractUserInfo_WithValidToken_ReturnsUserInfo" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.006">
+    <system-out><![CDATA[2025-12-01T15:14:58.394+05:30  INFO 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Successfully verified Google ID token for user: test@example.com
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCheckNullJtiReturnsTrueWhenStoredJtiIsAlsoNull" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.002"/>
-  <testcase name="shouldRemoveWhitelistSuccessfully" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.003"/>
-  <testcase name="shouldCheckNonWhitelistedJtiReturnsFalse" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.003"/>
-  <testcase name="shouldOverwriteExistingJtiForSameUser" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.003"/>
-  <testcase name="shouldCheckWhitelistedJtiReturnsTrue" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.003"/>
-  <testcase name="shouldGenerateCorrectUserKeyForDifferentUserIds" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.004"/>
-  <testcase name="shouldRegisterJtiSuccessfully" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.003"/>
-  <testcase name="shouldHandleRedisExceptionOnCheck" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.003">
-    <system-out><![CDATA[2025-12-01T15:14:59.710+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.RedisTokenService     : Failed to check jti whitelist for user 123: Redis connection failed
+  <testcase name="testVerifyAndExtractUserInfo_WithMinimalInfo_ReturnsUserInfo" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.005">
+    <system-out><![CDATA[2025-12-01T15:14:58.400+05:30  INFO 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Successfully verified Google ID token for user: test@example.com
 ]]></system-out>
   </testcase>
-  <testcase name="shouldRegisterNullJti" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.001"/>
-  <testcase name="shouldHandleEmptyStringJti" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.001"/>
-  <testcase name="shouldRegisterJtiWithNegativeTtl" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.001"/>
-  <testcase name="shouldCheckJtiWithNullUserId" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.002"/>
-  <testcase name="shouldCheckJtiWhenRedisReturnsNull" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.002"/>
-  <testcase name="shouldRegisterJtiWithZeroTtl" classname="com.starter.springboot.service.RedisTokenServiceTest" time="0.002"/>
+  <testcase name="testVerifyAndExtractUserInfo_WithNullClientId_ThrowsException" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.004">
+    <system-out><![CDATA[2025-12-01T15:14:58.406+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Failed to verify Google ID token: Google Client ID not configured
+]]></system-out>
+  </testcase>
+  <testcase name="testVerifyAndExtractUserInfo_WithInvalidToken_ReturnsNull" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.003">
+    <system-out><![CDATA[2025-12-01T15:14:58.409+05:30  WARN 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Invalid Google ID token
+]]></system-out>
+  </testcase>
+  <testcase name="testVerifyAndExtractUserInfo_WithIOException_ReturnsNull" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.005">
+    <system-out><![CDATA[2025-12-01T15:14:58.414+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Failed to verify Google ID token: Network error
+]]></system-out>
+  </testcase>
+  <testcase name="testVerifyAndExtractUserInfo_WithNullOptionalFields_ReturnsUserInfo" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.004">
+    <system-out><![CDATA[2025-12-01T15:14:58.420+05:30  INFO 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Successfully verified Google ID token for user: test@example.com
+]]></system-out>
+  </testcase>
+  <testcase name="testVerifyAndExtractUserInfo_WithException_ReturnsNull" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.004">
+    <system-out><![CDATA[2025-12-01T15:14:58.424+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Failed to verify Google ID token: Token verification failed
+]]></system-out>
+  </testcase>
+  <testcase name="testVerifyAndExtractUserInfo_WithoutClientId_ThrowsException" classname="com.starter.springboot.service.impl.GoogleOAuthServiceTest" time="0.003">
+    <system-out><![CDATA[2025-12-01T15:14:58.428+05:30 ERROR 14228 --- [Starter Project] [           main] c.s.s.service.impl.GoogleOAuthService    : Failed to verify Google ID token: Google Client ID not configured
+]]></system-out>
+  </testcase>
 </testsuite>

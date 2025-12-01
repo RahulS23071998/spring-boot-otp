@@ -2,6 +2,7 @@ package com.starter.springboot.service.impl;
 
 import com.starter.springboot.constants.ApplicationConstants;
 import com.starter.springboot.constants.SecurityConstants;
+import com.starter.springboot.entity.AuthType;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
@@ -207,6 +208,64 @@ public class UserService implements IUserService {
             LOGGER.warn("Failed to clear caches for user {}: {}", savedUser.getUsername(), e.getMessage());
         }
         return savedUser;
+    }
+
+    @Override
+    @Transactional
+    public User findOrCreateGoogleOAuthUser(Map<String, Object> googleUserInfo) {
+        String googleId = (String) googleUserInfo.get("sub");
+        String email = (String) googleUserInfo.get("email");
+        String givenName = (String) googleUserInfo.get("given_name");
+        String familyName = (String) googleUserInfo.get("family_name");
+        String name = (String) googleUserInfo.get("name");
+
+        Optional<User> existingUser = userRepository.findByGoogleId(googleId);
+        if (existingUser.isPresent()) {
+            LOGGER.info("Google OAuth user already exists: {}", email);
+            return existingUser.get();
+        }
+
+        Optional<User> existingUserByEmail = userRepository.findByUsername(email);
+        if (existingUserByEmail.isPresent()) {
+            User user = existingUserByEmail.get();
+            if (user.getGoogleId() == null) {
+                user.setGoogleId(googleId);
+                user.setAuthType(AuthType.GOOGLE_OAUTH);
+                LOGGER.info("Linked existing user to Google OAuth: {}", email);
+                return userRepository.save(user);
+            }
+        }
+
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setFirstName((givenName != null && !givenName.isBlank()) ? givenName : (name != null && !name.isBlank()) ? name : "Google");
+        String lastName = familyName != null && familyName.length() >= 4 ? familyName : "User";
+        newUser.setLastName(lastName);
+        newUser.setUsername(email);
+        newUser.setPassword(generateRandomPassword());
+        newUser.setEnabled(Boolean.TRUE);
+        newUser.setStatus(UserStatus.ACTIVE);
+        newUser.setAuthType(AuthType.GOOGLE_OAUTH);
+        newUser.setGoogleId(googleId);
+        newUser.setIsOtpRequired(Boolean.FALSE);
+
+        Date now = Date.from(Instant.now());
+        newUser.setLastPasswordResetDate(now);
+
+        Role defaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
+                .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.default_role_not_configured")));
+        newUser.setRole(defaultRole);
+
+        authorityRepository.findByName(defaultRole.getName().replace(SecurityConstants.ROLE_PREFIX, ""))
+                .ifPresent(newUser::setAuthority);
+
+        User savedUser = userRepository.save(newUser);
+        LOGGER.info("New Google OAuth user created: {}", email);
+        return savedUser;
+    }
+
+    private String generateRandomPassword() {
+        return java.util.UUID.randomUUID().toString().replace("-", "").substring(0, 32);
     }
 
 }

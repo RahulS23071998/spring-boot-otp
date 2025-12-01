@@ -460,6 +460,203 @@ class UserServiceTest {
         verify(authorityRepository).findByName("USER");
     }
 
+    @Test
+    @DisplayName("Should find existing user by Google ID")
+    void shouldFindExistingUserByGoogleId() {
+        // Given
+        String googleId = "google-user-12345";
+        testUser.setGoogleId(googleId);
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, TEST_EMAIL, "John", "Doe", "John Doe");
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.of(testUser));
+
+        // When
+        User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(TEST_USER_ID, result.getId());
+        assertEquals(TEST_EMAIL, result.getEmail());
+        verify(userRepository).findByGoogleId(googleId);
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    @Test
+    @DisplayName("Should link Google ID to existing user with same email")
+    void shouldLinkGoogleIdToExistingUserWithSameEmail() {
+        // Given
+        String googleId = "google-user-67890";
+        String email = TEST_EMAIL;
+        testUser.setGoogleId(null);
+        testUser.setAuthType(null);
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Doe", "John Doe");
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(email)).thenReturn(Optional.of(testUser));
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+
+        // When
+        User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+        // Then
+        assertNotNull(result);
+        verify(userRepository).findByGoogleId(googleId);
+        verify(userRepository).findByUsername(email);
+        
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+        User savedUser = userCaptor.getValue();
+        assertEquals(googleId, savedUser.getGoogleId());
+    }
+
+    @Test
+    @DisplayName("Should create new user for Google OAuth with complete info")
+    void shouldCreateNewGoogleOAuthUserWithCompleteInfo() {
+        // Given
+        String googleId = "google-user-new";
+        String email = "newgoogleuser@gmail.com";
+        String givenName = "John";
+        String familyName = "Smith";
+        String name = "John Smith";
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, givenName, familyName, name);
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
+        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
+        
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setUsername(email);
+        newUser.setGoogleId(googleId);
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+
+        // When
+        User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+        // Then
+        assertNotNull(result);
+        assertEquals(email, result.getEmail());
+        assertEquals(googleId, result.getGoogleId());
+        
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+        User savedUser = userCaptor.getValue();
+        assertEquals(givenName, savedUser.getFirstName());
+        assertEquals(familyName, savedUser.getLastName());
+        assertEquals(email, savedUser.getUsername());
+    }
+
+    @Test
+    @DisplayName("Should create user with default first name when given_name is null")
+    void shouldCreateUserWithDefaultFirstNameWhenGivenNameIsNull() {
+        // Given
+        String googleId = "google-user-noname";
+        String email = "noname@gmail.com";
+        String name = "Full Name";
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, null, "Name", name);
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
+        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
+        
+        User newUser = new User();
+        newUser.setEmail(email);
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+
+        // When
+        User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+        // Then
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+        User savedUser = userCaptor.getValue();
+        assertEquals("Full Name", savedUser.getFirstName());
+    }
+
+    @Test
+    @DisplayName("Should set default last name to User when family_name is too short")
+    void shouldSetDefaultLastNameWhenFamilyNameIsTooShort() {
+        // Given
+        String googleId = "google-user-short";
+        String email = "short@gmail.com";
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Jo", "John Jo");
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
+        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
+        
+        User newUser = new User();
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+
+        // When
+        User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+        // Then
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+        User savedUser = userCaptor.getValue();
+        assertEquals("User", savedUser.getLastName());
+    }
+
+    @Test
+    @DisplayName("Should set OTP to false for Google OAuth users")
+    void shouldSetOtpToFalseForGoogleOAuthUsers() {
+        // Given
+        String googleId = "google-user-otp";
+        String email = "otp@gmail.com";
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Doe", "John Doe");
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
+        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
+        
+        User newUser = new User();
+        when(userRepository.save(any(User.class))).thenReturn(newUser);
+
+        // When
+        User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
+
+        // Then
+        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
+        verify(userRepository).save(userCaptor.capture());
+        User savedUser = userCaptor.getValue();
+        assertEquals(Boolean.FALSE, savedUser.getIsOtpRequired());
+    }
+
+    @Test
+    @DisplayName("Should throw EntityNotFoundException when default role not found")
+    void shouldThrowEntityNotFoundExceptionWhenDefaultRoleNotFoundForGoogleOAuth() {
+        // Given
+        String googleId = "google-user-norole";
+        String email = "norole@gmail.com";
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Doe", "John Doe");
+
+        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.empty());
+
+        // When & Then
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
+                () -> userService.findOrCreateGoogleOAuthUser(googleUserInfo));
+
+        verify(userRepository, never()).save(any(User.class));
+    }
+
+    private Map<String, Object> createGoogleUserInfo(String googleId, String email, String givenName, String familyName, String name) {
+        Map<String, Object> googleUserInfo = new HashMap<>();
+        googleUserInfo.put("sub", googleId);
+        googleUserInfo.put("email", email);
+        googleUserInfo.put("given_name", givenName);
+        googleUserInfo.put("family_name", familyName);
+        googleUserInfo.put("name", name);
+        googleUserInfo.put("picture", "https://example.com/picture.jpg");
+        return googleUserInfo;
+    }
+
     private void mockLocalizationMessages() {
         lenient().when(localizationService.getMessage(anyString())).thenAnswer(invocation -> resolveMessage(invocation.getArgument(0)));
         lenient().when(localizationService.getMessage(anyString(), any())).thenAnswer(invocation -> {

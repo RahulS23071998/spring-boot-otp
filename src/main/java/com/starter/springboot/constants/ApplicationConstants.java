@@ -15,6 +15,7 @@ public final class ApplicationConstants {
     public static final String AUTHENTICATE_ENDPOINT = "/authenticate";
     public static final String VERIFY_ENDPOINT = "/verify";
     public static final String REFRESH_ENDPOINT = "/refresh";
+    public static final String GOOGLE_OAUTH_ENDPOINT = "/google";
     public static final String PUBLIC_ENDPOINT = "/public";
     public static final String PASSWORD_ENDPOINT = "/password";
     public static final String CHANGE_PASSWORD_ENDPOINT = "/public/password";

@@ -52,6 +52,8 @@ CREATE TABLE IF NOT EXISTS user_account (
     status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
     last_password_reset_date DATETIME NULL,
     is_otp_required BOOLEAN DEFAULT false,
+    auth_type VARCHAR(20) DEFAULT 'USERNAME_PASSWORD',
+    google_id VARCHAR(255) UNIQUE NULL,
     role_id BIGINT,
     authority_id BIGINT,
     created_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -61,7 +63,8 @@ CREATE TABLE IF NOT EXISTS user_account (
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES role(id),
     CONSTRAINT fk_user_authority FOREIGN KEY (authority_id) REFERENCES authority(id),
     INDEX idx_user_username (username),
-    INDEX idx_user_email (email)
+    INDEX idx_user_email (email),
+    INDEX idx_user_google_id (google_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ================================================

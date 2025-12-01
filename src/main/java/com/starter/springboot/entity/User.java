@@ -67,6 +67,13 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
     @Column(name = DatabaseConstants.IS_OTP_REQUIRED_COLUMN)
     private Boolean isOtpRequired;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "auth_type", length = 20)
+    private AuthType authType;
+
+    @Column(name = "google_id", length = 255)
+    private String googleId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = DatabaseConstants.ROLE_ID_COLUMN)
     private Role role;
@@ -169,5 +176,21 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
 
     public void setAuthority(Authority authority) {
         this.authority = authority;
+    }
+
+    public AuthType getAuthType() {
+        return authType;
+    }
+
+    public void setAuthType(AuthType authType) {
+        this.authType = authType;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId;
     }
 }
