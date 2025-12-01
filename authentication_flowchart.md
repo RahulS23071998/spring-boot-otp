@@ -3,9 +3,12 @@
 ```mermaid
 flowchart TD
     %% Start
-    A["User Login Request"] --> B["authorize: POST /authenticate"]
-    B --> C{"authenticate: Check credentials via OtpAwareAuthenticationProvider"}
-    %% Positive Authentication Path
+    A["User Login Request"] --> B{{"Select Auth Method"}}
+    B -->|Traditional| B1["POST /authenticate"]
+    B -->|OAuth| B2["POST /auth/google"]
+    
+    %% Traditional Authentication Path
+    B1 --> C["authorize: Check credentials via OtpAwareAuthenticationProvider"]
     C --> D["Load User: From Redis cache (auth:user:{username}, 5min) or DB"]
     D --> E["Validate Credentials: PasswordEncoder.matches()"]
     E --> F{"OTP Required? Check user.getIsOtpRequired()"}
@@ -17,11 +20,30 @@ flowchart TD
     K --> L["Generate JWT: TokenProvider.generateToken() with Jwts.builder()"]
     L --> M["Register JTI: Redis whitelist via IRedisTokenService.registerJti()"]
     M --> N["Return accepted: TokenCreationResponse.accepted() with JWT"]
+    
+    %% Google OAuth Path
+    B2 --> B3["Receive Google ID Token"]
+    B3 --> B4["verifyAndExtractUserInfo: IGoogleOAuthService.verify token"]
+    B4 --> B5{{"Token Valid?"}}
+    B5 -->|No| B6["Log Error: LocalizationService"]
+    B6 --> B7["Return UNAUTHORIZED: Invalid Google ID token"]
+    B5 -->|Yes| B8["Extract User Info: email, given_name, family_name, sub"]
+    B8 --> B9["findOrCreateGoogleOAuthUser: UserService"]
+    B9 --> B10{{"User Exists by Google ID?"}}
+    B10 -->|Yes| B11["Return Existing User"]
+    B10 -->|No, Email Exists| B12["Link Google OAuth to Existing User"]
+    B10 -->|New User| B13["Create New Google OAuth User (OTP disabled)"]
+    B11 --> B14["createAccessTokenAfterVerifiedOtp: Generate JWT"]
+    B12 --> B14
+    B13 --> B14
+    B14 --> B15["createRefreshToken: Generate refresh token"]
+    B15 --> B16["Return: JWT + Refresh Token with remember_me flag"]
+    
     %% OTP Verification Path
     J --> O["User Enters OTP"]
     O --> P["verifyOtp: POST /verify via AuthenticationController"]
     P --> Q["validateOTP: Check OTP via OtpService.validateOTP() against Redis"]
-    Q --> R{"Validation Success? OtpValidationStatus.SUCCESS"}
+    Q --> R{{"Validation Success? OtpValidationStatus.SUCCESS"}}
     R -->|Yes| S["createTokenAfterVerifiedOtp: Generate JWT post-OTP via TokenProvider"]
     S --> T["Retrieve Cached: DomainUserDetails via TokenProvider.getCachedUserDetailsForOtp() (ObjectMapper.readValue)"]
     T --> U["Construct User: Build User object from cached data"]
@@ -50,13 +72,16 @@ flowchart TD
     QQQ --> RRR["Return New Tokens: JWTToken with access + refresh tokens"]
     RRR --> SSS["Client Updates Tokens"]
     %% Negative Paths
-    E -->|Invalid Credentials| Y["BadCredentialsException: HttpStatus.UNAUTHORIZED"]
+    E -->|Invalid Credentials| Y["BadCredentialsException: HttpStatus.UNAUTHORIZED<br/>LocalizationService"]
     G -->|Rate Limit Exceeded| Z["rateLimited: OtpGenerationResult.rateLimited() - Redis key otp:{username}:rate_limit (15s)"]
     G -->|Max Attempts Exceeded| AA["maxAttemptsExceeded: OtpGenerationResult.maxAttemptsExceeded() - Redis key otp:{username}:attempts"]
     AA --> AB["Send Lockout Email: Async via IEmailService.sendSimpleMessageAsync()"]
-    Q -->|Invalid/Expired OTP| BB["invalid: OtpValidationResult.invalid() - HttpStatus.UNAUTHORIZED"]
-    Q -->|Locked Account| CC["locked: OtpValidationResult.locked() - HttpStatus.LOCKED"]
-    CCC -->|Invalid Current Password| KKK["BadCredentialsException: HttpStatus.UNAUTHORIZED"]
+    Q -->|Invalid/Expired OTP| BB["invalid: OtpValidationResult.invalid() - HttpStatus.UNAUTHORIZED<br/>LocalizationService"]
+    Q -->|Locked Account| CC["locked: OtpValidationResult.locked() - HttpStatus.LOCKED<br/>LocalizationService"]
+    CCC -->|Invalid Current Password| KKK["BadCredentialsException: HttpStatus.UNAUTHORIZED<br/>LocalizationService"]
+    B4 -->|Network Error| B17["Network Error During Verification"]
+    B17 --> B18["Log Error: LocalizationService"]
+    B18 --> B7
     %% Caching Details
     D --> DD["User Cache: ObjectMapper.writeValueAsString() in OtpAwareAuthenticationProvider"]
     I --> EE["OTP Cache: ObjectMapper.writeValueAsString() in TokenProvider (with JavaTimeModule & SimpleGrantedAuthorityDeserializer)"]
@@ -66,21 +91,42 @@ flowchart TD
     FF --> GG["Delete Expired: OtpAuditEntryRepository.deleteByExpiresOnBefore()"]
     FF --> HH["Log: SLF4J info/debug"]
     %% Negative Paths for Refresh
-    NNN -->|Invalid Token| TTT["Invalid Refresh Token: HttpStatus.UNAUTHORIZED"]
+    NNN -->|Invalid Token| TTT["Invalid Refresh Token: HttpStatus.UNAUTHORIZED<br/>LocalizationService"]
     %% End
     N --> II["Success: Authentication completed"]
     X --> II
-    JJJ --> II
-    RRR --> II
-    Y --> JJ["Failure: Authentication failed"]
+    B16 --> II
+    Y --> JJ["Failure: Authentication failed<br/>LocalizationService Response"]
     Z --> JJ
     BB --> JJ
     CC --> JJ
-    KKK --> JJ
     TTT --> JJ
+    B7 --> JJ
 ```
 
 ## Key Changes Made
+
+### Google OAuth Integration
+- **Added OAuth authentication path** (`B2` → `B16`) as alternative to traditional login
+- **Token verification** (`B4` → `B5`) via IGoogleOAuthService.verifyAndExtractUserInfo()
+- **User management** (`B9` → `B13`) with three scenarios:
+  - Existing Google OAuth user authentication
+  - Linking Google OAuth to existing email-based account
+  - Creating new Google OAuth users (OTP disabled by default)
+- **Automatic token generation** for OAuth users without OTP requirement
+- **Refresh token support** for OAuth flows with remember_me flag
+- **Error handling** for invalid/expired tokens with proper HTTP status codes
+
+### Localization Service Integration
+- **Error message localization** across all authentication paths:
+  - Invalid credentials (Traditional auth)
+  - Invalid/Expired OTP validation
+  - Locked accounts
+  - Invalid refresh tokens
+  - Invalid Google ID tokens
+  - Network errors during verification
+- **Centralized messaging** via LocalizationService for consistent user experience
+- **Multi-language support** for all error responses
 
 ### Password Change Integration
 - **Added password change flow** (`AAA` → `JJJ`) showing the complete process
@@ -99,11 +145,13 @@ flowchart TD
 - **Refresh token revocation** on password change prevents token reuse
 - **Token rotation** prevents refresh token replay attacks
 - **Fresh DB lookup** guarantees latest user data is used
+- **OAuth user isolation** - Google OAuth users exempt from OTP requirements
 
 ### Flow Connections
+- Dual authentication entry points (Traditional + OAuth)
 - Password change success connects back to authentication flow
 - Refresh token flow handles expired access tokens seamlessly
-- Comprehensive error handling for all authentication scenarios
-- Scheduled cleanup for expired tokens
+- Comprehensive error handling with localization for all authentication scenarios
+- Scheduled cleanup for expired tokens and OTP entries
 
-This updated flowchart reflects the complete JWT authentication system with refresh tokens, ensuring both security and user experience optimization.
+This updated flowchart reflects the complete JWT authentication system with Google OAuth support, refresh tokens, and multi-language error messaging, ensuring both security and enhanced user experience.
