@@ -46,7 +46,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-public class TokenProvider {
+public class TokenProvider implements ITokenProvider {
 
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
@@ -186,6 +186,7 @@ public class TokenProvider {
      * @param rememberMe remember me indicator
      * @return payload containing HTTP status and optional JWT token
      */
+    @Override
     public TokenCreationResponse createToken(Authentication authentication, Boolean rememberMe) {
         String username = authentication.getName();
         DomainUserDetails userDetails = resolveDomainUserDetails(authentication);
@@ -237,6 +238,7 @@ public class TokenProvider {
      * @param rememberMe remember me indicator
      * @return JWTToken with access token only
      */
+    @Override
     public JWTToken createAccessTokenAfterVerifiedOtp(String username, Boolean rememberMe) {
         TokenCreationData tokenData = createTokenInternal(username, rememberMe);
         return JWTToken.bearerToken(tokenData.tokenValue(), tokenData.expirationSeconds());
@@ -249,6 +251,7 @@ public class TokenProvider {
      * @param rememberMe remember me indicator
      * @return JWTToken with access and refresh tokens
      */
+    @Override
     public JWTToken createTokenAfterVerifiedOtp(String username, Boolean rememberMe) {
         TokenCreationData tokenData = createTokenInternal(username, rememberMe);
 
@@ -271,6 +274,7 @@ public class TokenProvider {
      * @param token provided token
      * @return Authentication Object
      */
+    @Override
     public Authentication getAuthentication(String token)
     {
         Claims claims = jwtParser
@@ -292,6 +296,7 @@ public class TokenProvider {
      * @param authToken - JWT token
      * @return true | false
      */
+    @Override
     @Transactional(readOnly = true)
     public boolean validateToken(String authToken) {
         try
@@ -379,6 +384,7 @@ public class TokenProvider {
      * Get refresh token validity in seconds
      * @return refresh token validity in seconds
      */
+    @Override
     public long getRefreshTokenValidityInSeconds() {
         return jwtProperties.getRefreshExpiration();
     }

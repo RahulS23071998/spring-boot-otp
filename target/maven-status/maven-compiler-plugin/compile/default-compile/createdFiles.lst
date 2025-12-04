@@ -24,6 +24,7 @@ com\starter\springboot\config\ProviderConfiguration.class
 com\starter\springboot\dto\OtpValidationResult.class
 com\starter\springboot\dto\OtpValidationStatus.class
 com\starter\springboot\repository\AuthorityRepository.class
+com\starter\springboot\security\jwt\ITokenProvider.class
 com\starter\springboot\config\Http401UnauthorizedEntryPoint.class
 com\starter\springboot\service\IRefreshTokenService.class
 com\starter\springboot\dto\EmailDTO.class

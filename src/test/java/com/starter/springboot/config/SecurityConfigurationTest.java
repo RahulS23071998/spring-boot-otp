@@ -1,7 +1,7 @@
 package com.starter.springboot.config;
 
 import com.starter.springboot.repository.UserRepository;
-import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.security.OtpAwareAuthenticationProvider;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class SecurityConfigurationTest {
     private SecurityEvaluationContextExtension securityEvaluationContextExtension;
 
     @MockBean
-    private TokenProvider tokenProvider;
+    private ITokenProvider tokenProvider;
 
     @MockBean
     private Http401UnauthorizedEntryPoint authenticationEntryPoint;

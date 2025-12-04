@@ -2,7 +2,7 @@ package com.starter.springboot.config;
 
 import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.jwt.JWTConfigurer;
-import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.security.OtpAwareAuthenticationProvider;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.context.annotation.Bean;
@@ -52,7 +52,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, TokenProvider tokenProvider) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, ITokenProvider tokenProvider) throws Exception {
         http
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .csrf(AbstractHttpConfigurer::disable)

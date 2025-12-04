@@ -10,9 +10,9 @@ public class JWTConfigurer extends AbstractHttpConfigurer<JWTConfigurer, HttpSec
 
     public static final String AUTHORIZATION_TOKEN = "access_token";
 
-    private final TokenProvider tokenProvider;
+    private final ITokenProvider tokenProvider;
 
-    public JWTConfigurer(TokenProvider tokenProvider) {
+    public JWTConfigurer(ITokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 

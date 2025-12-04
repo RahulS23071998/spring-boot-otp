@@ -14,7 +14,7 @@ import com.starter.springboot.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
-import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.service.IGoogleOAuthService;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRefreshTokenService;
@@ -57,7 +57,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AuthenticationControllerTest {
 
     @Mock
-    private TokenProvider tokenProvider;
+    private ITokenProvider tokenProvider;
 
     @Mock
     private IOtpService otpService;

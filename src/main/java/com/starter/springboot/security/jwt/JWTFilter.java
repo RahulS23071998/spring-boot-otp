@@ -25,9 +25,9 @@ public class JWTFilter extends GenericFilterBean {
 
     private final Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
-    private final TokenProvider tokenProvider;
+    private final ITokenProvider tokenProvider;
 
-    public JWTFilter(TokenProvider tokenProvider) {
+    public JWTFilter(ITokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 
@@ -47,6 +47,14 @@ public class JWTFilter extends GenericFilterBean {
         try
         {
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+            String requestUri = httpServletRequest.getRequestURI();
+            
+            if (requestUri.startsWith("/auth/")) {
+                log.debug("Skipping JWT validation for auth endpoint: {}", requestUri);
+                filterChain.doFilter(servletRequest, servletResponse);
+                return;
+            }
+            
             String jwt = resolveToken(httpServletRequest);
             if (StringUtils.hasText(jwt))
             {
@@ -74,12 +82,16 @@ public class JWTFilter extends GenericFilterBean {
     {
         String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(ApplicationConstants.BEARER_PREFIX)){
-            return bearerToken.substring(ApplicationConstants.BEARER_PREFIX.length(), bearerToken.length());
+            String token = bearerToken.substring(ApplicationConstants.BEARER_PREFIX.length(), bearerToken.length());
+            log.info("Extracted Bearer Token from header: {}", token);
+            return token;
         }
         String jwt = request.getParameter(JWTConfigurer.AUTHORIZATION_TOKEN);
         if (StringUtils.hasText(jwt)) {
+            log.info("Extracted Token from parameter: {}", jwt);
             return jwt;
         }
+        log.info("No token found in request");
         return null;
     }
 }

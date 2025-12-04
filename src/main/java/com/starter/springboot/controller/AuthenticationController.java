@@ -14,7 +14,7 @@ import com.starter.springboot.dto.VerifyTokenRequestDTO;
 import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
-import com.starter.springboot.security.jwt.TokenProvider;
+import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.service.IGoogleOAuthService;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRefreshTokenService;
@@ -60,7 +60,7 @@ public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
-    private final TokenProvider tokenProvider;
+    private final ITokenProvider tokenProvider;
 
     private final IOtpService otpService;
 
@@ -76,7 +76,7 @@ public class AuthenticationController {
 
     private final IUserService userService;
 
-    public AuthenticationController(TokenProvider tokenProvider,
+    public AuthenticationController(ITokenProvider tokenProvider,
                                     IOtpService otpService,
                                     IRefreshTokenService refreshTokenService,
                                     UserRepository userRepository,

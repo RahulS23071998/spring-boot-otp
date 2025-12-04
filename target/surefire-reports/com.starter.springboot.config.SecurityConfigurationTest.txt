@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.starter.springboot.config.SecurityConfigurationTest
 -------------------------------------------------------------------------------
-Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.81 s -- in com.starter.springboot.config.SecurityConfigurationTest
+Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 28.23 s -- in com.starter.springboot.config.SecurityConfigurationTest
