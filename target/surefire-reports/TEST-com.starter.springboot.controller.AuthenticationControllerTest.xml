@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.controller.AuthenticationControllerTest" time="1.664" tests="21" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.controller.AuthenticationControllerTest" time="1.24" tests="21" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="IN"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin"/>
-    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire8765242969442034953\surefirebooter-20251204161423407_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire8765242969442034953 2025-12-04T16-14-23_265-jvmRun1 surefire-20251204161423407_1tmp surefire_0-20251204161423407_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire11179390271036201261\surefirebooter-20251208105138417_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire11179390271036201261 2025-12-08T10-51-37_930-jvmRun1 surefire-20251208105138417_1tmp surefire_0-20251208105138417_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\Rahul.S\.m2\repository\com\google\api-client\google-api-client\2.7.2\google-api-client-2.7.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\oauth-client\google-oauth-client\1.36.0\google-oauth-client-1.36.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-credentials\1.30.0\google-auth-library-credentials-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-oauth2-http\1.30.0\google-auth-library-oauth2-http-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auto\value\auto-value-annotations\1.11.0\auto-value-annotations-1.11.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-gson\1.45.2\google-http-client-gson-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-apache-v2\1.45.2\google-http-client-apache-v2-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpclient\4.5.14\httpclient-4.5.14.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client\1.45.2\google-http-client-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-context\1.68.2\grpc-context-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-api\1.68.2\grpc-api-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-api\0.31.1\opencensus-api-0.31.1.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-contrib-http-util\0.31.1\opencensus-contrib-http-util-0.31.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -34,7 +34,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire8765242969442034953\surefirebooter-20251204161423407_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire11179390271036201261\surefirebooter-20251208105138417_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.9+10-LTS"/>
@@ -44,6 +44,7 @@
     <property name="os.version" value="10.0"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - [%thread] - %logger{36} - %msg%n"/>
     <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
     <property name="java.vendor.version" value="Microsoft-12574459"/>
     <property name="maven.ext.class.path" value="C:\Users\Rahul.S\AppData\Local\Programs\IntelliJ IDEA 2025.2.1\plugins\maven\lib\maven-event-listener.jar"/>
@@ -56,7 +57,7 @@
     <property name="os.arch" value="amd64"/>
     <property name="jansi.passthrough" value="true"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="18052"/>
+    <property name="PID" value="27028"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="native.encoding" value="Cp1252"/>
@@ -68,284 +69,285 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="maven.repo.local" value="C:\Users\Rahul.S\.m2\repository"/>
     <property name="java.class.version" value="65.0"/>
+    <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - %msg%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="testInvalidOtpVerification" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.813">
-    <system-out><![CDATA[2025-12-04T16:14:54.244+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.247+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.248+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.248+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.248+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.263+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#verifyOtp(VerifyTokenRequestDTO)
-2025-12-04T16:14:54.269+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@8cf705e]
-2025-12-04T16:14:54.276+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : OTP validation failed for user: diona.smith with status INVALID
-2025-12-04T16:14:54.279+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.287+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid OTP provided., otpRequired=fals (truncated)...]
+  <testcase name="testInvalidOtpVerification" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.621">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 1 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#verifyOtp(VerifyTokenRequestDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@d7da0ae]
+2025-12-08 10:51:56 - [] - [] - OTP validation failed for user: diona.smith with status INVALID
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid OTP provided., otpRequired=fals (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testRefreshTokenWithExpiredToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.039">
-    <system-out><![CDATA[2025-12-04T16:14:54.363+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.365+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.366+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.366+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.366+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.372+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:54.379+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=expired-refresh-token]]
-2025-12-04T16:14:54.388+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: Invalid refresh token
-2025-12-04T16:14:54.390+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.390+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+  <testcase name="testRefreshTokenWithExpiredToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.027">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=expired-refresh-token]]
+2025-12-08 10:51:56 - [] - [] - Token refresh failed: Invalid refresh token
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testGoogleOAuthWithInvalidToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.031">
-    <system-out><![CDATA[2025-12-04T16:14:54.403+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.404+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.405+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.405+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.405+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.408+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
-2025-12-04T16:14:54.411+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@27b8eecb]
-2025-12-04T16:14:54.413+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication attempt
-2025-12-04T16:14:54.420+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication failed: Invalid ID token
-2025-12-04T16:14:54.421+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.422+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid Google ID token, otpRequired=false, to (truncated)...]
+  <testcase name="testGoogleOAuthWithInvalidToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.048">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 1 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@55cb75bf]
+2025-12-08 10:51:56 - [] - [] - Google OAuth authentication attempt
+2025-12-08 10:51:56 - [] - [] - Google OAuth authentication failed: Invalid ID token
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid Google ID token, otpRequired=false, to (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testCreateNewGoogleOAuthUserWithoutRememberMe" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.036">
-    <system-out><![CDATA[2025-12-04T16:14:54.436+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.438+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.438+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.438+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.439+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-12-04T16:14:54.449+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
-2025-12-04T16:14:54.452+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@14919b5c]
-2025-12-04T16:14:54.455+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication attempt
-2025-12-04T16:14:54.456+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication successful for user: newuser@gmail.com
-2025-12-04T16:14:54.458+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.459+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=newuser@gmail.com, status=SUCCESS, message=Authentication successful, otpRe (truncated)...]
+  <testcase name="testCreateNewGoogleOAuthUserWithoutRememberMe" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.059">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@3e084d2f]
+2025-12-08 10:51:56 - [] - [] - Google OAuth authentication attempt
+2025-12-08 10:51:56 - [] - [] - Google OAuth authentication successful for user: newuser@gmail.com
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=newuser@gmail.com, status=SUCCESS, message=Authentication successful, otpRe (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testGoogleOAuthWithEmptyUserInfo" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.021">
-    <system-out><![CDATA[2025-12-04T16:14:54.471+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.473+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.473+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.473+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.474+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-12-04T16:14:54.476+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
-2025-12-04T16:14:54.478+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@68fa9450]
-2025-12-04T16:14:54.479+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication attempt
-2025-12-04T16:14:54.480+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication failed: Invalid ID token
-2025-12-04T16:14:54.482+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.482+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid Google ID token, otpRequired=false, to (truncated)...]
+  <testcase name="testGoogleOAuthWithEmptyUserInfo" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.035">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@422f7c73]
+2025-12-08 10:51:56 - [] - [] - Google OAuth authentication attempt
+2025-12-08 10:51:56 - [] - [] - Google OAuth authentication failed: Invalid ID token
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid Google ID token, otpRequired=false, to (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testAuthenticationExceptionHandling" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.023">
-    <system-out><![CDATA[2025-12-04T16:14:54.493+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.495+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.495+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.495+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.495+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.499+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-04T16:14:54.500+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@7ffc28de]
-2025-12-04T16:14:54.503+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
-2025-12-04T16:14:54.504+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication failed for user: diona.smith: Account locked
-2025-12-04T16:14:54.505+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.506+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Account locked, otpRequired=false, toke (truncated)...]
+  <testcase name="testAuthenticationExceptionHandling" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.03">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [com.starter.springboot.dto.LoginDTO@556746e2]
+2025-12-08 10:51:56 - [] - [] - Authentication attempt for user: diona.smith
+2025-12-08 10:51:56 - [] - [] - Authentication failed for user: diona.smith: Account locked
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Account locked, otpRequired=false, toke (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testInvalidUsernameOrPassword" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.023">
-    <system-out><![CDATA[2025-12-04T16:14:54.517+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.518+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.519+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.519+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.519+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.521+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-04T16:14:54.523+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@6377ec2a]
-2025-12-04T16:14:54.526+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
-2025-12-04T16:14:54.527+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication failed for user: diona.smith due to bad credentials
-2025-12-04T16:14:54.529+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.529+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid credentials, otpRequired=false, (truncated)...]
+  <testcase name="testInvalidUsernameOrPassword" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.029">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [com.starter.springboot.dto.LoginDTO@5d1a1770]
+2025-12-08 10:51:56 - [] - [] - Authentication attempt for user: diona.smith
+2025-12-08 10:51:56 - [] - [] - Authentication failed for user: diona.smith due to bad credentials
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid credentials, otpRequired=false, (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testTokenRotationDuringRefresh" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.029">
-    <system-out><![CDATA[2025-12-04T16:14:54.540+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.543+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.544+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.544+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.544+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.548+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:54.550+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=old-refresh-token-value]]
-2025-12-04T16:14:54.555+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refreshed successfully for user: testuser
-2025-12-04T16:14:54.557+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.558+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=testuser, status=SUCCESS, message=Authentication successful, otpRequired=fa (truncated)...]
+  <testcase name="testTokenRotationDuringRefresh" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.024">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:56 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:56 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=old-refresh-token-value]]
+2025-12-08 10:51:56 - [] - [] - Token refreshed successfully for user: testuser
+2025-12-08 10:51:56 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:56 - [] - [] - Writing [AuthResponseDTO[username=testuser, status=SUCCESS, message=Authentication successful, otpRequired=fa (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testAuthenticationRequiresOtp" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.025">
-    <system-out><![CDATA[2025-12-04T16:14:54.569+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.571+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.571+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.571+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.572+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.575+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-04T16:14:54.577+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@9ed1f3f]
-2025-12-04T16:14:54.582+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
-2025-12-04T16:14:54.582+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication completed for user: diona.smith
-2025-12-04T16:14:54.585+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.585+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=OTP_PENDING, message=OTP required for authentication, o (truncated)...]
+  <testcase name="testAuthenticationRequiresOtp" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.024">
+    <system-out><![CDATA[2025-12-08 10:51:56 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:56 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:56 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:56 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.LoginDTO@43af156a]
+2025-12-08 10:51:57 - [] - [] - Authentication attempt for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Authentication completed for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=OTP_PENDING, message=OTP required for authentication, o (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testRefreshTokenWithServiceException" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.022">
-    <system-out><![CDATA[2025-12-04T16:14:54.598+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.599+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.600+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.600+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.600+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.603+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:54.604+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=problematic-token]]
-2025-12-04T16:14:54.607+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: Database error
-2025-12-04T16:14:54.609+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.609+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+  <testcase name="testRefreshTokenWithServiceException" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.023">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=problematic-token]]
+2025-12-08 10:51:57 - [] - [] - Token refresh failed: Database error
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testSuccessfulOtpVerification" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.023">
-    <system-out><![CDATA[2025-12-04T16:14:54.621+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.622+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.623+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.623+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.623+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.625+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#verifyOtp(VerifyTokenRequestDTO)
-2025-12-04T16:14:54.627+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@335c77fe]
-2025-12-04T16:14:54.630+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : OTP verified successfully for user: diona.smith
-2025-12-04T16:14:54.631+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.631+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
+  <testcase name="testSuccessfulOtpVerification" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.022">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 1 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#verifyOtp(VerifyTokenRequestDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@39edd51c]
+2025-12-08 10:51:57 - [] - [] - OTP verified successfully for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testRefreshTokenWithMissingToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.019">
-    <system-out><![CDATA[2025-12-04T16:14:54.643+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.645+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.645+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.645+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.646+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-12-04T16:14:54.648+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:54.649+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=null]]
-2025-12-04T16:14:54.653+05:30  WARN 18052 --- [Starter Project] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.starter.springboot.dto.AuthResponseDTO> com.starter.springboot.controller.AuthenticationController.refreshToken(com.starter.springboot.dto.RefreshTokenRequestDTO): [Field error in object 'refreshTokenRequestDTO' on field 'refreshToken': rejected value [null]; codes [NotBlank.refreshTokenRequestDTO.refreshToken,NotBlank.refreshToken,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [refreshTokenRequestDTO.refreshToken,refreshToken]; arguments []; default message [refreshToken]]; default message [This field cannot be blank]] ]
+  <testcase name="testRefreshTokenWithMissingToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.027">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=null]]
+2025-12-08 10:51:57 - [] - [] - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.starter.springboot.dto.AuthResponseDTO> com.starter.springboot.controller.AuthenticationController.refreshToken(com.starter.springboot.dto.RefreshTokenRequestDTO): [Field error in object 'refreshTokenRequestDTO' on field 'refreshToken': rejected value [null]; codes [NotBlank.refreshTokenRequestDTO.refreshToken,NotBlank.refreshToken,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [refreshTokenRequestDTO.refreshToken,refreshToken]; arguments []; default message [refreshToken]]; default message [This field cannot be blank]] ]
 ]]></system-out>
   </testcase>
-  <testcase name="testSuccessfulAuthenticationWithoutOtp" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.027">
-    <system-out><![CDATA[2025-12-04T16:14:54.663+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.664+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.665+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.665+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.665+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.668+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-04T16:14:54.670+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@6700ec4e]
-2025-12-04T16:14:54.674+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
-2025-12-04T16:14:54.675+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication completed for user: diona.smith
-2025-12-04T16:14:54.677+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.678+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=null, otpRequired=false, token=com.sta (truncated)...]
+  <testcase name="testSuccessfulAuthenticationWithoutOtp" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.032">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.LoginDTO@7ee2b3e3]
+2025-12-08 10:51:57 - [] - [] - Authentication attempt for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Authentication completed for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=null, otpRequired=false, token=com.sta (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testSuccessfulTokenRefresh" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.043">
-    <system-out><![CDATA[2025-12-04T16:14:54.696+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.698+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.698+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.698+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.698+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.702+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:54.704+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=old-refresh-token-value]]
-2025-12-04T16:14:54.710+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refreshed successfully for user: diona.smith
-2025-12-04T16:14:54.714+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.721+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
+  <testcase name="testSuccessfulTokenRefresh" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.032">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=old-refresh-token-value]]
+2025-12-08 10:51:57 - [] - [] - Token refreshed successfully for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testGoogleOAuthLinkingExistingUser" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.043">
-    <system-out><![CDATA[2025-12-04T16:14:54.741+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.747+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.748+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.749+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.750+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.754+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
-2025-12-04T16:14:54.756+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@4eee43a]
-2025-12-04T16:14:54.761+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication attempt
-2025-12-04T16:14:54.763+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication successful for user: existing@gmail.com
-2025-12-04T16:14:54.765+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.766+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=existing@gmail.com, status=SUCCESS, message=Authentication successful, otpR (truncated)...]
+  <testcase name="testGoogleOAuthLinkingExistingUser" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.029">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@2419f457]
+2025-12-08 10:51:57 - [] - [] - Google OAuth authentication attempt
+2025-12-08 10:51:57 - [] - [] - Google OAuth authentication successful for user: existing@gmail.com
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=existing@gmail.com, status=SUCCESS, message=Authentication successful, otpR (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testOtpRequiredExceptionHandling" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.044">
-    <system-out><![CDATA[2025-12-04T16:14:54.787+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.791+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.793+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.793+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.796+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
-2025-12-04T16:14:54.803+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-04T16:14:54.806+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@75f735ff]
-2025-12-04T16:14:54.819+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
-2025-12-04T16:14:54.820+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : OTP required for user: diona.smith
+  <testcase name="testOtpRequiredExceptionHandling" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.034">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.LoginDTO@7864ec9e]
+2025-12-08 10:51:57 - [] - [] - Authentication attempt for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - OTP required for user: diona.smith
 ]]></system-out>
   </testcase>
-  <testcase name="testGoogleOAuthWithMissingToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.021">
-    <system-out><![CDATA[2025-12-04T16:14:54.834+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.836+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.836+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.836+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.837+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-12-04T16:14:54.838+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
-2025-12-04T16:14:54.840+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@6a6beec0]
-2025-12-04T16:14:54.843+05:30  WARN 18052 --- [Starter Project] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.starter.springboot.dto.AuthResponseDTO> com.starter.springboot.controller.AuthenticationController.googleOAuth(com.starter.springboot.dto.GoogleTokenDTO): [Field error in object 'googleTokenDTO' on field 'idToken': rejected value [null]; codes [NotNull.googleTokenDTO.idToken,NotNull.idToken,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [googleTokenDTO.idToken,idToken]; arguments []; default message [idToken]]; default message [This field is required]] ]
+  <testcase name="testGoogleOAuthWithMissingToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.017">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@464c80ac]
+2025-12-08 10:51:57 - [] - [] - Resolved [org.springframework.web.bind.MethodArgumentNotValidException: Validation failed for argument [0] in public org.springframework.http.ResponseEntity<com.starter.springboot.dto.AuthResponseDTO> com.starter.springboot.controller.AuthenticationController.googleOAuth(com.starter.springboot.dto.GoogleTokenDTO): [Field error in object 'googleTokenDTO' on field 'idToken': rejected value [null]; codes [NotNull.googleTokenDTO.idToken,NotNull.idToken,NotNull.java.lang.String,NotNull]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [googleTokenDTO.idToken,idToken]; arguments []; default message [idToken]]; default message [This field is required]] ]
 ]]></system-out>
   </testcase>
-  <testcase name="testSuccessfulGoogleOAuthAuthentication" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.062">
-    <system-out><![CDATA[2025-12-04T16:14:54.854+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.856+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.857+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.857+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.857+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.868+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
-2025-12-04T16:14:54.896+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@75a5fe82]
-2025-12-04T16:14:54.900+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication attempt
-2025-12-04T16:14:54.901+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Google OAuth authentication successful for user: user@gmail.com
-2025-12-04T16:14:54.903+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.903+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=user@gmail.com, status=SUCCESS, message=Authentication successful, otpRequi (truncated)...]
+  <testcase name="testSuccessfulGoogleOAuthAuthentication" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.022">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#googleOAuth(GoogleTokenDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.GoogleTokenDTO@3f51ee4f]
+2025-12-08 10:51:57 - [] - [] - Google OAuth authentication attempt
+2025-12-08 10:51:57 - [] - [] - Google OAuth authentication successful for user: user@gmail.com
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=user@gmail.com, status=SUCCESS, message=Authentication successful, otpRequi (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testRefreshTokenWithInvalidToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.031">
-    <system-out><![CDATA[2025-12-04T16:14:54.921+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.927+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.927+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.927+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.928+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2025-12-04T16:14:54.931+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:54.933+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=invalid-refresh-token]]
-2025-12-04T16:14:54.937+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: Invalid refresh token
-2025-12-04T16:14:54.939+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.939+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+  <testcase name="testRefreshTokenWithInvalidToken" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.019">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=invalid-refresh-token]]
+2025-12-08 10:51:57 - [] - [] - Token refresh failed: Invalid refresh token
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testTokenCreationWithRememberMe" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.032">
-    <system-out><![CDATA[2025-12-04T16:14:54.952+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:54.954+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:54.955+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:54.955+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:54.955+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:54.959+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-04T16:14:54.965+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [com.starter.springboot.dto.LoginDTO@eb8378c]
-2025-12-04T16:14:54.969+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication attempt for user: diona.smith
-2025-12-04T16:14:54.969+05:30  INFO 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Authentication completed for user: diona.smith
-2025-12-04T16:14:54.971+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:54.971+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=null, otpRequired=false, token=com.sta (truncated)...]
+  <testcase name="testTokenCreationWithRememberMe" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.03">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 1 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [com.starter.springboot.dto.LoginDTO@19b4787c]
+2025-12-08 10:51:57 - [] - [] - Authentication attempt for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Authentication completed for user: diona.smith
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=null, otpRequired=false, token=com.sta (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="testRefreshTokenWhenUserNotFound" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.218">
-    <system-out><![CDATA[2025-12-04T16:14:55.003+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2025-12-04T16:14:55.006+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-04T16:14:55.007+05:30  INFO 18052 --- [Starter Project] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
-2025-12-04T16:14:55.007+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2025-12-04T16:14:55.007+05:30  INFO 18052 --- [Starter Project] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
-2025-12-04T16:14:55.015+05:30 DEBUG 18052 --- [Starter Project] [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
-2025-12-04T16:14:55.179+05:30 DEBUG 18052 --- [Starter Project] [           main] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json" to [RefreshTokenRequestDTO[refreshToken=valid-refresh-token]]
-2025-12-04T16:14:55.184+05:30  WARN 18052 --- [Starter Project] [           main] c.s.s.c.AuthenticationController         : Token refresh failed: User not found
-2025-12-04T16:14:55.188+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2025-12-04T16:14:55.189+05:30 DEBUG 18052 --- [Starter Project] [           main] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
+  <testcase name="testRefreshTokenWhenUserNotFound" classname="com.starter.springboot.controller.AuthenticationControllerTest" time="0.025">
+    <system-out><![CDATA[2025-12-08 10:51:57 - [] - [] - 4 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
+2025-12-08 10:51:57 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-08 10:51:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-08 10:51:57 - [] - [] - Initializing Servlet ''
+2025-12-08 10:51:57 - [] - [] - Completed initialization in 0 ms
+2025-12-08 10:51:57 - [] - [] - Mapped to com.starter.springboot.controller.AuthenticationController#refreshToken(RefreshTokenRequestDTO)
+2025-12-08 10:51:57 - [] - [] - Read "application/json" to [RefreshTokenRequestDTO[refreshToken=valid-refresh-token]]
+2025-12-08 10:51:57 - [] - [] - Token refresh failed: User not found
+2025-12-08 10:51:57 - [] - [] - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-12-08 10:51:57 - [] - [] - Writing [AuthResponseDTO[username=null, status=FAILED, message=Invalid refresh token, otpRequired=false, toke (truncated)...]
 ]]></system-out>
   </testcase>
 </testsuite>

@@ -2,14 +2,14 @@ package com.starter.springboot.entity;
 
 
 import com.starter.springboot.constants.DatabaseConstants;
+import com.starter.springboot.listener.CustomAuditingListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
 @Table(name = DatabaseConstants.AUTHORITY_TABLE)
-@EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
+@EntityListeners({CustomAuditingListener.class, IdGeneratorEntityListener.class})
 public class Authority extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Id

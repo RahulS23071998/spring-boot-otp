@@ -180,11 +180,12 @@ class GoogleOAuthServiceTest {
         when(mockPayload.get("given_name")).thenReturn(null);
         when(mockPayload.get("family_name")).thenReturn(null);
         when(mockPayload.get("picture")).thenReturn(null);
+        when(mockPayload.getEmailVerified()).thenReturn(true);
 
         Map<String, Object> result = googleOAuthService.verifyAndExtractUserInfo(VALID_TOKEN);
 
         assertNotNull(result);
-        assertEquals(6, result.size());
+        assertEquals(7, result.size());
         assertEquals(TEST_EMAIL, result.get("email"));
         assertEquals(TEST_GOOGLE_ID, result.get("sub"));
     }

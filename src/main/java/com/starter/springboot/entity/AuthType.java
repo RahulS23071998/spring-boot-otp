@@ -1,6 +1,6 @@
 package com.starter.springboot.entity;
 
 public enum AuthType {
-    USERNAME_PASSWORD,
+    WEB_SIGNUP,
     GOOGLE_OAUTH
 }

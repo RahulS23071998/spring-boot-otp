@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 
 @Configuration
@@ -42,6 +43,11 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    public MDCFilter mdcFilter() {
+        return new MDCFilter();
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -52,7 +58,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, ITokenProvider tokenProvider) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, ITokenProvider tokenProvider, MDCFilter mdcFilter) throws Exception {
         http
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authenticationEntryPoint))
                 .csrf(AbstractHttpConfigurer::disable)
@@ -68,6 +74,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/greeting/**").authenticated()
                         .requestMatchers("/api/**").authenticated()
                 )
+                .addFilterBefore(mdcFilter, BasicAuthenticationFilter.class)
                 .with(new JWTConfigurer(tokenProvider), Customizer.withDefaults());
         
         return http.build();

@@ -17,6 +17,8 @@ import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.service.IGoogleOAuthService;
 import com.starter.springboot.service.IOtpService;
+import com.starter.springboot.service.IOtpRateLimiter;
+import com.starter.springboot.service.IOtpAuditService;
 import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.IUserService;
 import com.starter.springboot.service.LocalizationService;
@@ -83,6 +85,12 @@ class AuthenticationControllerTest {
     @Mock
     private IUserService userService;
 
+    @Mock
+    private IOtpRateLimiter otpRateLimiter;
+
+    @Mock
+    private IOtpAuditService otpAuditService;
+
     @InjectMocks
     private AuthenticationController authenticationController;
 
@@ -111,6 +119,10 @@ class AuthenticationControllerTest {
         validVerifyRequest.setRememberMe(false);
         validVerifyRequest.setClientId("web-app-client");
         validVerifyRequest.setDeviceId("mobile-device-001");
+        
+        lenient().when(otpRateLimiter.checkRateLimit(any())).thenReturn(null);
+        lenient().when(otpRateLimiter.checkAndIncrementAttempts(any())).thenReturn(null);
+        
         mockLocalizationMessages();
     }
 

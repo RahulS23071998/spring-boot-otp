@@ -51,6 +51,7 @@ public class GoogleOAuthService implements IGoogleOAuthService {
                 userInfo.put("family_name", payload.get("family_name"));
                 userInfo.put("picture", payload.get("picture"));
                 userInfo.put("sub", payload.getSubject());
+                userInfo.put("email_verified", payload.getEmailVerified());
 
                 LOGGER.info("Successfully verified Google ID token for user: {}", payload.getEmail());
                 return userInfo;

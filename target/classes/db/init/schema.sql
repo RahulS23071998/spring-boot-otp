@@ -51,8 +51,8 @@ CREATE TABLE IF NOT EXISTS user_account (
     enabled BOOLEAN NOT NULL DEFAULT true,
     status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
     last_password_reset_date DATETIME NULL,
-    is_otp_required BOOLEAN DEFAULT false,
-    auth_type VARCHAR(20) DEFAULT 'USERNAME_PASSWORD',
+    is_otp_required BOOLEAN DEFAULT true,
+    auth_type VARCHAR(20) DEFAULT 'WEB_SIGNUP',
     google_id VARCHAR(255) UNIQUE NULL,
     role_id BIGINT,
     authority_id BIGINT,
@@ -105,15 +105,15 @@ CREATE TABLE IF NOT EXISTS refresh_tokens (
 -- 5. INSERT ROLES
 -- ================================================
 INSERT IGNORE INTO role (id, name, description, created_date, created_by) VALUES
-(1988213221802115073, 'ROLE_ADMIN', 'Administrator role with full access to all features', CURRENT_TIMESTAMP, 'system'),
-(1988213221802115074, 'ROLE_USER', 'Standard user role with limited access to features', CURRENT_TIMESTAMP, 'system');
+(1988213221802115073, 'ROLE_ADMIN', 'Administrator role with full access to all features', CURRENT_TIMESTAMP, 'SYSTEM_REGISTRATION'),
+(1988213221802115074, 'ROLE_USER', 'Standard user role with limited access to features', CURRENT_TIMESTAMP, 'SYSTEM_REGISTRATION');
 
 -- ================================================
 -- 6. INSERT AUTHORITIES
 -- ================================================
 INSERT IGNORE INTO authority (id, name, description, created_date, created_by) VALUES
-(1988213221802115075, 'ADMIN', 'Administrator authority', CURRENT_TIMESTAMP, 'system'),
-(1988213221802115076, 'USER', 'User authority', CURRENT_TIMESTAMP, 'system');
+(1988213221802115075, 'ADMIN', 'Administrator authority', CURRENT_TIMESTAMP, 'SYSTEM_REGISTRATION'),
+(1988213221802115076, 'USER', 'User authority', CURRENT_TIMESTAMP, 'SYSTEM_REGISTRATION');
 
 -- ================================================
 -- 7. INSERT SAMPLE ADMIN USER
@@ -126,7 +126,7 @@ INSERT IGNORE INTO user_account (
     1988213221802115077,
     'admin',
     '$2y$10$/CRi5UMb21iS5oQ98e8uIObrwQgu2ovKaWDw2xNd0i052.FhYMc6W',
-    'System',
+    'Admin',
     'Administrator',
     'frederickraghul@gmail.com',
     true,
@@ -136,7 +136,7 @@ INSERT IGNORE INTO user_account (
     (SELECT id FROM role WHERE name = 'ROLE_ADMIN' LIMIT 1),
     (SELECT id FROM authority WHERE name = 'ADMIN' LIMIT 1),
     CURRENT_TIMESTAMP,
-    'system'
+    'SYSTEM_REGISTRATION'
 WHERE NOT EXISTS (SELECT 1 FROM user_account WHERE username = 'admin');
 
 -- ================================================
@@ -160,7 +160,7 @@ INSERT IGNORE INTO user_account (
     (SELECT id FROM role WHERE name = 'ROLE_USER' LIMIT 1),
     (SELECT id FROM authority WHERE name = 'USER' LIMIT 1),
     CURRENT_TIMESTAMP,
-    'system'
+    'SYSTEM_REGISTRATION'
 WHERE NOT EXISTS (SELECT 1 FROM user_account WHERE username = 'rahulvijay');
 
 -- ================================================
@@ -184,5 +184,5 @@ INSERT IGNORE INTO user_account (
     (SELECT id FROM role WHERE name = 'ROLE_USER' LIMIT 1),
     (SELECT id FROM authority WHERE name = 'USER' LIMIT 1),
     CURRENT_TIMESTAMP,
-    'system'
+    'SYSTEM_REGISTRATION'
 WHERE NOT EXISTS (SELECT 1 FROM user_account WHERE username = 'rameez');

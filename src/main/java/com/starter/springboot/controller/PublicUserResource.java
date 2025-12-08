@@ -63,18 +63,16 @@ public class PublicUserResource {
     @RequestBody(description = "User registration details",
         content = @Content(schema = @Schema(implementation = UserRequestDTO.class),
             examples = @ExampleObject(value = """
-                {
-                  "username": "john.doe",
-                  "password": "SecurePass123!",
-                  "firstName": "John",
-                  "lastName": "Doe",
-                  "email": "john@example.com",
-                  "otpRequired": true,
-                  "enabled": true,
-                  "status": "ACTIVE",
-                  "roleId": 1,
-                  "authorityId": 1
-                }
+                    {
+                       "username": "rahulvijay18",
+                       "password": "StrongPass123",          // optional when updating, required for creation
+                       "firstName": "Rahul",
+                       "lastName": "Vijay",
+                       "email": "frederickraghul@gmail.com",
+                       "otpRequired": true,
+                       "status": "ACTIVE",                   // defaults to ACTIVE if omitted
+                       "enabled": true                       // defaults to true if omitted
+                     }
                 """)))
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "User created successfully",

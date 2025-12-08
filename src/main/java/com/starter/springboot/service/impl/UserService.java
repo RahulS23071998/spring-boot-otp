@@ -1,22 +1,14 @@
 package com.starter.springboot.service.impl;
 
 import com.starter.springboot.constants.ApplicationConstants;
-import com.starter.springboot.constants.SecurityConstants;
-import com.starter.springboot.entity.AuthType;
-import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
-import com.starter.springboot.repository.AuthorityRepository;
-import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
-import com.starter.springboot.service.IAuthCacheService;
-import com.starter.springboot.service.IdGeneratorService;
 import com.starter.springboot.service.IPasswordChangeAuthorizationService;
-import com.starter.springboot.service.IRedisTokenService;
-import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.IUserProvisioningService;
 import com.starter.springboot.service.IUserService;
+import com.starter.springboot.service.IUserTokenService;
 import com.starter.springboot.service.LocalizationService;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,50 +23,35 @@ import org.slf4j.LoggerFactory;
 import java.time.Instant;
 import java.util.*;
 
+/**
+ * Service for managing user operations.
+ * Delegates user creation to UserProvisioningService (facade)
+ * and token/cache management to UserTokenService (facade).
+ * Focuses on core user management operations.
+ */
 @Service
 public class UserService implements IUserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
-    private final RoleRepository roleRepository;
-
-    private final AuthorityRepository authorityRepository;
-
-    private final IRedisTokenService redisTokenService;
-
     private final IPasswordChangeAuthorizationService authorizationService;
-
-    private final IdGeneratorService idGeneratorService;
-
-    private final IAuthCacheService authCacheService;
-
-    private final IRefreshTokenService refreshTokenService;
-
+    private final IUserProvisioningService provisioningService;
+    private final IUserTokenService tokenService;
     private final LocalizationService localizationService;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       RoleRepository roleRepository,
-                       AuthorityRepository authorityRepository,
-                       IRedisTokenService redisTokenService,
                        IPasswordChangeAuthorizationService authorizationService,
-                       IdGeneratorService idGeneratorService,
-                       IAuthCacheService authCacheService,
-                       IRefreshTokenService refreshTokenService,
+                       IUserProvisioningService provisioningService,
+                       IUserTokenService tokenService,
                        LocalizationService localizationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.roleRepository = roleRepository;
-        this.authorityRepository = authorityRepository;
-        this.redisTokenService = redisTokenService;
         this.authorizationService = authorizationService;
-        this.idGeneratorService = idGeneratorService;
-        this.authCacheService = authCacheService;
-        this.refreshTokenService = refreshTokenService;
+        this.provisioningService = provisioningService;
+        this.tokenService = tokenService;
         this.localizationService = localizationService;
     }
 
@@ -110,28 +87,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public User createUser(User user) {
-        userRepository.findByUsername(user.getUsername()).ifPresent(existing -> {
-            throw new EntityExistsException(localizationService.getMessage("user.already_exists", user.getUsername()));
-        });
-        Date now = Date.from(Instant.now());
-        user.setLastPasswordResetDate(now);
-        if (Objects.isNull(user.getStatus())) {
-            user.setStatus(UserStatus.ACTIVE);
-        }
-        if (Objects.isNull(user.getEnabled())) {
-            user.setEnabled(Boolean.TRUE);
-        }
-        if (Objects.isNull(user.getRole())) {
-            Role defaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
-                    .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.default_role_not_configured")));
-            user.setRole(defaultRole);
-        }
-        if (Objects.isNull(user.getAuthority()) && Objects.nonNull(user.getRole())) {
-            authorityRepository.findByName(user.getRole().getName().replace(SecurityConstants.ROLE_PREFIX, ""))
-                    .ifPresent(user::setAuthority);
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        return provisioningService.createUser(user);
     }
 
     @Override
@@ -189,23 +145,17 @@ public class UserService implements IUserService {
             throw new IllegalArgumentException(localizationService.getMessage("user.password_mismatch"));
         }
         if (Objects.isNull(oldPassword) || !passwordEncoder.matches(oldPassword, user.getPassword())) {
-            // Use BadCredentialsException to indicate authentication failure
             throw new BadCredentialsException(localizationService.getMessage("user.old_password_incorrect"));
         }
 
         user.setPassword(passwordEncoder.encode(newPassword));
-        user.setLastPasswordResetDate(Date.from(java.time.Instant.now()));
+        user.setLastPasswordResetDate(Date.from(Instant.now()));
         User savedUser = userRepository.save(user);
 
-        // Clear authentication cache, token whitelist, and refresh tokens for this user
-        // This ensures the new password is used immediately on next authentication
         try {
-            authCacheService.clearAllCachesForUser(savedUser.getUsername(), savedUser.getId());
-            refreshTokenService.revokeAllUserRefreshTokens(savedUser.getId());
-            LOGGER.info("Cleared authentication cache, token whitelist, and refresh tokens for user after password change: {}", savedUser.getUsername());
+            tokenService.clearAllUserTokensAndCaches(savedUser.getUsername(), savedUser.getId());
         } catch (Exception e) {
-            // Log and continue; cache clearing is best-effort
-            LOGGER.warn("Failed to clear caches for user {}: {}", savedUser.getUsername(), e.getMessage());
+            LOGGER.warn("Failed to clear tokens and caches for user {}: {}", savedUser.getUsername(), e.getMessage());
         }
         return savedUser;
     }
@@ -213,59 +163,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public User findOrCreateGoogleOAuthUser(Map<String, Object> googleUserInfo) {
-        String googleId = (String) googleUserInfo.get("sub");
-        String email = (String) googleUserInfo.get("email");
-        String givenName = (String) googleUserInfo.get("given_name");
-        String familyName = (String) googleUserInfo.get("family_name");
-        String name = (String) googleUserInfo.get("name");
-
-        Optional<User> existingUser = userRepository.findByGoogleId(googleId);
-        if (existingUser.isPresent()) {
-            LOGGER.info("Google OAuth user already exists: {}", email);
-            return existingUser.get();
-        }
-
-        Optional<User> existingUserByEmail = userRepository.findByUsername(email);
-        if (existingUserByEmail.isPresent()) {
-            User user = existingUserByEmail.get();
-            if (user.getGoogleId() == null) {
-                user.setGoogleId(googleId);
-                user.setAuthType(AuthType.GOOGLE_OAUTH);
-                LOGGER.info("Linked existing user to Google OAuth: {}", email);
-                return userRepository.save(user);
-            }
-        }
-
-        User newUser = new User();
-        newUser.setEmail(email);
-        newUser.setFirstName((givenName != null && !givenName.isBlank()) ? givenName : (name != null && !name.isBlank()) ? name : "Google");
-        String lastName = familyName != null && familyName.length() >= 4 ? familyName : "User";
-        newUser.setLastName(lastName);
-        newUser.setUsername(email);
-        newUser.setPassword(generateRandomPassword());
-        newUser.setEnabled(Boolean.TRUE);
-        newUser.setStatus(UserStatus.ACTIVE);
-        newUser.setAuthType(AuthType.GOOGLE_OAUTH);
-        newUser.setGoogleId(googleId);
-        newUser.setIsOtpRequired(Boolean.FALSE);
-
-        Date now = Date.from(Instant.now());
-        newUser.setLastPasswordResetDate(now);
-
-        Role defaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
-                .orElseThrow(() -> new EntityNotFoundException(localizationService.getMessage("user.default_role_not_configured")));
-        newUser.setRole(defaultRole);
-
-        authorityRepository.findByName(defaultRole.getName().replace(SecurityConstants.ROLE_PREFIX, ""))
-                .ifPresent(newUser::setAuthority);
-
-        User savedUser = userRepository.save(newUser);
-        LOGGER.info("New Google OAuth user created: {}", email);
-        return savedUser;
-    }
-
-    private String generateRandomPassword() {
-        return java.util.UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+        return provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
 }

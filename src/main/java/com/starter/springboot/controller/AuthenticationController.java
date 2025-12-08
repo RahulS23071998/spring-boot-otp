@@ -17,9 +17,12 @@ import com.starter.springboot.security.jwt.TokenCreationResponse;
 import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.service.IGoogleOAuthService;
 import com.starter.springboot.service.IOtpService;
+import com.starter.springboot.service.IOtpRateLimiter;
+import com.starter.springboot.service.IOtpAuditService;
 import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.IUserService;
 import com.starter.springboot.service.LocalizationService;
+import com.starter.springboot.dto.OtpGenerationResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -76,6 +79,10 @@ public class AuthenticationController {
 
     private final IUserService userService;
 
+    private final IOtpRateLimiter otpRateLimiter;
+
+    private final IOtpAuditService otpAuditService;
+
     public AuthenticationController(ITokenProvider tokenProvider,
                                     IOtpService otpService,
                                     IRefreshTokenService refreshTokenService,
@@ -83,7 +90,9 @@ public class AuthenticationController {
                                     AuthenticationManager authenticationManager,
                                     LocalizationService localizationService,
                                     IGoogleOAuthService googleOAuthService,
-                                    IUserService userService) {
+                                    IUserService userService,
+                                    IOtpRateLimiter otpRateLimiter,
+                                    IOtpAuditService otpAuditService) {
         this.tokenProvider = tokenProvider;
         this.otpService = otpService;
         this.refreshTokenService = refreshTokenService;
@@ -92,6 +101,8 @@ public class AuthenticationController {
         this.localizationService = localizationService;
         this.googleOAuthService = googleOAuthService;
         this.userService = userService;
+        this.otpRateLimiter = otpRateLimiter;
+        this.otpAuditService = otpAuditService;
     }
 
     @PostMapping(value = ApplicationConstants.AUTHENTICATE_ENDPOINT)
@@ -381,6 +392,22 @@ public class AuthenticationController {
                     .body(AuthResponseDTO.failed(null, "Missing Google ID token"));
         }
 
+        String rateLimitKey = "google-oauth:" + (googleTokenDTO.getClientId() != null ? googleTokenDTO.getClientId() : "default");
+        
+        OtpGenerationResult rateLimitCheck = otpRateLimiter.checkRateLimit(rateLimitKey);
+        if (rateLimitCheck != null) {
+            LOGGER.warn("Google OAuth rate limit exceeded for client: {}", googleTokenDTO.getClientId());
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .body(AuthResponseDTO.failed(null, rateLimitCheck.getMessage()));
+        }
+
+        OtpGenerationResult attemptCheck = otpRateLimiter.checkAndIncrementAttempts(rateLimitKey);
+        if (attemptCheck != null) {
+            LOGGER.warn("Google OAuth max attempts exceeded for client: {}", googleTokenDTO.getClientId());
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .body(AuthResponseDTO.failed(null, "Maximum authentication attempts exceeded. Please try again later"));
+        }
+
         Map<String, Object> googleUserInfo = googleOAuthService.verifyAndExtractUserInfo(googleTokenDTO.getIdToken());
         if (MapUtils.isEmpty(googleUserInfo)) {
             LOGGER.warn("Google OAuth authentication failed: Invalid ID token");
@@ -404,6 +431,10 @@ public class AuthenticationController {
                 tokenProvider.getRefreshTokenValidityInSeconds()
             );
 
+            otpRateLimiter.recordRateLimitTimestamp(rateLimitKey);
+            otpRateLimiter.resetAttempts(rateLimitKey);
+            otpAuditService.persistAuditEntry(user.getUsername());
+
             AuthResponseDTO response = AuthResponseDTO.success(user.getUsername(), fullToken, googleTokenDTO.getRememberMe())
                 .withContext(googleTokenDTO.getRememberMe(), googleTokenDTO.getClientId(), googleTokenDTO.getDeviceId());
 
@@ -413,7 +444,7 @@ public class AuthenticationController {
         } catch (Exception e) {
             LOGGER.error("Google OAuth authentication failed: {}", e.getMessage(), e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(AuthResponseDTO.failed(null, "Google OAuth authentication failed"));
+                    .body(AuthResponseDTO.failed(null, "Google OAuth authentication failed"));
         }
     }
 }

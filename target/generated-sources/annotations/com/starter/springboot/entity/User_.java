@@ -16,6 +16,7 @@ public abstract class User_ extends com.starter.springboot.entity.BaseAuditedEnt
 	public static volatile SingularAttribute<User, Role> role;
 	public static volatile SingularAttribute<User, Boolean> enabled;
 	public static volatile SingularAttribute<User, String> firstName;
+	public static volatile SingularAttribute<User, Boolean> emailVerified;
 	public static volatile SingularAttribute<User, String> password;
 	public static volatile SingularAttribute<User, Authority> authority;
 	public static volatile SingularAttribute<User, Long> id;
@@ -31,6 +32,7 @@ public abstract class User_ extends com.starter.springboot.entity.BaseAuditedEnt
 	public static final String ROLE = "role";
 	public static final String ENABLED = "enabled";
 	public static final String FIRST_NAME = "firstName";
+	public static final String EMAIL_VERIFIED = "emailVerified";
 	public static final String PASSWORD = "password";
 	public static final String AUTHORITY = "authority";
 	public static final String ID = "id";

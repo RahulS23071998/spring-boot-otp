@@ -1,9 +1,11 @@
 com\starter\springboot\constants\ValidationConstants.class
 com\starter\springboot\constants\ApplicationConstants.class
+com\starter\springboot\service\impl\UserTokenService.class
 com\starter\springboot\service\IOtpNotificationService.class
 com\starter\springboot\constants\EmailConstants.class
 com\starter\springboot\java\SetUtilsExample.class
 com\starter\springboot\security\jwt\JWTFilter.class
+com\starter\springboot\listener\CustomAuditingListener.class
 com\starter\springboot\entity\OtpAuditEntry_.class
 com\starter\springboot\service\IOtpGenerator.class
 com\starter\springboot\security\jwt\TokenProvider.class
@@ -45,6 +47,7 @@ com\starter\springboot\controller\PublicUserResource.class
 com\starter\springboot\service\impl\OtpProperties$AuditPurgeProperties.class
 com\starter\springboot\config\AuditingConfiguration.class
 com\starter\springboot\config\LocaleConfiguration.class
+com\starter\springboot\service\IUserTokenService.class
 com\starter\springboot\controller\AuthenticationController.class
 com\starter\springboot\entity\BaseAuditedEntity_.class
 com\starter\springboot\entity\User.class
@@ -53,6 +56,7 @@ com\starter\springboot\config\AppInfoProperties$Contact.class
 com\starter\springboot\entity\OtpAuditEntry.class
 com\starter\springboot\service\IPasswordChangeAuthorizationService.class
 com\starter\springboot\security\jwt\JWTToken.class
+com\starter\springboot\service\IUserProvisioningService.class
 com\starter\springboot\converter\LocalDateToSqlDateConverter.class
 com\starter\springboot\config\AppInfoProperties$License.class
 com\starter\springboot\service\IUserService.class
@@ -66,6 +70,7 @@ com\starter\springboot\repository\UserRepository.class
 com\starter\springboot\service\IOtpRateLimiter.class
 com\starter\springboot\repository\OtpAuditEntryRepository.class
 com\starter\springboot\converter\StringToDateConverter.class
+com\starter\springboot\service\impl\UserProvisioningService.class
 com\starter\springboot\service\impl\EmailService.class
 com\starter\springboot\constants\OtpConstants.class
 com\starter\springboot\constants\SecurityConstants.class
@@ -90,15 +95,18 @@ com\starter\springboot\entity\IdGeneratorEntityListener.class
 com\starter\springboot\entity\AuthType.class
 com\starter\springboot\exception\RestExceptionHandler.class
 com\starter\springboot\service\impl\OtpProperties.class
+com\starter\springboot\config\MDCFilter.class
 com\starter\springboot\service\LocalizationService.class
 com\starter\springboot\security\OtpAwareAuthenticationProvider.class
 com\starter\springboot\config\AppInfoProperties.class
 com\starter\springboot\controller\UserResource.class
 com\starter\springboot\service\IGoogleOAuthService.class
+com\starter\springboot\java\StringsExample.class
 com\starter\springboot\config\RedisConfig.class
 com\starter\springboot\java\ArrayUtilsExample.class
 com\starter\springboot\config\AppInfoProperties$System.class
 com\starter\springboot\security\AuthoritiesConstants.class
+com\starter\springboot\java\ApacheUtils.class
 com\starter\springboot\dto\OtpGenerationResult.class
 com\starter\springboot\Application.class
 com\starter\springboot\dto\AuthResponseDTO.class

@@ -2,12 +2,12 @@ package com.starter.springboot.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.starter.springboot.constants.DatabaseConstants;
+import com.starter.springboot.listener.CustomAuditingListener;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = DatabaseConstants.ROLE_TABLE)
 @DynamicInsert
 @DynamicUpdate
-@EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
+@EntityListeners({CustomAuditingListener.class, IdGeneratorEntityListener.class})
 public class Role extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Id

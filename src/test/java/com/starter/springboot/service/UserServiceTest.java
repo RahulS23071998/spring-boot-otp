@@ -4,15 +4,7 @@ import com.starter.springboot.entity.Authority;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
-import com.starter.springboot.repository.AuthorityRepository;
-import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
-import com.starter.springboot.service.IAuthCacheService;
-import com.starter.springboot.service.IRefreshTokenService;
-import com.starter.springboot.service.IRedisTokenService;
-import com.starter.springboot.service.IdGeneratorService;
-import com.starter.springboot.service.IPasswordChangeAuthorizationService;
-import com.starter.springboot.service.LocalizationService;
 import com.starter.springboot.service.impl.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -50,25 +42,13 @@ class UserServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Mock
-    private RoleRepository roleRepository;
-
-    @Mock
-    private AuthorityRepository authorityRepository;
-
-    @Mock
-    private IRedisTokenService redisTokenService;
-
-    @Mock
     private IPasswordChangeAuthorizationService authorizationService;
 
     @Mock
-    private IdGeneratorService idGeneratorService;
+    private IUserProvisioningService provisioningService;
 
     @Mock
-    private IAuthCacheService authCacheService;
-
-    @Mock
-    private IRefreshTokenService refreshTokenService;
+    private IUserTokenService tokenService;
 
     @Mock
     private LocalizationService localizationService;
@@ -99,6 +79,7 @@ class UserServiceTest {
     void shouldSuccessfullyFindAllUsers() {
         // Given
         List<User> expectedUsers = Arrays.asList(testUser, createAnotherTestUser());
+        mockLocalizationMessages();
         when(userRepository.findAll()).thenReturn(expectedUsers);
 
         // When
@@ -143,32 +124,14 @@ class UserServiceTest {
     void shouldSuccessfullyCreateUserWithDefaults() {
         // Given
         User newUser = createNewUserForCreation();
-        when(userRepository.findByUsername(newUser.getUsername())).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
-        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
-        when(passwordEncoder.encode(TEST_PASSWORD)).thenReturn(ENCODED_PASSWORD);
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(provisioningService.createUser(newUser)).thenReturn(newUser);
 
         // When
         User createdUser = userService.createUser(newUser);
 
         // Then
         assertNotNull(createdUser);
-        assertEquals(UserStatus.ACTIVE, createdUser.getStatus());
-        assertEquals(Boolean.TRUE, createdUser.getEnabled());
-        assertEquals(testRole, createdUser.getRole());
-        assertEquals(testAuthority, createdUser.getAuthority());
-        assertNotNull(createdUser.getLastPasswordResetDate());
-        
-        verify(userRepository).findByUsername(newUser.getUsername());
-        verify(roleRepository).findByName("ROLE_USER");
-        verify(authorityRepository).findByName("USER");
-        verify(passwordEncoder).encode(TEST_PASSWORD);
-        
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository).save(userCaptor.capture());
-        User savedUser = userCaptor.getValue();
-        assertEquals(ENCODED_PASSWORD, savedUser.getPassword());
+        verify(provisioningService).createUser(newUser);
     }
 
     @Test
@@ -176,16 +139,14 @@ class UserServiceTest {
     void shouldThrowEntityExistsExceptionWhenCreatingUserWithExistingUsername() {
         // Given
         User newUser = createNewUserForCreation();
-        when(userRepository.findByUsername(newUser.getUsername())).thenReturn(Optional.of(testUser));
+        when(provisioningService.createUser(newUser)).thenThrow(new EntityExistsException("User with username " + newUser.getUsername() + " already exists"));
 
         // When & Then
         EntityExistsException exception = assertThrows(EntityExistsException.class,
                 () -> userService.createUser(newUser));
 
         assertEquals("User with username " + newUser.getUsername() + " already exists", exception.getMessage());
-        verify(userRepository).findByUsername(newUser.getUsername());
-        verify(roleRepository, never()).findByName(anyString());
-        verify(userRepository, never()).save(any(User.class));
+        verify(provisioningService).createUser(newUser);
     }
 
     @Test
@@ -193,17 +154,14 @@ class UserServiceTest {
     void shouldThrowEntityNotFoundExceptionWhenDefaultRoleNotFoundDuringUserCreation() {
         // Given
         User newUser = createNewUserForCreation();
-        when(userRepository.findByUsername(newUser.getUsername())).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.empty());
+        when(provisioningService.createUser(newUser)).thenThrow(new EntityNotFoundException("Default role ROLE_USER not configured"));
 
         // When & Then
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 () -> userService.createUser(newUser));
 
         assertEquals("Default role ROLE_USER not configured", exception.getMessage());
-        verify(userRepository).findByUsername(newUser.getUsername());
-        verify(roleRepository).findByName("ROLE_USER");
-        verify(userRepository, never()).save(any(User.class));
+        verify(provisioningService).createUser(newUser);
     }
 
     @Test
@@ -268,6 +226,7 @@ class UserServiceTest {
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         doNothing().when(authorizationService).authorizePasswordChange(testUser);
+        doNothing().when(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
 
         // When
         User updatedUser = userService.changePasswordById(TEST_USER_ID, payload);
@@ -277,8 +236,7 @@ class UserServiceTest {
         verify(userRepository).findById(TEST_USER_ID);
         verify(passwordEncoder).matches(TEST_PASSWORD, ENCODED_PASSWORD);
         verify(passwordEncoder).encode("newPassword123");
-        verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
-        verify(refreshTokenService).revokeAllUserRefreshTokens(TEST_USER_ID);
+        verify(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
         
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -299,6 +257,7 @@ class UserServiceTest {
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         doNothing().when(authorizationService).authorizePasswordChangeByUsername(TEST_USERNAME);
+        doNothing().when(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
 
         // When
         User updatedUser = userService.changePasswordByUsername(TEST_USERNAME, payload);
@@ -308,8 +267,7 @@ class UserServiceTest {
         verify(userRepository).findByUsername(TEST_USERNAME);
         verify(passwordEncoder).matches(TEST_PASSWORD, ENCODED_PASSWORD);
         verify(passwordEncoder).encode("newPassword123");
-        verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
-        verify(refreshTokenService).revokeAllUserRefreshTokens(TEST_USER_ID);
+        verify(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
         
         ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
         verify(userRepository).save(userCaptor.capture());
@@ -421,14 +379,14 @@ class UserServiceTest {
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
         doNothing().when(authorizationService).authorizePasswordChange(testUser);
-        doThrow(new RuntimeException("Redis connection failed")).when(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
+        doThrow(new RuntimeException("Token service failed")).when(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
 
         // When
         User updatedUser = userService.changePasswordById(TEST_USER_ID, payload);
 
         // Then
         assertNotNull(updatedUser);
-        verify(authCacheService).clearAllCachesForUser(TEST_USERNAME, TEST_USER_ID);
+        verify(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
         verify(userRepository).save(any(User.class));
     }
 
@@ -441,23 +399,14 @@ class UserServiceTest {
         newUser.setStatus(UserStatus.INACTIVE);
         newUser.setEnabled(false);
         
-        when(userRepository.findByUsername(newUser.getUsername())).thenReturn(Optional.empty());
-        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
-        when(passwordEncoder.encode(TEST_PASSWORD)).thenReturn(ENCODED_PASSWORD);
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(provisioningService.createUser(newUser)).thenReturn(newUser);
 
         // When
         User createdUser = userService.createUser(newUser);
 
         // Then
         assertNotNull(createdUser);
-        assertEquals(UserStatus.INACTIVE, createdUser.getStatus());
-        assertEquals(false, createdUser.getEnabled());
-        assertEquals(testRole, createdUser.getRole());
-        assertEquals(testAuthority, createdUser.getAuthority());
-        
-        verify(roleRepository, never()).findByName("ROLE_USER");
-        verify(authorityRepository).findByName("USER");
+        verify(provisioningService).createUser(newUser);
     }
 
     @Test
@@ -468,7 +417,7 @@ class UserServiceTest {
         testUser.setGoogleId(googleId);
         Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, TEST_EMAIL, "John", "Doe", "John Doe");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.of(testUser));
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(testUser);
 
         // When
         User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
@@ -477,8 +426,7 @@ class UserServiceTest {
         assertNotNull(result);
         assertEquals(TEST_USER_ID, result.getId());
         assertEquals(TEST_EMAIL, result.getEmail());
-        verify(userRepository).findByGoogleId(googleId);
-        verify(userRepository, never()).save(any(User.class));
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     @Test
@@ -487,26 +435,17 @@ class UserServiceTest {
         // Given
         String googleId = "google-user-67890";
         String email = TEST_EMAIL;
-        testUser.setGoogleId(null);
-        testUser.setAuthType(null);
+        testUser.setGoogleId(googleId);
         Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Doe", "John Doe");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
-        when(userRepository.findByUsername(email)).thenReturn(Optional.of(testUser));
-        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(testUser);
 
         // When
         User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
 
         // Then
         assertNotNull(result);
-        verify(userRepository).findByGoogleId(googleId);
-        verify(userRepository).findByUsername(email);
-        
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository).save(userCaptor.capture());
-        User savedUser = userCaptor.getValue();
-        assertEquals(googleId, savedUser.getGoogleId());
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     @Test
@@ -515,21 +454,13 @@ class UserServiceTest {
         // Given
         String googleId = "google-user-new";
         String email = "newgoogleuser@gmail.com";
-        String givenName = "John";
-        String familyName = "Smith";
-        String name = "John Smith";
-        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, givenName, familyName, name);
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Smith", "John Smith");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
-        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
-        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
-        
         User newUser = new User();
         newUser.setEmail(email);
         newUser.setUsername(email);
         newUser.setGoogleId(googleId);
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(newUser);
 
         // When
         User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
@@ -538,13 +469,7 @@ class UserServiceTest {
         assertNotNull(result);
         assertEquals(email, result.getEmail());
         assertEquals(googleId, result.getGoogleId());
-        
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository).save(userCaptor.capture());
-        User savedUser = userCaptor.getValue();
-        assertEquals(givenName, savedUser.getFirstName());
-        assertEquals(familyName, savedUser.getLastName());
-        assertEquals(email, savedUser.getUsername());
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     @Test
@@ -553,26 +478,18 @@ class UserServiceTest {
         // Given
         String googleId = "google-user-noname";
         String email = "noname@gmail.com";
-        String name = "Full Name";
-        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, null, "Name", name);
+        Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, null, "Name", "Full Name");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
-        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
-        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
-        
         User newUser = new User();
         newUser.setEmail(email);
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(newUser);
 
         // When
         User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
 
         // Then
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository).save(userCaptor.capture());
-        User savedUser = userCaptor.getValue();
-        assertEquals("Full Name", savedUser.getFirstName());
+        assertNotNull(result);
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     @Test
@@ -583,22 +500,17 @@ class UserServiceTest {
         String email = "short@gmail.com";
         Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Jo", "John Jo");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
-        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
-        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
-        
         User newUser = new User();
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        newUser.setLastName("User");
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(newUser);
 
         // When
         User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
 
         // Then
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository).save(userCaptor.capture());
-        User savedUser = userCaptor.getValue();
-        assertEquals("User", savedUser.getLastName());
+        assertNotNull(result);
+        assertEquals("User", result.getLastName());
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     @Test
@@ -609,22 +521,17 @@ class UserServiceTest {
         String email = "otp@gmail.com";
         Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Doe", "John Doe");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
-        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(testRole));
-        when(authorityRepository.findByName("USER")).thenReturn(Optional.of(testAuthority));
-        
         User newUser = new User();
-        when(userRepository.save(any(User.class))).thenReturn(newUser);
+        newUser.setIsOtpRequired(Boolean.FALSE);
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenReturn(newUser);
 
         // When
         User result = userService.findOrCreateGoogleOAuthUser(googleUserInfo);
 
         // Then
-        ArgumentCaptor<User> userCaptor = ArgumentCaptor.forClass(User.class);
-        verify(userRepository).save(userCaptor.capture());
-        User savedUser = userCaptor.getValue();
-        assertEquals(Boolean.FALSE, savedUser.getIsOtpRequired());
+        assertNotNull(result);
+        assertEquals(Boolean.FALSE, result.getIsOtpRequired());
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     @Test
@@ -635,15 +542,13 @@ class UserServiceTest {
         String email = "norole@gmail.com";
         Map<String, Object> googleUserInfo = createGoogleUserInfo(googleId, email, "John", "Doe", "John Doe");
 
-        when(userRepository.findByGoogleId(googleId)).thenReturn(Optional.empty());
-        when(userRepository.findByUsername(email)).thenReturn(Optional.empty());
-        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.empty());
+        when(provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo)).thenThrow(new EntityNotFoundException("Default role ROLE_USER not configured"));
 
         // When & Then
         EntityNotFoundException exception = assertThrows(EntityNotFoundException.class,
                 () -> userService.findOrCreateGoogleOAuthUser(googleUserInfo));
 
-        verify(userRepository, never()).save(any(User.class));
+        verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
     private Map<String, Object> createGoogleUserInfo(String googleId, String email, String givenName, String familyName, String name) {

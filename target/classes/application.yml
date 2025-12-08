@@ -15,6 +15,9 @@ spring:
     cache-duration: 3600
 
 logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - [%thread] - %logger{36} - %msg%n"
   level:
     org.springframework.security.authentication.dao.DaoAuthenticationProvider: warn
     org.springframework.security.authentication.ProviderManager: warn

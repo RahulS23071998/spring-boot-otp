@@ -4,6 +4,7 @@ import com.starter.springboot.constants.DatabaseConstants;
 import com.starter.springboot.converter.LocalDateToSqlDateConverter;
 import com.starter.springboot.converter.LocalDateToUtilDateConverter;
 import com.starter.springboot.converter.StringToDateConverter;
+import com.starter.springboot.listener.CustomAuditingListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = DatabaseConstants.OTP_AUDIT_ENTRIES_TABLE)
-@EntityListeners(IdGeneratorEntityListener.class)
+@EntityListeners({CustomAuditingListener.class, IdGeneratorEntityListener.class})
 public class OtpAuditEntry extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Id

@@ -74,6 +74,9 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
     @Column(name = "google_id", length = 255)
     private String googleId;
 
+    @Column(name = "email_verified")
+    private Boolean emailVerified;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = DatabaseConstants.ROLE_ID_COLUMN)
     private Role role;
@@ -192,5 +195,13 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
 
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
+    }
+
+    public Boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    public void setEmailVerified(Boolean emailVerified) {
+        this.emailVerified = emailVerified;
     }
 }
