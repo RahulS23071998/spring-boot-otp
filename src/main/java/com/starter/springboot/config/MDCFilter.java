@@ -1,5 +1,6 @@
 package com.starter.springboot.config;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +35,29 @@ public class MDCFilter extends GenericFilterBean {
             
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             if (authentication != null && authentication.isAuthenticated()) {
-                MDC.put(USER_ID, authentication.getName());
+                String userId = authentication.getName();
+
+                // Mask email safely if it looks like one
+                if (StringUtils.contains(userId, "@")) {
+                    String[] parts = userId.split("@");
+                    String local = parts[0];
+                    String domain = parts[1];
+
+                    // Keep first 2 chars of local part, mask the rest
+                    String maskedLocal = StringUtils.rightPad(
+                            StringUtils.left(local, Math.min(2, local.length())), // take first 2 chars
+                            local.length(), '*'
+                    );
+
+                    // Keep only domain name (mask everything after first dot)
+                    String maskedDomain = domain.contains(".")
+                            ? domain.substring(0, domain.indexOf('.')) + ".***"
+                            : "***";
+
+                    userId = maskedLocal + "@" + maskedDomain;
+                }
+
+                MDC.put(USER_ID, userId);
             }
             
             filterChain.doFilter(servletRequest, servletResponse);

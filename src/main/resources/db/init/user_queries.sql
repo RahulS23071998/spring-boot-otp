@@ -203,5 +203,141 @@ ORDER BY otp_count DESC;
 -- Replace 1 with the actual user ID and 'ROLE_USER' with desired role
 
 -- ================================================
+-- 16. GET GOOGLE OAUTH USERS WHO HAVEN'T SET PASSWORD
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.auth_type,
+    u.password_set,
+    u.google_id,
+    u.email_verified,
+    u.created_date
+FROM user u
+WHERE u.auth_type = 'GOOGLE_OAUTH'
+  AND u.password_set = false
+ORDER BY u.created_date DESC;
+
+-- ================================================
+-- 17. GET GOOGLE OAUTH USERS WITH PASSWORD SET
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.auth_type,
+    u.password_set,
+    u.google_id,
+    u.email_verified,
+    u.created_date
+FROM user u
+WHERE u.auth_type = 'GOOGLE_OAUTH'
+  AND u.password_set = true
+ORDER BY u.username;
+
+-- ================================================
+-- 18. GET ALL WEB SIGNUP USERS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.auth_type,
+    u.password_set,
+    u.enabled,
+    u.status,
+    u.created_date
+FROM user u
+WHERE u.auth_type = 'WEB_SIGNUP'
+ORDER BY u.created_date DESC;
+
+-- ================================================
+-- 19. COUNT USERS BY AUTH TYPE
+-- ================================================
+SELECT
+    auth_type,
+    COUNT(*) as user_count
+FROM user
+GROUP BY auth_type
+ORDER BY auth_type;
+
+-- ================================================
+-- 20. COUNT OAUTH USERS BY PASSWORD SET STATUS
+-- ================================================
+SELECT
+    password_set,
+    COUNT(*) as user_count
+FROM user
+WHERE auth_type = 'GOOGLE_OAUTH'
+GROUP BY password_set;
+
+-- ================================================
+-- 21. GET ALL USERS WITH AUTH TYPE AND PASSWORD STATUS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.auth_type,
+    u.password_set,
+    u.enabled,
+    u.status,
+    r.name as role_name
+FROM user u
+LEFT JOIN role r ON u.role_id = r.id
+ORDER BY u.auth_type, u.username;
+
+-- ================================================
+-- 22. GET GOOGLE OAUTH USERS WITH EMAIL VERIFICATION STATUS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.google_id,
+    u.email_verified,
+    u.password_set,
+    u.created_date
+FROM user u
+WHERE u.auth_type = 'GOOGLE_OAUTH'
+ORDER BY u.created_date DESC;
+
+-- ================================================
+-- 23. SET PASSWORD FOR OAUTH USER
+-- ================================================
+-- UPDATE user SET password_set = true WHERE id = 1 AND auth_type = 'GOOGLE_OAUTH';
+-- Replace 1 with the actual user ID
+
+-- ================================================
+-- 24. UPDATE OAUTH USER PASSWORD AND SET FLAG
+-- ================================================
+-- UPDATE user SET password = 'hashed_password_here', password_set = true 
+-- WHERE id = 1 AND auth_type = 'GOOGLE_OAUTH';
+-- Replace 1 with user ID and 'hashed_password_here' with the bcrypt hashed password
+
+-- ================================================
+-- 25. GET USERS WITH OTP ENABLED AND GOOGLE OAUTH
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.auth_type,
+    u.is_otp_required,
+    u.password_set,
+    u.google_id
+FROM user u
+WHERE u.auth_type = 'GOOGLE_OAUTH'
+  AND u.is_otp_required = true
+ORDER BY u.username;
+
+-- ================================================
 -- End of User Query Examples
 -- ================================================

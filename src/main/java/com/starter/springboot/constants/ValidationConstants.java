@@ -6,7 +6,8 @@ package com.starter.springboot.constants;
 public final class ValidationConstants {
 
     // Validation Patterns
-    public static final String USERNAME_PATTERN = "^(?=.{1,50}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$";
+    // Allows email format (with @) or alphanumeric usernames with underscores and dots
+    public static final String USERNAME_PATTERN = "^[a-zA-Z0-9._@-]{3,50}$";
     
     // Date Format Patterns
     public static final String DATE_PATTERN = "yyyy-MM-dd";

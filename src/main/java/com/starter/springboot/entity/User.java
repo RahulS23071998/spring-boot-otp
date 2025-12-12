@@ -77,6 +77,9 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
     @Column(name = "email_verified")
     private Boolean emailVerified;
 
+    @Column(name = "password_set")
+    private Boolean passwordSet = Boolean.FALSE;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = DatabaseConstants.ROLE_ID_COLUMN)
     private Role role;
@@ -203,5 +206,13 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
 
     public void setEmailVerified(Boolean emailVerified) {
         this.emailVerified = emailVerified;
+    }
+
+    public Boolean getPasswordSet() {
+        return passwordSet;
+    }
+
+    public void setPasswordSet(Boolean passwordSet) {
+        this.passwordSet = passwordSet;
     }
 }

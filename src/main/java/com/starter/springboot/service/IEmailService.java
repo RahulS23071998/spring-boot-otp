@@ -21,4 +21,14 @@ public interface IEmailService {
      * @param emailDTO - data to be sent.
      */
     CompletableFuture<Boolean> sendSimpleMessageAsync(EmailDTO emailDTO);
+
+    /**
+     * Send an HTML e-mail message (synchronous).
+     */
+    Boolean sendHtmlMessage(EmailDTO emailDTO);
+
+    /**
+     * Send an HTML e-mail message asynchronously.
+     */
+    CompletableFuture<Boolean> sendHtmlMessageAsync(EmailDTO emailDTO);
 }

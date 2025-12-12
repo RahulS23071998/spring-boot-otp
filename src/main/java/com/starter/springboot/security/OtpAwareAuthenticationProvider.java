@@ -179,6 +179,13 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
             log.warn("User '{}' is not activated", normalizedUsername);
             throw new UserNotActivatedException("User account is not activated");
         }
+        
+        if (user.getAuthType() != null && 
+            user.getAuthType().toString().equals("GOOGLE_OAUTH") && 
+            !Boolean.TRUE.equals(user.getPasswordSet())) {
+            log.warn("Google OAuth user '{}' has not set password yet", normalizedUsername);
+            throw new BadCredentialsException("Please set your password first before signing in with email/password");
+        }
     }
 
     private void validatePassword(User user, String providedPassword, String normalizedUsername) {

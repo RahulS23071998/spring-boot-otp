@@ -14,6 +14,7 @@ public abstract class User_ extends com.starter.springboot.entity.BaseAuditedEnt
 	public static volatile SingularAttribute<User, String> lastName;
 	public static volatile SingularAttribute<User, Boolean> isOtpRequired;
 	public static volatile SingularAttribute<User, Role> role;
+	public static volatile SingularAttribute<User, Boolean> passwordSet;
 	public static volatile SingularAttribute<User, Boolean> enabled;
 	public static volatile SingularAttribute<User, String> firstName;
 	public static volatile SingularAttribute<User, Boolean> emailVerified;
@@ -30,6 +31,7 @@ public abstract class User_ extends com.starter.springboot.entity.BaseAuditedEnt
 	public static final String LAST_NAME = "lastName";
 	public static final String IS_OTP_REQUIRED = "isOtpRequired";
 	public static final String ROLE = "role";
+	public static final String PASSWORD_SET = "passwordSet";
 	public static final String ENABLED = "enabled";
 	public static final String FIRST_NAME = "firstName";
 	public static final String EMAIL_VERIFIED = "emailVerified";

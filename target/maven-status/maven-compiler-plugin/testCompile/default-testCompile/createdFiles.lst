@@ -1,7 +1,9 @@
 com\starter\springboot\config\SecurityConfigurationTest.class
 com\starter\springboot\controller\AuthenticationControllerTest.class
 com\starter\springboot\service\UserServiceTest.class
+com\starter\springboot\service\impl\TemporaryPasswordTokenServiceTest.class
 com\starter\springboot\service\EmailServiceTest.class
+com\starter\springboot\service\impl\PasswordSetupServiceTest.class
 com\starter\springboot\service\OtpRateLimiterImplTest.class
 com\starter\springboot\security\jwt\TokenProviderTest.class
 com\starter\springboot\security\OtpAwareAuthenticationProviderTest.class

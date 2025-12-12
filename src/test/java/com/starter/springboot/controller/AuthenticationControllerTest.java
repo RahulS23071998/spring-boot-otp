@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.starter.springboot.dto.GoogleTokenDTO;
 import com.starter.springboot.dto.OtpValidationResult;
 import com.starter.springboot.dto.RefreshTokenRequestDTO;
+import com.starter.springboot.dto.SetPasswordDTO;
 import com.starter.springboot.entity.AuthType;
 import com.starter.springboot.entity.RefreshToken;
 import com.starter.springboot.entity.User;
@@ -20,6 +21,8 @@ import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IOtpRateLimiter;
 import com.starter.springboot.service.IOtpAuditService;
 import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.service.IPasswordSetupService;
+import com.starter.springboot.service.ITemporaryPasswordTokenService;
 import com.starter.springboot.service.IUserService;
 import com.starter.springboot.service.LocalizationService;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +33,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -90,6 +95,12 @@ class AuthenticationControllerTest {
 
     @Mock
     private IOtpAuditService otpAuditService;
+
+    @Mock
+    private ITemporaryPasswordTokenService temporaryPasswordTokenService;
+
+    @Mock
+    private IPasswordSetupService passwordSetupService;
 
     @InjectMocks
     private AuthenticationController authenticationController;
@@ -742,6 +753,7 @@ class AuthenticationControllerTest {
         user.setAuthType(AuthType.GOOGLE_OAUTH);
         user.setGoogleId("google-id-" + id);
         user.setIsOtpRequired(false);
+        user.setPasswordSet(true);
         return user;
     }
 
@@ -754,6 +766,142 @@ class AuthenticationControllerTest {
         googleUserInfo.put("name", name);
         googleUserInfo.put("picture", "https://example.com/picture.jpg");
         return googleUserInfo;
+    }
+
+    @Test
+    @DisplayName("Should set password with temporary token successfully")
+    void testSetPassword_WithTemporaryToken_Success() throws Exception {
+        SetPasswordDTO request = new SetPasswordDTO();
+        request.setPassword("NewPass123!");
+        request.setConfirmPassword("NewPass123!");
+        request.setTemporaryToken("test-token-123");
+
+        var successResponse = ResponseEntity.ok(
+            new com.starter.springboot.dto.SetPasswordResponseDTO(
+                "SUCCESS", "Password set successfully", "testuser@example.com", Boolean.TRUE, java.time.Instant.now()
+            )
+        );
+
+        when(passwordSetupService.handlePasswordSetWithTemporaryToken(any(SetPasswordDTO.class)))
+                .thenReturn(successResponse);
+
+        mockMvc.perform(post("/auth/set-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is("SUCCESS")))
+                .andExpect(jsonPath("$.password_set", is(true)));
+
+        verify(passwordSetupService).handlePasswordSetWithTemporaryToken(any(SetPasswordDTO.class));
+    }
+
+    @Test
+    @DisplayName("Should return 400 when passwords do not match")
+    void testSetPassword_PasswordMismatch() throws Exception {
+        SetPasswordDTO request = new SetPasswordDTO();
+        request.setPassword("NewPass123!");
+        request.setConfirmPassword("DifferentPass123!");
+        request.setTemporaryToken("test-token-123");
+
+        mockMvc.perform(post("/auth/set-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status", is("FAILED")))
+                .andExpect(jsonPath("$.message", is("Passwords do not match")));
+
+        verify(passwordSetupService, never()).handlePasswordSetWithTemporaryToken(any());
+    }
+
+    @Test
+    @DisplayName("Should set password with authenticated user successfully")
+    void testSetPassword_WithAuthentication_Success() throws Exception {
+        SetPasswordDTO request = new SetPasswordDTO();
+        request.setPassword("NewPass123!");
+        request.setConfirmPassword("NewPass123!");
+
+        var successResponse = ResponseEntity.ok(
+            new com.starter.springboot.dto.SetPasswordResponseDTO(
+                "SUCCESS", "Password set successfully", "testuser@example.com", Boolean.TRUE, java.time.Instant.now()
+            )
+        );
+
+        when(passwordSetupService.handlePasswordSetWithAuthentication(any(SetPasswordDTO.class)))
+                .thenReturn(successResponse);
+
+        mockMvc.perform(post("/auth/set-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status", is("SUCCESS")));
+
+        verify(passwordSetupService).handlePasswordSetWithAuthentication(any(SetPasswordDTO.class));
+    }
+
+    @Test
+    @DisplayName("Should return 400 when temporary token missing and not authenticated")
+    void testSetPassword_NoTokenAndNotAuthenticated() throws Exception {
+        SetPasswordDTO request = new SetPasswordDTO();
+        request.setPassword("NewPass123!");
+        request.setConfirmPassword("NewPass123!");
+
+        var failureResponse = ResponseEntity.status(401)
+            .body(new com.starter.springboot.dto.SetPasswordResponseDTO(
+                "FAILED", "User not authenticated", null, null, java.time.Instant.now()
+            ));
+
+        when(passwordSetupService.handlePasswordSetWithAuthentication(any(SetPasswordDTO.class)))
+                .thenReturn(failureResponse);
+
+        mockMvc.perform(post("/auth/set-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @DisplayName("Should return 401 when temporary token is invalid or expired")
+    void testSetPassword_InvalidTemporaryToken() throws Exception {
+        SetPasswordDTO request = new SetPasswordDTO();
+        request.setPassword("NewPass123!");
+        request.setConfirmPassword("NewPass123!");
+        request.setTemporaryToken("invalid-token");
+
+        var failureResponse = ResponseEntity.status(401)
+            .body(new com.starter.springboot.dto.SetPasswordResponseDTO(
+                "FAILED", "Temporary token expired or invalid", null, null, java.time.Instant.now()
+            ));
+
+        when(passwordSetupService.handlePasswordSetWithTemporaryToken(any(SetPasswordDTO.class)))
+                .thenReturn(failureResponse);
+
+        mockMvc.perform(post("/auth/set-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message", is("Temporary token expired or invalid")));
+    }
+
+    @Test
+    @DisplayName("Should return 429 when rate limit exceeded for password set")
+    void testSetPassword_RateLimitExceeded() throws Exception {
+        SetPasswordDTO request = new SetPasswordDTO();
+        request.setPassword("NewPass123!");
+        request.setConfirmPassword("NewPass123!");
+        request.setTemporaryToken("test-token");
+
+        var failureResponse = ResponseEntity.status(429)
+            .body(new com.starter.springboot.dto.SetPasswordResponseDTO(
+                "FAILED", "Too many password reset attempts. Please try again later", null, null, java.time.Instant.now()
+            ));
+
+        when(passwordSetupService.handlePasswordSetWithTemporaryToken(any(SetPasswordDTO.class)))
+                .thenReturn(failureResponse);
+
+        mockMvc.perform(post("/auth/set-password")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isTooManyRequests());
     }
 
 }

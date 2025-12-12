@@ -1,9 +1,13 @@
 com\starter\springboot\constants\ValidationConstants.class
 com\starter\springboot\constants\ApplicationConstants.class
+com\starter\springboot\service\impl\PasswordSetupService.class
 com\starter\springboot\service\impl\UserTokenService.class
 com\starter\springboot\service\IOtpNotificationService.class
 com\starter\springboot\constants\EmailConstants.class
+com\starter\springboot\dto\OAuthRedirectDTO.class
+com\starter\springboot\service\IPasswordSetupService.class
 com\starter\springboot\java\SetUtilsExample.class
+com\starter\springboot\service\PasswordValidationService.class
 com\starter\springboot\security\jwt\JWTFilter.class
 com\starter\springboot\listener\CustomAuditingListener.class
 com\starter\springboot\entity\OtpAuditEntry_.class
@@ -15,10 +19,13 @@ com\starter\springboot\java\StringsUtilsExample.class
 com\starter\springboot\dto\GoogleTokenDTO.class
 com\starter\springboot\entity\RefreshToken.class
 com\starter\springboot\service\impl\RefreshTokenCleanupService.class
+com\starter\springboot\dto\SetPasswordDTO.class
 com\starter\springboot\dto\ErrorResponse.class
 com\starter\springboot\java\ListUtilsExample.class
 com\starter\springboot\java\MapUtilsExample.class
+com\starter\springboot\service\ITemporaryPasswordTokenService.class
 com\starter\springboot\entity\BaseEntityWithId.class
+com\starter\springboot\java\FilesExample.class
 com\starter\springboot\config\SwaggerConfig.class
 com\starter\springboot\service\impl\OtpAuditRetentionService.class
 com\starter\springboot\service\IOtpAuditRetentionService.class
@@ -45,10 +52,12 @@ com\starter\springboot\entity\Authority.class
 com\starter\springboot\service\IOtpService.class
 com\starter\springboot\controller\PublicUserResource.class
 com\starter\springboot\service\impl\OtpProperties$AuditPurgeProperties.class
+com\starter\springboot\java\MdcEmailMaskMultithreadDemo.class
 com\starter\springboot\config\AuditingConfiguration.class
 com\starter\springboot\config\LocaleConfiguration.class
 com\starter\springboot\service\IUserTokenService.class
 com\starter\springboot\controller\AuthenticationController.class
+com\starter\springboot\dto\SetPasswordResponseDTO.class
 com\starter\springboot\entity\BaseAuditedEntity_.class
 com\starter\springboot\entity\User.class
 com\starter\springboot\exception\OtpRequiredException.class
@@ -72,6 +81,7 @@ com\starter\springboot\repository\OtpAuditEntryRepository.class
 com\starter\springboot\converter\StringToDateConverter.class
 com\starter\springboot\service\impl\UserProvisioningService.class
 com\starter\springboot\service\impl\EmailService.class
+com\starter\springboot\service\PasswordValidationService$PasswordValidationResult.class
 com\starter\springboot\constants\OtpConstants.class
 com\starter\springboot\constants\SecurityConstants.class
 com\starter\springboot\service\IRedisTokenService.class
@@ -95,6 +105,7 @@ com\starter\springboot\entity\IdGeneratorEntityListener.class
 com\starter\springboot\entity\AuthType.class
 com\starter\springboot\exception\RestExceptionHandler.class
 com\starter\springboot\service\impl\OtpProperties.class
+com\starter\springboot\java\MapExample.class
 com\starter\springboot\config\MDCFilter.class
 com\starter\springboot\service\LocalizationService.class
 com\starter\springboot\security\OtpAwareAuthenticationProvider.class
@@ -117,6 +128,7 @@ com\starter\springboot\entity\Role_.class
 com\starter\springboot\java\PriorityQueueS.class
 com\starter\springboot\service\impl\GoogleOAuthService.class
 com\starter\springboot\service\IAuthCacheService.class
+com\starter\springboot\service\impl\TemporaryPasswordTokenService.class
 com\starter\springboot\config\AppInfoProperties$App.class
 com\starter\springboot\java\Cart.class
 com\starter\springboot\service\impl\AuthCacheService.class

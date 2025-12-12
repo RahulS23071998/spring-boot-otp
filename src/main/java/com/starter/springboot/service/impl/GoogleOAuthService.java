@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -44,7 +44,7 @@ public class GoogleOAuthService implements IGoogleOAuthService {
             if (Objects.nonNull(idToken)) {
                 GoogleIdToken.Payload payload = idToken.getPayload();
 
-                Map<String, Object> userInfo = new HashMap<>();
+                Map<String, Object> userInfo = new LinkedHashMap<>();
                 userInfo.put("email", payload.getEmail());
                 userInfo.put("name", payload.get("name"));
                 userInfo.put("given_name", payload.get("given_name"));

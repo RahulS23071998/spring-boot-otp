@@ -24,6 +24,9 @@ A comprehensive Spring Boot application demonstrating secure One-Time Password (
 
 - **JWT Token Authentication** - Secure token-based authentication with Redis whitelisting
 - **OTP Verification** - Email-based OTP verification with rate limiting and audit trails
+- **Google OAuth Integration** - Seamless Google OAuth 2.0 authentication with automatic user provisioning
+- **OAuth Password Setup** - Secure password setup flow for OAuth users using temporary tokens
+- **Temporary Token System** - Short-lived tokens for sensitive operations like password reset
 - **Redis Session Management** - Token whitelisting, user caching, and session management
 - **User Management** - Complete user registration, activation, and profile management
 - **Email Service** - SMTP email integration for OTP delivery and notifications
@@ -31,14 +34,14 @@ A comprehensive Spring Boot application demonstrating secure One-Time Password (
 - **Role-Based Access Control** - Authority and role-based permissions system
 - **Embedded Redis** - Development-ready embedded Redis with production Redis support
 - **Comprehensive Auditing** - OTP audit trails and retention policies
-- **Rate Limiting** - OTP generation rate limiting to prevent abuse
-- **Data Validation** - Jakarta validation with custom constraints
+- **Rate Limiting** - OTP generation rate limiting and password set attempt limiting
+- **Data Validation** - Jakarta validation with custom constraints and password strength validation
 - **Exception Handling** - Global exception handling with detailed error responses
 - **API Documentation** - Interactive Swagger/OpenAPI documentation
 - **Application Monitoring** - Spring Boot Actuator endpoints for health checks and metrics
 - **Profile Support** - Development and production environment configurations
 - **Security Hardening** - Multiple layers of security validation and CORS protection
-- **Comprehensive Testing** - Extensive unit and integration tests (90%+ coverage)
+- **Comprehensive Testing** - Extensive unit and integration tests (340+ test cases with 90%+ coverage)
 
 ## 🛠 Tech Stack
 
@@ -116,9 +119,13 @@ src/
 │   │   ├── dto/                          # Data Transfer Objects
 │   │   │   ├── AuthResponseDTO.java               # Authentication response
 │   │   │   ├── EmailDTO.java                      # Email data
+│   │   │   ├── GoogleTokenDTO.java                # Google OAuth token
 │   │   │   ├── LoginDTO.java                      # Login request
+│   │   │   ├── OAuthRedirectDTO.java              # OAuth redirect response
 │   │   │   ├── OtpGenerationResult.java           # OTP generation result
 │   │   │   ├── OtpValidationResult.java           # OTP validation result
+│   │   │   ├── SetPasswordDTO.java                # Password setup request
+│   │   │   ├── SetPasswordResponseDTO.java        # Password setup response
 │   │   │   ├── UserRequestDTO.java                # User request data
 │   │   │   ├── UserResponseDTO.java               # User response data
 │   │   │   └── VerifyTokenRequestDTO.java         # OTP verification request
@@ -151,6 +158,7 @@ src/
 │   │   ├── service/                       # Service layer
 │   │   │   ├── impl/                              # Service implementations
 │   │   │   │   ├── EmailService.java              # Email service impl
+│   │   │   │   ├── GoogleOAuthService.java        # Google OAuth impl
 │   │   │   │   ├── OtpAuditRetentionService.java  # Audit retention impl
 │   │   │   │   ├── OtpAuditServiceImpl.java       # Audit service impl
 │   │   │   │   ├── OtpGenerator.java              # OTP generator impl
@@ -158,9 +166,13 @@ src/
 │   │   │   │   ├── OtpProperties.java             # OTP properties impl
 │   │   │   │   ├── OtpRateLimiterImpl.java        # Rate limiter impl
 │   │   │   │   ├── OtpService.java                # OTP service impl
+│   │   │   │   ├── PasswordSetupService.java      # Password setup impl
+│   │   │   │   ├── PasswordValidationService.java # Password validation impl
 │   │   │   │   ├── RedisTokenService.java         # Redis token service impl
+│   │   │   │   ├── TemporaryPasswordTokenService.java # Temporary token impl
 │   │   │   │   └── UserService.java               # User service impl
 │   │   │   ├── IEmailService.java                 # Email service interface
+│   │   │   ├── IGoogleOAuthService.java           # Google OAuth interface
 │   │   │   ├── IOtpAuditRetentionService.java     # Audit retention interface
 │   │   │   ├── IOtpAuditService.java              # Audit service interface
 │   │   │   ├── IOtpGenerator.java                 # OTP generator interface
@@ -168,8 +180,11 @@ src/
 │   │   │   ├── IOtpProperties.java                # OTP properties interface
 │   │   │   ├── IOtpRateLimiter.java               # Rate limiter interface
 │   │   │   ├── IOtpService.java                   # OTP service interface
+│   │   │   ├── IPasswordSetupService.java         # Password setup interface
 │   │   │   ├── IRedisTokenService.java            # Redis token service interface
-│   │   │   └── IUserService.java                  # User service interface
+│   │   │   ├── ITemporaryPasswordTokenService.java # Temporary token interface
+│   │   │   ├── IUserService.java                  # User service interface
+│   │   │   └── PasswordValidationService.java     # Password validation logic
 │   │   └── Application.java               # Main application class
 │   └── resources/
 │       ├── application.yml               # Main configuration
@@ -177,8 +192,10 @@ src/
 │       ├── application-prod.yml          # Production profile
 ├── test/
 │   └── java/com/starter/springboot/
+│       ├── config/                       # Configuration tests
+│       │   └── SecurityConfigurationTest.java    # Security config tests
 │       ├── controller/                   # Controller tests
-│       │   ├── AuthenticationControllerTest.java # Auth controller tests
+│       │   ├── AuthenticationControllerTest.java # Auth controller tests (340+ test cases)
 │       │   └── PublicUserResourceTest.java       # Public user tests
 │       ├── security/                     # Security tests
 │       │   ├── jwt/                              # JWT tests
@@ -186,13 +203,18 @@ src/
 │       │   └── OtpAwareAuthenticationProviderTest.java # Auth provider tests
 │       └── service/                      # Service tests
 │           ├── EmailServiceTest.java             # Email service tests
+│           ├── GoogleOAuthServiceTest.java       # Google OAuth tests
 │           ├── OtpAuditRetentionServiceTest.java # Audit retention tests
 │           ├── OtpAuditServiceImplTest.java      # Audit service tests
 │           ├── OtpGeneratorTest.java             # OTP generator tests
 │           ├── OtpNotificationServiceImplTest.java # Notification tests
 │           ├── OtpRateLimiterImplTest.java       # Rate limiter tests
 │           ├── OtpServiceTest.java               # OTP service tests
+│           ├── PasswordChangeAuthorizationServiceTest.java # Auth tests
+│           ├── PasswordSetupServiceTest.java     # Password setup tests (13+ cases)
 │           ├── RedisTokenServiceTest.java        # Redis token tests
+│           ├── RefreshTokenServiceTest.java      # Refresh token tests
+│           ├── TemporaryPasswordTokenServiceTest.java # Temp token tests (13+ cases)
 │           └── UserServiceTest.java              # User service tests
 ```
 
@@ -351,6 +373,67 @@ Content-Type: application/json
 }
 ```
 
+#### Google OAuth Authentication
+```http
+POST /auth/google
+Content-Type: application/json
+
+{
+  "idToken": "google-id-token-here",
+  "rememberMe": true,
+  "clientId": "web-portal",
+  "deviceId": "device-1234"
+}
+```
+
+**Response (New User - Requires Password Setup):**
+```json
+{
+  "status": "SET_PASSWORD_REQUIRED",
+  "username": "user@gmail.com",
+  "message": "Please set your password to complete registration",
+  "temporary_token": "uuid-token-123"
+}
+```
+
+**Response (Existing User - Already Has Password):**
+```json
+{
+  "status": "SUCCESS",
+  "username": "user@gmail.com",
+  "message": "Authentication successful",
+  "otp_required": false,
+  "token": {
+    "id_token": "eyJhbGciOiJIUzI1NiIs...",
+    "token_type": "Bearer",
+    "expires_in": 3600
+  }
+}
+```
+
+#### Set Password (OAuth Users)
+```http
+POST /auth/set-password
+Content-Type: application/json
+
+{
+  "password": "NewPassword123!",
+  "confirmPassword": "NewPassword123!",
+  "temporaryToken": "uuid-token-123"
+}
+```
+
+**Response:**
+```json
+{
+  "status": "SUCCESS",
+  "message": "Password set successfully",
+  "username": "user@gmail.com",
+  "password_set": true,
+  "timestamp": "2025-12-10T13:40:00.000Z"
+}
+```
+
 ### User Management Endpoints
 
 #### Register User
@@ -391,15 +474,15 @@ GET /api/users/current
 Authorization: Bearer <token>
 ```
 
-## 🔐 Authentication Flow
+## 🔐 Authentication Flows
 
-### Standard Flow (OTP Disabled)
+### 1. Standard Email/Password Flow (OTP Disabled)
 1. User submits credentials → `/auth/authenticate`
 2. System validates credentials
 3. JWT token returned immediately
 4. User can access protected endpoints
 
-### OTP Flow (OTP Enabled)
+### 2. OTP Flow (OTP Enabled)
 1. User submits credentials → `/auth/authenticate`
 2. System validates credentials
 3. OTP generated and sent via email
@@ -409,12 +492,47 @@ Authorization: Bearer <token>
 7. JWT token returned
 8. User can access protected endpoints
 
+### 3. Google OAuth Flow (New User)
+1. User initiates Google login
+2. User completes Google OAuth consent
+3. Frontend sends Google ID token → `/auth/google`
+4. System verifies token with Google
+5. New OAuth user created automatically
+6. System detects user has no password set
+7. System returns `SET_PASSWORD_REQUIRED` with temporary token
+8. User sets password → `/auth/set-password`
+9. System validates password strength
+10. Password set confirmed
+11. User completes login with email/password
+
+### 4. Google OAuth Flow (Returning User)
+1. User initiates Google login
+2. User completes Google OAuth consent
+3. Frontend sends Google ID token → `/auth/google`
+4. System verifies token with Google
+5. Existing OAuth user found
+6. System checks if password already set
+7. If password set: Returns JWT token directly
+8. If no password: Returns `SET_PASSWORD_REQUIRED` response
+
+### 5. Password Setup with Temporary Token
+1. User receives temporary token from OAuth flow or password reset
+2. User submits new password → `/auth/set-password`
+3. System validates temporary token (expires in 15 minutes)
+4. System validates password strength and format
+5. System checks rate limits (max 5 attempts per user)
+6. System updates password with BCrypt hashing
+7. System sends confirmation email
+8. System invalidates temporary token
+9. User can now log in with email and new password
+
 ### Token Validation
 - JWT signature validation
 - Token expiration check
 - User existence verification
 - Password reset date validation
 - Redis whitelist verification (if available)
+- Temporary token validation (Redis-based with TTL)
 
 ## 📊 OTP Audit System
 
@@ -512,19 +630,37 @@ The project includes comprehensive test coverage:
 - **Security Tests**: JWT token validation, OTP verification
 - **Repository Tests**: Data access layer testing
 
-### Key Test Classes
-- `UserServiceTest` - User management operations
-- `OtpServiceTest` - OTP generation and validation
-- `OtpGeneratorTest` - OTP generation logic
-- `TokenProviderTest` - JWT token operations
-- `AuthenticationControllerTest` - Authentication endpoints
-- `PublicUserResourceTest` - Public user operations
-- `OtpAwareAuthenticationProviderTest` - Authentication provider
-- `RedisTokenServiceTest` - Token whitelist management
-- `EmailServiceTest` - Email service functionality
-- `OtpRateLimiterImplTest` - Rate limiting logic
-- `OtpAuditServiceImplTest` - Audit service operations
-- `OtpNotificationServiceImplTest` - OTP notification delivery
+### Key Test Classes (340+ Test Cases)
+- **OAuth & Password Setup** (26+ cases)
+  - `PasswordSetupServiceTest` - Password setup logic with rate limiting (13 cases)
+  - `TemporaryPasswordTokenServiceTest` - Temporary token generation and validation (13 cases)
+  - `AuthenticationControllerTest` - Google OAuth endpoints (6 cases)
+  
+- **Core Authentication** (80+ cases)
+  - `AuthenticationControllerTest` - All authentication flows and edge cases (340+ total cases)
+  - `TokenProviderTest` - JWT token generation and validation
+  - `OtpAwareAuthenticationProviderTest` - OTP-aware authentication
+  
+- **OTP System** (60+ cases)
+  - `OtpServiceTest` - OTP generation and verification logic (15 cases)
+  - `OtpGeneratorTest` - OTP generation algorithms
+  - `OtpRateLimiterImplTest` - Rate limiting and attempt tracking (9 cases)
+  - `OtpAuditServiceImplTest` - Audit trail management
+  - `OtpNotificationServiceImplTest` - OTP email delivery
+  - `OtpAuditRetentionServiceTest` - Audit retention policies
+  
+- **User Management** (40+ cases)
+  - `UserServiceTest` - User creation, activation, and management (25 cases)
+  - `PublicUserResourceTest` - Public user endpoints
+  - `PasswordChangeAuthorizationServiceTest` - Authorization checks (17 cases)
+  
+- **Token & Session** (40+ cases)
+  - `RedisTokenServiceTest` - Token whitelist and Redis operations (17 cases)
+  - `RefreshTokenServiceTest` - Refresh token lifecycle (19 cases)
+  
+- **Infrastructure** (20+ cases)
+  - `EmailServiceTest` - Email sending functionality
+  - `SecurityConfigurationTest` - Security configuration validation
 
 ## 📁 Profiles
 
@@ -634,4 +770,11 @@ For support and questions:
 **Note**: This project has been migrated to Spring Boot 3.2.3 and Java 17 for improved security, performance, and long-term maintainability. It includes comprehensive API documentation (Swagger) and monitoring capabilities (Actuator). The application is designed for educational and demonstration purposes. For production use, ensure proper security auditing and compliance with your organization's security policies.
 
 **Migration Status**: ✅ Successfully migrated from Spring Boot 1.5.7 to 3.2.3 with Jakarta EE compatibility.
-**New Features**: ✅ Added Swagger/OpenAPI documentation and Spring Boot Actuator monitoring.
+**Recent Features**: 
+- ✅ Added Swagger/OpenAPI documentation and Spring Boot Actuator monitoring
+- ✅ Implemented Google OAuth 2.0 integration with automatic user provisioning
+- ✅ Added secure password setup flow with temporary tokens for OAuth users
+- ✅ Implemented password strength validation with configurable rules
+- ✅ Added rate limiting for password set attempts
+- ✅ Created 340+ comprehensive test cases covering all authentication flows
+- ✅ Full Redis-based temporary token system with TTL management

@@ -81,6 +81,9 @@ public class UserProvisioningService implements IUserProvisioningService {
         if (Objects.isNull(user.getIsOtpRequired())) {
             user.setIsOtpRequired(Boolean.TRUE);
         }
+        if (Objects.isNull(user.getPasswordSet())) {
+            user.setPasswordSet(Boolean.TRUE);
+        }
 
         assignDefaultRoleAndAuthority(user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -129,13 +132,14 @@ public class UserProvisioningService implements IUserProvisioningService {
         String lastName = familyName != null && familyName.length() >= 4 ? familyName : "User";
         newUser.setLastName(lastName);
         newUser.setUsername(email);
-        newUser.setPassword(generateRandomPassword());
+        newUser.setPassword(passwordEncoder.encode(generateRandomPassword()));
         newUser.setEnabled(Boolean.TRUE);
         newUser.setStatus(UserStatus.ACTIVE);
         newUser.setAuthType(AuthType.GOOGLE_OAUTH);
         newUser.setGoogleId(googleId);
         newUser.setEmailVerified(emailVerified);
         newUser.setIsOtpRequired(Boolean.FALSE);
+        newUser.setPasswordSet(Boolean.FALSE);
 
         Date now = Date.from(Instant.now());
         newUser.setLastPasswordResetDate(now);
