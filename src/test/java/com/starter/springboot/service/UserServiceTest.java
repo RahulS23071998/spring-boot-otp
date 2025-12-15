@@ -53,6 +53,9 @@ class UserServiceTest {
     @Mock
     private LocalizationService localizationService;
 
+    @Mock
+    private com.starter.springboot.repository.PasswordHistoryRepository passwordHistoryRepository;
+
     @InjectMocks
     private UserService userService;
 
@@ -225,6 +228,8 @@ class UserServiceTest {
         when(passwordEncoder.matches(TEST_PASSWORD, ENCODED_PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
+        when(passwordHistoryRepository.findByUserOrderByCreatedDateDesc(any(User.class))).thenReturn(java.util.Collections.emptyList());
+        when(passwordHistoryRepository.save(any(com.starter.springboot.entity.PasswordHistory.class))).thenReturn(new com.starter.springboot.entity.PasswordHistory());
         doNothing().when(authorizationService).authorizePasswordChange(testUser);
         doNothing().when(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
 
@@ -256,6 +261,8 @@ class UserServiceTest {
         when(passwordEncoder.matches(TEST_PASSWORD, ENCODED_PASSWORD)).thenReturn(true);
         when(passwordEncoder.encode("newPassword123")).thenReturn("encodedNewPassword");
         when(userRepository.save(any(User.class))).thenReturn(testUser);
+        when(passwordHistoryRepository.findByUserOrderByCreatedDateDesc(any(User.class))).thenReturn(java.util.Collections.emptyList());
+        when(passwordHistoryRepository.save(any(com.starter.springboot.entity.PasswordHistory.class))).thenReturn(new com.starter.springboot.entity.PasswordHistory());
         doNothing().when(authorizationService).authorizePasswordChangeByUsername(TEST_USERNAME);
         doNothing().when(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
 

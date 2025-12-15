@@ -1,6 +1,7 @@
 package com.starter.springboot.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.starter.springboot.dto.UserRequestDTO;
 import com.starter.springboot.entity.Authority;
 import com.starter.springboot.entity.Role;
@@ -18,6 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -63,7 +65,11 @@ class PublicUserResourceTest {
 
     @BeforeEach
     void setUp() {
+        objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+
         mockMvc = MockMvcBuilders.standaloneSetup(publicUserResource)
+            .setMessageConverters(new MappingJackson2HttpMessageConverter(objectMapper))
             .setHandlerExceptionResolvers((request, response, handler, ex) -> {
                 if (ex instanceof ResponseStatusException rse) {
                     response.setStatus(rse.getStatusCode().value());
@@ -82,7 +88,6 @@ class PublicUserResourceTest {
                 return null;
             })
             .build();
-        objectMapper = new ObjectMapper();
         
         // Setup valid UserRequestDTO
         validUserRequest = new UserRequestDTO();

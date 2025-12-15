@@ -1,14 +1,17 @@
 package com.starter.springboot.service.impl;
 
 import com.starter.springboot.constants.ApplicationConstants;
+import com.starter.springboot.entity.PasswordHistory;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.repository.PasswordHistoryRepository;
 import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.service.IPasswordChangeAuthorizationService;
 import com.starter.springboot.service.IUserProvisioningService;
 import com.starter.springboot.service.IUserService;
 import com.starter.springboot.service.IUserTokenService;
 import com.starter.springboot.service.LocalizationService;
+import com.starter.springboot.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,19 +43,22 @@ public class UserService implements IUserService {
     private final IUserProvisioningService provisioningService;
     private final IUserTokenService tokenService;
     private final LocalizationService localizationService;
+    private final PasswordHistoryRepository passwordHistoryRepository;
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
                        IPasswordChangeAuthorizationService authorizationService,
                        IUserProvisioningService provisioningService,
                        IUserTokenService tokenService,
-                       LocalizationService localizationService) {
+                       LocalizationService localizationService,
+                       com.starter.springboot.repository.PasswordHistoryRepository passwordHistoryRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorizationService = authorizationService;
         this.provisioningService = provisioningService;
         this.tokenService = tokenService;
         this.localizationService = localizationService;
+        this.passwordHistoryRepository = passwordHistoryRepository;
     }
 
     /**
@@ -148,6 +154,11 @@ public class UserService implements IUserService {
             throw new BadCredentialsException(localizationService.getMessage("user.old_password_incorrect"));
         }
 
+        checkPasswordHistory(user, newPassword);
+
+        // Save old password to history before updating
+        savePasswordToHistory(user);
+
         user.setPassword(passwordEncoder.encode(newPassword));
         user.setLastPasswordResetDate(Date.from(Instant.now()));
         User savedUser = userRepository.save(user);
@@ -164,6 +175,38 @@ public class UserService implements IUserService {
     @Transactional
     public User findOrCreateGoogleOAuthUser(Map<String, Object> googleUserInfo) {
         return provisioningService.findOrCreateGoogleOAuthUser(googleUserInfo);
+    }
+
+    private void checkPasswordHistory(User user, String newPassword) {
+        List<PasswordHistory> history = passwordHistoryRepository.findByUserOrderByCreatedDateDesc(user);
+        // Check last 3 passwords
+        int limit = 3;
+        for (int i = 0; i < Math.min(history.size(), limit); i++) {
+            if (passwordEncoder.matches(newPassword, history.get(i).getPassword())) {
+                throw new IllegalArgumentException("Password has been used recently. Please choose a different password.");
+            }
+        }
+    }
+
+    private void savePasswordToHistory(User user) {
+        PasswordHistory history = new PasswordHistory();
+        history.setUser(user);
+        history.setPassword(user.getPassword()); // Save the current (old) password
+        passwordHistoryRepository.save(history);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findUserById(Long userId) {
+        return userRepository.findById(userId)
+            .orElseThrow(() -> UserNotFoundException.ofId(userId));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> UserNotFoundException.ofUsername(username));
     }
 
 }

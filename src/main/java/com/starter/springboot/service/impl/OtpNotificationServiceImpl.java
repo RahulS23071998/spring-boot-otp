@@ -1,11 +1,12 @@
 package com.starter.springboot.service.impl;
 
 import com.starter.springboot.constants.EmailConstants;
-import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.dto.EmailDTO;
 import com.starter.springboot.service.IEmailService;
 import com.starter.springboot.service.IOtpNotificationService;
+import com.starter.springboot.service.ISmsService;
 import com.starter.springboot.service.LocalizationService;
+import io.jsonwebtoken.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,15 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
     private final Logger LOGGER = LoggerFactory.getLogger(OtpNotificationServiceImpl.class);
 
     private final IEmailService emailService;
+    private final ISmsService smsService;
 
     private final LocalizationService localizationService;
 
-    public OtpNotificationServiceImpl(IEmailService emailService, LocalizationService localizationService) {
+    public OtpNotificationServiceImpl(IEmailService emailService, 
+                                      ISmsService smsService,
+                                      LocalizationService localizationService) {
         this.emailService = emailService;
+        this.smsService = smsService;
         this.localizationService = localizationService;
     }
 
@@ -63,6 +68,11 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
         emailDTO.setRecipients(recipients);
 
         try {
+            String mobileNumber = "+91" + "9677210944";
+            if (mobileNumber.matches("^(\\+91)?[6-9][0-9]{9}$")) {
+                 smsService.sendSmsAsync(mobileNumber, "Your OTP is: " + otpValue);
+           }
+
             return emailService.sendSimpleMessageAsync(emailDTO);
         } catch (Exception e) {
             LOGGER.error("Error initiating OTP email dispatch to: {}", userEmail, e);

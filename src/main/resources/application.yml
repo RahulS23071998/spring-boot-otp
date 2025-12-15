@@ -32,6 +32,11 @@ otp:
     enabled: true
     retention-days: 90
 
+twilio:
+  account-sid: AC4fae5dc49c384693e9d98029a381c30f
+  auth-token: 463d32af42360ac6686c8d977049baa2
+  phone-number: +19853323841
+
 google:
   oauth:
     client-id: 351355811776-90j5o6amqtsj377lud1df6im5mic1uvb.apps.googleusercontent.com

@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS user_account (
     enabled BOOLEAN NOT NULL DEFAULT true,
     status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
     last_password_reset_date DATETIME NULL,
-    is_otp_required BOOLEAN DEFAULT true,
+    is_otp_required TINYINT(1) DEFAULT 1,
     auth_type VARCHAR(20) DEFAULT 'WEB_SIGNUP',
     google_id VARCHAR(255) UNIQUE NULL,
     role_id BIGINT,

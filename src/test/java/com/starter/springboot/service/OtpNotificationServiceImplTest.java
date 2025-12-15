@@ -30,6 +30,9 @@ class OtpNotificationServiceImplTest {
     private IEmailService emailService;
 
     @Mock
+    private ISmsService smsService;
+
+    @Mock
     private LocalizationService localizationService;
 
     @InjectMocks

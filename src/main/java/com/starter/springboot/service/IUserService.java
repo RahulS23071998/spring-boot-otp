@@ -2,6 +2,7 @@ package com.starter.springboot.service;
 
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.exception.UserNotFoundException;
 import java.util.List;
 import java.util.Map;
 
@@ -69,4 +70,22 @@ public interface IUserService {
      * @return the user (existing or newly created)
      */
     User findOrCreateGoogleOAuthUser(Map<String, Object> googleUserInfo);
+
+    /**
+     * Find user by ID
+     *
+     * @param userId - the user id
+     * @return the user
+     * @throws UserNotFoundException if user not found
+     */
+    User findUserById(Long userId);
+
+    /**
+     * Find user by username
+     *
+     * @param username - the username
+     * @return the user
+     * @throws UserNotFoundException if user not found
+     */
+    User findUserByUsername(String username);
 }
