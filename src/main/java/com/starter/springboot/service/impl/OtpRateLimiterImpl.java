@@ -42,6 +42,10 @@ public class OtpRateLimiterImpl implements IOtpRateLimiter {
                 if (timeDiffSeconds < OtpConstants.OTP_RATE_LIMIT_SECONDS) {
                     long remainingSeconds = OtpConstants.OTP_RATE_LIMIT_SECONDS - timeDiffSeconds;
                     LOGGER.warn("OTP rate limit exceeded for key: {}. Last sent {} seconds ago, {} seconds remaining", key, timeDiffSeconds, remainingSeconds);
+                    // If this is a google oauth key, return an oauth-friendly message
+                    if (key.startsWith("google-oauth:")) {
+                        return OtpGenerationResult.googleRateLimited((int) remainingSeconds);
+                    }
                     return OtpGenerationResult.rateLimited((int) remainingSeconds);
                 }
             } catch (NumberFormatException e) {

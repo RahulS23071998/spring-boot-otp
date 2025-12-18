@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.config.SecurityConfigurationTest" time="23.182" tests="22" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.config.SecurityConfigurationTest" time="49.336" tests="22" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -16,7 +16,7 @@
     <property name="user.country" value="IN"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="sun.boot.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin"/>
-    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire6555403042139544147\surefirebooter-20251215125249558_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire6555403042139544147 2025-12-15T12-52-49_077-jvmRun1 surefire-20251215125249558_1tmp surefire_0-20251215125249558_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire7378734398480079850\surefirebooter-20251217180536356_3.jar C:\Users\Rahul.S\AppData\Local\Temp\surefire7378734398480079850 2025-12-17T18-05-35_671-jvmRun1 surefire-20251217180536356_1tmp surefire_0-20251217180536356_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\test-classes;C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\target\classes;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.2.3\spring-boot-starter-web-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter\3.2.3\spring-boot-starter-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot\3.2.3\spring-boot-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.2.3\spring-boot-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.2.3\spring-boot-starter-logging-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-classic\1.4.14\logback-classic-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\ch\qos\logback\logback-core\1.4.14\logback-core-1.4.14.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.21.1\log4j-to-slf4j-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\logging\log4j\log4j-api\2.21.1\log4j-api-2.21.1.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\jul-to-slf4j\2.0.12\jul-to-slf4j-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\yaml\snakeyaml\2.2\snakeyaml-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.2.3\spring-boot-starter-json-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.4\jackson-datatype-jdk8-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.4\jackson-module-parameter-names-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-web\6.1.4\spring-web-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-webmvc\6.1.4\spring-webmvc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.2.3\spring-boot-starter-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-aop\3.2.3\spring-boot-starter-aop-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\aspectj\aspectjweaver\1.9.21\aspectjweaver-1.9.21.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.2.3\spring-boot-starter-jdbc-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\zaxxer\HikariCP\5.0.1\HikariCP-5.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jdbc\6.1.4\spring-jdbc-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-core\6.4.4.Final\hibernate-core-6.4.4.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\Rahul.S\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\common\hibernate-commons-annotations\6.0.6.Final\hibernate-commons-annotations-6.0.6.Final.jar;C:\Users\Rahul.S\.m2\repository\io\smallrye\jandex\3.1.2\jandex-3.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\classmate\1.6.0\classmate-1.6.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\antlr\antlr4-runtime\4.13.0\antlr4-runtime-4.13.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-jpa\3.2.3\spring-data-jpa-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-orm\6.1.4\spring-orm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-tx\6.1.4\spring-tx-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aspects\6.1.4\spring-aspects-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\orm\hibernate-jpamodelgen\6.2.5.Final\hibernate-jpamodelgen-6.2.5.Final.jar;C:\Users\Rahul.S\.m2\repository\org\jboss\logging\jboss-logging\3.5.3.Final\jboss-logging-3.5.3.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.1\jakarta.xml.bind-api-4.0.1.jar;C:\Users\Rahul.S\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.4\jaxb-runtime-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.4\jaxb-core-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\glassfish\jaxb\txw2\4.0.4\txw2-4.0.4.jar;C:\Users\Rahul.S\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\Rahul.S\.m2\repository\com\mysql\mysql-connector-j\8.3.0\mysql-connector-j-8.3.0.jar;C:\Users\Rahul.S\.m2\repository\commons-codec\commons-codec\1.16.0\commons-codec-1.16.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-collections4\4.4\commons-collections4-4.4.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-lang3\3.14.0\commons-lang3-3.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.2.3\spring-boot-starter-security-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-aop\6.1.4\spring-aop-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-config\6.2.2\spring-security-config-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-web\6.2.2\spring-security-web-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-data\6.2.2\spring-security-data-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-core\6.2.2\spring-security-core-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-crypto\6.2.2\spring-security-crypto-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-commons\3.2.3\spring-data-commons-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-core\6.1.4\spring-core-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-jcl\6.1.4\spring-jcl-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-messaging\6.2.2\spring-security-messaging-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-beans\6.1.4\spring-beans-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context\6.1.4\spring-context-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-expression\6.1.4\spring-expression-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-messaging\6.1.4\spring-messaging-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-api\0.11.5\jjwt-api-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-impl\0.11.5\jjwt-impl-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\io\jsonwebtoken\jjwt-jackson\0.11.5\jjwt-jackson-0.11.5.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.4\jackson-databind-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\it\ozimov\embedded-redis\0.7.3\embedded-redis-0.7.3.jar;C:\Users\Rahul.S\.m2\repository\commons-io\commons-io\2.5\commons-io-2.5.jar;C:\Users\Rahul.S\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.2.3\spring-boot-starter-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\lettuce\lettuce-core\6.3.1.RELEASE\lettuce-core-6.3.1.RELEASE.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-common\4.1.107.Final\netty-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-handler\4.1.107.Final\netty-handler-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-resolver\4.1.107.Final\netty-resolver-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-buffer\4.1.107.Final\netty-buffer-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.107.Final\netty-transport-native-unix-common-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-codec\4.1.107.Final\netty-codec-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\netty\netty-transport\4.1.107.Final\netty-transport-4.1.107.Final.jar;C:\Users\Rahul.S\.m2\repository\io\projectreactor\reactor-core\3.6.3\reactor-core-3.6.3.jar;C:\Users\Rahul.S\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-redis\3.2.3\spring-data-redis-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\data\spring-data-keyvalue\3.2.3\spring-data-keyvalue-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-oxm\6.1.4\spring-oxm-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.2.3\spring-boot-starter-tomcat-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.19\tomcat-embed-core-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.19\tomcat-embed-el-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.19\tomcat-embed-websocket-10.1.19.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.2.3\spring-boot-starter-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test\3.2.3\spring-boot-test-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.2.3\spring-boot-test-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\json-smart\2.5.0\json-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\net\minidev\accessors-smart\2.5.0\accessors-smart-2.5.0.jar;C:\Users\Rahul.S\.m2\repository\org\ow2\asm\asm\9.3\asm-9.3.jar;C:\Users\Rahul.S\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\Rahul.S\.m2\repository\org\awaitility\awaitility\4.2.0\awaitility-4.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-core\5.7.0\mockito-core-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\Rahul.S\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Rahul.S\.m2\repository\org\mockito\mockito-junit-jupiter\5.7.0\mockito-junit-jupiter-5.7.0.jar;C:\Users\Rahul.S\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-test\6.1.4\spring-test-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\security\spring-security-test\6.2.2\spring-security-test-6.2.2.jar;C:\Users\Rahul.S\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\Rahul.S\.m2\repository\redis\clients\jedis\5.0.2\jedis-5.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\slf4j\slf4j-api\2.0.12\slf4j-api-2.0.12.jar;C:\Users\Rahul.S\.m2\repository\org\apache\commons\commons-pool2\2.12.0\commons-pool2-2.12.0.jar;C:\Users\Rahul.S\.m2\repository\org\json\json\20231013\json-20231013.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\gson\gson\2.10.1\gson-2.10.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-json-org\2.15.3\jackson-datatype-json-org-2.15.3.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.4\jackson-core-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.4\jackson-datatype-jsr310-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.4\jackson-annotations-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\guava\32.1.2-jre\guava-32.1.2-jre.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\failureaccess\1.0.1\failureaccess-1.0.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\guava\listenablefuture\9999.0-empty-to-avoid-conflict-with-guava\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar;C:\Users\Rahul.S\.m2\repository\com\google\code\findbugs\jsr305\3.0.2\jsr305-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\checkerframework\checker-qual\3.33.0\checker-qual-3.33.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\errorprone\error_prone_annotations\2.18.0\error_prone_annotations-2.18.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\j2objc\j2objc-annotations\2.8\j2objc-annotations-2.8.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-mail\3.2.3\spring-boot-starter-mail-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\spring-context-support\6.1.4\spring-context-support-6.1.4.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\jakarta.mail\2.0.2\jakarta.mail-2.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\eclipse\angus\angus-activation\2.0.1\angus-activation-2.0.1.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.2.3\spring-boot-starter-validation-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.1.Final\hibernate-validator-8.0.1.Final.jar;C:\Users\Rahul.S\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-ui\2.2.0\springdoc-openapi-starter-webmvc-ui-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-webmvc-api\2.2.0\springdoc-openapi-starter-webmvc-api-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springdoc\springdoc-openapi-starter-common\2.2.0\springdoc-openapi-starter-common-2.2.0.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-core-jakarta\2.2.15\swagger-core-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-annotations-jakarta\2.2.15\swagger-annotations-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\io\swagger\core\v3\swagger-models-jakarta\2.2.15\swagger-models-jakarta-2.2.15.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-yaml\2.15.4\jackson-dataformat-yaml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\webjars\swagger-ui\5.2.0\swagger-ui-5.2.0.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.2.3\spring-boot-starter-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.2.3\spring-boot-actuator-autoconfigure-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\org\springframework\boot\spring-boot-actuator\3.2.3\spring-boot-actuator-3.2.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-observation\1.12.3\micrometer-observation-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-commons\1.12.3\micrometer-commons-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-jakarta9\1.12.3\micrometer-jakarta9-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\io\micrometer\micrometer-core\1.12.3\micrometer-core-1.12.3.jar;C:\Users\Rahul.S\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\Rahul.S\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\Rahul.S\.m2\repository\com\twilio\sdk\twilio\9.14.0\twilio-9.14.0.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpclient\4.5.13\httpclient-4.5.13.jar;C:\Users\Rahul.S\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-xml\2.15.4\jackson-dataformat-xml-2.15.4.jar;C:\Users\Rahul.S\.m2\repository\org\codehaus\woodstox\stax2-api\4.2.1\stax2-api-4.2.1.jar;C:\Users\Rahul.S\.m2\repository\com\fasterxml\woodstox\woodstox-core\6.5.1\woodstox-core-6.5.1.jar;C:\Users\Rahul.S\.m2\repository\com\google\api-client\google-api-client\2.7.2\google-api-client-2.7.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\oauth-client\google-oauth-client\1.36.0\google-oauth-client-1.36.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-credentials\1.30.0\google-auth-library-credentials-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auth\google-auth-library-oauth2-http\1.30.0\google-auth-library-oauth2-http-1.30.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\auto\value\auto-value-annotations\1.11.0\auto-value-annotations-1.11.0.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-gson\1.45.2\google-http-client-gson-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client-apache-v2\1.45.2\google-http-client-apache-v2-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\com\google\http-client\google-http-client\1.45.2\google-http-client-1.45.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-context\1.68.2\grpc-context-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\grpc\grpc-api\1.68.2\grpc-api-1.68.2.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-api\0.31.1\opencensus-api-0.31.1.jar;C:\Users\Rahul.S\.m2\repository\io\opencensus\opencensus-contrib-http-util\0.31.1\opencensus-contrib-http-util-0.31.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -34,7 +34,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="FILE_LOG_CHARSET" value="IBM437"/>
     <property name="java.awt.headless" value="true"/>
-    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire6555403042139544147\surefirebooter-20251215125249558_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Rahul.S\AppData\Local\Temp\surefire7378734398480079850\surefirebooter-20251217180536356_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.9+10-LTS"/>
@@ -57,11 +57,11 @@
     <property name="os.arch" value="amd64"/>
     <property name="jansi.passthrough" value="true"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="PID" value="18844"/>
+    <property name="PID" value="51188"/>
     <property name="sun.os.patch.level" value=""/>
     <property name="CONSOLE_LOG_CHARSET" value="IBM437"/>
     <property name="native.encoding" value="Cp1252"/>
-    <property name="java.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\SapMachine\JDK\17\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\apache-maven-3.9.6\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\MinGW\bin;C:\Users\Rahul.S\AppData\Local\Microsoft\WindowsApps;C:\Users\Rahul.S\AppData\Local\GitHubDesktop\bin;C:\Users\Rahul.S\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Rahul.S\AppData\Roaming\npm;C:\Users\Rahul.S\AppData\Roaming\Cloud Foundry;C:\Users\Rahul.S\AppData\Local\Programs\Git\cmd;;."/>
+    <property name="java.library.path" value="C:\Users\Rahul.S\.jdks\ms-21.0.9\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\SapMachine\JDK\17\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\apache-maven-3.9.6\bin;C:\Program Files\nodejs\;C:\Program Files\dotnet\;C:\MinGW\bin;C:\Program Files\Memurai\;C:\Users\Rahul.S\AppData\Local\Microsoft\WindowsApps;C:\Users\Rahul.S\AppData\Local\GitHubDesktop\bin;C:\Users\Rahul.S\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Rahul.S\AppData\Roaming\npm;C:\Users\Rahul.S\AppData\Roaming\Cloud Foundry;C:\Users\Rahul.S\AppData\Local\Programs\Git\cmd;;."/>
     <property name="java.vm.info" value="mixed mode, sharing"/>
     <property name="stderr.encoding" value="Cp1252"/>
     <property name="java.vendor" value="Microsoft"/>
@@ -72,9 +72,9 @@
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - %msg%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldCreateOtpAwareAuthenticationProviderBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.084">
-    <system-out><![CDATA[12:52:53.279 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.starter.springboot.config.SecurityConfigurationTest]: SecurityConfigurationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-12:52:53.773 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.config.SecurityConfigurationTest
+  <testcase name="shouldCreateOtpAwareAuthenticationProviderBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.132">
+    <system-out><![CDATA[18:05:40.916 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.starter.springboot.config.SecurityConfigurationTest]: SecurityConfigurationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:05:41.349 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.config.SecurityConfigurationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -84,49 +84,49 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.3)
 
-2025-12-15 12:52:54 - [] - [] - Starting SecurityConfigurationTest using Java 21.0.9 with PID 18844 (started by Rahul.S in C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp)
-2025-12-15 12:52:54 - [] - [] - The following 1 profile is active: "dev"
-2025-12-15 12:52:54 - [] - [] - Loading source class com.starter.springboot.Application
-2025-12-15 12:52:54 - [] - [] - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@37b72ea
-2025-12-15 12:52:58 - [] - [] - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-12-15 12:52:58 - [] - [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-12-15 12:52:58 - [] - [] - @EnableAutoConfiguration was declared on a class in the package 'com.starter.springboot'. Automatic @Repository and @Entity scanning is enabled.
-2025-12-15 12:52:58 - [] - [] - Finished Spring Data repository scanning in 333 ms. Found 6 JPA repository interfaces.
-2025-12-15 12:52:58 - [] - [] - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-12-15 12:52:58 - [] - [] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-12-15 12:52:58 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.AuthorityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-15 12:52:58 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.OtpAuditEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-15 12:52:58 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.PasswordHistoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-15 12:52:58 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-15 12:52:58 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-15 12:52:58 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-15 12:52:58 - [] - [] - Finished Spring Data repository scanning in 25 ms. Found 0 Redis repository interfaces.
-2025-12-15 12:53:03 - [] - [] - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-12-15 12:53:03 - [] - [] - MySQL Local Connection - Starting...
-2025-12-15 12:53:03 - [] - [] - MySQL Local Connection - Added connection com.mysql.cj.jdbc.ConnectionImpl@419c70f6
-2025-12-15 12:53:03 - [] - [] - MySQL Local Connection - Start completed.
-2025-12-15 12:53:03 - [] - [] - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-12-15 12:53:03 - [] - [] - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-12-15 12:53:05 - [] - [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-12-15 12:53:07 - [] - [] - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-12-15 12:53:09 - [] - [] - 16 mappings in 'requestMappingHandlerMapping'
-2025-12-15 12:53:09 - [] - [] - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-12-15 12:53:10 - [] - [] - Exposing 10 endpoint(s) beneath base path '/actuator'
-2025-12-15 12:53:10 - [] - [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@66fb1627, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1cbd2c1a, org.springframework.security.web.context.SecurityContextHolderFilter@65dfce2f, org.springframework.security.web.header.HeaderWriterFilter@2de77ecf, org.springframework.web.filter.CorsFilter@4e125be1, org.springframework.security.web.authentication.logout.LogoutFilter@6ed99447, com.starter.springboot.security.jwt.JWTFilter@781ebe48, com.starter.springboot.config.MDCFilter@1332d4ae, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1e7535a4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@7d518749, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@46ead542, org.springframework.security.web.session.SessionManagementFilter@4086dd5f, org.springframework.security.web.access.ExceptionTranslationFilter@4d6cdebb, org.springframework.security.web.access.intercept.AuthorizationFilter@1bf18ca8]
-2025-12-15 12:53:11 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-15 12:53:12 - [] - [] - Mapping filters: webMvcObservationFilter urls=[/*] order=-2147483647, springSecurityFilterChain urls=[/*] order=-100, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, mdcFilter urls=[/*] order=2147483647
-2025-12-15 12:53:12 - [] - [] - Mapping servlets: 
-2025-12-15 12:53:12 - [] - [] - Filter 'characterEncodingFilter' configured for use
-2025-12-15 12:53:12 - [] - [] - Filter 'webMvcObservationFilter' configured for use
-2025-12-15 12:53:12 - [] - [] - Filter 'formContentFilter' configured for use
-2025-12-15 12:53:12 - [] - [] - Filter 'requestContextFilter' configured for use
-2025-12-15 12:53:12 - [] - [] - Filter 'springSecurityFilterChain' configured for use
-2025-12-15 12:53:12 - [] - [] - Initializing Spring TestDispatcherServlet ''
-2025-12-15 12:53:12 - [] - [] - Initializing Servlet ''
-2025-12-15 12:53:12 - [] - [] - Completed initialization in 2 ms
-2025-12-15 12:53:12 - [] - [] - Started SecurityConfigurationTest in 18.718 seconds (process running for 22.913)
-2025-12-15 12:53:12 - [] - [] - Application availability state LivenessState changed to CORRECT
-2025-12-15 12:53:12 - [] - [] - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
+2025-12-17 18:05:42 - [] - [] - Starting SecurityConfigurationTest using Java 21.0.9 with PID 51188 (started by Rahul.S in C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp)
+2025-12-17 18:05:42 - [] - [] - The following 1 profile is active: "dev"
+2025-12-17 18:05:42 - [] - [] - Loading source class com.starter.springboot.Application
+2025-12-17 18:05:42 - [] - [] - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@4e92466a
+2025-12-17 18:05:46 - [] - [] - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-12-17 18:05:46 - [] - [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-17 18:05:46 - [] - [] - @EnableAutoConfiguration was declared on a class in the package 'com.starter.springboot'. Automatic @Repository and @Entity scanning is enabled.
+2025-12-17 18:05:46 - [] - [] - Finished Spring Data repository scanning in 378 ms. Found 6 JPA repository interfaces.
+2025-12-17 18:05:46 - [] - [] - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-12-17 18:05:46 - [] - [] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-12-17 18:05:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.AuthorityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-12-17 18:05:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.OtpAuditEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-12-17 18:05:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.PasswordHistoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-12-17 18:05:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-12-17 18:05:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-12-17 18:05:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-12-17 18:05:46 - [] - [] - Finished Spring Data repository scanning in 27 ms. Found 0 Redis repository interfaces.
+2025-12-17 18:05:58 - [] - [] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-17 18:05:58 - [] - [] - MySQL Local Connection - Starting...
+2025-12-17 18:05:59 - [] - [] - MySQL Local Connection - Added connection com.mysql.cj.jdbc.ConnectionImpl@153cf928
+2025-12-17 18:05:59 - [] - [] - MySQL Local Connection - Start completed.
+2025-12-17 18:05:59 - [] - [] - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-17 18:05:59 - [] - [] - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
+2025-12-17 18:06:08 - [] - [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-17 18:06:10 - [] - [] - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-17 18:06:15 - [] - [] - 18 mappings in 'requestMappingHandlerMapping'
+2025-12-17 18:06:16 - [] - [] - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
+2025-12-17 18:06:18 - [] - [] - Exposing 10 endpoint(s) beneath base path '/actuator'
+2025-12-17 18:06:18 - [] - [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@145f22cf, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@35cb8b64, org.springframework.security.web.context.SecurityContextHolderFilter@2536edc3, org.springframework.security.web.header.HeaderWriterFilter@3a99aa17, org.springframework.web.filter.CorsFilter@3b3bf723, org.springframework.security.web.authentication.logout.LogoutFilter@390e513a, com.starter.springboot.security.jwt.JWTFilter@6c772506, com.starter.springboot.config.MDCFilter@62ce5261, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@36598d1d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@2e643209, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1532b1d, org.springframework.security.web.session.SessionManagementFilter@3cf09930, org.springframework.security.web.access.ExceptionTranslationFilter@3ad32e52, org.springframework.security.web.access.intercept.AuthorizationFilter@13b85e31]
+2025-12-17 18:06:19 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-12-17 18:06:22 - [] - [] - Mapping filters: webMvcObservationFilter urls=[/*] order=-2147483647, springSecurityFilterChain urls=[/*] order=-100, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, mdcFilter urls=[/*] order=2147483647
+2025-12-17 18:06:22 - [] - [] - Mapping servlets: 
+2025-12-17 18:06:22 - [] - [] - Filter 'characterEncodingFilter' configured for use
+2025-12-17 18:06:22 - [] - [] - Filter 'webMvcObservationFilter' configured for use
+2025-12-17 18:06:22 - [] - [] - Filter 'formContentFilter' configured for use
+2025-12-17 18:06:22 - [] - [] - Filter 'requestContextFilter' configured for use
+2025-12-17 18:06:22 - [] - [] - Filter 'springSecurityFilterChain' configured for use
+2025-12-17 18:06:22 - [] - [] - Initializing Spring TestDispatcherServlet ''
+2025-12-17 18:06:22 - [] - [] - Initializing Servlet ''
+2025-12-17 18:06:22 - [] - [] - Completed initialization in 4 ms
+2025-12-17 18:06:22 - [] - [] - Started SecurityConfigurationTest in 40.734 seconds (process running for 45.738)
+2025-12-17 18:06:22 - [] - [] - Application availability state LivenessState changed to CORRECT
+2025-12-17 18:06:22 - [] - [] - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
 ]]></system-out>
     <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
@@ -134,88 +134,146 @@ WARNING: If a serviceability tool is not in use, please run with -Djdk.instrumen
 WARNING: Dynamic loading of agents will be disallowed by default in a future release
 ]]></system-err>
   </testcase>
-  <testcase name="shouldPermitPublicApiEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.301">
-    <system-out><![CDATA[2025-12-15 12:53:13 - [] - [] - No token found in request
-2025-12-15 12:53:13 - [74406fd6-a373-4366-919b-23fd04cbadef] - [anonymous] - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
-2025-12-15 12:53:13 - [74406fd6-a373-4366-919b-23fd04cbadef] - [anonymous] - Resource not found
-2025-12-15 12:53:13 - [74406fd6-a373-4366-919b-23fd04cbadef] - [anonymous] - Unhandled exception: NoResourceFoundException - No static resource api/public/test.
-2025-12-15 12:53:13 - [74406fd6-a373-4366-919b-23fd04cbadef] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-15 12:53:13 - [74406fd6-a373-4366-919b-23fd04cbadef] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-15T07:23:13.264174Z, status=500, error=Internal Server Error, messag (truncated)...]
+  <testcase name="shouldPermitPublicApiEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.685">
+    <system-out><![CDATA[2025-12-17 18:06:23 - [] - [] - No token found in request
+2025-12-17 18:06:23 - [08d1226c-3de6-481a-8bab-a27a57aa8de2] - [anonymous] - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2025-12-17 18:06:23 - [08d1226c-3de6-481a-8bab-a27a57aa8de2] - [anonymous] - Resource not found
+2025-12-17 18:06:23 - [08d1226c-3de6-481a-8bab-a27a57aa8de2] - [anonymous] - Unhandled exception: NoResourceFoundException - No static resource api/public/test.
+2025-12-17 18:06:23 - [08d1226c-3de6-481a-8bab-a27a57aa8de2] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
+2025-12-17 18:06:23 - [08d1226c-3de6-481a-8bab-a27a57aa8de2] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-17T12:36:23.294027300Z, status=500, error=Internal Server Error, mes (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldHaveHttpSecurityConfiguredWithProperAuthorization" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.061">
-    <system-out><![CDATA[2025-12-15 12:53:13 - [] - [] - No token found in request
+  <testcase name="shouldHaveHttpSecurityConfiguredWithProperAuthorization" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.105">
+    <system-out><![CDATA[2025-12-17 18:06:23 - [] - [] - No token found in request
 ]]></system-out>
   </testcase>
-  <testcase name="shouldRequireAdminRoleForActuatorEndpoints" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.04">
-    <system-out><![CDATA[2025-12-15 12:53:13 - [] - [] - No token found in request
+  <testcase name="shouldRequireAdminRoleForActuatorEndpoints" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.073">
+    <system-out><![CDATA[2025-12-17 18:06:23 - [] - [] - No token found in request
 ]]></system-out>
   </testcase>
-  <testcase name="shouldPermitAuthEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.165">
-    <system-out><![CDATA[2025-12-15 12:53:13 - [7265a131-7245-42bb-8f96-ac9427c763a4] - [anonymous] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-15 12:53:13 - [7265a131-7245-42bb-8f96-ac9427c763a4] - [anonymous] - Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@598c23ad]
-2025-12-15 12:53:13 - [7265a131-7245-42bb-8f96-ac9427c763a4] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-15 12:53:13 - [7265a131-7245-42bb-8f96-ac9427c763a4] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-15T07:23:13.686364900Z, status=400, error=Bad Request, message=Valid (truncated)...]
+  <testcase name="shouldPermitAuthEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.252">
+    <system-out><![CDATA[2025-12-17 18:06:23 - [e2b5e81a-5045-47f5-8468-3ca763e4afc8] - [anonymous] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-17 18:06:24 - [e2b5e81a-5045-47f5-8468-3ca763e4afc8] - [anonymous] - Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@589c341d]
+2025-12-17 18:06:24 - [e2b5e81a-5045-47f5-8468-3ca763e4afc8] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
+2025-12-17 18:06:24 - [e2b5e81a-5045-47f5-8468-3ca763e4afc8] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-17T12:36:24.124279600Z, status=400, error=Bad Request, message=Valid (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCreateSecurityEvaluationContextExtionBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.007"/>
-  <testcase name="shouldHaveJwtFilterConfiguredInSecurityFilterChain" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.014">
-    <system-out><![CDATA[2025-12-15 12:53:13 - [] - [] - No token found in request
+  <testcase name="shouldCreateSecurityEvaluationContextExtionBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.012"/>
+  <testcase name="shouldHaveJwtFilterConfiguredInSecurityFilterChain" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.024">
+    <system-out><![CDATA[2025-12-17 18:06:24 - [] - [] - No token found in request
 ]]></system-out>
   </testcase>
-  <testcase name="shouldSupportMultipleEncodingAttempts" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.441"/>
-  <testcase name="shouldAllowAuthenticatedUsersToAccessGreeting" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.032">
-    <system-out><![CDATA[2025-12-15 12:53:14 - [] - [] - No token found in request
-2025-12-15 12:53:14 - [936a7795-b3f3-44d0-85cb-1c6f8dceb9aa] - [user] - Mapped to com.starter.springboot.controller.GreetingController#hello()
-2025-12-15 12:53:14 - [936a7795-b3f3-44d0-85cb-1c6f8dceb9aa] - [user] - Using 'application/json', given [*/*] and supported [application/json]
-2025-12-15 12:53:14 - [936a7795-b3f3-44d0-85cb-1c6f8dceb9aa] - [user] - Writing [{message=Hello World!, timestamp=2025-12-15T07:23:14.190064600Z, status=SUCCESS}]
+  <testcase name="shouldSupportMultipleEncodingAttempts" classname="com.starter.springboot.config.SecurityConfigurationTest" time="1.073"/>
+  <testcase name="shouldAllowAuthenticatedUsersToAccessGreeting" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.088">
+    <system-out><![CDATA[2025-12-17 18:06:25 - [] - [] - No token found in request
+2025-12-17 18:06:25 - [88f2021f-209e-4b2d-b918-587abb99ea3f] - [user] - Mapped to com.starter.springboot.controller.GreetingController#hello()
+2025-12-17 18:06:25 - [88f2021f-209e-4b2d-b918-587abb99ea3f] - [user] - Using 'application/json', given [*/*] and supported [application/json]
+2025-12-17 18:06:25 - [88f2021f-209e-4b2d-b918-587abb99ea3f] - [user] - Writing [{message=Hello World!, timestamp=2025-12-17T12:36:25.335948400Z, status=SUCCESS}]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldEncodePasswordUsingBCryptPasswordEncoder" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.207"/>
-  <testcase name="shouldHaveStatelessSessionPolicyConfigured" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.008"/>
-  <testcase name="shouldConstructorInjectAllRequiredDependencies" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.006"/>
-  <testcase name="shouldPermitActuatorEndpointsWithAdminRole" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.634">
-    <system-out><![CDATA[2025-12-15 12:53:14 - [] - [] - No token found in request
-2025-12-15 12:53:14 - [a84cd06c-7f6e-4d67-a0a0-d6500949ced7] - [user] - Mapped to Actuator web endpoint 'health'
-2025-12-15 12:53:14 - [a84cd06c-7f6e-4d67-a0a0-d6500949ced7] - [user] - Read "application/octet-stream" to []
-2025-12-15 12:53:15 - [a84cd06c-7f6e-4d67-a0a0-d6500949ced7] - [user] - Using 'application/vnd.spring-boot.actuator.v3+json', given [*/*] and supported [application/vnd.spring-boot.actuator.v3+json, application/vnd.spring-boot.actuator.v2+json, application/json]
-2025-12-15 12:53:15 - [a84cd06c-7f6e-4d67-a0a0-d6500949ced7] - [user] - Writing [org.springframework.boot.actuate.health.SystemHealth@247b411d]
+  <testcase name="shouldEncodePasswordUsingBCryptPasswordEncoder" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.511"/>
+  <testcase name="shouldHaveStatelessSessionPolicyConfigured" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.007"/>
+  <testcase name="shouldConstructorInjectAllRequiredDependencies" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.011"/>
+  <testcase name="shouldPermitActuatorEndpointsWithAdminRole" classname="com.starter.springboot.config.SecurityConfigurationTest" time="1.347">
+    <system-out><![CDATA[2025-12-17 18:06:25 - [] - [] - No token found in request
+2025-12-17 18:06:25 - [8467702b-e1b0-499f-889e-46be8fcd5429] - [user] - Mapped to Actuator web endpoint 'health'
+2025-12-17 18:06:25 - [8467702b-e1b0-499f-889e-46be8fcd5429] - [user] - Read "application/octet-stream" to []
+2025-12-17 18:06:27 - [] - [] - Redis health check failed
+org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.translateException(LettuceConnectionFactory.java:1795)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1726)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1528)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.lambda$getConnection$0(LettuceConnectionFactory.java:1508)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.doInLock(LettuceConnectionFactory.java:1469)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1505)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getSharedReactiveConnection(LettuceConnectionFactory.java:1216)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:1091)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:118)
+	at reactor.core.publisher.MonoSupplier.call(MonoSupplier.java:67)
+	at reactor.core.publisher.FluxSubscribeOnCallable$CallableSubscribeOnSubscription.run(FluxSubscribeOnCallable.java:228)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
+	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: org.springframework.data.redis.connection.PoolException: Could not get a resource from the pool
+	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.getConnection(LettucePoolingConnectionProvider.java:104)
+	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1724)
+	... 16 common frames omitted
+Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to localhost/<unresolved>:6379
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:78)
+	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:56)
+	at io.lettuce.core.AbstractRedisClient.getConnection(AbstractRedisClient.java:350)
+	at io.lettuce.core.RedisClient.connect(RedisClient.java:215)
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.lambda$getConnection$1(StandaloneConnectionProvider.java:112)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.getConnection(StandaloneConnectionProvider.java:112)
+	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.lambda$getConnection$0(LettucePoolingConnectionProvider.java:93)
+	at io.lettuce.core.support.ConnectionPoolSupport$RedisPooledObjectFactory.create(ConnectionPoolSupport.java:211)
+	at io.lettuce.core.support.ConnectionPoolSupport$RedisPooledObjectFactory.create(ConnectionPoolSupport.java:201)
+	at org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:71)
+	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:566)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:306)
+	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:233)
+	at io.lettuce.core.support.ConnectionPoolSupport$1.borrowObject(ConnectionPoolSupport.java:122)
+	at io.lettuce.core.support.ConnectionPoolSupport$1.borrowObject(ConnectionPoolSupport.java:117)
+	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.getConnection(LettucePoolingConnectionProvider.java:99)
+	... 17 common frames omitted
+Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: getsockopt: localhost/127.0.0.1:6379
+Caused by: java.net.ConnectException: Connection refused: getsockopt
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:973)
+	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:337)
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:335)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:776)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
+	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+2025-12-17 18:06:27 - [8467702b-e1b0-499f-889e-46be8fcd5429] - [user] - Using 'application/vnd.spring-boot.actuator.v3+json', given [*/*] and supported [application/vnd.spring-boot.actuator.v3+json, application/vnd.spring-boot.actuator.v2+json, application/json]
+2025-12-17 18:06:27 - [8467702b-e1b0-499f-889e-46be8fcd5429] - [user] - Writing [org.springframework.boot.actuate.health.SystemHealth@4db4ec6a]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldPermitSwaggerEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.939">
-    <system-out><![CDATA[2025-12-15 12:53:15 - [] - [] - No token found in request
-2025-12-15 12:53:15 - [b5bbde0e-5fc2-4e3c-b1dd-e90bcaff123b] - [anonymous] - Mapped to org.springdoc.webmvc.api.OpenApiWebMvcResource#openapiJson(HttpServletRequest, String, Locale)
-2025-12-15 12:53:15 - [b5bbde0e-5fc2-4e3c-b1dd-e90bcaff123b] - [anonymous] - Init duration for springdoc-openapi is: 873 ms
-2025-12-15 12:53:15 - [b5bbde0e-5fc2-4e3c-b1dd-e90bcaff123b] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json]
-2025-12-15 12:53:15 - [b5bbde0e-5fc2-4e3c-b1dd-e90bcaff123b] - [anonymous] - Writing [{123, 34, 111, 112, 101, 110, 97, 112, 105, 34, 58, 34, 51, 46, 48, 46, 49, 34, 44, 34, 105, 110, 10 (truncated)...]
+  <testcase name="shouldPermitSwaggerEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="2.254">
+    <system-out><![CDATA[2025-12-17 18:06:27 - [] - [] - No token found in request
+2025-12-17 18:06:27 - [a848c035-7fff-4a2f-ad19-b65445cb409f] - [anonymous] - Mapped to org.springdoc.webmvc.api.OpenApiWebMvcResource#openapiJson(HttpServletRequest, String, Locale)
+2025-12-17 18:06:29 - [a848c035-7fff-4a2f-ad19-b65445cb409f] - [anonymous] - Init duration for springdoc-openapi is: 2106 ms
+2025-12-17 18:06:29 - [a848c035-7fff-4a2f-ad19-b65445cb409f] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json]
+2025-12-17 18:06:29 - [a848c035-7fff-4a2f-ad19-b65445cb409f] - [anonymous] - Writing [{123, 34, 111, 112, 101, 110, 97, 112, 105, 34, 58, 34, 51, 46, 48, 46, 49, 34, 44, 34, 105, 110, 10 (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDenyUnauthenticatedAccessToProtectedApiEndpoints" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.011">
-    <system-out><![CDATA[2025-12-15 12:53:16 - [] - [] - No token found in request
+  <testcase name="shouldDenyUnauthenticatedAccessToProtectedApiEndpoints" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.051">
+    <system-out><![CDATA[2025-12-17 18:06:29 - [] - [] - No token found in request
 ]]></system-out>
   </testcase>
-  <testcase name="shouldHaveCsrfProtectionDisabled" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.014">
-    <system-out><![CDATA[2025-12-15 12:53:16 - [121bffd7-c192-4b9d-b91f-899b3b7aa91a] - [anonymous] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-15 12:53:16 - [121bffd7-c192-4b9d-b91f-899b3b7aa91a] - [anonymous] - Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@7f95dc2]
-2025-12-15 12:53:16 - [121bffd7-c192-4b9d-b91f-899b3b7aa91a] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-15 12:53:16 - [121bffd7-c192-4b9d-b91f-899b3b7aa91a] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-15T07:23:16.032828300Z, status=400, error=Bad Request, message=Valid (truncated)...]
+  <testcase name="shouldHaveCsrfProtectionDisabled" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.035">
+    <system-out><![CDATA[2025-12-17 18:06:29 - [5b1773f7-27ca-42f1-a682-38096898e619] - [anonymous] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
+2025-12-17 18:06:29 - [5b1773f7-27ca-42f1-a682-38096898e619] - [anonymous] - Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@41143491]
+2025-12-17 18:06:29 - [5b1773f7-27ca-42f1-a682-38096898e619] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
+2025-12-17 18:06:29 - [5b1773f7-27ca-42f1-a682-38096898e619] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-17T12:36:29.594526800Z, status=400, error=Bad Request, message=Valid (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldEnableMethodSecurityWithPrePostAndSecuredEnabled" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.005"/>
-  <testcase name="shouldCreateAuthenticationManagerBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.005"/>
-  <testcase name="shouldHaveFrameOptionsDisabledForH2ConsoleCompatibility" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.015">
-    <system-out><![CDATA[2025-12-15 12:53:16 - [] - [] - No token found in request
-2025-12-15 12:53:16 - [3a4c7d56-d556-48ed-a9ed-fae0c8d7c5ca] - [anonymous] - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
-2025-12-15 12:53:16 - [3a4c7d56-d556-48ed-a9ed-fae0c8d7c5ca] - [anonymous] - Resource not found
-2025-12-15 12:53:16 - [3a4c7d56-d556-48ed-a9ed-fae0c8d7c5ca] - [anonymous] - Unhandled exception: NoResourceFoundException - No static resource .
-2025-12-15 12:53:16 - [3a4c7d56-d556-48ed-a9ed-fae0c8d7c5ca] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-15 12:53:16 - [3a4c7d56-d556-48ed-a9ed-fae0c8d7c5ca] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-15T07:23:16.061833900Z, status=500, error=Internal Server Error, mes (truncated)...]
+  <testcase name="shouldEnableMethodSecurityWithPrePostAndSecuredEnabled" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.013"/>
+  <testcase name="shouldCreateAuthenticationManagerBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.015"/>
+  <testcase name="shouldHaveFrameOptionsDisabledForH2ConsoleCompatibility" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.034">
+    <system-out><![CDATA[2025-12-17 18:06:29 - [] - [] - No token found in request
+2025-12-17 18:06:29 - [57f45650-cf70-4c5a-9493-fc8f13fb8f92] - [anonymous] - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
+2025-12-17 18:06:29 - [57f45650-cf70-4c5a-9493-fc8f13fb8f92] - [anonymous] - Resource not found
+2025-12-17 18:06:29 - [57f45650-cf70-4c5a-9493-fc8f13fb8f92] - [anonymous] - Unhandled exception: NoResourceFoundException - No static resource .
+2025-12-17 18:06:29 - [57f45650-cf70-4c5a-9493-fc8f13fb8f92] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
+2025-12-17 18:06:29 - [57f45650-cf70-4c5a-9493-fc8f13fb8f92] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-17T12:36:29.670074700Z, status=500, error=Internal Server Error, mes (truncated)...]
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCreatePasswordEncoderBeanAsBCryptPasswordEncoder" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.006"/>
-  <testcase name="shouldConfigureExceptionHandlingWithCustomAuthenticationEntryPoint" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.009">
-    <system-out><![CDATA[2025-12-15 12:53:16 - [] - [] - No token found in request
+  <testcase name="shouldCreatePasswordEncoderBeanAsBCryptPasswordEncoder" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.016"/>
+  <testcase name="shouldConfigureExceptionHandlingWithCustomAuthenticationEntryPoint" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.025">
+    <system-out><![CDATA[2025-12-17 18:06:29 - [] - [] - No token found in request
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCreateSecurityFilterChainConfiguration" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.004"/>
+  <testcase name="shouldCreateSecurityFilterChainConfiguration" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.011"/>
 </testsuite>

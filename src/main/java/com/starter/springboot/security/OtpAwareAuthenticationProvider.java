@@ -8,6 +8,7 @@ import com.starter.springboot.exception.UserNotActivatedException;
 import com.starter.springboot.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -105,7 +106,7 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (RedisConnectionFailureException ex) {
             log.warn("Redis unavailable: {}", ex.getMessage());
         }
 
@@ -141,7 +142,7 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
         return new CachedUser(
                 user.getId(),
                 user.getUsername(),
-                null,
+                user.getPassword(), // Store password hash in cache
                 user.getEmail(),
                 user.getEnabled(),
                 user.getIsOtpRequired(),
@@ -179,9 +180,9 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
             log.warn("User '{}' is not activated", normalizedUsername);
             throw new UserNotActivatedException("User account is not activated");
         }
-        
-        if (user.getAuthType() != null && 
-            user.getAuthType().toString().equals("GOOGLE_OAUTH") && 
+
+        if (user.getAuthType() != null &&
+            user.getAuthType().toString().equals("GOOGLE_OAUTH") &&
             !Boolean.TRUE.equals(user.getPasswordSet())) {
             log.warn("Google OAuth user '{}' has not set password yet", normalizedUsername);
             throw new BadCredentialsException("Please set your password first before signing in with email/password");
@@ -201,18 +202,16 @@ public class OtpAwareAuthenticationProvider implements AuthenticationProvider {
     }
 
     private List<GrantedAuthority> buildAuthorities(User user) {
-        List<GrantedAuthority> list = new ArrayList<>();
-        // DomainUserDetails reads role/authority names later; user may not have full entities when loaded from cache
-        try {
-            if (Objects.nonNull(user.getRole()) && Objects.nonNull(user.getRole().getName())) {
-                list.add(new SimpleGrantedAuthority(user.getRole().getName()));
-            }
-        } catch (Exception ignored) {}
-        try {
-            if (Objects.nonNull(user.getAuthority()) && Objects.nonNull(user.getAuthority().getName())) {
-                list.add(new SimpleGrantedAuthority(user.getAuthority().getName()));
-            }
-        } catch (Exception ignored) {}
-        return list;
+        List<GrantedAuthority> authorities = new ArrayList<>();
+
+        if (user.getRole() != null && user.getRole().getName() != null) {
+            authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+        }
+
+        if (user.getAuthority() != null && user.getAuthority().getName() != null) {
+            authorities.add(new SimpleGrantedAuthority(user.getAuthority().getName()));
+        }
+
+        return authorities;
     }
 }

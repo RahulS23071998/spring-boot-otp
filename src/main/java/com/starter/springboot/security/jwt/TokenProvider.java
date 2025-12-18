@@ -211,6 +211,7 @@ public class TokenProvider implements ITokenProvider {
         long refreshTokenExpirationSeconds = jwtProperties.getRefreshExpiration();
         if (Objects.nonNull(userDetails.getUserId())) {
             try {
+                refreshTokenService.revokeAllUserRefreshTokens(userDetails.getUserId());
                 RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserId(), refreshTokenExpirationSeconds);
                 refreshTokenValue = refreshToken.getToken();
             } catch (Exception e) {
@@ -259,6 +260,7 @@ public class TokenProvider implements ITokenProvider {
         String refreshTokenValue = null;
         long refreshTokenExpirationSeconds = jwtProperties.getRefreshExpiration();
         try {
+            refreshTokenService.revokeAllUserRefreshTokens(tokenData.user().getId());
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(tokenData.user().getId(), refreshTokenExpirationSeconds);
             refreshTokenValue = refreshToken.getToken();
         } catch (Exception e) {

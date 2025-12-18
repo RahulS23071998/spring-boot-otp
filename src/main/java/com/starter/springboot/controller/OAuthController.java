@@ -183,6 +183,8 @@ public class OAuthController {
 
             SecurityContextHolder.clearContext();
 
+            refreshTokenService.revokeAllUserRefreshTokens(user.getId());
+
             JWTToken token = tokenProvider.createAccessTokenAfterVerifiedOtp(user.getUsername(), googleTokenDTO.getRememberMe());
             RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(), tokenProvider.getRefreshTokenValidityInSeconds());
 

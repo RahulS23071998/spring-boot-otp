@@ -7,6 +7,7 @@ import com.starter.springboot.dto.LoginDTO;
 import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
+import com.starter.springboot.service.ILoginRateLimiter;
 import com.starter.springboot.service.LocalizationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +18,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -48,13 +50,16 @@ public class AuthenticationController {
     private final ITokenProvider tokenProvider;
     private final AuthenticationManager authenticationManager;
     private final LocalizationService localizationService;
+    private final ILoginRateLimiter loginRateLimiter;
 
     public AuthenticationController(ITokenProvider tokenProvider,
                                     AuthenticationManager authenticationManager,
-                                    LocalizationService localizationService) {
+                                    LocalizationService localizationService,
+                                    ILoginRateLimiter loginRateLimiter) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
         this.localizationService = localizationService;
+        this.loginRateLimiter = loginRateLimiter;
     }
 
     @PostMapping(value = ApplicationConstants.AUTHENTICATE_ENDPOINT)
@@ -104,6 +109,15 @@ public class AuthenticationController {
                       "message": "Account locked"
                     }
                     """))),
+        @ApiResponse(responseCode = "429", description = "Too many login attempts",
+            content = @Content(mediaType = "application/json", 
+                examples = @ExampleObject(value = """
+                    {
+                      "username": "admin",
+                      "success": false,
+                      "message": "Too many login attempts. Please try again later."
+                    }
+                    """))),
         @ApiResponse(responseCode = "400", description = "Invalid request format or validation error")
     })
     public ResponseEntity<AuthResponseDTO> authorize(@Valid @RequestBody LoginDTO loginDTO) {
@@ -112,11 +126,21 @@ public class AuthenticationController {
         AuthResponseBuilder responseBuilder = AuthResponseBuilder.withUsername(loginDTO.getUsername())
             .context(loginDTO.getRememberMe(), loginDTO.getClientId(), loginDTO.getDeviceId());
 
+        // Check rate limit
+        if (!loginRateLimiter.isAllowed(loginDTO.getUsername())) {
+            LOGGER.warn("Login rate limit exceeded for user: {}", loginDTO.getUsername());
+            return responseBuilder.failedResponse(HttpStatus.TOO_MANY_REQUESTS, "Too many login attempts. Please try again later.");
+        }
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginDTO.getUsername(), loginDTO.getPassword()
         );
         try {
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            
+            // Record successful attempt (counts towards rate limit to prevent token flooding)
+            loginRateLimiter.recordAttempt(loginDTO.getUsername());
+            
             TokenCreationResponse createResponse = tokenProvider.createToken(authentication, loginDTO.getRememberMe());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -132,9 +156,13 @@ public class AuthenticationController {
             throw ex;
         } catch (BadCredentialsException ex) {
             LOGGER.warn("Authentication failed for user: {} due to bad credentials", loginDTO.getUsername());
+            // Record failed attempt
+            loginRateLimiter.recordAttempt(loginDTO.getUsername());
             return responseBuilder.unauthorizedResponse(localizationService.getMessage("auth.invalid_credentials"));
         } catch (AuthenticationException ex) {
             LOGGER.warn("Authentication failed for user: {}: {}", loginDTO.getUsername(), ex.getMessage());
+            // Record failed attempt
+            loginRateLimiter.recordAttempt(loginDTO.getUsername());
             return responseBuilder.forbiddenResponse(ex.getMessage());
         }
     }

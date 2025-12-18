@@ -21,6 +21,10 @@ public final class OtpGenerationResult {
         return new OtpGenerationResult(false, String.format("Please wait %d seconds before requesting a new OTP.", Math.max(1, remainingSeconds)));
     }
 
+    public static OtpGenerationResult googleRateLimited(int remainingSeconds) {
+        return new OtpGenerationResult(false, String.format("Please wait %d seconds before retrying authentication.", Math.max(1, remainingSeconds)));
+    }
+
     public static OtpGenerationResult maxAttemptsExceeded() {
         return new OtpGenerationResult(false, "Maximum OTP attempts exceeded. Try again later.");
     }

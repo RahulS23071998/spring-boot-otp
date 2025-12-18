@@ -49,7 +49,10 @@ public class JWTFilter extends GenericFilterBean {
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
             String requestUri = httpServletRequest.getRequestURI();
             
-            if (requestUri.startsWith("/auth/")) {
+            if (requestUri.startsWith("/auth/authenticate") || 
+                requestUri.startsWith("/auth/verify") || 
+                requestUri.startsWith("/auth/refresh") || 
+                requestUri.startsWith("/auth/google")) {
                 log.debug("Skipping JWT validation for auth endpoint: {}", requestUri);
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
