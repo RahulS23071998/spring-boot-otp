@@ -6,7 +6,6 @@ import com.starter.springboot.service.IEmailService;
 import com.starter.springboot.service.IOtpNotificationService;
 import com.starter.springboot.service.ISmsService;
 import com.starter.springboot.service.LocalizationService;
-import io.jsonwebtoken.lang.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
 
     private final LocalizationService localizationService;
 
-    public OtpNotificationServiceImpl(IEmailService emailService, 
+    public OtpNotificationServiceImpl(IEmailService emailService,
                                       ISmsService smsService,
                                       LocalizationService localizationService) {
         this.emailService = emailService;
@@ -61,19 +60,31 @@ public class OtpNotificationServiceImpl implements IOtpNotificationService {
             return CompletableFuture.completedFuture(false);
         }
 
-        List<String> recipients = List.of(userEmail);
-        EmailDTO emailDTO = new EmailDTO();
-        emailDTO.setSubject(EmailConstants.OTP_EMAIL_SUBJECT);
-        emailDTO.setBody(EmailConstants.OTP_EMAIL_BODY_PREFIX + otpValue);
-        emailDTO.setRecipients(recipients);
-
         try {
-            String mobileNumber = "+91" + "9677210944";
-            if (mobileNumber.matches("^(\\+91)?[6-9][0-9]{9}$")) {
-                 smsService.sendSmsAsync(mobileNumber, "Your OTP is: " + otpValue);
-           }
+            EmailDTO emailDTO = new EmailDTO();
+            emailDTO.setRecipients(List.of(userEmail));
+            emailDTO.setSubject(EmailConstants.OTP_EMAIL_SUBJECT);
+            emailDTO.setHtml(true);
 
-            return emailService.sendSimpleMessageAsync(emailDTO);
+            // Build verify URL
+            String verifyUrl = String.format(EmailConstants.OTP_VERIFY_URL_TEMPLATE, userEmail);
+
+            // Build OTP content
+            String otpContent = String.format(EmailConstants.OTP_EMAIL_CONTENT_TEMPLATE, otpValue, verifyUrl);
+
+            // Wrap with email wrapper
+            String finalHtml = String.format(EmailConstants.EMAIL_WRAPPER_TEMPLATE, EmailConstants.OTP_EMAIL_SUBJECT, otpContent);
+
+            emailDTO.setBody(finalHtml);
+
+            String mobileNumber = "+919677210944"; //this is whitelisted in twilio
+            if (mobileNumber.matches("^(\\+91|91)?[6-9][0-9]{9}$")) {
+                smsService.sendSmsAsync(mobileNumber, "Your OTP is: " + otpValue);
+            }
+
+            // Send HTML email
+            return emailService.sendHtmlMessageAsync(emailDTO);
+
         } catch (Exception e) {
             LOGGER.error("Error initiating OTP email dispatch to: {}", userEmail, e);
             return CompletableFuture.completedFuture(false);

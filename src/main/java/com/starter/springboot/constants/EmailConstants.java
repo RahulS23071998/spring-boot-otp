@@ -17,6 +17,33 @@ public final class EmailConstants {
     // OTP Email Content
     public static final String OTP_EMAIL_SUBJECT = "Spring Boot OTP Password.";
     public static final String OTP_EMAIL_BODY_PREFIX = "OTP Password: ";
+    public static final String OTP_VERIFY_URL_TEMPLATE = "http://localhost:8080/auth/verify-otp?email=%s";
+    public static final String OTP_EMAIL_CONTENT_TEMPLATE = """
+            <p style="color:white; font-size:15px; margin:0 0 10px 0;">
+                Hello,
+            </p>
+            
+            <p style="color:white; font-size:15px; margin:0 0 15px 0;">
+                Your One-Time Password (OTP) is:
+            </p>
+            
+            <p style="color:#0a6ed1; font-size:24px; font-weight:bold; letter-spacing:3px; margin:0 0 25px 0;">
+                %s
+            </p>
+            
+            <p style="text-align:center; margin:30px 0;">
+                <a href="%s"
+                   style="background-color:#0a6ed1; color:white; padding:12px 24px;
+                   text-decoration:none; border-radius:5px; font-size:16px; display:inline-block;">
+                    Verify OTP
+                </a>
+            </p>
+            
+            <p style="color:#cccccc; font-size:12px; margin-top:30px;">
+                This OTP is valid for a limited time. Do not share it with anyone.
+            </p>
+            """;
+
 
     // Email Validation Messages
     public static final String NO_RECIPIENTS_PROVIDED_MESSAGE = "No recipients provided for email with subject: {}";
@@ -42,16 +69,19 @@ public final class EmailConstants {
                 <meta charset="UTF-8">
                 <title>%s</title>
             </head>
+            
             <body style="margin:0; padding:0; background-color:#f3f3f3; font-family:Arial, sans-serif;">
             
-            <table width="100%%" cellpadding="0" cellspacing="0" style="background-color:#f3f3f3; padding:30px 0;">
+            <table width="100%%" cellpadding="0" cellspacing="0" bgcolor="#f3f3f3">
                 <tr>
-                    <td align="center">
+                    <!-- CENTERING MUST HAPPEN HERE -->
+                    <td align="center" style="padding:24px 12px;">
             
-                        <!-- MAIN CARD -->
-                        <table width="600" cellpadding="0" cellspacing="0" style="background-color:#1c1c1e; border-radius:8px; padding:30px;">
+                        <!-- INNER CARD -->
+                        <table width="100%%" cellpadding="0" cellspacing="0"
+                               style="max-width:600px; background-color:#1c1c1e; border-radius:8px;">
                             <tr>
-                                <td>
+                                <td style="padding:30px;">
             
                                     <!-- HEADER -->
                                     <h2 style="color:white; font-size:22px; margin:0 0 20px 0;">

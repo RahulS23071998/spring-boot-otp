@@ -3,7 +3,6 @@ package com.starter.springboot.service;
 import com.starter.springboot.constants.EmailConstants;
 import com.starter.springboot.constants.OtpConstants;
 import com.starter.springboot.dto.EmailDTO;
-import com.starter.springboot.service.LocalizationService;
 import com.starter.springboot.service.impl.OtpNotificationServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -42,6 +41,8 @@ class OtpNotificationServiceImplTest {
     void setUp() {
         // Setup lenient mocks for async operations
         lenient().when(emailService.sendSimpleMessageAsync(any(EmailDTO.class)))
+                .thenReturn(CompletableFuture.completedFuture(true));
+        lenient().when(emailService.sendHtmlMessageAsync(any(EmailDTO.class)))
                 .thenReturn(CompletableFuture.completedFuture(true));
         mockLocalizationMessages();
     }
@@ -95,11 +96,12 @@ class OtpNotificationServiceImplTest {
         // Then
         assertTrue(result.join());
         ArgumentCaptor<EmailDTO> emailCaptor = ArgumentCaptor.forClass(EmailDTO.class);
-        verify(emailService).sendSimpleMessageAsync(emailCaptor.capture());
+        verify(emailService).sendHtmlMessageAsync(emailCaptor.capture());
 
         EmailDTO sentEmail = emailCaptor.getValue();
         assertEquals(EmailConstants.OTP_EMAIL_SUBJECT, sentEmail.getSubject());
-        assertEquals(EmailConstants.OTP_EMAIL_BODY_PREFIX + otpValue, sentEmail.getBody());
+        assertTrue(sentEmail.getBody().contains(otpValue.toString()));
+        assertTrue(sentEmail.getBody().contains("Verify OTP") || sentEmail.getBody().contains("Verify"));
         assertEquals(List.of(userEmail), sentEmail.getRecipients());
     }
 
@@ -143,7 +145,8 @@ class OtpNotificationServiceImplTest {
         String userEmail = "test@example.com";
         Integer otpValue = 123456;
 
-        when(emailService.sendSimpleMessageAsync(any(EmailDTO.class)))
+        // Stub the HTML sender to throw since implementation uses sendHtmlMessageAsync
+        when(emailService.sendHtmlMessageAsync(any(EmailDTO.class)))
                 .thenThrow(new RuntimeException("Email service error"));
 
         // When
@@ -151,7 +154,7 @@ class OtpNotificationServiceImplTest {
 
         // Then
         assertFalse(result.join());
-        verify(emailService).sendSimpleMessageAsync(any());
+        verify(emailService).sendHtmlMessageAsync(any());
     }
 
     @Test

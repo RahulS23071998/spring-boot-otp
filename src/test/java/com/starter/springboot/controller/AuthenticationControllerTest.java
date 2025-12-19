@@ -7,6 +7,7 @@ import com.starter.springboot.exception.OtpRequiredException;
 import com.starter.springboot.security.jwt.ITokenProvider;
 import com.starter.springboot.security.jwt.JWTToken;
 import com.starter.springboot.security.jwt.TokenCreationResponse;
+import com.starter.springboot.service.ILoginRateLimiter;
 import com.starter.springboot.service.LocalizationService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +51,9 @@ class AuthenticationControllerTest {
     private LocalizationService localizationService;
 
     @Mock
+    private ILoginRateLimiter loginRateLimiter;
+
+    @Mock
     private Authentication authentication;
 
     @InjectMocks
@@ -82,6 +86,9 @@ class AuthenticationControllerTest {
     private void mockLocalizationMessages() {
         lenient().when(localizationService.getMessage("auth.invalid_credentials"))
                 .thenReturn("Invalid credentials");
+        lenient().when(loginRateLimiter.isAllowed(any(String.class)))
+                .thenReturn(true);
+        lenient().doNothing().when(loginRateLimiter).recordAttempt(any(String.class));
     }
 
     @Test

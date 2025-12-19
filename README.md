@@ -32,6 +32,9 @@ A comprehensive Spring Boot application demonstrating secure One-Time Password (
 - **Email Service** - SMTP email integration for OTP delivery and notifications
 - **Password Reset** - Secure password reset with OTP verification
 - **Role-Based Access Control** - Authority and role-based permissions system
+- **Secure Logout** - Endpoint to invalidate current session and blacklist token
+- **Global Logout** - Endpoint to revoke all sessions and refresh tokens for a user
+- **Enhanced Token Security** - Automatic revocation of old refresh tokens upon new login
 - **Embedded Redis** - Development-ready embedded Redis with production Redis support
 - **Comprehensive Auditing** - OTP audit trails and retention policies
 - **Rate Limiting** - OTP generation rate limiting and password set attempt limiting

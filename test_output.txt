@@ -1,0 +1,72 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.starter:spring-boot >-----------------------
+[INFO] Building spring-boot 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[WARNING] The artifact org.hibernate:hibernate-jpamodelgen:jar:6.2.5.Final has been relocated to org.hibernate.orm:hibernate-jpamodelgen:jar:6.2.5.Final
+[INFO] 
+[INFO] --- spring-boot:3.2.3:build-info (default) @ spring-boot ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ spring-boot ---
+[INFO] Copying 17 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ spring-boot ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ spring-boot ---
+[INFO] skip non existing resourceDirectory C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ spring-boot ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ spring-boot ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.starter.springboot.controller.AuthenticationControllerTest
+13:02:17.530 [main] INFO org.hibernate.validator.internal.util.Version -- HV000001: Hibernate Validator 8.0.1.Final
+13:02:18.605 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+13:02:18.605 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+13:02:18.614 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 7 ms
+13:02:19.028 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
+13:02:19.037 [main] WARN com.starter.springboot.controller.AuthenticationController -- Authentication failed for user: diona.smith: Account locked
+13:02:19.231 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+13:02:19.231 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+13:02:19.232 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 1 ms
+13:02:19.247 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
+13:02:19.248 [main] WARN com.starter.springboot.controller.AuthenticationController -- Authentication failed for user: diona.smith due to bad credentials
+13:02:19.277 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+13:02:19.278 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+13:02:19.278 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+13:02:19.294 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
+13:02:19.299 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication completed for user: diona.smith
+13:02:19.331 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+13:02:19.331 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+13:02:19.331 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+13:02:19.346 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
+13:02:19.347 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication completed for user: diona.smith
+13:02:19.383 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+13:02:19.384 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+13:02:19.384 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+13:02:19.404 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
+13:02:19.406 [main] INFO com.starter.springboot.controller.AuthenticationController -- OTP required for user: diona.smith
+13:02:19.442 [main] INFO org.springframework.mock.web.MockServletContext -- Initializing Spring TestDispatcherServlet ''
+13:02:19.442 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Initializing Servlet ''
+13:02:19.443 [main] INFO org.springframework.test.web.servlet.TestDispatcherServlet -- Completed initialization in 0 ms
+13:02:19.454 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication attempt for user: diona.smith
+13:02:19.455 [main] INFO com.starter.springboot.controller.AuthenticationController -- Authentication completed for user: diona.smith
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.656 s -- in com.starter.springboot.controller.AuthenticationControllerTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  13.201 s
+[INFO] Finished at: 2025-12-18T13:02:19+05:30
+[INFO] ------------------------------------------------------------------------

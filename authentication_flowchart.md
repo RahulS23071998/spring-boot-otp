@@ -17,17 +17,33 @@ flowchart TD
     H --> I["Cache DomainUserDetails: Redis otp:user:{username} 5min"]
     I --> J["Return OTP_PENDING: TokenCreationResponse.pendingOtp()"]
     F -->|No| K["createToken: Generate JWT via TokenProvider"]
-    K --> L["Generate JWT: TokenProvider.generateToken() HS256"]
+    K --> K1["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
+    K1 --> L["Generate JWT: TokenProvider.generateToken() HS256"]
     L --> M["Register JTI: Redis whitelist via IRedisTokenService.registerJti()"]
     M --> N["Return AUTHENTICATED: TokenCreationResponse.accepted() with JWT"]
     
+    %% ========== LOGOUT FLOW ==========
+    LogoutReq["Logout Request"] --> LogoutType{{"Logout Type"}}
+    LogoutType -->|Current Session| L1["POST /auth/logout"]
+    L1 --> L2["Extract JTI from Token"]
+    L2 --> L3["Blacklist Token: Redis blacklist"]
+    L3 --> L4["Clear Context: SecurityContextHolder.clearContext()"]
+    L4 --> L5["Return SUCCESS"]
+    
+    LogoutType -->|All Sessions| LA1["POST /auth/logout-all-sessions"]
+    LA1 --> LA2["Revoke All Refresh Tokens: DB"]
+    LA2 --> LA3["Clear Auth Cache: Redis"]
+    LA3 --> LA4["Blacklist Current Token"]
+    LA4 --> LA5["Return SUCCESS"]
+
     %% ========== OTP VERIFICATION FLOW ==========
     J --> O["User Enters OTP"]
     O --> P["verifyOtp: POST /auth/verify"]
     P --> Q["validateOTP: Check OTP via OtpService.validateOTP()"]
     Q --> R{{"OTP Valid?"}}
     R -->|Yes| S["createTokenAfterVerifiedOtp: Generate JWT post-OTP"]
-    S --> T["Retrieve Cached: DomainUserDetails from Redis"]
+    S --> S1["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
+    S1 --> T["Retrieve Cached: DomainUserDetails from Redis"]
     T --> U["Construct User: Build object from cached data"]
     U --> V["Generate JWT: TokenProvider.generateToken()"]
     V --> W["Register JTI: Redis whitelist"]
@@ -76,7 +92,8 @@ flowchart TD
     
     %% ========== GOOGLE OAUTH FLOW - RETURNING USER ==========
     B20 -->|Yes| B50["createAccessTokenAfterVerifiedOtp: Generate JWT"]
-    B50 --> B51["createRefreshToken: Generate refresh token"]
+    B50 --> B50A["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
+    B50A --> B51["createRefreshToken: Generate refresh token"]
     B51 --> B52["Return SUCCESS: JWT + Refresh Token<br/>with remember_me flag"]
     
     %% ========== PASSWORD CHANGE FLOW ==========
@@ -213,7 +230,11 @@ flowchart TD
 - New access token generated and returned
 - Seamless token renewal without re-authentication
 
-### 7. Password Change Flow
+### 7. Logout Flow
+- **Current Session**: `/auth/logout` invalidates current JWT via Redis blacklist
+- **All Sessions**: `/auth/logout-all-sessions` revokes all refresh tokens and clears caches
+
+### 8. Password Change Flow
 - User changes password: `PUT /api/users/public/password`
 - Current password validated
 - New password encoded with BCrypt

@@ -81,7 +81,7 @@ public class UserProvisioningService implements IUserProvisioningService {
         if (Objects.isNull(user.getIsOtpRequired())) {
             user.setIsOtpRequired(Boolean.TRUE);
         }
-        if (Objects.isNull(user.getPasswordSet())) {
+        if (Objects.isNull(user.getPasswordSet()) || Boolean.FALSE.equals(user.getPasswordSet())) {
             user.setPasswordSet(Boolean.TRUE);
         }
 
