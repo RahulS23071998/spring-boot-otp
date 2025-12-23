@@ -80,6 +80,9 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
     @Column(name = "password_set")
     private Boolean passwordSet = Boolean.FALSE;
 
+    @Column(name = "totp_secret", length = 255)
+    private String totpSecret;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = DatabaseConstants.ROLE_ID_COLUMN)
     private Role role;
@@ -214,5 +217,13 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
 
     public void setPasswordSet(Boolean passwordSet) {
         this.passwordSet = passwordSet;
+    }
+
+    public String getTotpSecret() {
+        return totpSecret;
+    }
+
+    public void setTotpSecret(String totpSecret) {
+        this.totpSecret = totpSecret;
     }
 }

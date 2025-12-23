@@ -8,6 +8,7 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\AuthCacheServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\RefreshTokenServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\PasswordSetupServiceTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\TotpServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\RedisTokenServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\EmailServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\OtpVerificationControllerTest.java
@@ -19,6 +20,7 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\repository\OtpAuditEntryRepositoryTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\OtpAuditRetentionServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\LogoutServiceTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\GoogleOAuthMfaControllerTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\security\jwt\TokenProviderTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\OtpAuditServiceImplTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\TokenRefreshControllerTest.java

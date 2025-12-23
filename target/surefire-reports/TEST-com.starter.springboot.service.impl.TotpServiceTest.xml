@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.config.SecurityConfigurationTest" time="17.387" tests="22" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.impl.TotpServiceTest" time="0.208" tests="13" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -72,208 +72,47 @@
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - %msg%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="shouldCreateOtpAwareAuthenticationProviderBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.082">
-    <system-out><![CDATA[16:25:43.310 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.starter.springboot.config.SecurityConfigurationTest]: SecurityConfigurationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-16:25:43.525 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.starter.springboot.Application for test class com.starter.springboot.config.SecurityConfigurationTest
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v3.2.3)
-
-2025-12-23 16:25:44 - [] - [] - Starting SecurityConfigurationTest using Java 21.0.9 with PID 31428 (started by Rahul.S in C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp)
-2025-12-23 16:25:44 - [] - [] - The following 1 profile is active: "dev"
-2025-12-23 16:25:44 - [] - [] - Loading source class com.starter.springboot.Application
-2025-12-23 16:25:44 - [] - [] - Refreshing org.springframework.web.context.support.GenericWebApplicationContext@408b87aa
-2025-12-23 16:25:46 - [] - [] - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-12-23 16:25:46 - [] - [] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-12-23 16:25:46 - [] - [] - @EnableAutoConfiguration was declared on a class in the package 'com.starter.springboot'. Automatic @Repository and @Entity scanning is enabled.
-2025-12-23 16:25:46 - [] - [] - Finished Spring Data repository scanning in 224 ms. Found 6 JPA repository interfaces.
-2025-12-23 16:25:46 - [] - [] - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-12-23 16:25:46 - [] - [] - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-12-23 16:25:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.AuthorityRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-23 16:25:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.OtpAuditEntryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-23 16:25:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.PasswordHistoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-23 16:25:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-23 16:25:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.RoleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-23 16:25:46 - [] - [] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.starter.springboot.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-12-23 16:25:46 - [] - [] - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
-2025-12-23 16:25:49 - [] - [] - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-12-23 16:25:49 - [] - [] - MySQL Local Connection - Starting...
-2025-12-23 16:25:50 - [] - [] - MySQL Local Connection - Added connection com.mysql.cj.jdbc.ConnectionImpl@2314f013
-2025-12-23 16:25:50 - [] - [] - MySQL Local Connection - Start completed.
-2025-12-23 16:25:50 - [] - [] - HHH90000025: MySQL8Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-12-23 16:25:50 - [] - [] - HHH90000026: MySQL8Dialect has been deprecated; use org.hibernate.dialect.MySQLDialect instead
-2025-12-23 16:25:51 - [] - [] - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-12-23 16:25:53 - [] - [] - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-12-23 16:25:54 - [] - [] - 20 mappings in 'requestMappingHandlerMapping'
-2025-12-23 16:25:55 - [] - [] - Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping'
-2025-12-23 16:25:55 - [] - [] - Exposing 10 endpoint(s) beneath base path '/actuator'
-2025-12-23 16:25:55 - [] - [] - Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@f0ced73, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2f152472, org.springframework.security.web.context.SecurityContextHolderFilter@3178f903, org.springframework.security.web.header.HeaderWriterFilter@5a931ba9, org.springframework.web.filter.CorsFilter@3e94fc76, org.springframework.security.web.authentication.logout.LogoutFilter@443d8d4d, com.starter.springboot.security.jwt.JWTFilter@469b55ae, com.starter.springboot.config.MDCFilter@37d9db26, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@176630ee, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4e9d3925, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2e145f7b, org.springframework.security.web.session.SessionManagementFilter@3829bb5, org.springframework.security.web.access.ExceptionTranslationFilter@56101f06, org.springframework.security.web.access.intercept.AuthorizationFilter@497dc589]
-2025-12-23 16:25:56 - [] - [] - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-12-23 16:25:57 - [] - [] - Mapping filters: webMvcObservationFilter urls=[/*] order=-2147483647, springSecurityFilterChain urls=[/*] order=-100, characterEncodingFilter urls=[/*] order=-2147483648, formContentFilter urls=[/*] order=-9900, requestContextFilter urls=[/*] order=-105, mdcFilter urls=[/*] order=2147483647
-2025-12-23 16:25:57 - [] - [] - Mapping servlets: 
-2025-12-23 16:25:57 - [] - [] - Filter 'characterEncodingFilter' configured for use
-2025-12-23 16:25:57 - [] - [] - Filter 'webMvcObservationFilter' configured for use
-2025-12-23 16:25:57 - [] - [] - Filter 'formContentFilter' configured for use
-2025-12-23 16:25:57 - [] - [] - Filter 'requestContextFilter' configured for use
-2025-12-23 16:25:57 - [] - [] - Filter 'springSecurityFilterChain' configured for use
-2025-12-23 16:25:57 - [] - [] - Initializing Spring TestDispatcherServlet ''
-2025-12-23 16:25:57 - [] - [] - Initializing Servlet ''
-2025-12-23 16:25:57 - [] - [] - Completed initialization in 2 ms
-2025-12-23 16:25:57 - [] - [] - Started SecurityConfigurationTest in 13.748 seconds (process running for 16.646)
-2025-12-23 16:25:57 - [] - [] - Application availability state LivenessState changed to CORRECT
-2025-12-23 16:25:57 - [] - [] - Application availability state ReadinessState changed to ACCEPTING_TRAFFIC
-]]></system-out>
-    <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Rahul.S\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar)
-WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
-WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
-WARNING: Dynamic loading of agents will be disallowed by default in a future release
-]]></system-err>
-  </testcase>
-  <testcase name="shouldPermitPublicApiEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.292">
-    <system-out><![CDATA[2025-12-23 16:25:57 - [] - [] - No token found in request
-2025-12-23 16:25:57 - [99bac3b4-bec2-4038-88a7-c2d2939b1d42] - [anonymous] - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
-2025-12-23 16:25:57 - [99bac3b4-bec2-4038-88a7-c2d2939b1d42] - [anonymous] - Resource not found
-2025-12-23 16:25:57 - [99bac3b4-bec2-4038-88a7-c2d2939b1d42] - [anonymous] - Unhandled exception: NoResourceFoundException - No static resource api/public/test.
-2025-12-23 16:25:57 - [99bac3b4-bec2-4038-88a7-c2d2939b1d42] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-23 16:25:57 - [99bac3b4-bec2-4038-88a7-c2d2939b1d42] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-23T10:55:57.902186500Z, status=500, error=Internal Server Error, mes (truncated)...]
+  <testcase name="generateQrCodeUrl_Success" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.089"/>
+  <testcase name="revokeTotpSecret_Success" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.004">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - TOTP secret revoked for user: user
 ]]></system-out>
   </testcase>
-  <testcase name="shouldHaveHttpSecurityConfiguredWithProperAuthorization" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.054">
-    <system-out><![CDATA[2025-12-23 16:25:58 - [] - [] - No token found in request
+  <testcase name="validateTotp_InvalidFormat" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.002">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - Invalid TOTP code format for user: user
 ]]></system-out>
   </testcase>
-  <testcase name="shouldRequireAdminRoleForActuatorEndpoints" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.029">
-    <system-out><![CDATA[2025-12-23 16:25:58 - [] - [] - No token found in request
+  <testcase name="generateQrCodeUrl_Failure" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.002">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - Failed to generate QR code URL: Cannot invoke "String.length()" because "s" is null
 ]]></system-out>
   </testcase>
-  <testcase name="shouldPermitAuthEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.155">
-    <system-out><![CDATA[2025-12-23 16:25:58 - [15a4c074-55e3-44c5-aaae-e48b4e625322] - [anonymous] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-23 16:25:58 - [15a4c074-55e3-44c5-aaae-e48b4e625322] - [anonymous] - Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@2d0529f2]
-2025-12-23 16:25:58 - [15a4c074-55e3-44c5-aaae-e48b4e625322] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-23 16:25:58 - [15a4c074-55e3-44c5-aaae-e48b4e625322] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-23T10:55:58.278865300Z, status=400, error=Bad Request, message=Valid (truncated)...]
+  <testcase name="saveTotpSecret_Success" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.003">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - TOTP secret saved for user: user
 ]]></system-out>
   </testcase>
-  <testcase name="shouldCreateSecurityEvaluationContextExtionBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.01"/>
-  <testcase name="shouldHaveJwtFilterConfiguredInSecurityFilterChain" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.018">
-    <system-out><![CDATA[2025-12-23 16:25:58 - [] - [] - No token found in request
+  <testcase name="validateTotp_NoSecret" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.004">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - TOTP secret not found for user: user
 ]]></system-out>
   </testcase>
-  <testcase name="shouldSupportMultipleEncodingAttempts" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.449"/>
-  <testcase name="shouldAllowAuthenticatedUsersToAccessGreeting" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.035">
-    <system-out><![CDATA[2025-12-23 16:25:58 - [] - [] - No token found in request
-2025-12-23 16:25:58 - [cad7ea14-e69b-4ff5-bd14-bad667ef49b9] - [user] - Mapped to com.starter.springboot.controller.GreetingController#hello()
-2025-12-23 16:25:58 - [cad7ea14-e69b-4ff5-bd14-bad667ef49b9] - [user] - Using 'application/json', given [*/*] and supported [application/json]
-2025-12-23 16:25:58 - [cad7ea14-e69b-4ff5-bd14-bad667ef49b9] - [user] - Writing [{message=Hello World!, timestamp=2025-12-23T10:55:58.798060300Z, status=SUCCESS}]
+  <testcase name="generateTotpSecret_Success" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.081"/>
+  <testcase name="saveTotpSecret_Exception" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.004">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - Failed to save TOTP secret for user user: Redis error
 ]]></system-out>
   </testcase>
-  <testcase name="shouldEncodePasswordUsingBCryptPasswordEncoder" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.159"/>
-  <testcase name="shouldHaveStatelessSessionPolicyConfigured" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.003"/>
-  <testcase name="shouldConstructorInjectAllRequiredDependencies" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.003"/>
-  <testcase name="shouldPermitActuatorEndpointsWithAdminRole" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.434">
-    <system-out><![CDATA[2025-12-23 16:25:58 - [] - [] - No token found in request
-2025-12-23 16:25:58 - [730df6f1-fb7c-47ae-819d-d4b73c64f71b] - [user] - Mapped to Actuator web endpoint 'health'
-2025-12-23 16:25:58 - [730df6f1-fb7c-47ae-819d-d4b73c64f71b] - [user] - Read "application/octet-stream" to []
-2025-12-23 16:25:59 - [] - [] - Redis health check failed
-org.springframework.data.redis.RedisConnectionFailureException: Unable to connect to Redis
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.translateException(LettuceConnectionFactory.java:1795)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1726)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getNativeConnection(LettuceConnectionFactory.java:1528)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.lambda$getConnection$0(LettuceConnectionFactory.java:1508)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.doInLock(LettuceConnectionFactory.java:1469)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$SharedConnection.getConnection(LettuceConnectionFactory.java:1505)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getSharedReactiveConnection(LettuceConnectionFactory.java:1216)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:1091)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory.getReactiveConnection(LettuceConnectionFactory.java:118)
-	at reactor.core.publisher.MonoSupplier.call(MonoSupplier.java:67)
-	at reactor.core.publisher.FluxSubscribeOnCallable$CallableSubscribeOnSubscription.run(FluxSubscribeOnCallable.java:228)
-	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:68)
-	at reactor.core.scheduler.SchedulerTask.call(SchedulerTask.java:28)
-	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
-	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-Caused by: org.springframework.data.redis.connection.PoolException: Could not get a resource from the pool
-	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.getConnection(LettucePoolingConnectionProvider.java:104)
-	at org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory$ExceptionTranslatingConnectionProvider.getConnection(LettuceConnectionFactory.java:1724)
-	... 16 common frames omitted
-Caused by: io.lettuce.core.RedisConnectionException: Unable to connect to localhost/<unresolved>:6379
-	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:78)
-	at io.lettuce.core.RedisConnectionException.create(RedisConnectionException.java:56)
-	at io.lettuce.core.AbstractRedisClient.getConnection(AbstractRedisClient.java:350)
-	at io.lettuce.core.RedisClient.connect(RedisClient.java:215)
-	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.lambda$getConnection$1(StandaloneConnectionProvider.java:112)
-	at java.base/java.util.Optional.orElseGet(Optional.java:364)
-	at org.springframework.data.redis.connection.lettuce.StandaloneConnectionProvider.getConnection(StandaloneConnectionProvider.java:112)
-	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.lambda$getConnection$0(LettucePoolingConnectionProvider.java:93)
-	at io.lettuce.core.support.ConnectionPoolSupport$RedisPooledObjectFactory.create(ConnectionPoolSupport.java:211)
-	at io.lettuce.core.support.ConnectionPoolSupport$RedisPooledObjectFactory.create(ConnectionPoolSupport.java:201)
-	at org.apache.commons.pool2.BasePooledObjectFactory.makeObject(BasePooledObjectFactory.java:71)
-	at org.apache.commons.pool2.impl.GenericObjectPool.create(GenericObjectPool.java:566)
-	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:306)
-	at org.apache.commons.pool2.impl.GenericObjectPool.borrowObject(GenericObjectPool.java:233)
-	at io.lettuce.core.support.ConnectionPoolSupport$1.borrowObject(ConnectionPoolSupport.java:122)
-	at io.lettuce.core.support.ConnectionPoolSupport$1.borrowObject(ConnectionPoolSupport.java:117)
-	at org.springframework.data.redis.connection.lettuce.LettucePoolingConnectionProvider.getConnection(LettucePoolingConnectionProvider.java:99)
-	... 17 common frames omitted
-Caused by: io.netty.channel.AbstractChannel$AnnotatedConnectException: Connection refused: getsockopt: localhost/127.0.0.1:6379
-Caused by: java.net.ConnectException: Connection refused: getsockopt
-	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
-	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:682)
-	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:973)
-	at io.netty.channel.socket.nio.NioSocketChannel.doFinishConnect(NioSocketChannel.java:337)
-	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.finishConnect(AbstractNioChannel.java:335)
-	at io.netty.channel.nio.NioEventLoop.processSelectedKey(NioEventLoop.java:776)
-	at io.netty.channel.nio.NioEventLoop.processSelectedKeysOptimized(NioEventLoop.java:724)
-	at io.netty.channel.nio.NioEventLoop.processSelectedKeys(NioEventLoop.java:650)
-	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:562)
-	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:997)
-	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74)
-	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-2025-12-23 16:25:59 - [730df6f1-fb7c-47ae-819d-d4b73c64f71b] - [user] - Using 'application/vnd.spring-boot.actuator.v3+json', given [*/*] and supported [application/vnd.spring-boot.actuator.v3+json, application/vnd.spring-boot.actuator.v2+json, application/json]
-2025-12-23 16:25:59 - [730df6f1-fb7c-47ae-819d-d4b73c64f71b] - [user] - Writing [org.springframework.boot.actuate.health.SystemHealth@96160a]
+  <testcase name="revokeTotpSecret_Exception" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.002">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - Failed to revoke TOTP secret for user user: Redis error
 ]]></system-out>
   </testcase>
-  <testcase name="shouldPermitSwaggerEndpointsWithoutAuthentication" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.96">
-    <system-out><![CDATA[2025-12-23 16:25:59 - [] - [] - No token found in request
-2025-12-23 16:25:59 - [9f1a7ebd-924e-4140-9ae5-2af83e4e0623] - [anonymous] - Mapped to org.springdoc.webmvc.api.OpenApiWebMvcResource#openapiJson(HttpServletRequest, String, Locale)
-2025-12-23 16:26:00 - [9f1a7ebd-924e-4140-9ae5-2af83e4e0623] - [anonymous] - Init duration for springdoc-openapi is: 892 ms
-2025-12-23 16:26:00 - [9f1a7ebd-924e-4140-9ae5-2af83e4e0623] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json]
-2025-12-23 16:26:00 - [9f1a7ebd-924e-4140-9ae5-2af83e4e0623] - [anonymous] - Writing [{123, 34, 111, 112, 101, 110, 97, 112, 105, 34, 58, 34, 51, 46, 48, 46, 49, 34, 44, 34, 105, 110, 10 (truncated)...]
+  <testcase name="validateTotp_InvalidCode" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.001">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - TOTP validation failed for user: user
 ]]></system-out>
   </testcase>
-  <testcase name="shouldDenyUnauthenticatedAccessToProtectedApiEndpoints" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.014">
-    <system-out><![CDATA[2025-12-23 16:26:00 - [] - [] - No token found in request
+  <testcase name="getTotpSecret_Exception" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.002">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - Failed to retrieve TOTP secret for user user: Redis error
 ]]></system-out>
   </testcase>
-  <testcase name="shouldHaveCsrfProtectionDisabled" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.015">
-    <system-out><![CDATA[2025-12-23 16:26:00 - [930e4a37-51ed-4ecf-aceb-2b41d1616bf9] - [anonymous] - Mapped to com.starter.springboot.controller.AuthenticationController#authorize(LoginDTO)
-2025-12-23 16:26:00 - [930e4a37-51ed-4ecf-aceb-2b41d1616bf9] - [anonymous] - Read "application/json;charset=UTF-8" to [com.starter.springboot.dto.LoginDTO@2372ada3]
-2025-12-23 16:26:00 - [930e4a37-51ed-4ecf-aceb-2b41d1616bf9] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-23 16:26:00 - [930e4a37-51ed-4ecf-aceb-2b41d1616bf9] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-23T10:56:00.405589Z, status=400, error=Bad Request, message=Validati (truncated)...]
+  <testcase name="getTotpSecret_Success" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.001"/>
+  <testcase name="validateTotp_Success" classname="com.starter.springboot.service.impl.TotpServiceTest" time="0.001">
+    <system-out><![CDATA[2025-12-23 16:26:08 - [] - [] - TOTP validation successful for user: user
 ]]></system-out>
   </testcase>
-  <testcase name="shouldEnableMethodSecurityWithPrePostAndSecuredEnabled" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.005"/>
-  <testcase name="shouldCreateAuthenticationManagerBean" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.005"/>
-  <testcase name="shouldHaveFrameOptionsDisabledForH2ConsoleCompatibility" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.016">
-    <system-out><![CDATA[2025-12-23 16:26:00 - [] - [] - No token found in request
-2025-12-23 16:26:00 - [5a78c3cc-3718-47b9-858f-e47e71691cc1] - [anonymous] - Mapped to ResourceHttpRequestHandler [classpath [META-INF/resources/], classpath [resources/], classpath [static/], classpath [public/], ServletContext [/]]
-2025-12-23 16:26:00 - [5a78c3cc-3718-47b9-858f-e47e71691cc1] - [anonymous] - Resource not found
-2025-12-23 16:26:00 - [5a78c3cc-3718-47b9-858f-e47e71691cc1] - [anonymous] - Unhandled exception: NoResourceFoundException - No static resource .
-2025-12-23 16:26:00 - [5a78c3cc-3718-47b9-858f-e47e71691cc1] - [anonymous] - Using 'application/json', given [*/*] and supported [application/json, application/*+json, application/xml;charset=UTF-8, text/xml;charset=UTF-8, application/*+xml;charset=UTF-8]
-2025-12-23 16:26:00 - [5a78c3cc-3718-47b9-858f-e47e71691cc1] - [anonymous] - Writing [ErrorResponse[timestamp=2025-12-23T10:56:00.435105200Z, status=500, error=Internal Server Error, mes (truncated)...]
-]]></system-out>
-  </testcase>
-  <testcase name="shouldCreatePasswordEncoderBeanAsBCryptPasswordEncoder" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.005"/>
-  <testcase name="shouldConfigureExceptionHandlingWithCustomAuthenticationEntryPoint" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.026">
-    <system-out><![CDATA[2025-12-23 16:26:00 - [] - [] - No token found in request
-]]></system-out>
-  </testcase>
-  <testcase name="shouldCreateSecurityFilterChainConfiguration" classname="com.starter.springboot.config.SecurityConfigurationTest" time="0.005"/>
 </testsuite>

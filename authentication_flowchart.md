@@ -90,11 +90,33 @@ flowchart TD
     B42 --> B43["sendPasswordSetNotification: Email confirmation"]
     B43 --> B44["Return SUCCESS: Password set confirmed"]
     
-    %% ========== GOOGLE OAUTH FLOW - RETURNING USER ==========
-    B20 -->|Yes| B50["createAccessTokenAfterVerifiedOtp: Generate JWT"]
-    B50 --> B50A["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
-    B50A --> B51["createRefreshToken: Generate refresh token"]
-    B51 --> B52["Return SUCCESS: JWT + Refresh Token<br/>with remember_me flag"]
+    %% ========== GOOGLE OAUTH MFA FLOW ==========
+    B20 -->|Yes| GM1["Initiate MFA: POST /auth/google-oauth-mfa"]
+    GM1 --> GM2{{"Has Persistent Secret?"}}
+    GM2 -->|No| GM3["Generate New Secret: TotpService"]
+    GM3 --> GM4["Save Secret: DB (Persistent)"]
+    GM4 --> GM5["Return MFA_REQUIRED + QR Code"]
+    GM2 -->|Yes| GM6["Retrieve Secret: DB (Persistent)"]
+    GM6 --> GM7["Return MFA_REQUIRED (No QR Code)"]
+    
+    GM5 --> GM8["User Scans QR & Enters Code"]
+    GM7 --> GM8
+    GM8 --> GM9["Verify MFA: POST /auth/google-mfa-verify"]
+    GM9 --> GM10["Check Replay: Redis totp:used:{userId}"]
+    GM10 --> GM11{{"Code Used?"}}
+    GM11 -->|Yes| GM12["Return 401: Replay Detected"]
+    GM11 -->|No| GM13["Validate Code: GoogleAuthenticator"]
+    GM13 --> GM14{{"Code Valid?"}}
+    GM14 -->|No| GM15["Return 401: Invalid Code"]
+    GM14 -->|Yes| GM16["Mark Used: Redis (30s TTL)"]
+    GM16 --> GM17["Generate JWT Tokens"]
+    GM17 --> GM18["Return SUCCESS: JWT + Refresh Token"]
+
+    %% ========== GOOGLE OAUTH FLOW - RETURNING USER (Legacy/Direct) ==========
+    %% B20 -->|Yes| B50["createAccessTokenAfterVerifiedOtp: Generate JWT"]
+    %% B50 --> B50A["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
+    %% B50A --> B51["createRefreshToken: Generate refresh token"]
+    %% B51 --> B52["Return SUCCESS: JWT + Refresh Token<br/>with remember_me flag"]
     
     %% ========== PASSWORD CHANGE FLOW ==========
     AAA["Password Change Request"] --> BBB["changePassword: PUT /api/users/public/password"]
@@ -204,12 +226,18 @@ flowchart TD
   - **Processing**: BCrypt encoding, `passwordSet=true`, confirmation email
   - **Token Cleanup**: Temporary token invalidated after success
 
-### 4. Google OAuth Flow - Returning User
-- User initiates Google login → `/auth/google`
+### 4. Google OAuth Flow - Returning User (MFA Enabled)
+- User initiates Google login → `/auth/google-oauth-mfa`
 - Token verified, existing user found
 - System checks `passwordSet` flag
-- If password already set: Returns JWT + Refresh Token directly
-- User can log in with OAuth or email/password
+- If password set:
+  - **Check Persistent Secret**: Does user have a stored TOTP secret?
+  - **No (First Time)**: Generate new secret, save to DB, return QR Code
+  - **Yes (Returning)**: Retrieve secret, return `MFA_REQUIRED` (no QR Code)
+- User verifies via `/auth/google-mfa-verify`:
+  - **Replay Protection**: Check Redis if code was used in last 30s
+  - **Validation**: Verify code against stored secret
+  - **Success**: Mark code as used (Redis), issue JWT tokens
 
 ### 5. Password Setup with Temporary Token
 - Triggered by OAuth new user flow
@@ -266,6 +294,7 @@ flowchart TD
 - **Token Rotation**: Refresh tokens rotated on use, old tokens revoked
 - **Password Change Cache Invalidation**: All caches and tokens cleared on password change
 - **OTP Security**: Time-based expiration, max attempt tracking, lockout mechanism
+- **Persistent TOTP**: Secrets stored in DB, replay protection via Redis (30s TTL)
 - **Rate Limiting**: Multiple layers - OTP (3/10min), Password Set (5/user), OAuth (10/min)
 - **Audit Trails**: OTP generation and verification logged for compliance
 
