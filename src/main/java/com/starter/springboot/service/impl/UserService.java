@@ -13,6 +13,8 @@ import com.starter.springboot.service.IUserTokenService;
 import com.starter.springboot.service.LocalizationService;
 import com.starter.springboot.exception.UserNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -70,6 +72,18 @@ public class UserService implements IUserService {
     @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return this.userRepository.findAll();
+    }
+
+    /**
+     * Method for getting all users with pagination
+     *
+     * @param pageable the pagination parameters
+     * @return Page of user objects.
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public Page<User> findAllUsers(Pageable pageable) {
+        return this.userRepository.findAll(pageable);
     }
 
     /**

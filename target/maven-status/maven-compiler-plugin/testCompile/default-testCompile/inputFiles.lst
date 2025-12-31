@@ -11,7 +11,9 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\TotpServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\RedisTokenServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\EmailServiceTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\AdminControllerTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\OtpVerificationControllerTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\PaginationServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\TemporaryPasswordTokenServiceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\PasswordManagementControllerTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\OtpGeneratorTest.java
@@ -26,6 +28,7 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\TokenRefreshControllerTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\config\SecurityConfigurationTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\impl\GoogleOAuthServiceTest.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\UserResourceTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\controller\LogoutControllerTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\repository\AuthorityRepositoryTest.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\test\java\com\starter\springboot\service\PasswordChangeAuthorizationServiceTest.java

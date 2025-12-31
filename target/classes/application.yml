@@ -16,7 +16,7 @@ spring:
 
 logging:
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - [%thread] - %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - [%thread] - %logger{36} - %msg%n"
   level:
     org.springframework.security.authentication.dao.DaoAuthenticationProvider: warn

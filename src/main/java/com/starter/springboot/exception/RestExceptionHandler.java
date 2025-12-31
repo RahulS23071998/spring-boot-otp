@@ -203,4 +203,36 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(body);
     }
 
+    @ExceptionHandler(InvalidSortFieldException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidSortField(InvalidSortFieldException ex, HttpServletRequest request) {
+        LOGGER.warn("Invalid sort field: {}", ex.getMessage());
+        Map<String, Object> details = new HashMap<>();
+        details.put("path", request.getRequestURI());
+        details.put("invalidField", ex.getSortField());
+        if (ex.getValidFields() != null) {
+            details.put("validFields", ex.getValidFields());
+        }
+        ErrorResponse body = ErrorResponse.of(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage(),
+                details
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, HttpServletRequest request) {
+        LOGGER.warn("Invalid argument: {}", ex.getMessage());
+        Map<String, Object> details = new HashMap<>();
+        details.put("path", request.getRequestURI());
+        ErrorResponse body = ErrorResponse.of(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage(),
+                details
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+    }
+
 }

@@ -1,5 +1,6 @@
 com\starter\springboot\config\SecurityConfigurationTest.class
 com\starter\springboot\controller\AuthenticationControllerTest.class
+com\starter\springboot\service\impl\PaginationServiceTest.class
 com\starter\springboot\service\UserServiceTest.class
 com\starter\springboot\service\impl\TemporaryPasswordTokenServiceTest.class
 com\starter\springboot\service\EmailServiceTest.class
@@ -8,6 +9,7 @@ com\starter\springboot\controller\OAuthControllerTest.class
 com\starter\springboot\service\impl\LoginRateLimiterTest.class
 com\starter\springboot\service\impl\UserProvisioningServiceTest.class
 com\starter\springboot\service\OtpRateLimiterImplTest.class
+com\starter\springboot\controller\UserResourceTest.class
 com\starter\springboot\security\jwt\TokenProviderTest.class
 com\starter\springboot\security\OtpAwareAuthenticationProviderTest.class
 com\starter\springboot\service\OtpServiceTest.class
@@ -35,6 +37,7 @@ com\starter\springboot\service\impl\UserTokenServiceTest.class
 com\starter\springboot\controller\LogoutControllerTest.class
 com\starter\springboot\repository\UserRepositoryTest.class
 com\starter\springboot\service\OtpAuditServiceImplTest.class
+com\starter\springboot\controller\AdminControllerTest.class
 com\starter\springboot\controller\TokenRefreshControllerTest.class
 com\starter\springboot\service\RedisTokenServiceTest.class
 com\starter\springboot\service\PasswordChangeAuthorizationServiceTest.class

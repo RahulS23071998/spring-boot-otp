@@ -3,6 +3,8 @@ package com.starter.springboot.service;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
 import com.starter.springboot.exception.UserNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,14 @@ public interface IUserService {
      * @return List of user objects.
      */
     List<User> findAllUsers();
+
+    /**
+     * Method for getting all users with pagination
+     *
+     * @param pageable the pagination parameters
+     * @return Page of user objects.
+     */
+    Page<User> findAllUsers(Pageable pageable);
 
     /**
      * Method for getting e-mail by username (key)
