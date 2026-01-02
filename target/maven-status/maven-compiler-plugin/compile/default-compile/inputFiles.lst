@@ -128,10 +128,10 @@ C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\spri
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\controller\TokenRefreshController.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\entity\BaseEntityWithId.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\service\IdGeneratorService.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\exception\UserAlreadyExistsException.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\service\IRefreshTokenService.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\converter\LocalDateToUtilDateConverter.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\security\jwt\JWTToken.java
-C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\java\StudentQuestion1.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\entity\OtpAuditEntry.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\converter\LocalDateToSqlDateConverter.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\repository\PasswordHistoryRepository.java

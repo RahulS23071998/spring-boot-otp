@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,12 +26,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -60,7 +54,7 @@ public class PublicUserResource {
     @Operation(summary = "Create a new user",
         description = "Register a new user in the system. This is a public endpoint that does not require authentication. " +
                       "The user can optionally enable OTP-based authentication during registration.")
-    @RequestBody(description = "User registration details",
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "User registration details",
         content = @Content(schema = @Schema(implementation = UserRequestDTO.class),
             examples = @ExampleObject(value = """
                     {
@@ -108,7 +102,7 @@ public class PublicUserResource {
                     """)))
     })
     public ResponseEntity<UserResponseDTO> createUser(
-        @Valid @org.springframework.web.bind.annotation.RequestBody UserRequestDTO request) {
+        @Valid @RequestBody UserRequestDTO request) {
         try {
             User created = userService.createUser(toEntity(request));
             return ResponseEntity.status(HttpStatus.CREATED).body(UserResponseDTO.fromEntity(created));
@@ -166,7 +160,7 @@ public class PublicUserResource {
                       "Users can only change their own password; administrators can change any user's password. " +
                       "The request must include the current password for verification and the new password. " +
                       "Requires JWT authentication.")
-    @RequestBody(description = "Password change request - provide either userId or username along with current and new password",
+    @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Password change request - provide either userId or username along with current and new password",
         content = @Content(schema = @Schema(type = "object"),
             examples = @ExampleObject(value = """
                 {

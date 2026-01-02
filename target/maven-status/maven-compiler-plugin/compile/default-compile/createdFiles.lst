@@ -35,6 +35,7 @@ com\starter\springboot\dto\OtpValidationResult.class
 com\starter\springboot\dto\OtpValidationStatus.class
 com\starter\springboot\repository\AuthorityRepository.class
 com\starter\springboot\security\jwt\ITokenProvider.class
+com\starter\springboot\exception\UserAlreadyExistsException.class
 com\starter\springboot\config\Http401UnauthorizedEntryPoint.class
 com\starter\springboot\service\IRefreshTokenService.class
 com\starter\springboot\dto\EmailDTO.class
@@ -137,7 +138,6 @@ com\starter\springboot\security\AuthoritiesConstants.class
 com\starter\springboot\dto\OtpGenerationResult.class
 com\starter\springboot\Application.class
 com\starter\springboot\dto\AuthResponseDTO.class
-com\starter\springboot\java\StudentQuestion1.class
 com\starter\springboot\dto\UserRequestDTO.class
 com\starter\springboot\service\IOtpProperties.class
 com\starter\springboot\service\IOtpAuditService.class

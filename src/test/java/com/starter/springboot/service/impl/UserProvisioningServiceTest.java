@@ -6,6 +6,7 @@ import com.starter.springboot.entity.Authority;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.exception.UserAlreadyExistsException;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
@@ -100,14 +101,14 @@ class UserProvisioningServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw EntityExistsException when username already exists")
-    void shouldThrowEntityExistsExceptionWhenUsernameExists() {
+    @DisplayName("Should throw UserAlreadyExistsException when username already exists")
+    void shouldThrowUserAlreadyExistsExceptionWhenUsernameExists() {
         // Given
         when(userRepository.findByUsername(testUser.getUsername())).thenReturn(Optional.of(new User()));
         when(localizationService.getMessage(eq("user.already_exists"), anyString())).thenReturn("User already exists");
 
         // When & Then
-        assertThrows(EntityExistsException.class, () -> userProvisioningService.createUser(testUser));
+        assertThrows(UserAlreadyExistsException.class, () -> userProvisioningService.createUser(testUser));
         verify(userRepository, never()).save(any(User.class));
     }
 

@@ -5,12 +5,12 @@ import com.starter.springboot.entity.AuthType;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.exception.UserAlreadyExistsException;
 import com.starter.springboot.repository.AuthorityRepository;
 import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.repository.UserRepository;
 import com.starter.springboot.service.IUserProvisioningService;
 import com.starter.springboot.service.LocalizationService;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,13 +57,13 @@ public class UserProvisioningService implements IUserProvisioningService {
      *
      * @param user the user to create
      * @return the created user
-     * @throws EntityExistsException if username already exists
+     * @throws UserAlreadyExistsException if username already exists
      */
     @Override
     @Transactional
     public User createUser(User user) {
         userRepository.findByUsername(user.getUsername()).ifPresent(existing -> {
-            throw new EntityExistsException(localizationService.getMessage("user.already_exists", user.getUsername()));
+            throw new UserAlreadyExistsException(localizationService.getMessage("user.already_exists", user.getUsername()), existing.getId());
         });
 
         Date now = Date.from(Instant.now());

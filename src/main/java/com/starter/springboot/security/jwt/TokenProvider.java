@@ -286,9 +286,12 @@ public class TokenProvider implements ITokenProvider {
         String principal = claims.getSubject();
         Collection<GrantedAuthority> authorities = Arrays
             .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+            .map(String::trim)
+            .filter(auth -> !auth.isEmpty())
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList());
 
+        log.debug("Parsed authorities for user {}: {}", principal, authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 

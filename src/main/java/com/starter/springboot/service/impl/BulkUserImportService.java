@@ -1,13 +1,18 @@
 package com.starter.springboot.service.impl;
 
 import com.starter.springboot.constants.AdminConstants;
+import com.starter.springboot.constants.SecurityConstants;
 import com.starter.springboot.dto.BulkUserImportResponse;
 import com.starter.springboot.dto.BulkUserImportResult;
+import com.starter.springboot.entity.AuthType;
+import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
+import com.starter.springboot.exception.UserAlreadyExistsException;
+import com.starter.springboot.repository.RoleRepository;
 import com.starter.springboot.service.IBulkUserImportService;
 import com.starter.springboot.service.IUserService;
-import jakarta.persistence.EntityExistsException;
+import jakarta.validation.ConstraintViolationException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -15,8 +20,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,21 +34,25 @@ import java.util.Objects;
 @Service
 public class BulkUserImportService implements IBulkUserImportService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(BulkUserImportService.class);
-
     private final IUserService userService;
+    private final RoleRepository roleRepository;
+    private Role cachedDefaultRole;
 
-    public BulkUserImportService(IUserService userService) {
+    public BulkUserImportService(IUserService userService, RoleRepository roleRepository) {
         this.userService = userService;
+        this.roleRepository = roleRepository;
     }
 
     @Override
     public BulkUserImportResponse importUsersFromFile(MultipartFile file) {
         List<BulkUserImportResult> results = new ArrayList<>();
-        
+
         try {
-            String filename = Objects.requireNonNull(file.getOriginalFilename()).toLowerCase();
+            this.cachedDefaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
+                    .orElseThrow(() -> new IllegalArgumentException("Default role ROLE_USER not found in database"));
             
+            String filename = Objects.requireNonNull(file.getOriginalFilename()).toLowerCase();
+
             if (filename.endsWith(AdminConstants.CSV_FILE_EXTENSION)) {
                 results = importFromCsv(file);
             } else if (filename.endsWith(AdminConstants.XLSX_FILE_EXTENSION)) {
@@ -60,16 +67,15 @@ public class BulkUserImportService implements IBulkUserImportService {
             return new BulkUserImportResponse(results.size(), successCount, failureCount, results);
 
         } catch (Exception e) {
-            LOGGER.error(AdminConstants.LOG_ERROR_IMPORTING_USERS, e.getMessage(), e);
-            BulkUserImportResult errorResult = new BulkUserImportResult(0, "", false, 
-                AdminConstants.FILE_PROCESSING_ERROR_MESSAGE + e.getMessage());
+            BulkUserImportResult errorResult = new BulkUserImportResult(0, "", false,
+                    AdminConstants.FILE_PROCESSING_ERROR_MESSAGE + e.getMessage());
             return new BulkUserImportResponse(0, 0, 1, List.of(errorResult));
         }
     }
 
     private List<BulkUserImportResult> importFromCsv(MultipartFile file) throws IOException {
         List<BulkUserImportResult> results = new ArrayList<>();
-        
+
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
              CSVParser csvParser =
                      CSVFormat.DEFAULT.builder()
@@ -86,51 +92,49 @@ public class BulkUserImportService implements IBulkUserImportService {
                     BulkUserImportResult result = processUserRow(rowNumber, record.toMap());
                     results.add(result);
                 } catch (Exception e) {
-                    LOGGER.warn(AdminConstants.LOG_ERROR_PROCESSING_CSV_ROW, rowNumber, e.getMessage());
                     results.add(new BulkUserImportResult(rowNumber, "", false, e.getMessage()));
                 }
             }
         }
-        
+
         return results;
     }
 
     private List<BulkUserImportResult> importFromExcel(MultipartFile file) throws IOException {
         List<BulkUserImportResult> results = new ArrayList<>();
-        
+
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0);
-            
+
             int rowNumber = 0;
             for (Row row : sheet) {
                 if (rowNumber == 0) {
                     rowNumber++;
                     continue;
                 }
-                
+
                 rowNumber++;
                 try {
                     Map<String, String> rowData = extractExcelRowData(row);
                     BulkUserImportResult result = processUserRow(rowNumber, rowData);
                     results.add(result);
                 } catch (Exception e) {
-                    LOGGER.warn(AdminConstants.LOG_ERROR_PROCESSING_EXCEL_ROW, rowNumber, e.getMessage());
                     results.add(new BulkUserImportResult(rowNumber, "", false, e.getMessage()));
                 }
             }
         }
-        
+
         return results;
     }
 
     private Map<String, String> extractExcelRowData(Row row) {
         return Map.of(
-            "username", getCellValueAsString(row, 0),
-            "password", getCellValueAsString(row, 1),
-            "email", getCellValueAsString(row, 2),
-            "firstName", getCellValueAsString(row, 3),
-            "lastName", getCellValueAsString(row, 4),
-            "otpRequired", getCellValueAsString(row, 5)
+                "username", getCellValueAsString(row, 0),
+                "password", getCellValueAsString(row, 1),
+                "email", getCellValueAsString(row, 2),
+                "firstName", getCellValueAsString(row, 3),
+                "lastName", getCellValueAsString(row, 4),
+                "otpRequired", getCellValueAsString(row, 5)
         );
     }
 
@@ -148,7 +152,7 @@ public class BulkUserImportService implements IBulkUserImportService {
         String firstName = rowData.getOrDefault("firstName", "").trim();
         String lastName = rowData.getOrDefault("lastName", "").trim();
         String otpRequiredStr = rowData.getOrDefault("otpRequired", AdminConstants.OTP_FLAG_DEFAULT_FALSE).trim().toLowerCase();
-        
+
         // Validation
         if (username.isEmpty()) {
             return new BulkUserImportResult(rowNumber, username, false, AdminConstants.USERNAME_REQUIRED_MESSAGE);
@@ -165,11 +169,11 @@ public class BulkUserImportService implements IBulkUserImportService {
         if (lastName.isEmpty()) {
             return new BulkUserImportResult(rowNumber, username, false, AdminConstants.LAST_NAME_REQUIRED_MESSAGE);
         }
-        
-        boolean otpRequired = AdminConstants.OTP_FLAG_TRUE.equals(otpRequiredStr) || 
-                              AdminConstants.OTP_FLAG_YES.equals(otpRequiredStr) || 
-                              AdminConstants.OTP_FLAG_ONE.equals(otpRequiredStr);
-        
+
+        boolean otpRequired = AdminConstants.OTP_FLAG_TRUE.equals(otpRequiredStr) ||
+                AdminConstants.OTP_FLAG_YES.equals(otpRequiredStr) ||
+                AdminConstants.OTP_FLAG_ONE.equals(otpRequiredStr);
+
         try {
             User user = new User();
             user.setUsername(username);
@@ -180,15 +184,46 @@ public class BulkUserImportService implements IBulkUserImportService {
             user.setIsOtpRequired(otpRequired);
             user.setStatus(UserStatus.ACTIVE);
             user.setEnabled(true);
-            
+            user.setAuthType(AuthType.CSV_UPLOAD);
+            user.setEmailVerified(true);
+            user.setPasswordSet(true);
+            user.setRole(cachedDefaultRole);
+
             User createdUser = userService.createUser(user);
             return new BulkUserImportResult(rowNumber, username, true, AdminConstants.USER_CREATED_SUCCESS_MESSAGE, createdUser.getId());
-            
-        } catch (EntityExistsException e) {
-            return new BulkUserImportResult(rowNumber, username, false, AdminConstants.USER_ALREADY_EXISTS_ADMIN_MESSAGE);
+
+        } catch (UserAlreadyExistsException e) {
+            return new BulkUserImportResult(rowNumber, username, false, AdminConstants.USER_ALREADY_EXISTS_ADMIN_MESSAGE, e.getUserId());
         } catch (Exception e) {
-            LOGGER.error(AdminConstants.LOG_ERROR_CREATING_USER, username, e.getMessage());
+
+            ConstraintViolationException constraintViolation = unwrapConstraintViolation(e);
+
+            if (constraintViolation != null) {
+                String violationMessages = constraintViolation.getConstraintViolations().stream()
+                        .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
+                        .reduce((msg1, msg2) -> msg1 + "; " + msg2)
+                        .orElse("Validation failed");
+
+                return new BulkUserImportResult(rowNumber, username, false, violationMessages);
+            }
             return new BulkUserImportResult(rowNumber, username, false, AdminConstants.USER_CREATION_FAILED_MESSAGE + e.getMessage());
         }
+    }
+
+    /*
+    * the ConstraintViolationException is being wrapped by Spring's transaction management.
+    * When JPA validation fails during commit, it gets wrapped in a TransactionSystemException (or similar).
+    * we need to unwrap the exception to get the actual constraint violation
+    * otherwise we will get this message -> Failed to create user: Could not commit JPA transaction
+    * */
+    private ConstraintViolationException unwrapConstraintViolation(Exception e) {
+        Throwable cause = e.getCause();
+        while (cause != null) {
+            if (cause instanceof ConstraintViolationException) {
+                return (ConstraintViolationException) cause;
+            }
+            cause = cause.getCause();
+        }
+        return null;
     }
 }

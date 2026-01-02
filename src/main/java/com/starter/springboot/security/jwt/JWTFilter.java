@@ -48,30 +48,49 @@ public class JWTFilter extends GenericFilterBean {
         {
             HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
             String requestUri = httpServletRequest.getRequestURI();
+            String method = httpServletRequest.getMethod();
+            
+            log.info("JWTFilter processing: {} {}", method, requestUri);
             
             if (requestUri.startsWith("/auth/authenticate") || 
                 requestUri.startsWith("/auth/verify") || 
                 requestUri.startsWith("/auth/refresh") || 
                 requestUri.startsWith("/auth/google")) {
-                log.debug("Skipping JWT validation for auth endpoint: {}", requestUri);
+                log.info("Skipping JWT validation for auth endpoint: {}", requestUri);
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }
             
             String jwt = resolveToken(httpServletRequest);
+            log.info("JWT token resolved: {}", jwt != null ? "YES" : "NO");
+            
             if (StringUtils.hasText(jwt))
             {
+                log.info("Validating JWT token...");
                 if (this.tokenProvider.validateToken(jwt))
                 {
                     Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+                    log.info("Setting authentication for user: {} with authorities: {}", 
+                        authentication.getName(), authentication.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
+                else
+                {
+                    log.warn("Token validation failed for request: {}", requestUri);
+                }
+            }
+            else
+            {
+                log.warn("No JWT token found in request: {}", requestUri);
             }
             filterChain.doFilter(servletRequest, servletResponse);
         }
         catch (ExpiredJwtException eje) {
-            log.info("Security exception for user {} - {}", eje.getClaims().getSubject(), eje.getMessage());
+            log.warn("Security exception for user {} - {}", eje.getClaims().getSubject(), eje.getMessage());
             ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        catch (Exception e) {
+            log.error("Unexpected error in JWTFilter: {}", e.getMessage(), e);
         }
     }
 
