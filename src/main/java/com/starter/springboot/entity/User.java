@@ -10,6 +10,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -19,7 +20,19 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-@Table(name = DatabaseConstants.USER_TABLE)
+@Table(name = DatabaseConstants.USER_TABLE,
+       indexes = {
+           @Index(name = DatabaseConstants.IDX_USER_EMAIL, columnList = DatabaseConstants.EMAIL_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_STATUS, columnList = DatabaseConstants.STATUS_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_ENABLED, columnList = DatabaseConstants.ENABLED_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_OTP_REQUIRED, columnList = DatabaseConstants.IS_OTP_REQUIRED_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_EMAIL_VERIFIED, columnList = "email_verified"),
+           @Index(name = DatabaseConstants.IDX_USER_GOOGLE_ID, columnList = "google_id"),
+           @Index(name = DatabaseConstants.IDX_USER_AUTH_TYPE, columnList = "auth_type"),
+           @Index(name = DatabaseConstants.IDX_USER_ROLE_ID, columnList = DatabaseConstants.ROLE_ID_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_AUTHORITY_ID, columnList = DatabaseConstants.AUTHORITY_ID_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_CREATED_DATE, columnList = "created_date")
+       })
 @EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
 public class User extends BaseAuditedEntity implements BaseEntityWithId {
 

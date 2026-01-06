@@ -35,6 +35,7 @@ import java.util.Map;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -250,7 +251,7 @@ class GoogleOAuthMfaControllerTest {
         when(totpService.validateTotpPersistent(user.getId(), "123456")).thenReturn(OtpValidationResult.success());
         when(tokenProvider.createAccessTokenAfterVerifiedOtp(user.getUsername(), false)).thenReturn(jwtToken);
         when(tokenProvider.getRefreshTokenValidityInSeconds()).thenReturn(604800L);
-        when(refreshTokenService.createRefreshToken(user.getId(), 604800L)).thenReturn(refreshToken);
+        when(refreshTokenService.createRefreshToken(eq(user.getId()), eq(604800L), anyString(), anyString())).thenReturn(refreshToken);
 
         // Act & Assert
         mockMvc.perform(post("/auth/google-mfa-verify")

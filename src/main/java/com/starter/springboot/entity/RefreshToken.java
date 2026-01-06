@@ -50,12 +50,28 @@ public class RefreshToken {
     @Column(name = DatabaseConstants.REFRESH_TOKEN_REPLACED_BY_TOKEN_COLUMN)
     private String replacedByToken;
 
+    @Column(name = "ip_address", length = 45)
+    private String ipAddress;
+
+    @Column(name = "user_agent", length = 500)
+    private String userAgent;
+
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = Boolean.TRUE;
+
     public RefreshToken() {}
 
     public RefreshToken(Long userId, String token, Instant expiresAt) {
         this.userId = userId;
         this.token = token;
         this.expiresAt = expiresAt;
+        this.isActive = Boolean.TRUE;
+    }
+
+    public RefreshToken(Long userId, String token, Instant expiresAt, String ipAddress, String userAgent) {
+        this(userId, token, expiresAt);
+        this.ipAddress = ipAddress;
+        this.userAgent = userAgent;
     }
 
     public Long getId() {
@@ -114,7 +130,30 @@ public class RefreshToken {
         this.replacedByToken = replacedByToken;
     }
 
-    // Utility methods
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean active) {
+        isActive = active;
+    }
+
     public boolean isExpired() {
         return expiresAt.isBefore(Instant.now());
     }
@@ -123,7 +162,7 @@ public class RefreshToken {
         return revokedAt != null;
     }
 
-    public boolean isActive() {
-        return !isExpired() && !isRevoked();
+    public boolean isTokenActive() {
+        return !isExpired() && !isRevoked() && Boolean.TRUE.equals(isActive);
     }
 }

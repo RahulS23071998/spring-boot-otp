@@ -98,4 +98,96 @@ public interface IUserService {
      * @throws UserNotFoundException if user not found
      */
     User findUserByUsername(String username);
+
+    /**
+     * Get user by ID
+     *
+     * @param userId - the user id
+     * @return the user
+     */
+    User getUserById(Long userId);
+
+    /**
+     * Update user details
+     *
+     * @param userId - the user id
+     * @param userUpdates - the user updates
+     * @return the updated user
+     */
+    User updateUser(Long userId, User userUpdates);
+
+    /**
+     * Delete user by ID
+     *
+     * @param userId - the user id
+     */
+    void deleteUser(Long userId);
+
+    /**
+     * Reset user password
+     *
+     * @param userId - the user id
+     * @param newPassword - the new password
+     */
+    void resetUserPassword(Long userId, String newPassword);
+
+    /**
+     * Get users by status
+     *
+     * @param status - the user status
+     * @param pageable - the pagination parameters
+     * @return Page of user objects
+     */
+    Page<User> getUsersByStatus(UserStatus status, Pageable pageable);
+
+    /**
+     * Get all users (alias for findAllUsers)
+     *
+     * @param pageable - the pagination parameters
+     * @return Page of user objects
+     */
+    Page<User> getAllUsers(Pageable pageable);
+
+    /**
+     * Export users to CSV format
+     *
+     * @return CSV byte array
+     */
+    byte[] exportUsersToCSV();
+
+    /**
+     * Export users to Excel format
+     *
+     * @return Excel byte array
+     */
+    byte[] exportUsersToExcel();
+
+    /**
+     * Get total user count
+     *
+     * @return total number of users
+     */
+    long getTotalUsers();
+
+    /**
+     * Get user count by status
+     *
+     * @param status - the user status
+     * @return count of users with given status
+     */
+    long getUserCountByStatus(UserStatus status);
+
+    /**
+     * Get OTP required user count
+     *
+     * @return count of users with OTP required
+     */
+    long getOtpRequiredUserCount();
+
+    /**
+     * Get email verified user count
+     *
+     * @return count of users with verified email
+     */
+    long getEmailVerifiedUserCount();
 }

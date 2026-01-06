@@ -339,5 +339,238 @@ WHERE u.auth_type = 'GOOGLE_OAUTH'
 ORDER BY u.username;
 
 -- ================================================
+-- 26. GET USERS WITH EMAIL VERIFIED STATUS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.email_verified,
+    u.status,
+    u.enabled,
+    u.created_date
+FROM user u
+WHERE u.email_verified = true
+ORDER BY u.username;
+
+-- ================================================
+-- 27. COUNT EMAIL VERIFIED USERS
+-- ================================================
+SELECT
+    COUNT(*) as email_verified_count
+FROM user
+WHERE email_verified = true;
+
+-- ================================================
+-- 28. COUNT USERS WITH OTP REQUIRED
+-- ================================================
+SELECT
+    COUNT(*) as otp_required_count
+FROM user
+WHERE is_otp_required = true;
+
+-- ================================================
+-- 29. USER STATISTICS - TOTAL AND BY STATUS
+-- ================================================
+SELECT
+    (SELECT COUNT(*) FROM user) as total_users,
+    (SELECT COUNT(*) FROM user WHERE status = 'ACTIVE') as active_users,
+    (SELECT COUNT(*) FROM user WHERE status = 'INACTIVE') as inactive_users,
+    (SELECT COUNT(*) FROM user WHERE is_otp_required = true) as otp_required_users,
+    (SELECT COUNT(*) FROM user WHERE email_verified = true) as email_verified_users;
+
+-- ================================================
+-- 30. GET USERS BY STATUS WITH COUNT
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.first_name,
+    u.last_name,
+    u.email,
+    u.status,
+    u.enabled,
+    u.is_otp_required,
+    u.email_verified,
+    u.created_date
+FROM user u
+WHERE u.status = 'ACTIVE'  -- Replace with 'INACTIVE' or other status
+ORDER BY u.username;
+
+-- ================================================
+-- 31. GET INACTIVE USERS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.first_name,
+    u.last_name,
+    u.email,
+    u.status,
+    u.enabled,
+    u.last_password_reset_date,
+    u.created_date
+FROM user u
+WHERE u.status = 'INACTIVE'
+ORDER BY u.created_date DESC;
+
+-- ================================================
+-- 32. GET DISABLED USERS (NOT ENABLED)
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.first_name,
+    u.last_name,
+    u.email,
+    u.enabled,
+    u.status,
+    u.created_date
+FROM user u
+WHERE u.enabled = false
+ORDER BY u.created_date DESC;
+
+-- ================================================
+-- 33. GET USERS WITH PASSWORD HISTORY
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    ph.id as password_history_id,
+    ph.created_date as password_changed_date
+FROM user u
+LEFT JOIN password_history ph ON u.id = ph.user_id
+ORDER BY u.username, ph.created_date DESC;
+
+-- ================================================
+-- 34. COUNT PASSWORD CHANGES PER USER
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    COUNT(ph.id) as password_change_count,
+    MAX(ph.created_date) as last_password_changed
+FROM user u
+LEFT JOIN password_history ph ON u.id = ph.user_id
+GROUP BY u.id, u.username
+ORDER BY password_change_count DESC;
+
+-- ================================================
+-- 35. GET USERS WITH REFRESH TOKENS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    rt.id as refresh_token_id,
+    rt.expires_at as token_expiry
+FROM user u
+LEFT JOIN refresh_token rt ON u.id = rt.user_id
+WHERE rt.expires_at > NOW()
+ORDER BY u.username;
+
+-- ================================================
+-- 36. COUNT ACTIVE REFRESH TOKENS PER USER
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    COUNT(rt.id) as active_tokens
+FROM user u
+LEFT JOIN refresh_token rt ON u.id = rt.user_id
+WHERE rt.expires_at > NOW()
+GROUP BY u.id, u.username
+ORDER BY active_tokens DESC;
+
+-- ================================================
+-- 37. GET USERS FOR CSV/EXCEL EXPORT
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.status,
+    u.enabled,
+    u.is_otp_required,
+    u.email_verified
+FROM user u
+ORDER BY u.id;
+
+-- ================================================
+-- 38. GET USER BY ID WITH COMPLETE DETAILS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.enabled,
+    u.status,
+    u.is_otp_required,
+    u.email_verified,
+    u.auth_type,
+    u.password_set,
+    u.google_id,
+    u.last_password_reset_date,
+    u.created_date,
+    u.created_by,
+    r.name as role_name,
+    a.name as authority_name
+FROM user u
+LEFT JOIN role r ON u.role_id = r.id
+LEFT JOIN authority a ON u.authority_id = a.id
+WHERE u.id = 1;  -- Replace with desired user ID
+
+-- ================================================
+-- 39. RESET USER PASSWORD (UPDATE STATEMENT)
+-- ================================================
+-- UPDATE user SET password = 'new_hashed_password_here', last_password_reset_date = NOW() 
+-- WHERE id = 1;
+-- Replace 1 with user ID and 'new_hashed_password_here' with bcrypt hashed password
+
+-- ================================================
+-- 40. GET RECENTLY CREATED USERS
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.first_name,
+    u.last_name,
+    u.auth_type,
+    u.status,
+    u.enabled,
+    u.created_date
+FROM user u
+WHERE u.created_date >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+ORDER BY u.created_date DESC;
+
+-- ================================================
+-- 41. GET USERS WITH STATISTICS BREAKDOWN
+-- ================================================
+SELECT
+    u.id,
+    u.username,
+    u.email,
+    u.status,
+    u.enabled,
+    u.is_otp_required,
+    u.email_verified,
+    CASE 
+        WHEN u.enabled = true AND u.status = 'ACTIVE' THEN 'Active'
+        WHEN u.enabled = false OR u.status = 'INACTIVE' THEN 'Inactive'
+        ELSE 'Unknown'
+    END as user_state
+FROM user u
+ORDER BY u.status, u.username;
+
+-- ================================================
 -- End of User Query Examples
 -- ================================================

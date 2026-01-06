@@ -76,6 +76,20 @@ public final class DatabaseConstants {
     public static final String IDX_REFRESH_TOKEN_USER = "idx_refresh_token_user";
     public static final String IDX_REFRESH_TOKEN_EXPIRES = "idx_refresh_token_expires";
     public static final String IDX_REFRESH_TOKEN_TOKEN = "idx_refresh_token_token";
+    public static final String IDX_USER_EMAIL = "idx_user_email";
+    public static final String IDX_USER_STATUS = "idx_user_status";
+    public static final String IDX_USER_ENABLED = "idx_user_enabled";
+    public static final String IDX_USER_OTP_REQUIRED = "idx_user_otp_required";
+    public static final String IDX_USER_EMAIL_VERIFIED = "idx_user_email_verified";
+    public static final String IDX_USER_GOOGLE_ID = "idx_user_google_id";
+    public static final String IDX_USER_AUTH_TYPE = "idx_user_auth_type";
+    public static final String IDX_USER_ROLE_ID = "idx_user_role_id";
+    public static final String IDX_USER_AUTHORITY_ID = "idx_user_authority_id";
+    public static final String IDX_USER_CREATED_DATE = "idx_user_created_date";
+    public static final String IDX_OTP_AUDIT_USERNAME = "idx_otp_audit_username";
+    public static final String IDX_OTP_AUDIT_CREATED_DATE = "idx_otp_audit_created_date";
+    public static final String IDX_PASSWORD_HISTORY_USER_ID = "idx_password_history_user_id";
+    public static final String IDX_PASSWORD_HISTORY_CREATED_DATE = "idx_password_history_created_date";
     
     private DatabaseConstants() {
         // Private constructor to prevent instantiation

@@ -1,6 +1,7 @@
 package com.starter.springboot.security.jwt;
 
 import com.starter.springboot.entity.Authority;
+import com.starter.springboot.entity.RefreshToken;
 import com.starter.springboot.entity.Role;
 import com.starter.springboot.entity.User;
 import com.starter.springboot.entity.UserStatus;
@@ -14,6 +15,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.persistence.EntityNotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,9 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.util.ReflectionTestUtils;
 import com.starter.springboot.service.IRefreshTokenService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -69,6 +74,12 @@ class TokenProviderTest {
     @Mock
     private JwtProperties jwtProperties;
 
+    @Mock
+    private HttpServletRequest request;
+
+    @Mock
+    private ServletRequestAttributes attributes;
+
     private TokenProvider tokenProvider;
 
     private static final String TEST_USERNAME = "testuser";
@@ -100,8 +111,52 @@ class TokenProviderTest {
         lenient().when(valueOperations.get(anyString())).thenReturn(null);
         lenient().doNothing().when(valueOperations).set(anyString(), anyString(), any());
 
+        // Mock RefreshTokenService
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setToken("refresh-token");
+        lenient().when(refreshTokenService.createRefreshToken(anyLong(), anyLong(), anyString(), anyString())).thenReturn(refreshToken);
+        lenient().when(refreshTokenService.createRefreshToken(anyLong(), anyLong())).thenReturn(refreshToken);
+
         // Initialize tokenProvider
         tokenProvider.initialize();
+
+        // Setup Request Context
+        RequestContextHolder.setRequestAttributes(attributes);
+        lenient().when(attributes.getRequest()).thenReturn(request);
+    }
+
+    @AfterEach
+    void tearDown() {
+        RequestContextHolder.resetRequestAttributes();
+    }
+
+    @Test
+    @DisplayName("Should successfully create token with IP and User-Agent tracking")
+    void shouldSuccessfullyCreateTokenWithIpAndUserAgentTracking() {
+        // Given
+        testUser.setIsOtpRequired(false);
+        String testIp = "192.168.1.100";
+        String testUA = "Mozilla/5.0 Test";
+        
+        when(request.getHeader("X-Forwarded-For")).thenReturn(testIp);
+        when(request.getHeader("User-Agent")).thenReturn(testUA);
+        
+        // Mock RefreshTokenService to return a token
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setToken("mock-refresh-token");
+        when(refreshTokenService.createRefreshToken(eq(TEST_USER_ID), anyLong(), eq(testIp), eq(testUA)))
+                .thenReturn(refreshToken);
+
+        // When
+        TokenCreationResponse response = tokenProvider.createToken(buildAuthenticationWithDomainUserDetails(), false);
+
+        // Then
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.status());
+        assertNotNull(response.token());
+        assertEquals("mock-refresh-token", response.token().getRefreshToken());
+        
+        verify(refreshTokenService).createRefreshToken(eq(TEST_USER_ID), anyLong(), eq(testIp), eq(testUA));
     }
 
     @Test

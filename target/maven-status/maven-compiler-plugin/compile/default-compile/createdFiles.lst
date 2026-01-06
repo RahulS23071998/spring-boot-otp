@@ -12,6 +12,7 @@ com\starter\springboot\exception\UserNotFoundException.class
 com\starter\springboot\security\jwt\JWTFilter.class
 com\starter\springboot\dto\PaginatedResponse.class
 com\starter\springboot\listener\CustomAuditingListener.class
+com\starter\springboot\service\impl\TokenCleanupService.class
 com\starter\springboot\entity\OtpAuditEntry_.class
 com\starter\springboot\service\IOtpGenerator.class
 com\starter\springboot\security\jwt\TokenProvider.class
@@ -159,4 +160,5 @@ com\starter\springboot\service\impl\OtpGenerator.class
 com\starter\springboot\service\impl\OtpService.class
 com\starter\springboot\security\jwt\JwtProperties.class
 com\starter\springboot\dto\VerifyTokenRequestDTO.class
+com\starter\springboot\utils\RequestContextUtil.class
 com\starter\springboot\controller\builder\AuthResponseBuilder.class

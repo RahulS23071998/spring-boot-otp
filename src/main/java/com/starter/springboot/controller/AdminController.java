@@ -189,4 +189,114 @@ public class AdminController {
             AdminConstants.OTP_FAILED_KEY, failureCount
         ));
     }
+
+    // 8. Get All Users (Paginated)
+    @GetMapping("/users")
+    public ResponseEntity<PaginatedResponse<User>> getAllUsers(
+            @RequestParam(value = AdminConstants.PAGE_PARAM, defaultValue = "0") int page,
+            @RequestParam(value = AdminConstants.SIZE_PARAM, defaultValue = "20") int size,
+            @RequestParam(value = AdminConstants.SORT_BY_PARAM, defaultValue = "id") String sortBy,
+            @RequestParam(value = AdminConstants.SORT_DIRECTION_PARAM, defaultValue = AdminConstants.DEFAULT_SORT_DIRECTION) String sortDirection) {
+        
+        Pageable pageable = paginationService.createPageableWithSort(page, size, sortBy, sortDirection);
+        Page<User> users = userService.getAllUsers(pageable);
+        
+        PaginatedResponse<User> response = new PaginatedResponse<>(
+            users.getContent(),
+            paginationService.getCurrentPage(users),
+            paginationService.getPageSize(users),
+            paginationService.getTotalElements(users),
+            paginationService.getTotalPages(users),
+            paginationService.isFirst(users),
+            paginationService.isLast(users),
+            paginationService.hasNext(users),
+            paginationService.hasPrevious(users)
+        );
+        
+        return ResponseEntity.ok(response);
+    }
+
+    // 9. Get Single User
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<User> getUser(@PathVariable Long userId) {
+        return ResponseEntity.ok(userService.getUserById(userId));
+    }
+
+    // 10. Update User Details
+    @PutMapping("/users/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Long userId, @RequestBody User userUpdates) {
+        return ResponseEntity.ok(userService.updateUser(userId, userUpdates));
+    }
+
+    // 11. Delete User
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return ResponseEntity.ok(Map.of(AdminConstants.MESSAGE_KEY, "User deleted successfully"));
+    }
+
+    // 12. Reset User Password
+    @PostMapping("/users/{userId}/reset-password")
+    public ResponseEntity<?> resetUserPassword(@PathVariable Long userId, @RequestBody Map<String, String> request) {
+        String newPassword = request.get("newPassword");
+        userService.resetUserPassword(userId, newPassword);
+        return ResponseEntity.ok(Map.of(AdminConstants.MESSAGE_KEY, "Password reset successfully"));
+    }
+
+    // 13. Get Users by Status
+    @GetMapping("/users/status/{status}")
+    public ResponseEntity<PaginatedResponse<User>> getUsersByStatus(
+            @PathVariable UserStatus status,
+            @RequestParam(value = AdminConstants.PAGE_PARAM, defaultValue = "0") int page,
+            @RequestParam(value = AdminConstants.SIZE_PARAM, defaultValue = "20") int size) {
+        
+        Pageable pageable = paginationService.createPageable(page, size);
+        Page<User> users = userService.getUsersByStatus(status, pageable);
+        
+        PaginatedResponse<User> response = new PaginatedResponse<>(
+            users.getContent(),
+            paginationService.getCurrentPage(users),
+            paginationService.getPageSize(users),
+            paginationService.getTotalElements(users),
+            paginationService.getTotalPages(users),
+            paginationService.isFirst(users),
+            paginationService.isLast(users),
+            paginationService.hasNext(users),
+            paginationService.hasPrevious(users)
+        );
+
+        return ResponseEntity.ok(response);
+    }
+
+    // 14. Export Users to CSV
+    @GetMapping("/users/export/csv")
+    public ResponseEntity<?> exportUsersToCSV() {
+        byte[] csvData = userService.exportUsersToCSV();
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=users.csv")
+                .header("Content-Type", "text/csv")
+                .body(csvData);
+    }
+
+    // 15. Export Users to Excel
+    @GetMapping("/users/export/excel")
+    public ResponseEntity<?> exportUsersToExcel() {
+        byte[] excelData = userService.exportUsersToExcel();
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=users.xlsx")
+                .header("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                .body(excelData);
+    }
+
+    // 16. User Statistics
+    @GetMapping("/statistics")
+    public ResponseEntity<?> getUserStatistics() {
+        return ResponseEntity.ok(Map.of(
+            "totalUsers", userService.getTotalUsers(),
+            "activeUsers", userService.getUserCountByStatus(UserStatus.ACTIVE),
+            "inactiveUsers", userService.getUserCountByStatus(UserStatus.INACTIVE),
+            "otpRequiredUsers", userService.getOtpRequiredUserCount(),
+            "emailVerifiedUsers", userService.getEmailVerifiedUserCount()
+        ));
+    }
 }

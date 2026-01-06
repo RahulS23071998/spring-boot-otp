@@ -10,11 +10,16 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = DatabaseConstants.OTP_AUDIT_ENTRIES_TABLE)
+@Table(name = DatabaseConstants.OTP_AUDIT_ENTRIES_TABLE,
+       indexes = {
+           @Index(name = DatabaseConstants.IDX_OTP_AUDIT_USERNAME, columnList = DatabaseConstants.OTP_USERNAME_COLUMN),
+           @Index(name = DatabaseConstants.IDX_OTP_AUDIT_CREATED_DATE, columnList = "created_date")
+       })
 @EntityListeners({CustomAuditingListener.class, IdGeneratorEntityListener.class})
 public class OtpAuditEntry extends BaseAuditedEntity implements BaseEntityWithId {
 

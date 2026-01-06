@@ -17,6 +17,7 @@ import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.ITemporaryPasswordTokenService;
 import com.starter.springboot.service.ITotpService;
 import com.starter.springboot.service.IUserService;
+import com.starter.springboot.utils.RequestContextUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -244,7 +245,9 @@ public class GoogleOAuthMfaController {
 
             boolean rememberMe = Boolean.parseBoolean(rememberMeStr);
             JWTToken token = tokenProvider.createAccessTokenAfterVerifiedOtp(user.getUsername(), rememberMe);
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(), tokenProvider.getRefreshTokenValidityInSeconds());
+            String ipAddress = RequestContextUtil.getClientIpAddress();
+            String userAgent = RequestContextUtil.getUserAgent();
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(), tokenProvider.getRefreshTokenValidityInSeconds(), ipAddress, userAgent);
 
             JWTToken fullToken = new JWTToken(
                     token.getIdToken(),

@@ -17,6 +17,7 @@ import com.starter.springboot.security.DomainUserDetails;
 import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IRedisTokenService;
 import com.starter.springboot.service.IRefreshTokenService;
+import com.starter.springboot.utils.RequestContextUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -212,7 +213,9 @@ public class TokenProvider implements ITokenProvider {
         if (Objects.nonNull(userDetails.getUserId())) {
             try {
                 refreshTokenService.revokeAllUserRefreshTokens(userDetails.getUserId());
-                RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserId(), refreshTokenExpirationSeconds);
+                String ipAddress = RequestContextUtil.getClientIpAddress();
+                String userAgent = RequestContextUtil.getUserAgent();
+                RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUserId(), refreshTokenExpirationSeconds, ipAddress, userAgent);
                 refreshTokenValue = refreshToken.getToken();
             } catch (Exception e) {
                 log.warn("Failed to create refresh token: {}", e.getMessage());
@@ -261,7 +264,9 @@ public class TokenProvider implements ITokenProvider {
         long refreshTokenExpirationSeconds = jwtProperties.getRefreshExpiration();
         try {
             refreshTokenService.revokeAllUserRefreshTokens(tokenData.user().getId());
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(tokenData.user().getId(), refreshTokenExpirationSeconds);
+            String ipAddress = RequestContextUtil.getClientIpAddress();
+            String userAgent = RequestContextUtil.getUserAgent();
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(tokenData.user().getId(), refreshTokenExpirationSeconds, ipAddress, userAgent);
             refreshTokenValue = refreshToken.getToken();
         } catch (Exception e) {
             log.warn("Failed to create refresh token: {}", e.getMessage());

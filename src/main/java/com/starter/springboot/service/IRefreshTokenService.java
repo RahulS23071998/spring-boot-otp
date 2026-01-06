@@ -16,6 +16,16 @@ public interface IRefreshTokenService {
     RefreshToken createRefreshToken(Long userId, long expirationSeconds);
 
     /**
+     * Create a new refresh token for a user with IP address and user agent tracking
+     * @param userId the user ID
+     * @param expirationSeconds token validity in seconds
+     * @param ipAddress client IP address
+     * @param userAgent client user agent
+     * @return the created refresh token
+     */
+    RefreshToken createRefreshToken(Long userId, long expirationSeconds, String ipAddress, String userAgent);
+
+    /**
      * Validate and retrieve refresh token
      * @param token the refresh token string
      * @return the refresh token entity if valid

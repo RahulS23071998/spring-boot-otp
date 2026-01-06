@@ -51,6 +51,24 @@ class RefreshTokenServiceTest {
     }
 
     @Test
+    @DisplayName("Should create refresh token with IP address and user agent")
+    void shouldCreateRefreshTokenWithIpAndUserAgent() {
+        String ipAddress = "192.168.1.1";
+        String userAgent = "Mozilla/5.0";
+        ArgumentCaptor<RefreshToken> tokenCaptor = ArgumentCaptor.forClass(RefreshToken.class);
+        
+        when(refreshTokenRepository.save(any(RefreshToken.class))).thenReturn(testRefreshToken);
+
+        refreshTokenService.createRefreshToken(TEST_USER_ID, EXPIRATION_SECONDS, ipAddress, userAgent);
+
+        verify(refreshTokenRepository).save(tokenCaptor.capture());
+        RefreshToken savedToken = tokenCaptor.getValue();
+        assertEquals(ipAddress, savedToken.getIpAddress());
+        assertEquals(userAgent, savedToken.getUserAgent());
+        assertTrue(savedToken.getIsActive());
+    }
+
+    @Test
     @DisplayName("Should successfully create refresh token")
     void shouldSuccessfullyCreateRefreshToken() {
         when(refreshTokenRepository.save(any(RefreshToken.class))).thenReturn(testRefreshToken);

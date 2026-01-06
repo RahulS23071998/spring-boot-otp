@@ -16,6 +16,7 @@ import com.starter.springboot.service.IPasswordSetupService;
 import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.ITemporaryPasswordTokenService;
 import com.starter.springboot.service.IUserService;
+import com.starter.springboot.utils.RequestContextUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -186,7 +187,9 @@ public class OAuthController {
             refreshTokenService.revokeAllUserRefreshTokens(user.getId());
 
             JWTToken token = tokenProvider.createAccessTokenAfterVerifiedOtp(user.getUsername(), googleTokenDTO.getRememberMe());
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(), tokenProvider.getRefreshTokenValidityInSeconds());
+            String ipAddress = RequestContextUtil.getClientIpAddress();
+            String userAgent = RequestContextUtil.getUserAgent();
+            RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId(), tokenProvider.getRefreshTokenValidityInSeconds(), ipAddress, userAgent);
 
             JWTToken fullToken = new JWTToken(
                 token.getIdToken(),

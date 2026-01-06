@@ -16,6 +16,9 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -558,6 +561,135 @@ class UserServiceTest {
         verify(provisioningService).findOrCreateGoogleOAuthUser(googleUserInfo);
     }
 
+    @Test
+    @DisplayName("Should successfully find all users with pagination")
+    void shouldSuccessfullyFindAllUsersWithPagination() {
+        Pageable pageable = Pageable.unpaged();
+        Page<User> expectedPage = new PageImpl<>(Arrays.asList(testUser));
+        when(userRepository.findAll(pageable)).thenReturn(expectedPage);
+
+        Page<User> actualPage = userService.findAllUsers(pageable);
+
+        assertEquals(expectedPage, actualPage);
+        verify(userRepository).findAll(pageable);
+    }
+
+    @Test
+    @DisplayName("Should successfully find user by ID")
+    void shouldSuccessfullyFindUserById() {
+        when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
+
+        User result = userService.findUserById(TEST_USER_ID);
+
+        assertEquals(testUser, result);
+        verify(userRepository).findById(TEST_USER_ID);
+    }
+
+    @Test
+    @DisplayName("Should successfully find user by username")
+    void shouldSuccessfullyFindUserByUsername() {
+        when(userRepository.findByUsername(TEST_USERNAME)).thenReturn(Optional.of(testUser));
+
+        User result = userService.findUserByUsername(TEST_USERNAME);
+
+        assertEquals(testUser, result);
+        verify(userRepository).findByUsername(TEST_USERNAME);
+    }
+
+    @Test
+    @DisplayName("Should successfully update user details")
+    void shouldSuccessfullyUpdateUser() {
+        User userUpdates = new User();
+        userUpdates.setFirstName("UpdatedFirstName");
+        userUpdates.setLastName("UpdatedLastName");
+        userUpdates.setEmail("updated@example.com");
+        userUpdates.setStatus(UserStatus.INACTIVE);
+        userUpdates.setEnabled(false);
+        userUpdates.setIsOtpRequired(true);
+
+        when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
+        when(userRepository.save(any(User.class))).thenAnswer(i -> i.getArguments()[0]);
+
+        User result = userService.updateUser(TEST_USER_ID, userUpdates);
+
+        assertNotNull(result);
+        assertEquals("UpdatedFirstName", result.getFirstName());
+        assertEquals("UpdatedLastName", result.getLastName());
+        assertEquals("updated@example.com", result.getEmail());
+        assertEquals(UserStatus.INACTIVE, result.getStatus());
+        assertFalse(result.getEnabled());
+        assertTrue(result.getIsOtpRequired());
+        verify(userRepository).save(any(User.class));
+    }
+
+    @Test
+    @DisplayName("Should successfully delete user")
+    void shouldSuccessfullyDeleteUser() {
+        when(userRepository.existsById(TEST_USER_ID)).thenReturn(true);
+        doNothing().when(tokenService).clearAllUserTokensAndCaches(null, TEST_USER_ID);
+
+        userService.deleteUser(TEST_USER_ID);
+
+        verify(userRepository).deleteById(TEST_USER_ID);
+        verify(tokenService).clearAllUserTokensAndCaches(null, TEST_USER_ID);
+    }
+
+    @Test
+    @DisplayName("Should successfully reset user password")
+    void shouldSuccessfullyResetUserPassword() {
+        String newPassword = "newResetPassword123";
+        String encodedPassword = "encodedNewResetPassword";
+
+        when(userRepository.findById(TEST_USER_ID)).thenReturn(Optional.of(testUser));
+        when(passwordEncoder.encode(newPassword)).thenReturn(encodedPassword);
+        when(userRepository.save(any(User.class))).thenReturn(testUser);
+        doNothing().when(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
+
+        userService.resetUserPassword(TEST_USER_ID, newPassword);
+
+        assertEquals(encodedPassword, testUser.getPassword());
+        assertNotNull(testUser.getLastPasswordResetDate());
+        verify(userRepository).save(testUser);
+        verify(tokenService).clearAllUserTokensAndCaches(TEST_USERNAME, TEST_USER_ID);
+    }
+
+    @Test
+    @DisplayName("Should successfully export users to CSV")
+    void shouldSuccessfullyExportUsersToCSV() {
+        when(userRepository.findAll()).thenReturn(Arrays.asList(testUser));
+
+        byte[] result = userService.exportUsersToCSV();
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+        String csvContent = new String(result);
+        assertTrue(csvContent.contains(TEST_USERNAME));
+        assertTrue(csvContent.contains(TEST_EMAIL));
+    }
+
+    @Test
+    @DisplayName("Should successfully export users to Excel")
+    void shouldSuccessfullyExportUsersToExcel() {
+        when(userRepository.findAll()).thenReturn(Arrays.asList(testUser));
+
+        byte[] result = userService.exportUsersToExcel();
+
+        assertNotNull(result);
+        assertTrue(result.length > 0);
+    }
+
+    @Test
+    @DisplayName("Should successfully get user statistics")
+    void shouldSuccessfullyGetUserStatistics() {
+        when(userRepository.count()).thenReturn(10L);
+        when(userRepository.count(any(org.springframework.data.jpa.domain.Specification.class))).thenReturn(5L);
+
+        assertEquals(10L, userService.getTotalUsers());
+        assertEquals(5L, userService.getUserCountByStatus(UserStatus.ACTIVE));
+        assertEquals(5L, userService.getOtpRequiredUserCount());
+        assertEquals(5L, userService.getEmailVerifiedUserCount());
+    }
+
     private Map<String, Object> createGoogleUserInfo(String googleId, String email, String givenName, String familyName, String name) {
         Map<String, Object> googleUserInfo = new HashMap<>();
         googleUserInfo.put("sub", googleId);
@@ -615,6 +747,8 @@ class UserServiceTest {
         user.setLastName("User");
         user.setEnabled(true);
         user.setStatus(UserStatus.ACTIVE);
+        user.setIsOtpRequired(true);
+        user.setEmailVerified(true);
         user.setLastPasswordResetDate(Date.from(Instant.now()));
         user.setRole(testRole);
         user.setAuthority(testAuthority);
@@ -631,6 +765,8 @@ class UserServiceTest {
         user.setLastName("User");
         user.setEnabled(true);
         user.setStatus(UserStatus.ACTIVE);
+        user.setIsOtpRequired(true);
+        user.setEmailVerified(true);
         user.setLastPasswordResetDate(Date.from(Instant.now()));
         return user;
     }

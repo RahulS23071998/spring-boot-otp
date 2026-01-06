@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.controller.OtpVerificationControllerTest" time="0.059" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.starter.springboot.service.impl.BulkUserImportServiceTest" time="0.243" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -72,43 +72,8 @@
     <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss} - [%X{requestId}] - [%X{userId}] - [%thread] - %logger{36} - %msg%n"/>
     <property name="LOGGED_APPLICATION_NAME" value="[Starter Project] "/>
   </properties>
-  <testcase name="testInvalidOtpVerification" classname="com.starter.springboot.controller.OtpVerificationControllerTest" time="0.02">
-    <system-out><![CDATA[2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerMapping - 1 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.starter.springboot.controller.OtpVerificationController#verifyOtp(VerifyTokenRequestDTO)
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@67b4b072]
-2026-01-06 15:55:03 - [] - [] - [main] - c.s.s.c.OtpVerificationController - OTP validation failed for user: diona.smith with status INVALID
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Invalid OTP provided., otpRequired=fals (truncated)...]
-]]></system-out>
-  </testcase>
-  <testcase name="testSuccessfulOtpVerification" classname="com.starter.springboot.controller.OtpVerificationControllerTest" time="0.021">
-    <system-out><![CDATA[2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerMapping - 1 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.starter.springboot.controller.OtpVerificationController#verifyOtp(VerifyTokenRequestDTO)
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@128c3189]
-2026-01-06 15:55:03 - [] - [] - [main] - c.s.s.c.OtpVerificationController - OTP verified successfully for user: diona.smith
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthResponseDTO[username=diona.smith, status=SUCCESS, message=Authentication successful, otpRequired (truncated)...]
-]]></system-out>
-  </testcase>
-  <testcase name="testLockedAccountOtpVerification" classname="com.starter.springboot.controller.OtpVerificationControllerTest" time="0.015">
-    <system-out><![CDATA[2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerMapping - 1 mappings in org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerAdapter - ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.mock.web.MockServletContext - Initializing Spring TestDispatcherServlet ''
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.t.w.s.TestDispatcherServlet - Completed initialization in 0 ms
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestMappingHandlerMapping - Mapped to com.starter.springboot.controller.OtpVerificationController#verifyOtp(VerifyTokenRequestDTO)
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.RequestResponseBodyMethodProcessor - Read "application/json" to [com.starter.springboot.dto.VerifyTokenRequestDTO@57b2e99]
-2026-01-06 15:55:03 - [] - [] - [main] - c.s.s.c.OtpVerificationController - OTP validation failed for user: diona.smith with status LOCKED
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.HttpEntityMethodProcessor - Using 'application/json', given [*/*] and supported [application/json, application/*+json]
-2026-01-06 15:55:03 - [] - [] - [main] - o.s.w.s.m.m.a.HttpEntityMethodProcessor - Writing [AuthResponseDTO[username=diona.smith, status=FAILED, message=Account locked, otpRequired=false, toke (truncated)...]
-]]></system-out>
-  </testcase>
+  <testcase name="shouldHandleValidationErrorsDuringCsvImport" classname="com.starter.springboot.service.impl.BulkUserImportServiceTest" time="0.224"/>
+  <testcase name="shouldHandleUserAlreadyExistsExceptionDuringCsvImport" classname="com.starter.springboot.service.impl.BulkUserImportServiceTest" time="0.004"/>
+  <testcase name="shouldSuccessfullyImportUsersFromCsv" classname="com.starter.springboot.service.impl.BulkUserImportServiceTest" time="0.009"/>
+  <testcase name="shouldThrowErrorForUnsupportedFileFormat" classname="com.starter.springboot.service.impl.BulkUserImportServiceTest" time="0.001"/>
 </testsuite>

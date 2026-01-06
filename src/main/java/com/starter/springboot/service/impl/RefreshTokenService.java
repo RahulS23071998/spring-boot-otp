@@ -28,14 +28,20 @@ public class RefreshTokenService implements IRefreshTokenService {
     @Override
     @Transactional
     public RefreshToken createRefreshToken(Long userId, long expirationSeconds) {
+        return createRefreshToken(userId, expirationSeconds, null, null);
+    }
+
+    @Transactional
+    public RefreshToken createRefreshToken(Long userId, long expirationSeconds, String ipAddress, String userAgent) {
         // Generate a secure random token
         String token = UUID.randomUUID().toString() + "-" + UUID.randomUUID().toString();
         Instant expiresAt = Instant.now().plusSeconds(expirationSeconds);
 
-        RefreshToken refreshToken = new RefreshToken(userId, token, expiresAt);
+        RefreshToken refreshToken = new RefreshToken(userId, token, expiresAt, ipAddress, userAgent);
+        refreshToken.setIsActive(Boolean.TRUE);
         RefreshToken savedToken = refreshTokenRepository.save(refreshToken);
 
-        log.debug("Created refresh token for user: {}", userId);
+        log.debug("Created refresh token for user: {} from IP: {}", userId, ipAddress);
         return savedToken;
     }
 
@@ -57,6 +63,7 @@ public class RefreshTokenService implements IRefreshTokenService {
         refreshTokenRepository.findByTokenAndRevokedAtIsNullAndExpiresAtAfter(token, now)
                 .ifPresent(refreshToken -> {
                     refreshToken.setRevokedAt(now);
+                    refreshToken.setIsActive(Boolean.FALSE);
                     refreshTokenRepository.save(refreshToken);
                     log.debug("Revoked refresh token for user: {}", refreshToken.getUserId());
                 });

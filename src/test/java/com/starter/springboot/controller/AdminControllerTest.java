@@ -465,4 +465,107 @@ class AdminControllerTest {
         assertThat(body).containsEntry(AdminConstants.OTP_SENT_KEY, 0);
         assertThat(body).containsEntry(AdminConstants.OTP_FAILED_KEY, 1);
     }
+
+    @Test
+    void getAllUsers_ShouldReturnPaginatedUsers() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        when(paginationService.createPageableWithSort(anyInt(), anyInt(), anyString(), anyString())).thenReturn(Pageable.unpaged());
+        when(userService.getAllUsers(any(Pageable.class))).thenReturn(page);
+        
+        ResponseEntity<PaginatedResponse<User>> response = adminController.getAllUsers(0, 20, "id", "asc");
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody().getContent()).hasSize(1);
+    }
+
+    @Test
+    void getUser_ShouldReturnUser() {
+        when(userService.getUserById(1L)).thenReturn(user);
+        
+        ResponseEntity<User> response = adminController.getUser(1L);
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody().getUsername()).isEqualTo("testuser");
+    }
+
+    @Test
+    void updateUser_ShouldReturnUpdatedUser() {
+        User updates = new User();
+        updates.setFirstName("Updated");
+        when(userService.updateUser(eq(1L), any(User.class))).thenReturn(user);
+        
+        ResponseEntity<User> response = adminController.updateUser(1L, updates);
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        verify(userService).updateUser(eq(1L), any(User.class));
+    }
+
+    @Test
+    void deleteUser_ShouldReturnOk() {
+        ResponseEntity<?> response = adminController.deleteUser(1L);
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        verify(userService).deleteUser(1L);
+    }
+
+    @Test
+    void resetUserPassword_ShouldReturnOk() {
+        ResponseEntity<?> response = adminController.resetUserPassword(1L, Map.of("newPassword", "newPass"));
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        verify(userService).resetUserPassword(1L, "newPass");
+    }
+
+    @Test
+    void getUsersByStatus_ShouldReturnPaginatedUsers() {
+        Page<User> page = new PageImpl<>(List.of(user));
+        when(paginationService.createPageable(anyInt(), anyInt())).thenReturn(Pageable.unpaged());
+        when(userService.getUsersByStatus(eq(UserStatus.ACTIVE), any(Pageable.class))).thenReturn(page);
+        
+        ResponseEntity<PaginatedResponse<User>> response = adminController.getUsersByStatus(UserStatus.ACTIVE, 0, 20);
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getBody().getContent()).hasSize(1);
+    }
+
+    @Test
+    void exportUsersToCSV_ShouldReturnCSVData() {
+        byte[] csvData = "id,username\n1,testuser".getBytes();
+        when(userService.exportUsersToCSV()).thenReturn(csvData);
+        
+        ResponseEntity<?> response = adminController.exportUsersToCSV();
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getHeaders().getContentType().toString()).isEqualTo("text/csv");
+        assertThat(response.getBody()).isEqualTo(csvData);
+    }
+
+    @Test
+    void exportUsersToExcel_ShouldReturnExcelData() {
+        byte[] excelData = new byte[]{1, 2, 3};
+        when(userService.exportUsersToExcel()).thenReturn(excelData);
+        
+        ResponseEntity<?> response = adminController.exportUsersToExcel();
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        assertThat(response.getHeaders().getContentType().toString()).isEqualTo("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        assertThat(response.getBody()).isEqualTo(excelData);
+    }
+
+    @Test
+    void getUserStatistics_ShouldReturnStats() {
+        when(userService.getTotalUsers()).thenReturn(10L);
+        when(userService.getUserCountByStatus(UserStatus.ACTIVE)).thenReturn(8L);
+        when(userService.getUserCountByStatus(UserStatus.INACTIVE)).thenReturn(2L);
+        when(userService.getOtpRequiredUserCount()).thenReturn(5L);
+        when(userService.getEmailVerifiedUserCount()).thenReturn(7L);
+        
+        ResponseEntity<?> response = adminController.getUserStatistics();
+        
+        assertThat(response.getStatusCodeValue()).isEqualTo(200);
+        @SuppressWarnings("unchecked")
+        Map<String, Object> body = (Map<String, Object>) response.getBody();
+        assertThat(body.get("totalUsers")).isEqualTo(10L);
+        assertThat(body.get("activeUsers")).isEqualTo(8L);
+    }
 }
