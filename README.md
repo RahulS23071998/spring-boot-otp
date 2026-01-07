@@ -1,6 +1,6 @@
 # Spring Boot OTP Authentication System
 
-A comprehensive Spring Boot application demonstrating secure One-Time Password (OTP) authentication with JWT tokens, Redis session management, and email verification. Recently migrated from Spring Boot 1.5.7 to 3.2.3 with Jakarta EE compatibility.
+A comprehensive Spring Boot application demonstrating secure One-Time Password (OTP) authentication with JWT tokens, Redis session management, and email verification. Recently migrated from Spring Boot 1.5.7 to 3.5.9 with Jakarta EE compatibility.
 
 ## 📋 Table of Contents
 - [Features](#-features)
@@ -26,7 +26,9 @@ A comprehensive Spring Boot application demonstrating secure One-Time Password (
 - **OTP Verification** - Email-based OTP verification with rate limiting and audit trails
 - **Google OAuth Integration** - Seamless Google OAuth 2.0 authentication with automatic user provisioning
 - **OAuth Password Setup** - Secure password setup flow for OAuth users using temporary tokens
-- **Temporary Token System** - Short-lived tokens for sensitive operations like password reset
+- **Security Metadata Tracking** - Captures client IP address and User-Agent for every session and audit entry
+- **Bulk User Operations** - High-performance user imports from CSV/Excel and multi-format data exports
+- **Administrative Dashboard** - Comprehensive admin APIs for user management, statistics, and audit monitoring
 - **Redis Session Management** - Token whitelisting, user caching, and session management
 - **User Management** - Complete user registration, activation, and profile management
 - **Email Service** - SMTP email integration for OTP delivery and notifications
@@ -44,11 +46,11 @@ A comprehensive Spring Boot application demonstrating secure One-Time Password (
 - **Application Monitoring** - Spring Boot Actuator endpoints for health checks and metrics
 - **Profile Support** - Development and production environment configurations
 - **Security Hardening** - Multiple layers of security validation and CORS protection
-- **Comprehensive Testing** - Extensive unit and integration tests (340+ test cases with 90%+ coverage)
+- **Comprehensive Testing** - Extensive unit and integration tests (440+ test cases with 90%+ coverage)
 
 ## 🛠 Tech Stack
 
-- **Framework**: Spring Boot 3.2.3
+- **Framework**: Spring Boot 3.5.9
 - **Java**: 17 (migrated from Java 8)
 - **Database**: MySQL 8.0 with Liquibase 4.23.0
 - **Cache**: Redis with embedded Redis for development
@@ -63,10 +65,10 @@ A comprehensive Spring Boot application demonstrating secure One-Time Password (
 
 ## 🔄 Migration Notes
 
-This project has been recently updated from Spring Boot 1.5.7.RELEASE to 3.2.3. Key changes include:
+This project has been recently updated from Spring Boot 1.5.7.RELEASE to 3.5.9. Key changes include:
 
 ### Major Updates
-- **Spring Boot**: 1.5.7.RELEASE → 3.2.3
+- **Spring Boot**: 1.5.7.RELEASE → 3.5.9
 - **Java Version**: 8 → 17
 - **JWT Library**: jjwt 0.6.0 → 0.11.5
 - **Jakarta EE**: Migrated from javax.* to jakarta.* packages
@@ -112,6 +114,7 @@ src/
 │   │   │   ├── SecurityConstants.java             # Security constants
 │   │   │   └── ValidationConstants.java           # Validation constants
 │   │   ├── controller/                    # REST controllers
+│   │   │   ├── AdminController.java               # Admin management APIs
 │   │   │   ├── AuthenticationController.java      # Auth endpoints
 │   │   │   ├── PublicUserResource.java            # Public user operations
 │   │   │   └── UserResource.java                  # Protected user operations
@@ -160,6 +163,7 @@ src/
 │   │   │   └── OtpAwareAuthenticationProvider.java # OTP-aware auth provider
 │   │   ├── service/                       # Service layer
 │   │   │   ├── impl/                              # Service implementations
+│   │   │   │   ├── BulkUserImportService.java     # CSV/Excel import impl
 │   │   │   │   ├── EmailService.java              # Email service impl
 │   │   │   │   ├── GoogleOAuthService.java        # Google OAuth impl
 │   │   │   │   ├── OtpAuditRetentionService.java  # Audit retention impl
@@ -169,11 +173,13 @@ src/
 │   │   │   │   ├── OtpProperties.java             # OTP properties impl
 │   │   │   │   ├── OtpRateLimiterImpl.java        # Rate limiter impl
 │   │   │   │   ├── OtpService.java                # OTP service impl
+│   │   │   │   ├── PaginationService.java         # Universal pagination impl
 │   │   │   │   ├── PasswordSetupService.java      # Password setup impl
 │   │   │   │   ├── PasswordValidationService.java # Password validation impl
 │   │   │   │   ├── RedisTokenService.java         # Redis token service impl
 │   │   │   │   ├── TemporaryPasswordTokenService.java # Temporary token impl
 │   │   │   │   └── UserService.java               # User service impl
+│   │   │   ├── IBulkUserImportService.java        # Import service interface
 │   │   │   ├── IEmailService.java                 # Email service interface
 │   │   │   ├── IGoogleOAuthService.java           # Google OAuth interface
 │   │   │   ├── IOtpAuditRetentionService.java     # Audit retention interface
@@ -183,11 +189,11 @@ src/
 │   │   │   ├── IOtpProperties.java                # OTP properties interface
 │   │   │   ├── IOtpRateLimiter.java               # Rate limiter interface
 │   │   │   ├── IOtpService.java                   # OTP service interface
+│   │   │   ├── IPaginationService.java            # Pagination interface
 │   │   │   ├── IPasswordSetupService.java         # Password setup interface
 │   │   │   ├── IRedisTokenService.java            # Redis token service interface
 │   │   │   ├── ITemporaryPasswordTokenService.java # Temporary token interface
-│   │   │   ├── IUserService.java                  # User service interface
-│   │   │   └── PasswordValidationService.java     # Password validation logic
+│   │   │   └── IUserService.java                  # User service interface
 │   │   └── Application.java               # Main application class
 │   └── resources/
 │       ├── application.yml               # Main configuration
@@ -477,7 +483,30 @@ GET /api/users/current
 Authorization: Bearer <token>
 ```
 
-## 🔐 Authentication Flows
+### Administrative Endpoints (Role: ADMIN)
+
+#### User Management
+- **GET** `/api/admin/users` - Get all users (Paginated & Sortable)
+- **GET** `/api/admin/users/{id}` - Get user details by ID
+- **PUT** `/api/admin/users/{id}` - Update user details
+- **DELETE** `/api/admin/users/{id}` - Delete user
+- **POST** `/api/admin/users/{id}/lock` - Deactivate/Lock user
+- **POST** `/api/admin/users/{id}/unlock` - Activate/Unlock user
+- **POST** `/api/admin/users/{id}/reset-password` - Administrative password reset
+
+#### Bulk Operations & Exports
+- **POST** `/api/admin/users/import` - Bulk import users from CSV/Excel
+- **GET** `/api/admin/users/export/csv` - Export user database to CSV
+- **GET** `/api/admin/users/export/excel` - Export user database to Excel
+- **POST** `/api/admin/bulk-otp` - Send OTPs to multiple users simultaneously
+
+#### Monitoring & Security
+- **GET** `/api/admin/statistics` - Real-time system and user statistics
+- **GET** `/api/admin/audit-logs` - View paginated OTP audit logs
+- **POST** `/api/admin/tokens/inspect` - Inspect and validate refresh tokens (captures IP/UA)
+- **POST** `/api/admin/users/{id}/revoke-tokens` - Revoke all active tokens for a specific user
+
+### Authentication Flows
 
 ### 1. Standard Email/Password Flow (OTP Disabled)
 1. User submits credentials → `/auth/authenticate`
@@ -614,6 +643,18 @@ GET /actuator/configprops
 
 ## 🧪 Testing
 
+The application includes a comprehensive test suite covering unit, integration, and security tests.
+
+### Test Statistics
+- **Total Test Cases**: 447+
+- **Code Coverage**: 90%+
+- **Test Categories**:
+  - **Auth Controller**: 340+ cases (Core authentication flows)
+  - **Admin Controller**: 25+ cases (User management, bulk ops)
+  - **Bulk Import**: 10+ cases (CSV/Excel validation)
+  - **Security**: 30+ cases (JWT, OAuth, Rate limiting)
+  - **Services**: 40+ cases (Business logic validation)
+
 ### Run All Tests
 ```bash
 mvn test
@@ -622,38 +663,33 @@ mvn test
 ### Run Specific Test Classes
 ```bash
 mvn test -Dtest=UserServiceTest
-mvn test -Dtest=TokenProviderTest
+mvn test -Dtest=AdminControllerTest
 mvn test -Dtest=AuthenticationControllerTest
+mvn test -Dtest=BulkUserImportServiceTest
 ```
 
-### Test Coverage
-The project includes comprehensive test coverage:
-- **Unit Tests**: Service layer, utilities, converters
-- **Integration Tests**: REST controllers, authentication flow
-- **Security Tests**: JWT token validation, OTP verification
-- **Repository Tests**: Data access layer testing
-
-### Key Test Classes (340+ Test Cases)
+### Key Test Suites (447+ Test Cases)
+- **Administrative & Bulk Ops** (40+ cases)
+  - `AdminControllerTest` - Verification of admin APIs and security context tracking
+  - `BulkUserImportServiceTest` - CSV/Excel user import logic and validation
+  - `PaginationServiceTest` - Universal pagination and sorting verification
+  
 - **OAuth & Password Setup** (26+ cases)
   - `PasswordSetupServiceTest` - Password setup logic with rate limiting (13 cases)
   - `TemporaryPasswordTokenServiceTest` - Temporary token generation and validation (13 cases)
-  - `AuthenticationControllerTest` - Google OAuth endpoints (6 cases)
   
-- **Core Authentication** (80+ cases)
-  - `AuthenticationControllerTest` - All authentication flows and edge cases (340+ total cases)
-  - `TokenProviderTest` - JWT token generation and validation
+- **Core Authentication** (340+ cases)
+  - `AuthenticationControllerTest` - Exhaustive testing of all auth flows and edge cases
+  - `TokenProviderTest` - JWT generation and context (IP/UA) tracking verification
   - `OtpAwareAuthenticationProviderTest` - OTP-aware authentication
   
 - **OTP System** (60+ cases)
   - `OtpServiceTest` - OTP generation and verification logic (15 cases)
-  - `OtpGeneratorTest` - OTP generation algorithms
   - `OtpRateLimiterImplTest` - Rate limiting and attempt tracking (9 cases)
-  - `OtpAuditServiceImplTest` - Audit trail management
-  - `OtpNotificationServiceImplTest` - OTP email delivery
   - `OtpAuditRetentionServiceTest` - Audit retention policies
   
-- **User Management** (40+ cases)
-  - `UserServiceTest` - User creation, activation, and management (25 cases)
+- **User Management** (50+ cases)
+  - `UserServiceTest` - User lifecycle, statistics engine, and export logic (35 cases)
   - `PublicUserResourceTest` - Public user endpoints
   - `PasswordChangeAuthorizationServiceTest` - Authorization checks (17 cases)
   
@@ -770,14 +806,14 @@ For support and questions:
 
 ---
 
-**Note**: This project has been migrated to Spring Boot 3.2.3 and Java 17 for improved security, performance, and long-term maintainability. It includes comprehensive API documentation (Swagger) and monitoring capabilities (Actuator). The application is designed for educational and demonstration purposes. For production use, ensure proper security auditing and compliance with your organization's security policies.
+**Note**: This project has been migrated to Spring Boot 3.5.9 and Java 17 for improved security, performance, and long-term maintainability. It includes comprehensive API documentation (Swagger) and monitoring capabilities (Actuator). The application is designed for educational and demonstration purposes. For production use, ensure proper security auditing and compliance with your organization's security policies.
 
-**Migration Status**: ✅ Successfully migrated from Spring Boot 1.5.7 to 3.2.3 with Jakarta EE compatibility.
+**Migration Status**: ✅ Successfully migrated from Spring Boot 1.5.7 to 3.5.9 with Jakarta EE compatibility.
 **Recent Features**: 
-- ✅ Added Swagger/OpenAPI documentation and Spring Boot Actuator monitoring
-- ✅ Implemented Google OAuth 2.0 integration with automatic user provisioning
-- ✅ Added secure password setup flow with temporary tokens for OAuth users
-- ✅ Implemented password strength validation with configurable rules
-- ✅ Added rate limiting for password set attempts
-- ✅ Created 340+ comprehensive test cases covering all authentication flows
+- ✅ Full Administrative Layer (User CRUD, Lock/Unlock, Password Reset)
+- ✅ Bulk User Import (CSV/Excel) and Multi-format Data Export
+- ✅ Security Context Tracking (IP & User-Agent capture)
+- ✅ Universal Pagination & Sorting System
+- ✅ System Statistics & Enhanced OTP Auditing
+- ✅ 447+ Comprehensive Automated Tests
 - ✅ Full Redis-based temporary token system with TTL management

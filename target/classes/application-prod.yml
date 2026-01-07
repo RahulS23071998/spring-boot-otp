@@ -75,7 +75,7 @@ info:
     description: Secure One-Time Password (OTP) authentication system with JWT tokens
     version: 1.0.0
     java-version: 17
-    spring-boot-version: 3.2.3
+    spring-boot-version: 3.5.9
   system:
     os: Production Environment
     architecture: x64

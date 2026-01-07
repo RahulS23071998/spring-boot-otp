@@ -17,8 +17,9 @@ flowchart TD
     H --> I["Cache DomainUserDetails: Redis otp:user:{username} 5min"]
     I --> J["Return OTP_PENDING: TokenCreationResponse.pendingOtp()"]
     F -->|No| K["createToken: Generate JWT via TokenProvider"]
-    K --> K1["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
-    K1 --> L["Generate JWT: TokenProvider.generateToken() HS256"]
+    K --> K1["Capture Context: IP & User-Agent via RequestContextUtil"]
+    K1 --> K2["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
+    K2 --> L["Generate JWT: TokenProvider.generateToken() HS256"]
     L --> M["Register JTI: Redis whitelist via IRedisTokenService.registerJti()"]
     M --> N["Return AUTHENTICATED: TokenCreationResponse.accepted() with JWT"]
     
@@ -42,7 +43,8 @@ flowchart TD
     P --> Q["validateOTP: Check OTP via OtpService.validateOTP()"]
     Q --> R{{"OTP Valid?"}}
     R -->|Yes| S["createTokenAfterVerifiedOtp: Generate JWT post-OTP"]
-    S --> S1["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
+    S --> S0["Capture Context: IP & User-Agent via RequestContextUtil"]
+    S0 --> S1["Revoke Old Tokens: refreshTokenService.revokeAllUserRefreshTokens()"]
     S1 --> T["Retrieve Cached: DomainUserDetails from Redis"]
     T --> U["Construct User: Build object from cached data"]
     U --> V["Generate JWT: TokenProvider.generateToken()"]
@@ -134,11 +136,31 @@ flowchart TD
     %% ========== TOKEN REFRESH FLOW ==========
     LLL["Access Token Expired"] --> MMM["refreshToken: POST /auth/refresh"]
     MMM --> NNN["Validate Refresh Token: refreshTokenService.validateRefreshToken()"]
-    NNN --> OOO["Get User: userRepository.findById()"]
+    NNN --> NNN1["Capture Context: IP & UA via RequestContextUtil"]
+    NNN1 --> OOO["Get User: userRepository.findById()"]
     OOO --> PPP["Rotate Refresh Token: refreshTokenService.rotateRefreshToken()"]
     PPP --> QQQ["Create New Access Token: TokenProvider.createAccessTokenAfterVerifiedOtp()"]
     QQQ --> RRR["Return New Tokens: JWTToken with access + refresh"]
     RRR --> SSS["Client Updates Tokens"]
+
+    %% ========== ADMINISTRATIVE FLOWS ==========
+    Admin["Admin User"] --> AdminTask{{"Select Admin Task"}}
+    
+    AdminTask -->|User Management| AM1["Lock/Unlock, Delete, Update, Reset Password"]
+    AM1 --> AM2["UserService.updateStatus() / updateUser() / deleteUser()"]
+    
+    AdminTask -->|Bulk Operations| AB1["Bulk User Import (CSV/Excel)"]
+    AB1 --> AB2["BulkUserImportService.importUsersFromFile()"]
+    AB2 --> AB3["Return success/failure counts + detailed errors"]
+    
+    AdminTask -->|Data Export| AE1["Export Users (CSV/Excel)"]
+    AE1 --> AE2["UserService.exportUsersToCSV() / exportUsersToExcel()"]
+    
+    AdminTask -->|Monitoring| AMo1["View Audit Logs (Paginated)"]
+    AMo1 --> AMo2["auditEntryRepository.findAll(pageable)"]
+    
+    AdminTask -->|System Insights| AS1["User Statistics"]
+    AS1 --> AS2["Total, Active, Inactive, OTP Required, Email Verified counts"]
     
     %% ========== ERROR PATHS ==========
     E -->|Invalid Credentials| Y["UNAUTHORIZED: Invalid credentials"]
@@ -159,9 +181,11 @@ flowchart TD
     %% ========== SUCCESS PATHS ==========
     N --> II["✓ Authentication Complete"]
     X --> II
-    B52 --> II
     B44 --> II
     RRR --> II
+    AM2 --> II
+    AB3 --> II
+    AE2 --> II
     
     %% ========== FAILURE PATHS ==========
     Y --> JJ["✗ Authentication Failed"]
@@ -187,6 +211,7 @@ flowchart TD
     style F fill:#FFD700
     style B5 fill:#FFD700
     style B10 fill:#FFD700
+    style AdminTask fill:#FFF4B0
 ```
 
 **Token & Configuration Specifications:**
@@ -273,6 +298,18 @@ flowchart TD
 - Next login forced to use fresh DB data
 - All existing sessions invalidated
 
+### 9. Administrative & Bulk Operations Flow
+- **User Management**: Administrators can lock/unlock users, update profiles, delete accounts, and reset passwords via `/api/admin/users`.
+- **Bulk User Import**: Supports CSV and Excel file uploads via `/api/admin/users/import`.
+  - Validates user data (email format, unique usernames).
+  - Handles duplicate records gracefully.
+  - Returns detailed success/failure reports.
+- **Data Export**: Administrators can export the entire user database to CSV or Excel formats.
+- **System Monitoring**:
+  - **Audit Logs**: Paginated access to OTP generation and verification logs.
+  - **User Statistics**: Real-time insights into total users, active status, and security configurations (e.g., OTP-required count).
+- **Security Context Tracking**: All token-related operations (authentication, refresh) now capture and store client IP addresses and User-Agent strings for auditing.
+
 ### Password Setup Security Features
 - **Temporary Token System**: Short-lived tokens (15 min) stored in Redis with automatic expiration
 - **Rate Limiting**: Max 5 password set attempts per user prevents brute force attacks
@@ -295,8 +332,11 @@ flowchart TD
 - **Password Change Cache Invalidation**: All caches and tokens cleared on password change
 - **OTP Security**: Time-based expiration, max attempt tracking, lockout mechanism
 - **Persistent TOTP**: Secrets stored in DB, replay protection via Redis (30s TTL)
+- **Security Metadata Tracking**: Integrated `RequestContextUtil` to extract and persist IP Address and User-Agent for every session/refresh token.
+- **Bulk Import Validation**: Strict schema and business logic validation for all imported users.
+- **Pagination & Sorting**: Universal implementation for all administrative list endpoints to prevent DoS.
 - **Rate Limiting**: Multiple layers - OTP (3/10min), Password Set (5/user), OAuth (10/min)
-- **Audit Trails**: OTP generation and verification logged for compliance
+- **Audit Trails**: OTP generation and verification logged for compliance with automated retention/cleanup.
 
 ### Authentication Decision Points (Color Coded Yellow)
 1. **OTP Required?** (Flow F) - User OTP setting check
@@ -307,6 +347,7 @@ flowchart TD
 6. **Token Valid?** (Flow B29) - Temporary token validation
 7. **Password Valid?** (Flow B32) - Password strength validation
 8. **OTP Valid?** (Flow R) - OTP verification
+9. **Import Valid?** (Flow AB2) - CSV/Excel validation logic
 
 ### Flow Connections
 - Dual authentication entry points: Traditional email/password + Google OAuth
@@ -316,6 +357,8 @@ flowchart TD
 - Comprehensive error paths with specific HTTP status codes
 - All success paths converge at authentication completion
 - Scheduled background cleanup of expired OTP audit entries
+- Administrative tasks bridge user management and system auditing
+- Bulk imports provide a fast-track for enterprise user onboarding
 
 ### System Architecture Highlights
 - **Service Layer**: Separated concerns with dedicated services for OTP, OAuth, Password Setup, Tokens
@@ -324,3 +367,5 @@ flowchart TD
 - **Async Email**: Non-blocking email delivery for OTP and notifications
 - **Transaction Management**: ACID compliance for password updates
 - **Monitoring & Logging**: Comprehensive logging at all decision points
+- **Bulk Data Processing**: Stream-based file processing for CSV/Excel imports/exports
+- **Context-Aware Security**: Global request interception for IP and User-Agent tracking
