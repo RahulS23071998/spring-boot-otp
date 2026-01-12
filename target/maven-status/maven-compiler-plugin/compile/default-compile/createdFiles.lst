@@ -103,6 +103,7 @@ com\starter\springboot\constants\OtpConstants.class
 com\starter\springboot\constants\SecurityConstants.class
 com\starter\springboot\service\IRedisTokenService.class
 com\starter\springboot\dto\LoginDTO.class
+com\starter\springboot\config\AsyncConfig.class
 com\starter\springboot\service\impl\UserService.class
 com\starter\springboot\controller\CustomShutdownEndpoint.class
 com\starter\springboot\service\impl\RedisTokenService.class

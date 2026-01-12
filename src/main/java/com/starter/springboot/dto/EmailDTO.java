@@ -1,5 +1,7 @@
 package com.starter.springboot.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.context.annotation.Description;
 
 import java.util.List;
@@ -7,10 +9,13 @@ import java.util.List;
 @Description(value = "EmailDTO DTO class.")
 public class EmailDTO {
 
+    @NotEmpty(message = "{validation.notNull}")
     private List<String> recipients;
     private List<String> ccList;
     private List<String> bccList;
+    @NotBlank(message = "{validation.notBlank}")
     private String subject;
+    @NotBlank(message = "{validation.notBlank}")
     private String body;
     private Boolean isHtml;
     private String attachmentPath;

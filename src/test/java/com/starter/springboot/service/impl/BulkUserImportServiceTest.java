@@ -18,13 +18,15 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockMultipartFile;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.concurrent.Executor;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class BulkUserImportServiceTest {
@@ -34,6 +36,9 @@ class BulkUserImportServiceTest {
 
     @Mock
     private RoleRepository roleRepository;
+
+    @Mock
+    private Executor bulkTaskExecutor;
 
     @InjectMocks
     private BulkUserImportService bulkUserImportService;
@@ -45,6 +50,13 @@ class BulkUserImportServiceTest {
         testRole = new Role();
         testRole.setId(1L);
         testRole.setName(SecurityConstants.USER_AUTHORITY);
+
+        // Make the executor run synchronously for tests
+        lenient().doAnswer(invocation -> {
+            Runnable runnable = invocation.getArgument(0);
+            runnable.run();
+            return null;
+        }).when(bulkTaskExecutor).execute(any(Runnable.class));
     }
 
     @Test
@@ -57,7 +69,6 @@ class BulkUserImportServiceTest {
         
         MockMultipartFile file = new MockMultipartFile("file", "users.csv", "text/csv", csvContent.getBytes());
         
-        when(roleRepository.findByName(SecurityConstants.USER_AUTHORITY)).thenReturn(Optional.of(testRole));
         when(userService.createUser(any(User.class))).thenAnswer(invocation -> {
             User user = invocation.getArgument(0);
             user.setId(System.currentTimeMillis()); // Mock an ID assignment
@@ -86,7 +97,6 @@ class BulkUserImportServiceTest {
         
         MockMultipartFile file = new MockMultipartFile("file", "users.csv", "text/csv", csvContent.getBytes());
         
-        when(roleRepository.findByName(SecurityConstants.USER_AUTHORITY)).thenReturn(Optional.of(testRole));
         when(userService.createUser(any(User.class))).thenThrow(new UserAlreadyExistsException("User exists", 1L));
 
         // When
@@ -113,8 +123,6 @@ class BulkUserImportServiceTest {
         
         MockMultipartFile file = new MockMultipartFile("file", "users.csv", "text/csv", csvContent.getBytes());
         
-        when(roleRepository.findByName(SecurityConstants.USER_AUTHORITY)).thenReturn(Optional.of(testRole));
-
         // When
         BulkUserImportResponse response = bulkUserImportService.importUsersFromFile(file);
 
@@ -130,13 +138,11 @@ class BulkUserImportServiceTest {
     }
 
     @Test
-    @DisplayName("Should throw error for unsupported file format")
-    void shouldThrowErrorForUnsupportedFileFormat() {
+    @DisplayName("Should return failure for unsupported file format")
+    void shouldReturnFailureForUnsupportedFileFormat() {
         // Given
         MockMultipartFile file = new MockMultipartFile("file", "users.txt", "text/plain", "content".getBytes());
         
-        when(roleRepository.findByName(SecurityConstants.USER_AUTHORITY)).thenReturn(Optional.of(testRole));
-
         // When
         BulkUserImportResponse response = bulkUserImportService.importUsersFromFile(file);
 
@@ -144,6 +150,7 @@ class BulkUserImportServiceTest {
         assertNotNull(response);
         assertEquals(0, response.getTotalRows());
         assertEquals(1, response.getFailureCount());
+        assertFalse(response.getResults().isEmpty());
         assertTrue(response.getResults().get(0).getMessage().contains(AdminConstants.UNSUPPORTED_FILE_FORMAT_MESSAGE));
     }
 }

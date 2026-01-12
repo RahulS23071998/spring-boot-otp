@@ -1,5 +1,6 @@
 package com.starter.springboot.entity;
 
+import com.starter.springboot.constants.DatabaseConstants;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -21,19 +22,19 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public abstract class BaseAuditedEntity {
 
     @CreatedDate
-    @Column(name = "created_date", nullable = false, updatable = false )
+    @Column(name = DatabaseConstants.CREATED_DATE_COLUMN, nullable = false, updatable = false )
     private LocalDateTime createdDate;
 
     @LastModifiedDate
-    @Column(name = "last_modified_date")
+    @Column(name = DatabaseConstants.LAST_MODIFIED_DATE_COLUMN)
     private LocalDateTime lastModifiedDate;
 
     @CreatedBy
-    @Column(name = "created_by", length = 50, updatable = false)
+    @Column(name = DatabaseConstants.CREATED_BY_COLUMN, length = DatabaseConstants.AUDIT_USER_MAX_LENGTH, updatable = false)
     private String createdBy;
 
     @LastModifiedBy
-    @Column(name = "last_modified_by", length = 50)
+    @Column(name = DatabaseConstants.LAST_MODIFIED_BY_COLUMN, length = DatabaseConstants.AUDIT_USER_MAX_LENGTH)
     private String lastModifiedBy;
 
     // Constructors

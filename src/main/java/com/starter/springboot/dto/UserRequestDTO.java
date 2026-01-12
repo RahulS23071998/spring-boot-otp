@@ -38,8 +38,10 @@ public class UserRequestDTO {
     @NotNull
     private Boolean otpRequired = Boolean.FALSE; // default to false when not explicitly provided
 
+    @NotNull(message = "{validation.notNull}")
     private UserStatus status;
 
+    @NotNull(message = "{validation.notNull}")
     private Boolean enabled;
 
     private Long roleId;

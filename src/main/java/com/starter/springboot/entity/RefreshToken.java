@@ -20,11 +20,10 @@ import java.time.Instant;
            @Index(name = DatabaseConstants.IDX_REFRESH_TOKEN_EXPIRES, columnList = DatabaseConstants.REFRESH_TOKEN_EXPIRES_AT_COLUMN),
            @Index(name = DatabaseConstants.IDX_REFRESH_TOKEN_TOKEN, columnList = DatabaseConstants.REFRESH_TOKEN_TOKEN_COLUMN, unique = true)
        })
-@EntityListeners(AuditingEntityListener.class)
-public class RefreshToken {
+@EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
+public class RefreshToken implements BaseEntityWithId {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -47,16 +46,17 @@ public class RefreshToken {
     @Column(name = DatabaseConstants.REFRESH_TOKEN_REVOKED_AT_COLUMN)
     private Instant revokedAt;
 
-    @Column(name = DatabaseConstants.REFRESH_TOKEN_REPLACED_BY_TOKEN_COLUMN)
+    @Column(name = DatabaseConstants.REFRESH_TOKEN_REPLACED_BY_TOKEN_COLUMN, length = DatabaseConstants.REFRESH_TOKEN_MAX_LENGTH)
+    @Size(max = DatabaseConstants.REFRESH_TOKEN_MAX_LENGTH)
     private String replacedByToken;
 
-    @Column(name = "ip_address", length = 45)
+    @Column(name = DatabaseConstants.IP_ADDRESS_COLUMN, length = DatabaseConstants.IP_ADDRESS_MAX_LENGTH)
     private String ipAddress;
 
-    @Column(name = "user_agent", length = 500)
+    @Column(name = DatabaseConstants.USER_AGENT_COLUMN, length = DatabaseConstants.USER_AGENT_MAX_LENGTH)
     private String userAgent;
 
-    @Column(name = "is_active", nullable = false)
+    @Column(name = DatabaseConstants.IS_ACTIVE_COLUMN, nullable = false)
     private Boolean isActive = Boolean.TRUE;
 
     public RefreshToken() {}

@@ -12,13 +12,15 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = DatabaseConstants.OTP_AUDIT_ENTRIES_TABLE,
        indexes = {
            @Index(name = DatabaseConstants.IDX_OTP_AUDIT_USERNAME, columnList = DatabaseConstants.OTP_USERNAME_COLUMN),
-           @Index(name = DatabaseConstants.IDX_OTP_AUDIT_CREATED_DATE, columnList = "created_date")
+           @Index(name = DatabaseConstants.IDX_OTP_AUDIT_CREATED_DATE, columnList = DatabaseConstants.CREATED_DATE_COLUMN)
        })
 @EntityListeners({CustomAuditingListener.class, IdGeneratorEntityListener.class})
 public class OtpAuditEntry extends BaseAuditedEntity implements BaseEntityWithId {
@@ -28,17 +30,22 @@ public class OtpAuditEntry extends BaseAuditedEntity implements BaseEntityWithId
 
     @Convert(converter = LocalDateToSqlDateConverter.class)
     @Column(name = DatabaseConstants.ISSUED_ON_COLUMN, nullable = false)
+    @NotNull
     private LocalDate issuedOn;
 
     @Convert(converter = LocalDateToUtilDateConverter.class)
     @Column(name = DatabaseConstants.EXPIRES_ON_COLUMN, nullable = false)
+    @NotNull
     private LocalDate expiresOn;
 
     @Convert(converter = StringToDateConverter.class)
-    @Column(name = DatabaseConstants.PARTNER_EXPIRY_COLUMN)
+    @Column(name = DatabaseConstants.PARTNER_EXPIRY_COLUMN, length = 255)
+    @Size(max = 255)
     private String partnerExpiry;
 
-    @Column(name = DatabaseConstants.OTP_USERNAME_COLUMN, nullable = false)
+    @Column(name = DatabaseConstants.OTP_USERNAME_COLUMN, nullable = false, length = DatabaseConstants.USERNAME_MAX_LENGTH)
+    @NotNull
+    @Size(max = DatabaseConstants.USERNAME_MAX_LENGTH)
     private String username;
 
     public Long getId() {

@@ -5,6 +5,7 @@ import com.starter.springboot.constants.DatabaseConstants;
 import com.starter.springboot.listener.CustomAuditingListener;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -17,9 +18,11 @@ public class Authority extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Column(name = DatabaseConstants.AUTHORITY_NAME_COLUMN, length = DatabaseConstants.AUTHORITY_NAME_MAX_LENGTH, nullable = false, unique = true)
     @NotNull
+    @Size(max = DatabaseConstants.AUTHORITY_NAME_MAX_LENGTH)
     private String name;
 
-    @Column(name = DatabaseConstants.AUTHORITY_DESCRIPTION_COLUMN)
+    @Column(name = DatabaseConstants.AUTHORITY_DESCRIPTION_COLUMN, length = DatabaseConstants.DESCRIPTION_MAX_LENGTH)
+    @Size(max = DatabaseConstants.DESCRIPTION_MAX_LENGTH)
     private String description;
 
     public Long getId() {

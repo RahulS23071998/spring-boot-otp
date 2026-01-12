@@ -1,6 +1,8 @@
 package com.starter.springboot.dto;
 
+import com.starter.springboot.constants.DatabaseConstants;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class GoogleTokenDTO {
 
@@ -9,8 +11,10 @@ public class GoogleTokenDTO {
 
     private Boolean rememberMe;
 
+    @Size(max = DatabaseConstants.CLIENT_ID_MAX_LENGTH, message = "{validation.clientId.size}")
     private String clientId;
 
+    @Size(max = DatabaseConstants.DEVICE_ID_MAX_LENGTH, message = "{validation.deviceId.size}")
     private String deviceId;
 
     public GoogleTokenDTO() {

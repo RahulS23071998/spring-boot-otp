@@ -29,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -656,7 +657,7 @@ class UserServiceTest {
     @Test
     @DisplayName("Should successfully export users to CSV")
     void shouldSuccessfullyExportUsersToCSV() {
-        when(userRepository.findAll()).thenReturn(Arrays.asList(testUser));
+        when(userRepository.streamAll()).thenReturn(Stream.of(testUser));
 
         byte[] result = userService.exportUsersToCSV();
 
@@ -670,7 +671,7 @@ class UserServiceTest {
     @Test
     @DisplayName("Should successfully export users to Excel")
     void shouldSuccessfullyExportUsersToExcel() {
-        when(userRepository.findAll()).thenReturn(Arrays.asList(testUser));
+        when(userRepository.streamAll()).thenReturn(Stream.of(testUser));
 
         byte[] result = userService.exportUsersToExcel();
 

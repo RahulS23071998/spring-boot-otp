@@ -20,6 +20,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,27 +31,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 @Service
 public class BulkUserImportService implements IBulkUserImportService {
 
     private final IUserService userService;
     private final RoleRepository roleRepository;
+    private final Executor bulkTaskExecutor;
     private Role cachedDefaultRole;
 
-    public BulkUserImportService(IUserService userService, RoleRepository roleRepository) {
+    public BulkUserImportService(IUserService userService, 
+                               RoleRepository roleRepository,
+                               @Qualifier("bulkTaskExecutor") Executor bulkTaskExecutor) {
         this.userService = userService;
         this.roleRepository = roleRepository;
+        this.bulkTaskExecutor = bulkTaskExecutor;
     }
 
     @Override
     public BulkUserImportResponse importUsersFromFile(MultipartFile file) {
-        List<BulkUserImportResult> results = new ArrayList<>();
+        List<BulkUserImportResult> results;
 
         try {
-            this.cachedDefaultRole = roleRepository.findByName(SecurityConstants.USER_AUTHORITY)
-                    .orElseThrow(() -> new IllegalArgumentException("Default role ROLE_USER not found in database"));
-            
             String filename = Objects.requireNonNull(file.getOriginalFilename()).toLowerCase();
 
             if (filename.endsWith(AdminConstants.CSV_FILE_EXTENSION)) {
@@ -68,13 +73,15 @@ public class BulkUserImportService implements IBulkUserImportService {
 
         } catch (Exception e) {
             BulkUserImportResult errorResult = new BulkUserImportResult(0, "", false,
-                    AdminConstants.FILE_PROCESSING_ERROR_MESSAGE + e.getMessage());
+                    AdminConstants.FILE_PROCESSING_ERROR_MESSAGE + "Unexpected error occurred.");
             return new BulkUserImportResponse(0, 0, 1, List.of(errorResult));
         }
     }
 
+    private List<Map<String, String>> rows = new ArrayList<>();
+
     private List<BulkUserImportResult> importFromCsv(MultipartFile file) throws IOException {
-        List<BulkUserImportResult> results = new ArrayList<>();
+        List<Map<String, String>> localRows = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
              CSVParser csvParser =
@@ -85,23 +92,37 @@ public class BulkUserImportService implements IBulkUserImportService {
                              .get()
                              .parse(reader)) {
 
-            int rowNumber = 1;
             for (CSVRecord record : csvParser) {
-                rowNumber++;
-                try {
-                    BulkUserImportResult result = processUserRow(rowNumber, record.toMap());
-                    results.add(result);
-                } catch (Exception e) {
-                    results.add(new BulkUserImportResult(rowNumber, "", false, e.getMessage()));
-                }
+                localRows.add(record.toMap());
             }
         }
 
-        return results;
+        return processRowsInParallel(localRows);
+    }
+
+    private List<BulkUserImportResult> processRowsInParallel(List<Map<String, String>> localRows) {
+        List<CompletableFuture<BulkUserImportResult>> futures = new ArrayList<>();
+        
+        for (int i = 0; i < localRows.size(); i++) {
+            final int rowNum = i + 2; // +1 for 0-index, +1 for header
+            final Map<String, String> rowData = localRows.get(i);
+            
+            futures.add(CompletableFuture.supplyAsync(() -> {
+                try {
+                    return processUserRow(rowNum, rowData);
+                } catch (Exception e) {
+                    return new BulkUserImportResult(rowNum, rowData.getOrDefault("username", ""), false, "Unexpected error in row processing");
+                }
+            }, bulkTaskExecutor));
+        }
+
+        return futures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
     }
 
     private List<BulkUserImportResult> importFromExcel(MultipartFile file) throws IOException {
-        List<BulkUserImportResult> results = new ArrayList<>();
+        List<Map<String, String>> localRows = new ArrayList<>();
 
         try (Workbook workbook = new XSSFWorkbook(file.getInputStream())) {
             Sheet sheet = workbook.getSheetAt(0);
@@ -112,19 +133,12 @@ public class BulkUserImportService implements IBulkUserImportService {
                     rowNumber++;
                     continue;
                 }
-
+                localRows.add(extractExcelRowData(row));
                 rowNumber++;
-                try {
-                    Map<String, String> rowData = extractExcelRowData(row);
-                    BulkUserImportResult result = processUserRow(rowNumber, rowData);
-                    results.add(result);
-                } catch (Exception e) {
-                    results.add(new BulkUserImportResult(rowNumber, "", false, e.getMessage()));
-                }
             }
         }
 
-        return results;
+        return processRowsInParallel(localRows);
     }
 
     private Map<String, String> extractExcelRowData(Row row) {
@@ -187,7 +201,6 @@ public class BulkUserImportService implements IBulkUserImportService {
             user.setAuthType(AuthType.CSV_UPLOAD);
             user.setEmailVerified(true);
             user.setPasswordSet(true);
-            user.setRole(cachedDefaultRole);
 
             User createdUser = userService.createUser(user);
             return new BulkUserImportResult(rowNumber, username, true, AdminConstants.USER_CREATED_SUCCESS_MESSAGE, createdUser.getId());
@@ -195,18 +208,11 @@ public class BulkUserImportService implements IBulkUserImportService {
         } catch (UserAlreadyExistsException e) {
             return new BulkUserImportResult(rowNumber, username, false, AdminConstants.USER_ALREADY_EXISTS_ADMIN_MESSAGE, e.getUserId());
         } catch (Exception e) {
-
             ConstraintViolationException constraintViolation = unwrapConstraintViolation(e);
-
             if (constraintViolation != null) {
-                String violationMessages = constraintViolation.getConstraintViolations().stream()
-                        .map(violation -> violation.getPropertyPath() + ": " + violation.getMessage())
-                        .reduce((msg1, msg2) -> msg1 + "; " + msg2)
-                        .orElse("Validation failed");
-
-                return new BulkUserImportResult(rowNumber, username, false, violationMessages);
+                return new BulkUserImportResult(rowNumber, username, false, "Validation failed for provided user details.");
             }
-            return new BulkUserImportResult(rowNumber, username, false, AdminConstants.USER_CREATION_FAILED_MESSAGE + e.getMessage());
+            return new BulkUserImportResult(rowNumber, username, false, "Failed to create user due to internal error.");
         }
     }
 

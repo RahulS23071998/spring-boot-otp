@@ -26,12 +26,12 @@ import jakarta.validation.constraints.Size;
            @Index(name = DatabaseConstants.IDX_USER_STATUS, columnList = DatabaseConstants.STATUS_COLUMN),
            @Index(name = DatabaseConstants.IDX_USER_ENABLED, columnList = DatabaseConstants.ENABLED_COLUMN),
            @Index(name = DatabaseConstants.IDX_USER_OTP_REQUIRED, columnList = DatabaseConstants.IS_OTP_REQUIRED_COLUMN),
-           @Index(name = DatabaseConstants.IDX_USER_EMAIL_VERIFIED, columnList = "email_verified"),
-           @Index(name = DatabaseConstants.IDX_USER_GOOGLE_ID, columnList = "google_id"),
-           @Index(name = DatabaseConstants.IDX_USER_AUTH_TYPE, columnList = "auth_type"),
+           @Index(name = DatabaseConstants.IDX_USER_EMAIL_VERIFIED, columnList = DatabaseConstants.EMAIL_VERIFIED_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_GOOGLE_ID, columnList = DatabaseConstants.GOOGLE_ID_COLUMN),
+           @Index(name = DatabaseConstants.IDX_USER_AUTH_TYPE, columnList = DatabaseConstants.AUTH_TYPE_COLUMN),
            @Index(name = DatabaseConstants.IDX_USER_ROLE_ID, columnList = DatabaseConstants.ROLE_ID_COLUMN),
            @Index(name = DatabaseConstants.IDX_USER_AUTHORITY_ID, columnList = DatabaseConstants.AUTHORITY_ID_COLUMN),
-           @Index(name = DatabaseConstants.IDX_USER_CREATED_DATE, columnList = "created_date")
+           @Index(name = DatabaseConstants.IDX_USER_CREATED_DATE, columnList = DatabaseConstants.CREATED_DATE_COLUMN)
        })
 @EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
 public class User extends BaseAuditedEntity implements BaseEntityWithId {
@@ -42,27 +42,27 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Column(name = DatabaseConstants.USERNAME_COLUMN, length = DatabaseConstants.USERNAME_MAX_LENGTH, unique = true)
     @NotNull
-    @Size(min = 4, max = DatabaseConstants.USERNAME_MAX_LENGTH)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.USERNAME_MAX_LENGTH)
     private String username;
 
     @Column(name = DatabaseConstants.PASSWORD_COLUMN, length = DatabaseConstants.PASSWORD_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = DatabaseConstants.PASSWORD_MAX_LENGTH)
+    @Size(min = DatabaseConstants.MIN_PASSWORD_LENGTH, max = DatabaseConstants.PASSWORD_MAX_LENGTH)
     private String password;
 
     @Column(name = DatabaseConstants.FIRST_NAME_COLUMN, length = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.FIRST_NAME_MAX_LENGTH)
     private String firstName;
 
     @Column(name = DatabaseConstants.LAST_NAME_COLUMN, length = DatabaseConstants.LAST_NAME_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = DatabaseConstants.LAST_NAME_MAX_LENGTH)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.LAST_NAME_MAX_LENGTH)
     private String lastName;
 
     @Column(name = DatabaseConstants.EMAIL_COLUMN, length = DatabaseConstants.EMAIL_MAX_LENGTH)
     @NotNull
-    @Size(min = 4, max = DatabaseConstants.EMAIL_MAX_LENGTH)
+    @Size(min = DatabaseConstants.MIN_NAME_LENGTH, max = DatabaseConstants.EMAIL_MAX_LENGTH)
     private String email;
 
     @Column(name = DatabaseConstants.ENABLED_COLUMN)
@@ -70,7 +70,7 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
     private Boolean enabled;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = DatabaseConstants.STATUS_COLUMN, length = DatabaseConstants.STATUS_MAX_LENGTH)
+    @Column(name = DatabaseConstants.STATUS_COLUMN, length = DatabaseConstants.STATUS_MAX_LENGTH, columnDefinition = "VARCHAR(20)")
     @NotNull
     private UserStatus status;
 
@@ -81,19 +81,19 @@ public class User extends BaseAuditedEntity implements BaseEntityWithId {
     private Boolean isOtpRequired;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "auth_type", length = 20)
+    @Column(name = DatabaseConstants.AUTH_TYPE_COLUMN, length = DatabaseConstants.AUTH_TYPE_MAX_LENGTH, columnDefinition = "VARCHAR(20)")
     private AuthType authType;
 
-    @Column(name = "google_id", length = 255)
+    @Column(name = DatabaseConstants.GOOGLE_ID_COLUMN, length = DatabaseConstants.GOOGLE_ID_MAX_LENGTH)
     private String googleId;
 
-    @Column(name = "email_verified")
+    @Column(name = DatabaseConstants.EMAIL_VERIFIED_COLUMN)
     private Boolean emailVerified;
 
-    @Column(name = "password_set")
+    @Column(name = DatabaseConstants.PASSWORD_SET_COLUMN)
     private Boolean passwordSet = Boolean.FALSE;
 
-    @Column(name = "totp_secret", length = 255)
+    @Column(name = DatabaseConstants.TOTP_SECRET_COLUMN, length = DatabaseConstants.TOTP_SECRET_MAX_LENGTH)
     private String totpSecret;
 
     @ManyToOne(fetch = FetchType.EAGER)

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.starter.springboot.service.OtpRateLimiterImplTest
 -------------------------------------------------------------------------------
-Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.041 s -- in com.starter.springboot.service.OtpRateLimiterImplTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in com.starter.springboot.service.OtpRateLimiterImplTest

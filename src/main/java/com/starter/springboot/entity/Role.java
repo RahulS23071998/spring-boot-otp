@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,10 +24,12 @@ public class Role extends BaseAuditedEntity implements BaseEntityWithId {
     private Long id;
 
     @NotNull
-    @Column(name = DatabaseConstants.ROLE_NAME_COLUMN, nullable = false)
+    @Size(max = DatabaseConstants.ROLE_NAME_MAX_LENGTH)
+    @Column(name = DatabaseConstants.ROLE_NAME_COLUMN, nullable = false, length = DatabaseConstants.ROLE_NAME_MAX_LENGTH)
     private String name;
 
-    @Column(name = DatabaseConstants.ROLE_DESCRIPTION_COLUMN)
+    @Size(max = DatabaseConstants.DESCRIPTION_MAX_LENGTH)
+    @Column(name = DatabaseConstants.ROLE_DESCRIPTION_COLUMN, length = DatabaseConstants.DESCRIPTION_MAX_LENGTH)
     private String description;
 
     @JsonIgnore

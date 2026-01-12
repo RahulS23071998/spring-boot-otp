@@ -17,7 +17,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,7 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -312,14 +314,15 @@ public class UserService implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public byte[] exportUsersToCSV() {
-        List<User> users = userRepository.findAll();
-        
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-             OutputStreamWriter writer = new OutputStreamWriter(outputStream);
+        try (Stream<User> userStream = userRepository.streamAll();
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
              CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT.withHeader(
                 "ID", "Username", "Email", "FirstName", "LastName", "Status", "Enabled", "OTP Required", "Email Verified"))) {
             
-            for (User user : users) {
+            Iterator<User> iterator = userStream.iterator();
+            while (iterator.hasNext()) {
+                User user = iterator.next();
                 csvPrinter.printRecord(
                     user.getId(),
                     user.getUsername(),
@@ -337,16 +340,15 @@ public class UserService implements IUserService {
             return outputStream.toByteArray();
         } catch (Exception e) {
             LOGGER.error("Failed to export users to CSV", e);
-            throw new RuntimeException("Failed to export users to CSV: " + e.getMessage());
+            throw new RuntimeException("An error occurred while exporting users to CSV.");
         }
     }
 
     @Override
     @Transactional(readOnly = true)
     public byte[] exportUsersToExcel() {
-        List<User> users = userRepository.findAll();
-        
-        try (XSSFWorkbook workbook = new XSSFWorkbook();
+        try (Stream<User> userStream = userRepository.streamAll();
+             SXSSFWorkbook workbook = new SXSSFWorkbook(100);
              ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
             
             Sheet sheet = workbook.createSheet("Users");
@@ -358,7 +360,9 @@ public class UserService implements IUserService {
             }
             
             int rowNum = 1;
-            for (User user : users) {
+            Iterator<User> iterator = userStream.iterator();
+            while (iterator.hasNext()) {
+                User user = iterator.next();
                 Row row = sheet.createRow(rowNum++);
                 row.createCell(0).setCellValue(user.getId());
                 row.createCell(1).setCellValue(user.getUsername());
@@ -372,10 +376,11 @@ public class UserService implements IUserService {
             }
             
             workbook.write(outputStream);
+            workbook.dispose();
             return outputStream.toByteArray();
         } catch (Exception e) {
             LOGGER.error("Failed to export users to Excel", e);
-            throw new RuntimeException("Failed to export users to Excel: " + e.getMessage());
+            throw new RuntimeException("An error occurred while exporting users to Excel.");
         }
     }
 

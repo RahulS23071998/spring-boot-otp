@@ -15,6 +15,7 @@ import com.starter.springboot.service.IOtpService;
 import com.starter.springboot.service.IPaginationService;
 import com.starter.springboot.service.IRefreshTokenService;
 import com.starter.springboot.service.IUserService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -27,6 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(AdminConstants.ADMIN_BASE_PATH)
@@ -41,6 +45,7 @@ public class AdminController {
     private final IPaginationService paginationService;
     private final IBulkUserImportService bulkUserImportService;
     private final IOtpService otpService;
+    private final Executor bulkTaskExecutor;
 
     public AdminController(IUserService userService,
                            IRefreshTokenService refreshTokenService,
@@ -49,7 +54,8 @@ public class AdminController {
                            StringRedisTemplate redisTemplate,
                            IPaginationService paginationService,
                            IBulkUserImportService bulkUserImportService,
-                           IOtpService otpService) {
+                           IOtpService otpService,
+                           @Qualifier("bulkTaskExecutor") Executor bulkTaskExecutor) {
         this.userService = userService;
         this.refreshTokenService = refreshTokenService;
         this.refreshTokenRepository = refreshTokenRepository;
@@ -58,6 +64,7 @@ public class AdminController {
         this.paginationService = paginationService;
         this.bulkUserImportService = bulkUserImportService;
         this.otpService = otpService;
+        this.bulkTaskExecutor = bulkTaskExecutor;
     }
 
     // 1. Lock/Unlock User
@@ -165,23 +172,26 @@ public class AdminController {
             );
         }
         
-        int successCount = 0;
-        int failureCount = 0;
-        
-        for (String username : usernames) {
-            try {
-                User user = userService.findUserByUsername(username);
-                if (user != null && user.getIsOtpRequired()) {
-                    String email = user.getEmail();
-                    otpService.generateOtp(username, email);
-                    successCount++;
-                } else {
-                    failureCount++;
+        List<CompletableFuture<Boolean>> futures = usernames.stream()
+            .map(username -> CompletableFuture.supplyAsync(() -> {
+                try {
+                    User user = userService.findUserByUsername(username);
+                    if (user != null && user.getIsOtpRequired()) {
+                        otpService.generateOtp(username, user.getEmail());
+                        return true;
+                    }
+                } catch (Exception e) {
+                    // Log error but continue
                 }
-            } catch (Exception e) {
-                failureCount++;
-            }
-        }
+                return false;
+            }, bulkTaskExecutor))
+            .collect(Collectors.toList());
+
+        // Wait for all to complete (optional, could also return immediate 202 Accepted)
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+        
+        int successCount = (int) futures.stream().filter(f -> f.join()).count();
+        int failureCount = usernames.size() - successCount;
         
         return ResponseEntity.ok(Map.of(
             AdminConstants.TOTAL_USERS_KEY, usernames.size(),

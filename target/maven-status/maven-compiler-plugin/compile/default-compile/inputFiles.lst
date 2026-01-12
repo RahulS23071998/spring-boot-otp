@@ -1,6 +1,7 @@
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\Application.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\AppInfoContributor.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\AppInfoProperties.java
+C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\AsyncConfig.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\AuditingConfiguration.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\EmailConfiguration.java
 C:\Users\Rahul.S\OneDrive\Desktop\spring-boot-otp\src\main\java\com\starter\springboot\config\EmbeddedRedisConfig.java

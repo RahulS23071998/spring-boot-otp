@@ -38,8 +38,13 @@ class RefreshTokenRepositoryTest {
     private RefreshToken expiredToken;
     private RefreshToken revokedToken;
 
+    private long idCounter = 1;
+
     @BeforeEach
     void setUp() {
+        // Reset counter
+        idCounter = 1;
+        
         // Clean up before each test
         refreshTokenRepository.deleteAll();
 
@@ -57,6 +62,7 @@ class RefreshTokenRepositoryTest {
 
     private RefreshToken createRefreshToken(Long userId, String token, Instant expiresAt, Instant revokedAt) {
         RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setId(idCounter++);
         refreshToken.setUserId(userId);
         refreshToken.setToken(token);
         refreshToken.setExpiresAt(expiresAt);

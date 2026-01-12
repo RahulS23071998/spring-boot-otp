@@ -15,16 +15,16 @@ import jakarta.validation.constraints.Size;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = "password_history",
+@Table(name = DatabaseConstants.PASSWORD_HISTORY_TABLE,
        indexes = {
            @Index(name = DatabaseConstants.IDX_PASSWORD_HISTORY_USER_ID, columnList = DatabaseConstants.USER_ID_COLUMN),
-           @Index(name = DatabaseConstants.IDX_PASSWORD_HISTORY_CREATED_DATE, columnList = "created_date")
+           @Index(name = DatabaseConstants.IDX_PASSWORD_HISTORY_CREATED_DATE, columnList = DatabaseConstants.CREATED_DATE_COLUMN)
        })
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners({AuditingEntityListener.class, IdGeneratorEntityListener.class})
 public class PasswordHistory extends BaseAuditedEntity implements BaseEntityWithId {
 
     @Id
-    @Column(name = "password_history_id")
+    @Column(name = DatabaseConstants.PASSWORD_HISTORY_ID_COLUMN)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

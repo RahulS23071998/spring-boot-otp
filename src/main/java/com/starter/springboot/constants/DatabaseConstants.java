@@ -11,6 +11,7 @@ public final class DatabaseConstants {
     public static final String AUTHORITY_TABLE = "authority";
     public static final String OTP_AUDIT_ENTRIES_TABLE = "otp_audit_entries";
     public static final String REFRESH_TOKENS_TABLE = "refresh_tokens";
+    public static final String PASSWORD_HISTORY_TABLE = "password_history";
     
     // User Table Columns
     public static final String USER_ID_COLUMN = "id";
@@ -25,6 +26,11 @@ public final class DatabaseConstants {
     public static final String IS_OTP_REQUIRED_COLUMN = "is_otp_required";
     public static final String ROLE_ID_COLUMN = "role_id";
     public static final String AUTHORITY_ID_COLUMN = "authority_id";
+    public static final String AUTH_TYPE_COLUMN = "auth_type";
+    public static final String GOOGLE_ID_COLUMN = "google_id";
+    public static final String EMAIL_VERIFIED_COLUMN = "email_verified";
+    public static final String PASSWORD_SET_COLUMN = "password_set";
+    public static final String TOTP_SECRET_COLUMN = "totp_secret";
     
     // Role Table Columns
     public static final String ROLE_NAME_COLUMN = "name";
@@ -47,6 +53,18 @@ public final class DatabaseConstants {
     public static final String REFRESH_TOKEN_CREATED_AT_COLUMN = "created_at";
     public static final String REFRESH_TOKEN_REVOKED_AT_COLUMN = "revoked_at";
     public static final String REFRESH_TOKEN_REPLACED_BY_TOKEN_COLUMN = "replaced_by_token";
+    public static final String IP_ADDRESS_COLUMN = "ip_address";
+    public static final String USER_AGENT_COLUMN = "user_agent";
+    public static final String IS_ACTIVE_COLUMN = "is_active";
+    
+    // Password History Table Columns
+    public static final String PASSWORD_HISTORY_ID_COLUMN = "password_history_id";
+
+    // Auditing Columns
+    public static final String CREATED_DATE_COLUMN = "created_date";
+    public static final String CREATED_BY_COLUMN = "created_by";
+    public static final String LAST_MODIFIED_DATE_COLUMN = "last_modified_date";
+    public static final String LAST_MODIFIED_BY_COLUMN = "last_modified_by";
     
     // Column Constraints
     public static final int USERNAME_MAX_LENGTH = 50;
@@ -55,14 +73,22 @@ public final class DatabaseConstants {
     public static final int LAST_NAME_MAX_LENGTH = 50;
     public static final int EMAIL_MAX_LENGTH = 50;
     public static final int STATUS_MAX_LENGTH = 20;
+    public static final int AUTH_TYPE_MAX_LENGTH = 20;
+    public static final int GOOGLE_ID_MAX_LENGTH = 255;
+    public static final int TOTP_SECRET_MAX_LENGTH = 255;
     public static final int AUTHORITY_NAME_MAX_LENGTH = 50;
+    public static final int ROLE_NAME_MAX_LENGTH = 255;
     public static final int REFRESH_TOKEN_MAX_LENGTH = 500;
+    public static final int IP_ADDRESS_MAX_LENGTH = 45;
+    public static final int USER_AGENT_MAX_LENGTH = 500;
+    public static final int DESCRIPTION_MAX_LENGTH = 500;
+    public static final int AUDIT_USER_MAX_LENGTH = 50;
     
     // Validation Constraints
     public static final int MIN_USERNAME_LENGTH = 1;
     public static final int MIN_PASSWORD_LENGTH = 4;
     public static final int MIN_NAME_LENGTH = 4;
-    public static final int DTO_PASSWORD_MAX_LENGTH = 32;
+    public static final int DTO_PASSWORD_MAX_LENGTH = 100;
     public static final int CLIENT_ID_MAX_LENGTH = 64;
     public static final int DEVICE_ID_MAX_LENGTH = 128;
     
